@@ -39,38 +39,7 @@ export default function OurStoryPage() {
 
     return (
         <div className="page-wrapper">
-            {/* Load Tailwind via CDN for this page specifically as per original implementation */}
-            <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
-            <Script id="tailwind-config" strategy="beforeInteractive">
-                {`
-          tailwind.config = {
-            darkMode: 'class',
-            theme: {
-              extend: {
-                fontFamily: {
-                  sans: ['Inter', 'sans-serif'],
-                  serif: ['Lora', 'serif'],
-                },
-                colors: {
-                  background: "#fafaf9",       // stone-50
-                  foreground: "#1c1917",       // stone-900
-                  primary: "#1c1917",          
-                  secondary: "#f5f5f4",        
-                  muted: "#f5f5f4",            
-                  "muted-foreground": "#78716c", 
-                  "dark-section": "#0c0a09",   // stone-950
-                  "dark-text": "#f5f5f4",      
-                  accent: {
-                    DEFAULT: "#2563eb",        // Royal Blue
-                    dim: "#2563eb33",          
-                    foreground: "#ffffff",     
-                  },
-                }
-              }
-            }
-          }
-        `}
-            </Script>
+            {/* Tailwind is now handled via global PostCSS setup */}
             {/* Fonts for this page */}
             <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
 

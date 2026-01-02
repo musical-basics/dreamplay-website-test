@@ -87,6 +87,11 @@ export default function CustomizePage() {
     }, []);
 
     useEffect(() => {
+        console.log('[CustomizePage Debug] Component Mounted');
+        return () => console.log('[CustomizePage Debug] Component Unmounted');
+    }, []);
+
+    useEffect(() => {
         // Countdown Interval
         const interval = setInterval(() => {
             setCountdown(prev => {
@@ -99,6 +104,32 @@ export default function CustomizePage() {
             });
         }, 1000);
         return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        console.log('[CustomizePage Debug] Setting up pageshow listener');
+        // Handle browser back/forward cache (bfcache)
+        // When user clicks back from Shopify, the page may be restored from cache without styles
+        const handlePageShow = (event: PageTransitionEvent) => {
+            console.log('[CustomizePage Debug] pageshow event fired', {
+                persisted: event.persisted,
+                timeStamp: event.timeStamp,
+                type: event.type
+            });
+
+            if (event.persisted) {
+                console.log('[CustomizePage Debug] Page restored from bfcache (persisted: true). Reloading...');
+                // Page was restored from bfcache, reload to ensure proper styling
+                window.location.reload();
+            } else {
+                console.log('[CustomizePage Debug] Page loaded normally (persisted: false).');
+            }
+        };
+        window.addEventListener('pageshow', handlePageShow);
+        return () => {
+            console.log('[CustomizePage Debug] Removing pageshow listener');
+            window.removeEventListener('pageshow', handlePageShow);
+        };
     }, []);
 
 
@@ -468,7 +499,7 @@ export default function CustomizePage() {
                                     </div>
                                 )}
                                 <div className="relative h-56 w-full overflow-hidden border-b border-white/5 transition-all duration-500 md:h-72" style={{ background: color === 'Black' ? 'linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)' : 'linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%)' }}>
-                                    <img src={color === 'Black' ? "/images/DS6.5-Black.png" : "/images/image-stand.png"} alt={color} className="absolute left-1/2 top-1/2 h-[85%] w-auto max-w-[90%] -translate-x-1/2 -translate-y-1/2 object-contain transition-all duration-500 group-hover:scale-105" />
+                                    <img src={color === 'Black' ? "/images/DS6.5-Black.png" : "/images/DS5.5-White.png"} alt={color} className="absolute left-1/2 top-1/2 h-[85%] w-auto max-w-[90%] -translate-x-1/2 -translate-y-1/2 object-contain transition-all duration-500 group-hover:scale-105" />
                                 </div>
                                 <div className="p-5 md:p-8">
                                     <div className="mb-2 flex items-center gap-2 md:mb-3 md:gap-3">

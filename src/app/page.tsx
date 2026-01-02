@@ -79,9 +79,9 @@ export default function Home() {
             <div className="container">
               <div className="hero-content-wrapper">
                 <div className="hero-title-block">
-                  <h1 data-w-id="a59ecacd-c7ce-77bd-8ce2-30263c56d483" style={{ opacity: 0 }} className="h1-heading text-white">Introducing:&nbsp; DreamPlay One</h1>
+                  <h1 data-w-id="a59ecacd-c7ce-77bd-8ce2-30263c56d483" className="h1-heading text-white">Introducing:&nbsp; DreamPlay One</h1>
                 </div>
-                <div data-w-id="ca99a284-ce87-a7a3-e5b5-f127871c8368" style={{ opacity: 0 }} className="hero-lower-content">
+                <div data-w-id="ca99a284-ce87-a7a3-e5b5-f127871c8368" className="hero-lower-content">
                   <p className="p-large text-white-80"><strong>The keyboard that feels like a dream to play.</strong></p>
                   <div className="hero-lower-cta-block">
                     <div className="hero-btn-wrap">
@@ -111,7 +111,7 @@ export default function Home() {
                   <div className="about-title-block">
                     <h2 className="h2-heading text-dark">Stop fighting a keyboard<br />that wasn't built for you.</h2>
                   </div>
-                  <div data-w-id="6564439e-ea22-fa56-985e-c5e60601d5de" style={{ opacity: 0 }} className="about-content-box">
+                  <div data-w-id="6564439e-ea22-fa56-985e-c5e60601d5de" className="about-content-box">
                     <div className="about-c-image-block">
                       <div className="about-c-wrapper">
                         <h3 className="h3-large">Did you know?</h3>
@@ -204,12 +204,6 @@ export default function Home() {
                         .img-container.piano-view { display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
                         .img-container.hand-view { border-radius: 1rem; margin-top: auto; }
                       `}</style>
-                      {/* Using Tailwind classes as in index.html. Note: You disabled tailwind in create-next-app, so these might not work unless we add tailwind CDN. 
-                          The user's original HTML loaded tailwind via CDN: <script src="https://cdn.tailwindcss.com"></script>. 
-                          I will include that Script in layout or here? It's better to just include it as a Script tag here if it's localized, or rely on global CSS. 
-                          Since it's an embed in Webflow, I'll add the script here. */}
-                      <script src="https://cdn.tailwindcss.com"></script>
-
                       <section className="max-w-[1600px] mx-auto px-4 py-16 piano-section">
                         <div className="text-center mb-12">
                           <p className="text-gray-500 text-sm tracking-wide mb-4 uppercase font-bold">Introducing the Sizes</p>
@@ -219,27 +213,27 @@ export default function Home() {
                           <div className="flex flex-col md:flex-row flex-[2]">
                             <div className="flex-1 piano-card theme-dark md:rounded-r-none">
                               <div className="img-container piano-view">
-                                <img id="target-piano-1" src="" alt="Piano DS5.5" className="object-contain max-h-full w-auto" />
+                                <img id="target-piano-1" src={undefined as unknown as string} alt="Piano DS5.5" className="object-contain max-h-full w-auto" />
                               </div>
                               <div className="text-center mb-6">
                                 <h2 className="piano-title">Piano DS5.5</h2>
                                 <p className="piano-desc">Perfect for handspans under 7.6 inches.</p>
                               </div>
                               <div className="img-container hand-view">
-                                <img id="target-hand-1" src="" alt="Hand Zone A" className="absolute inset-0 w-full h-full object-cover" />
+                                <img id="target-hand-1" src={undefined as unknown as string} alt="Hand Zone A" className="absolute inset-0 w-full h-full object-cover" />
                               </div>
                               <p className="zone-label">Zone A</p>
                             </div>
                             <div className="flex-1 piano-card theme-light relative z-10 mt-4 md:mt-0 md:-ml-4 md:rounded-l-none">
                               <div className="img-container piano-view">
-                                <img id="target-piano-2" src="" alt="Piano DS6.0" className="object-contain max-h-full w-auto" />
+                                <img id="target-piano-2" src={undefined as unknown as string} alt="Piano DS6.0" className="object-contain max-h-full w-auto" />
                               </div>
                               <div className="text-center mb-6">
                                 <h2 className="piano-title">Piano DS6.0</h2>
                                 <p className="piano-desc">Perfect for handspans between 7.6-8.5 inches.</p>
                               </div>
                               <div className="img-container hand-view">
-                                <img id="target-hand-2" src="" alt="Hand Zone B" className="absolute inset-0 w-full h-full object-cover" />
+                                <img id="target-hand-2" src={undefined as unknown as string} alt="Hand Zone B" className="absolute inset-0 w-full h-full object-cover" />
                               </div>
                               <p className="zone-label">Zone B</p>
                             </div>
@@ -247,14 +241,14 @@ export default function Home() {
                           <div className="flex-1">
                             <div className="piano-card theme-dark h-full">
                               <div className="img-container piano-view">
-                                <img id="target-piano-3" src="" alt="Standard Piano" className="object-contain max-h-full w-auto" />
+                                <img id="target-piano-3" src={undefined as unknown as string} alt="Standard Piano" className="object-contain max-h-full w-auto" />
                               </div>
                               <div className="text-center mb-6">
                                 <h2 className="piano-title">Standard Piano</h2>
                                 <p className="piano-desc">Perfect for handspans over 8.5 inches.</p>
                               </div>
                               <div className="img-container hand-view">
-                                <img id="target-hand-3" src="" alt="Hand Zone C" className="absolute inset-0 w-full h-full object-cover" />
+                                <img id="target-hand-3" src={undefined as unknown as string} alt="Hand Zone C" className="absolute inset-0 w-full h-full object-cover" />
                               </div>
                               <p className="zone-label">Zone C</p>
                             </div>
@@ -290,7 +284,7 @@ export default function Home() {
               <div className="container">
                 <div className="feature-wrapper">
                   <div className="feature-tittle-upper">
-                    <div data-w-id="30e253e2-26e0-500b-5a23-12b313dc5392" style={{ opacity: 0 }} className="p-large text-gray">Our Features</div>
+                    <div data-w-id="30e253e2-26e0-500b-5a23-12b313dc5392" className="p-large text-gray">Our Features</div>
                     <h2 className="h2-heading text-dark">Everything You Need, Built In</h2>
                   </div>
                   <div className="feature-card-block">
@@ -396,12 +390,24 @@ export default function Home() {
                        Actually, I should copy the slider HTML properly. */}
                   <div className="slider-tittle-block">
                     <div className="feature-tittle-upper">
-                      <div data-w-id="dcc09ef3-7f0f-df81-95bf-044228b340d9" style={{ opacity: 0 }} className="p-large text-white-80">Why We’re Doing This</div>
-                      <h2 data-w-id="dcc09ef3-7f0f-df81-95bf-044228b340db" style={{ opacity: 0 }} className="h2-heading text-white">Playing the piano<br />doesn’t have to hurt</h2>
+                      <div data-w-id="dcc09ef3-7f0f-df81-95bf-044228b340d9" className="p-large text-white-80">Why We’re Doing This</div>
+                      <h2 data-w-id="dcc09ef3-7f0f-df81-95bf-044228b340db" className="h2-heading text-white">Playing the piano<br />doesn’t have to hurt</h2>
                     </div>
                   </div>
                   <div className="slider-main">
                     <div className="t-slider-wrapper">
+                      <div className="slider-image-wrap">
+                        <img
+                          className="slider-imge"
+                          src="/images/Profile-Image_1.webp"
+                          width="Auto"
+                          height="Auto"
+                          alt=""
+                          sizes="100vw"
+                          loading="lazy"
+                          srcSet="/images/Profile-Image_1Profile%20Image.webp 500w, /images/Profile-Image_1.webp 768w"
+                        />
+                      </div>
                       {/* This part uses Webflow Slider typically (w-slider). 
                              Webflow.js handles it. Text content is critical. */}
                       <div data-delay="4000" data-animation="slide" className="testimonial-slider w-slider" data-autoplay="false" data-easing="ease" data-hide-arrows="true" data-disable-swipe="true" data-autoplay-limit="0" data-nav-spacing="3" data-duration="500" data-infinite="true">
@@ -475,7 +481,7 @@ export default function Home() {
             <div className="global-padding">
               <div className="container">
                 <div className="dreamplay-big-image-wrap">
-                  <div data-w-id="621ec278-cfa0-294d-e5e3-062afdd38e54" style={{ opacity: 0 }} className="dreamplay-big-image-block">
+                  <div data-w-id="621ec278-cfa0-294d-e5e3-062afdd38e54" className="dreamplay-big-image-block">
                     <div className="cta-c-block">
                       <div><h2 className="h2-heading text-white">Be the First to<br />Experience DreamPlay.</h2></div>
                       <div><p className="p-regular text-white">We&#x27;ve finished the design. Now, we need your help to begin production. By reserving now, you&#x27;re not just pre-ordering a keyboard - you&#x27;re helping bring a new standard of instrument to life.</p></div>
@@ -516,7 +522,7 @@ export default function Home() {
                     {/* Swiper Section */}
                     <div className="piano-slider-block">
                       <div className="swiper piano">
-                        <div data-w-id="a343a42c-8900-04d5-8f4b-feda93bf949b" style={{ opacity: 0 }} className="swiper-wrapper">
+                        <div data-w-id="a343a42c-8900-04d5-8f4b-feda93bf949b" className="swiper-wrapper">
                           <div className="swiper-slide">
                             <div className="discount-image-wrap">
                               <div className="slider-image-block"><img src="/images/DS6.0-Black-1.png" loading="lazy" sizes="100vw" srcSet="/images/DS6.0-Black-1-p-500.png 500w, /images/DS6.0-Black-1-p-800.png 800w, /images/DS6.0-Black-1-p-1080.png 1080w, /images/DS6.0-Black-1-p-1600.png 1600w, /images/DS6.0-Black-1-p-2000.png 2000w, /images/DS6.0-Black-1-p-2600.png 2600w, /images/DS6.0-Black-1-p-3200.png 3200w, /images/DS6.0-Black-1.png 6144w" alt="" className="discount-im" /></div>

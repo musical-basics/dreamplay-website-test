@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-wf-site="68b99847f96fcca15429faec">
+    <html lang="en" data-wf-site="68b99847f96fcca15429faec" suppressHydrationWarning>
       <head>
         <meta content="Webflow" name="generator" />
 
