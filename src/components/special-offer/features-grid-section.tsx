@@ -207,22 +207,22 @@ export function FeaturesGridSection() {
     return (
         <section
             ref={sectionRef}
-            className="py-10 md:py-16 lg:py-20 bg-neutral-50 min-h-screen flex flex-col justify-center"
+            className="py-20 md:py-28 lg:py-36 bg-neutral-50 min-h-screen flex flex-col justify-center"
         >
             <div className="container mx-auto px-4">
                 <div
-                    className={`text-center mb-8 md:mb-12 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                    className={`text-center mb-12 md:mb-16 lg:mb-20 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 >
-                    <p className="text-neutral-500 text-xs md:text-sm uppercase tracking-wider mb-2 md:mb-3">
+                    <p className="text-neutral-500 text-sm md:text-base uppercase tracking-widest mb-3 md:mb-4">
                         Professional Grade
                     </p>
-                    <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold text-neutral-900 leading-tight">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-neutral-900 leading-tight">
                         All the Features You Need
                     </h2>
                 </div>
 
-                <div className="max-w-4xl mx-auto">
-                    <div className="grid grid-cols-3 md:grid-cols-4 gap-4 md:gap-8">
+                <div className="max-w-5xl mx-auto">
+                    <div className="grid grid-cols-3 md:grid-cols-4 gap-8 md:gap-12 lg:gap-16">
                         {featuresGrid.map((feature, index) => (
                             <div
                                 key={index}
@@ -230,8 +230,8 @@ export function FeaturesGridSection() {
                                     }`}
                                 style={{ transitionDelay: `${100 + index * 40}ms` }}
                             >
-                                <div className="text-neutral-700 mb-2 md:mb-3">{feature.icon}</div>
-                                <p className="text-neutral-600 text-[10px] md:text-sm leading-tight px-1">{feature.label}</p>
+                                <div className="text-neutral-700 mb-3 md:mb-4 [&>svg]:w-8 [&>svg]:h-8 md:[&>svg]:w-10 md:[&>svg]:h-10">{feature.icon}</div>
+                                <p className="text-neutral-600 text-xs md:text-base lg:text-lg leading-tight px-1">{feature.label}</p>
                             </div>
                         ))}
                     </div>

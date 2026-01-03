@@ -3,8 +3,10 @@
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect, useRef } from "react"
+import { useABAnalytics } from "@/hooks/use-ab-analytics"
 
 export function CTASection() {
+    const { trackClick } = useABAnalytics("special_offer_variant", { trackTime: false })
     const [isVisible, setIsVisible] = useState(false)
     const sectionRef = useRef<HTMLElement>(null)
     const [timeLeft, setTimeLeft] = useState({
@@ -89,6 +91,7 @@ export function CTASection() {
                     </div>
 
                     <Link
+                        onClick={() => trackClick("cta_section", "secure_my_discount")}
                         href="/checkout-pages/customize"
                         className={`inline-flex items-center gap-3 bg-white text-neutral-900 rounded-full px-10 py-5 text-lg font-medium hover:bg-neutral-100 hover:scale-105 transition-all duration-500 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                     >

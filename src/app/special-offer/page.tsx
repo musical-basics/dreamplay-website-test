@@ -10,10 +10,12 @@ import { GuaranteeSection } from "@/components/special-offer/guarantee-section"
 import { CTASection } from "@/components/special-offer/cta-section"
 import { SpecialOfferHeader } from "@/components/special-offer/header"
 import { SpecialOfferFooter } from "@/components/special-offer/footer"
+import { useABAnalytics } from "@/hooks/use-ab-analytics"
 import { VideoSection1 } from "@/components/special-offer/video-section-1"
 import { VideoSection2 } from "@/components/special-offer/video-section-2"
 
 export default function SpecialOfferPage() {
+    useABAnalytics("special_offer_variant")
     return (
         <main className="relative">
             <style jsx global>{`

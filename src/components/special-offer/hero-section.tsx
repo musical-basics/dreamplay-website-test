@@ -3,8 +3,10 @@
 import { ArrowRight, ChevronDown } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState, useRef } from "react"
+import { useABAnalytics } from "@/hooks/use-ab-analytics"
 
 export function HeroSection() {
+    const { trackClick } = useABAnalytics("special_offer_variant", { trackTime: false })
     const [isVisible, setIsVisible] = useState(false)
     const sectionRef = useRef<HTMLElement>(null)
 
@@ -57,6 +59,7 @@ export function HeroSection() {
                     </div>
 
                     <Link
+                        onClick={() => trackClick("hero_section", "pre_order_now")}
                         href="/checkout-pages/customize"
                         className={`inline-flex items-center gap-3 bg-white text-neutral-900 rounded-full px-8 py-4 text-base font-medium hover:bg-neutral-100 transition-all duration-1000 delay-500 hover:scale-105 hover:shadow-xl ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                             }`}

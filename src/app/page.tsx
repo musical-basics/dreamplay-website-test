@@ -3,8 +3,10 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { useABAnalytics } from "@/hooks/use-ab-analytics";
 
 export default function Home() {
+  const { trackClick } = useABAnalytics("home_control");
   useEffect(() => {
     // --- SIZING SECTION SCRIPT ---
     const mappings = [
@@ -85,7 +87,7 @@ export default function Home() {
                   <p className="p-large text-white-80"><strong>The keyboard that feels like a dream to play.</strong></p>
                   <div className="hero-lower-cta-block">
                     <div className="hero-btn-wrap">
-                      <Link data-wf--button-primary--variant="base" data-w-id="3571025f-8656-4207-fe0a-7eddcbc423cd" href="/checkout-pages/customize" className="button w-inline-block">
+                      <Link onClick={() => trackClick("hero_section", "pre_order_now")} data-wf--button-primary--variant="base" data-w-id="3571025f-8656-4207-fe0a-7eddcbc423cd" href="/checkout-pages/customize" className="button w-inline-block">
                         <div className="button_text">
                           <div>Pre-Order Now</div>
                         </div>
@@ -505,7 +507,7 @@ export default function Home() {
                       <div className="p-medium _w-medium">The DreamPlay One will launch at <strong>$899</strong>. Due to the early stage, we are offering this keyboard at the incredible price of $599 (with free shipping). This is the lowest price we will ever offer.</div>
                     </div>
                     <div className="discount-btn-block">
-                      <Link data-w-id="f1d5c3cb-94af-550d-2aa5-b4cc60c9289e" href="/checkout-pages/customize" className="btn-secondary w-inline-block">
+                      <Link onClick={() => trackClick("discount_section", "secure_my_discount")} data-w-id="f1d5c3cb-94af-550d-2aa5-b4cc60c9289e" href="/checkout-pages/customize" className="btn-secondary w-inline-block">
                         <div className="s-btn-text"><strong>Secure My Discount</strong></div>
                         <div className="button_icon white">
                           <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 18 10" fill="none" className="button_icon-svg black">

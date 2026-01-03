@@ -4,8 +4,10 @@ import Link from "next/link"
 import { ArrowRight, Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
+import { useABAnalytics } from "@/hooks/use-ab-analytics"
 
 export function SpecialOfferHeader() {
+    const { trackClick } = useABAnalytics("special_offer_variant", { trackTime: false })
     const [scrolled, setScrolled] = useState(false)
 
     useEffect(() => {
@@ -43,12 +45,12 @@ export function SpecialOfferHeader() {
                             key={item.label}
                             href={item.href}
                             className={`text-sm transition-colors ${scrolled
-                                    ? i === 0
-                                        ? "text-neutral-900 font-medium"
-                                        : "text-neutral-700 hover:text-neutral-900"
-                                    : i === 0
-                                        ? "text-white font-medium"
-                                        : "text-white/70 hover:text-white"
+                                ? i === 0
+                                    ? "text-neutral-900 font-medium"
+                                    : "text-neutral-700 hover:text-neutral-900"
+                                : i === 0
+                                    ? "text-white font-medium"
+                                    : "text-white/70 hover:text-white"
                                 }`}
                         >
                             {item.label}
@@ -59,10 +61,11 @@ export function SpecialOfferHeader() {
                 {/* CTA Button */}
                 <div className="flex items-center gap-4">
                     <Link
+                        onClick={() => trackClick("header", "pre_order_now")}
                         href="/checkout-pages/customize"
                         className={`hidden md:flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${scrolled
-                                ? "bg-white border border-neutral-200 text-neutral-900 hover:border-neutral-400"
-                                : "bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20"
+                            ? "bg-white border border-neutral-200 text-neutral-900 hover:border-neutral-400"
+                            : "bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20"
                             }`}
                     >
                         Pre-Order Now

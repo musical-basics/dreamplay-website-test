@@ -21,7 +21,7 @@ const featureData = {
         icon: <Music className="w-4 h-4" />,
         label: "18 Presets",
         description: "Choose from 18 professionally crafted instrument sounds including grand pianos and strings.",
-        position: { left: "52%", top: "38%" },
+        position: { left: "50%", top: "52%" },
     },
     speakers: {
         icon: <Volume2 className="w-4 h-4" />,
@@ -70,31 +70,31 @@ export function FeaturesPianoSection() {
     }
 
     return (
-        <section ref={sectionRef} className="py-4 md:py-8 lg:py-10 bg-white min-h-screen flex flex-col justify-center">
-            <div className="container mx-auto px-3 md:px-4">
+        <section ref={sectionRef} className="py-16 md:py-24 lg:py-32 bg-white min-h-screen flex flex-col justify-center">
+            <div className="container mx-auto px-4 md:px-6">
                 <div
-                    className={`text-center mb-2 md:mb-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                    className={`text-center mb-6 md:mb-10 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 >
-                    <p className="text-neutral-500 text-[10px] md:text-xs uppercase tracking-wider mb-1 md:mb-2">Our Features</p>
-                    <h2 className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-semibold text-neutral-900 leading-tight">
+                    <p className="text-neutral-500 text-xs md:text-sm uppercase tracking-widest mb-2 md:mb-3">Our Features</p>
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-neutral-900 leading-tight">
                         Everything You Need, Built In
                     </h2>
-                    <p className="text-neutral-400 text-[10px] md:text-xs mt-1 md:mt-2">
+                    <p className="text-neutral-400 text-xs md:text-sm mt-2 md:mt-3">
                         <span className="hidden md:inline">Hover over</span>
                         <span className="md:hidden">Tap</span> a feature to learn more
                     </p>
                 </div>
 
                 <div
-                    className={`relative max-w-3xl mx-auto transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                    className={`relative max-w-4xl mx-auto transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 >
-                    <div className="grid grid-cols-3 gap-1 sm:gap-1.5 md:flex md:justify-center md:gap-2 mb-2 md:mb-4">
+                    <div className="grid grid-cols-3 gap-2 sm:gap-2 md:flex md:justify-center md:gap-3 mb-4 md:mb-6">
                         {(Object.keys(featureData) as FeatureKey[]).filter(Boolean).map((key) => {
                             const feature = featureData[key!]
                             return (
                                 <button
                                     key={key}
-                                    className={`flex items-center justify-center gap-0.5 md:gap-1 rounded-full px-1.5 py-1 md:px-3 md:py-1.5 transition-shadow duration-300 ease-out ${activeFeature === key
+                                    className={`flex items-center justify-center gap-1 md:gap-2 rounded-full px-2.5 py-1.5 md:px-4 md:py-2 transition-shadow duration-300 ease-out ${activeFeature === key
                                         ? "bg-gradient-to-r from-sky-400 to-blue-500 text-white shadow-lg"
                                         : "bg-white text-neutral-600 shadow-md hover:shadow-lg hover:text-sky-500"
                                         } border border-neutral-200/60`}
@@ -102,8 +102,8 @@ export function FeaturesPianoSection() {
                                     onMouseEnter={() => setActiveFeature(key)}
                                     onMouseLeave={() => setActiveFeature(null)}
                                 >
-                                    <span className="flex-shrink-0">{feature.icon}</span>
-                                    <span className="text-[8px] sm:text-[9px] md:text-[11px] font-medium whitespace-nowrap">
+                                    <span className="flex-shrink-0 [&>svg]:w-4 [&>svg]:h-4 md:[&>svg]:w-5 md:[&>svg]:h-5">{feature.icon}</span>
+                                    <span className="text-[9px] sm:text-[10px] md:text-sm font-medium whitespace-nowrap">
                                         {feature.label}
                                     </span>
                                 </button>
@@ -155,18 +155,18 @@ export function FeaturesPianoSection() {
                         )}
                     </div>
 
-                    <div className="h-[60px] md:h-[70px] mt-1.5 md:mt-3 flex items-start justify-center">
+                    <div className="h-[80px] md:h-[100px] mt-3 md:mt-6 flex items-start justify-center">
                         {activeFeature ? (
-                            <div className="text-center max-w-md px-2 md:px-4">
-                                <h3 className="font-medium bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent text-[11px] md:text-sm mb-0.5">
+                            <div className="text-center max-w-lg px-4 md:px-6">
+                                <h3 className="font-medium bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent text-sm md:text-base mb-1">
                                     {featureData[activeFeature].label}
                                 </h3>
-                                <p className="text-neutral-500 text-[9px] md:text-xs leading-relaxed">
+                                <p className="text-neutral-500 text-xs md:text-sm leading-relaxed">
                                     {featureData[activeFeature].description}
                                 </p>
                             </div>
                         ) : (
-                            <p className="text-neutral-300 text-[9px] md:text-[11px]">Select a feature above</p>
+                            <p className="text-neutral-300 text-xs md:text-sm">Select a feature above</p>
                         )}
                     </div>
                 </div>
