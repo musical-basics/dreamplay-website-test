@@ -5,10 +5,12 @@ import { usePathname } from "next/navigation";
 
 export default function Navbar() {
     const pathname = usePathname();
+    const isCustomizePage = pathname === "/checkout-pages/customize";
 
     const getLinkClass = (path: string) => {
         const baseClass = "navigation5_link-wrfrm w-nav-link";
-        return pathname === path ? `${baseClass} w--current` : baseClass;
+        const darkClass = isCustomizePage ? " text-white hover:text-[#4a9eff]" : "";
+        return pathname === path ? `${baseClass} w--current${darkClass}` : `${baseClass}${darkClass}`;
     };
 
     const getBrandClass = (path: string) => {
@@ -19,7 +21,8 @@ export default function Navbar() {
     return (
         <div
             data-animation="default"
-            className="section_navigation5-wrfrm w-nav"
+            className={`section_navigation5-wrfrm w-nav ${isCustomizePage ? 'bg-[#0a0a0f] border-b border-white/5' : ''}`}
+            style={isCustomizePage ? { position: 'relative', inset: 'auto' } : undefined}
             data-wf--navbar--variant="base"
             data-easing2="ease"
             // @ts-ignore
@@ -38,8 +41,8 @@ export default function Navbar() {
                     <img
                         loading="lazy"
                         src="/images/Logo.svg"
-                        alt=""
-                        className="navigation_logo"
+                        alt="DreamPlay Pianos"
+                        className={`navigation_logo ${isCustomizePage ? 'brightness-0 invert' : ''}`}
                     />
                 </Link>
                 <nav
@@ -54,28 +57,28 @@ export default function Navbar() {
                         >
                             DreamPlay One
                         </Link>
-                        <div className="nav-divider"></div>
+                        <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
                         <Link
                             href="/why-narrow"
                             className={getLinkClass("/why-narrow")}
                         >
                             Why Narrow?
                         </Link>
-                        <div className="nav-divider"></div>
+                        <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
                         <Link
                             href="/how-it-works"
                             className={getLinkClass("/how-it-works")}
                         >
                             How It Works
                         </Link>
-                        <div className="nav-divider"></div>
+                        <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
                         <Link
                             href="/our-story"
                             className={getLinkClass("/our-story")}
                         >
                             Our Story
                         </Link>
-                        <div className="nav-divider"></div>
+                        <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
                         <Link
                             href="/information-and-policies/faq"
                             className={getLinkClass("/information-and-policies/faq")}

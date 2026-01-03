@@ -2,7 +2,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Navbar from "@/components/Navbar"; // Assuming we want a Navbar, though the design might be standalone? 
+import Script from "next/script";
+import Navbar from "@/components/Navbar";
+
+// Types
+interface KeyboardZone {
+    zone: string;
+    rangeText: string;
+    model: string;
+    desc: string;
+    reach: string;
+    activeColor: string;
+}
+// Assuming we want a Navbar, though the design might be standalone? 
 // The original HTML does NOT include the standard Navbar. It has a custom sticky header #sticky-nav.
 // I will implement the custom sticky header as per the design.
 
@@ -269,52 +281,57 @@ export default function CustomizePage() {
     }, []);
 
     return (
-        <div className="bg-[#0a0a0f] min-h-screen text-white font-sans overflow-x-hidden selection:bg-[#4a9eff] selection:text-white">
-            {/* --- CUSTOM HEADER --- */}
-            <header className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${currentSection > 0 ? 'bg-[#0a0a0f]/95 py-3 shadow-lg shadow-black/20 backdrop-blur-md' : 'bg-transparent py-6'}`}>
-                <div className="mx-auto flex max-w-6xl items-center justify-between px-6">
-                    <Link href="/">
-                        <img src="/images/Logo.svg" alt="DreamPlay" className={`h-7 brightness-0 invert transition-opacity duration-300`} />
-                    </Link>
-                    <nav className="hidden items-center gap-1 md:flex">
-                        {['Start', 'Measure', 'Size', 'Color', 'Reserve'].map((label, index) => {
-                            const isActive = currentSection === index;
-                            const isCompleted = currentSection > index;
-                            const isClickable = index <= currentSection || isCompleted;
-                            return (
-                                <button
-                                    key={index}
-                                    onClick={() => isClickable && scrollToSection(index)}
-                                    disabled={!isClickable}
-                                    className={`group relative flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${isActive ? 'bg-[#4a9eff] text-white shadow-lg shadow-[#4a9eff]/30' :
-                                        isCompleted ? 'text-[#4a9eff] hover:bg-[#4a9eff]/10' :
-                                            'text-white/40'
-                                        } ${isClickable ? 'cursor-pointer' : 'cursor-not-allowed'}`}
-                                >
-                                    {index > 0 && (
-                                        <span className={`flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold ${isActive ? 'bg-white/20 text-white' :
-                                            isCompleted ? 'bg-[#4a9eff]/20 text-[#4a9eff]' :
-                                                'bg-white/10 text-white/40'
-                                            }`}>
-                                            {isCompleted ? '✓' : index}
-                                        </span>
-                                    )}
-                                    <span className="hidden lg:inline">{label}</span>
-                                </button>
-                            )
-                        })}
-                    </nav>
-                    <div className="flex items-center gap-4">
-                        {(appState.size || appState.color) && (
-                            <div className="hidden items-center gap-2 text-sm text-white/60 sm:flex">
-                                {appState.size && <span className="text-[#4a9eff]">{appState.size}</span>}
-                                {appState.size && appState.color && <span>•</span>}
-                                {appState.color && <span className="text-[#4a9eff]">{appState.color}</span>}
+        <div className="min-h-screen bg-[#0a0a0f] font-sans text-white selection:bg-[#4a9eff]/30">
+            {/* --- FIXED HEADERS WRAPPER --- */}
+            <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
+                {/* Main Navbar */}
+                <Navbar />
+
+                {/* Steps Sub-Navbar */}
+                <header id="sticky-nav" className="w-full transition-all duration-300 transform translate-y-0">
+                    <div className="mx-auto max-w-7xl px-4 md:px-6">
+                        <div className="flex h-12 md:h-14 items-center justify-between backdrop-blur-md bg-[#0a0a0f]/90 border-b border-white/5 rounded-b-2xl px-6 shadow-lg">
+                            {/* Hidden Logo since it's in Main Navbar */}
+                            <div className="hidden">
+                                <Link href="/" className="flex items-center gap-2 group">
+                                    <img src="/images/Logo-White.svg" alt="DreamPlay" className="h-6 md:h-8 w-auto transition-transform group-hover:scale-105" />
+                                </Link>
                             </div>
-                        )}
+
+                            <div className="hidden md:flex items-center gap-8 text-xs md:text-sm font-medium text-white/40 mx-auto">
+                                <button onClick={() => scrollToSection(0)} className={`flex items-center gap-2 transition-colors cursor-pointer hover:text-white/70 ${currentSection === 0 ? 'text-white' : ''}`}>
+                                    <span className={`flex h-5 w-5 md:h-6 md:w-6 items-center justify-center rounded-full border ${currentSection === 0 ? 'border-[#4a9eff] bg-[#4a9eff] text-white' : 'border-white/20'}`}>1</span>
+                                    <span>Start</span>
+                                </button>
+                                <div className={`h-px w-6 md:w-8 bg-white/10`}></div>
+                                <button onClick={() => scrollToSection(1)} className={`flex items-center gap-2 transition-colors cursor-pointer hover:text-white/70 ${currentSection === 1 ? 'text-white' : ''}`}>
+                                    <span className={`flex h-5 w-5 md:h-6 md:w-6 items-center justify-center rounded-full border ${currentSection === 1 ? 'border-[#4a9eff] bg-[#4a9eff] text-white' : 'border-white/20'}`}>2</span>
+                                    <span>Measure</span>
+                                </button>
+                                <div className={`h-px w-6 md:w-8 bg-white/10`}></div>
+                                <button onClick={() => scrollToSection(2)} className={`flex items-center gap-2 transition-colors cursor-pointer hover:text-white/70 ${currentSection === 2 ? 'text-white' : ''}`}>
+                                    <span className={`flex h-5 w-5 md:h-6 md:w-6 items-center justify-center rounded-full border ${currentSection === 2 ? 'border-[#4a9eff] bg-[#4a9eff] text-white' : 'border-white/20'}`}>3</span>
+                                    <span>Size</span>
+                                </button>
+                                <div className={`h-px w-6 md:w-8 bg-white/10`}></div>
+                                <button onClick={() => scrollToSection(3)} className={`flex items-center gap-2 transition-colors cursor-pointer hover:text-white/70 ${currentSection === 3 ? 'text-white' : ''}`}>
+                                    <span className={`flex h-5 w-5 md:h-6 md:w-6 items-center justify-center rounded-full border ${currentSection === 3 ? 'border-[#4a9eff] bg-[#4a9eff] text-white' : 'border-white/20'}`}>4</span>
+                                    <span>Color</span>
+                                </button>
+                                <div className={`h-px w-6 md:w-8 bg-white/10`}></div>
+                                <button onClick={() => scrollToSection(4)} className={`flex items-center gap-2 transition-colors cursor-pointer hover:text-white/70 ${currentSection === 4 ? 'text-white' : ''}`}>
+                                    <span className={`flex h-5 w-5 md:h-6 md:w-6 items-center justify-center rounded-full border ${currentSection === 4 ? 'border-[#4a9eff] bg-[#4a9eff] text-white' : 'border-white/20'}`}>5</span>
+                                    <span>Reserve</span>
+                                </button>
+                            </div>
+
+                            <div className="md:hidden text-sm font-medium text-[#4a9eff] mx-auto">
+                                Step {currentSection + 1}/5
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </header>
+                </header>
+            </div>
 
             {/* --- SECTIONS --- */}
 
