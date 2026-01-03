@@ -253,6 +253,21 @@ export default function CustomizePage() {
     const sizingResult = getSizingResult(realVal);
     const cmVal = (realVal * 2.54).toFixed(1);
 
+    // Mouse Position for Hero Glow
+    const [mousePos, setMousePos] = useState({ x: 50, y: 50 }); // Initialize centered (percentage)
+
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            // Calculate percentage to keep it responsive
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            setMousePos({ x, y });
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
     return (
         <div className="bg-[#0a0a0f] min-h-screen text-white font-sans overflow-x-hidden selection:bg-[#4a9eff] selection:text-white">
             {/* --- CUSTOM HEADER --- */}
@@ -305,7 +320,12 @@ export default function CustomizePage() {
 
             {/* SECTION 0: HERO */}
             <section ref={el => { if (sectionRefs.current) sectionRefs.current[0] = el }} id="section-0" className="journey-section relative flex h-screen items-center justify-center overflow-hidden bg-[#0a0a0f]">
-                <div className="pointer-events-none absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_center,_#4a9eff_0%,_transparent_50%)]"></div>
+                <div
+                    className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+                    style={{
+                        background: `radial-gradient(1200px circle at ${mousePos.x}% ${mousePos.y}%, rgba(74, 158, 255, 0.4), transparent 50%)`
+                    }}
+                ></div>
                 <div className="relative z-10 mx-auto max-w-4xl px-4 text-center md:px-6">
                     <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1.5 text-xs text-white/60 backdrop-blur-sm md:mb-4 md:px-4 md:py-2 md:text-sm">
                         <span className="h-2 w-2 animate-pulse rounded-full bg-[#4a9eff]"></span>
