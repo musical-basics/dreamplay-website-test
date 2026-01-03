@@ -1,0 +1,181 @@
+"use client"
+import { useState, useEffect, useRef } from "react"
+import { Bluetooth, Usb, Volume2, Music, Headphones, Piano } from "lucide-react"
+
+type FeatureKey = "bluetooth" | "usb" | "presets" | "speakers" | "headphones" | "keys" | null
+
+const featureData = {
+  bluetooth: {
+    icon: <Bluetooth className="w-4 h-4" />,
+    label: "Bluetooth",
+    description: "Connect wirelessly to your devices for seamless audio streaming and MIDI control.",
+    position: { left: "32%", top: "38%" },
+  },
+  usb: {
+    icon: <Usb className="w-4 h-4" />,
+    label: "USB MIDI",
+    description: "Direct USB connection for recording and integrating with your favorite music software.",
+    position: { left: "36%", top: "38%" },
+  },
+  presets: {
+    icon: <Music className="w-4 h-4" />,
+    label: "18 Presets",
+    description: "Choose from 18 professionally crafted instrument sounds including grand pianos and strings.",
+    position: { left: "52%", top: "38%" },
+  },
+  speakers: {
+    icon: <Volume2 className="w-4 h-4" />,
+    label: "Hi-Fi Speakers",
+    description: "Built-in high-fidelity speakers deliver rich, room-filling sound without external equipment.",
+    position: { left: "16%", top: "48%" },
+  },
+  headphones: {
+    icon: <Headphones className="w-4 h-4" />,
+    label: "Dual Headphone Jack",
+    description: "Two headphone outputs for private practice sessions or teacher-student learning.",
+    position: { left: "14%", top: "38%" },
+  },
+  keys: {
+    icon: <Piano className="w-4 h-4" />,
+    label: "88 Weighted Keys",
+    description: "Full-size weighted keys provide authentic piano feel and responsive touch dynamics.",
+    position: { left: "50%", top: "70%" },
+  },
+}
+
+export function FeaturesPianoSection() {
+  const [activeFeature, setActiveFeature] = useState<FeatureKey>(null)
+  const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      { threshold: 0.2 },
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  const handleFeatureInteraction = (key: FeatureKey) => {
+    setActiveFeature((prev) => (prev === key ? null : key))
+  }
+
+  return (
+    <section ref={sectionRef} className="py-4 md:py-8 lg:py-10 bg-white min-h-screen flex flex-col justify-center">
+      <div className="container mx-auto px-3 md:px-4">
+        <div
+          className={`text-center mb-2 md:mb-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
+          <p className="text-neutral-500 text-[10px] md:text-xs uppercase tracking-wider mb-1 md:mb-2">Our Features</p>
+          <h2 className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-semibold text-neutral-900 leading-tight">
+            Everything You Need, Built In
+          </h2>
+          <p className="text-neutral-400 text-[10px] md:text-xs mt-1 md:mt-2">
+            <span className="hidden md:inline">Hover over</span>
+            <span className="md:hidden">Tap</span> a feature to learn more
+          </p>
+        </div>
+
+        <div
+          className={`relative max-w-3xl mx-auto transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
+          <div className="grid grid-cols-3 gap-1 sm:gap-1.5 md:flex md:justify-center md:gap-2 mb-2 md:mb-4">
+            {(Object.keys(featureData) as FeatureKey[]).filter(Boolean).map((key) => {
+              const feature = featureData[key!]
+              return (
+                <button
+                  key={key}
+                  className={`flex items-center justify-center gap-0.5 md:gap-1 rounded-full px-1.5 py-1 md:px-3 md:py-1.5 transition-shadow duration-300 ease-out transform-gpu will-change-[box-shadow] ${
+                    activeFeature === key
+                      ? "dp-gradient text-white shadow-[0_0_20px_rgba(56,189,248,0.5)]"
+                      : "bg-white text-neutral-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_20px_rgba(56,189,248,0.35)] hover:text-sky-500"
+                  } border border-neutral-200/60`}
+                  onClick={() => handleFeatureInteraction(key)}
+                  onMouseEnter={() => setActiveFeature(key)}
+                  onMouseLeave={() => setActiveFeature(null)}
+                >
+                  <span className="flex-shrink-0 [&>svg]:w-2.5 [&>svg]:h-2.5 md:[&>svg]:w-3.5 md:[&>svg]:h-3.5">
+                    {feature.icon}
+                  </span>
+                  <span className="text-[8px] sm:text-[9px] md:text-[11px] font-medium whitespace-nowrap">
+                    {feature.label}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+
+          <div className="relative rounded-md md:rounded-xl overflow-hidden bg-neutral-100">
+            <img
+              src="/images/main-20product-20grey-20background.jpeg"
+              alt="DreamPlay One Features"
+              className="w-full h-auto"
+            />
+
+            {activeFeature && (
+              <svg
+                className="absolute inset-0 w-full h-full pointer-events-none"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+              >
+                <line
+                  x1="50"
+                  y1="0"
+                  x2={Number.parseFloat(featureData[activeFeature].position.left)}
+                  y2={Number.parseFloat(featureData[activeFeature].position.top)}
+                  stroke="#171717"
+                  strokeWidth="0.15"
+                  className="animate-in fade-in duration-200"
+                />
+                <circle
+                  cx={Number.parseFloat(featureData[activeFeature].position.left)}
+                  cy={Number.parseFloat(featureData[activeFeature].position.top)}
+                  r="0.8"
+                  fill="#171717"
+                  className="animate-in fade-in duration-200"
+                />
+              </svg>
+            )}
+
+            {activeFeature && (
+              <div
+                className="absolute w-2 h-2 md:w-3 md:h-3 -translate-x-1/2 -translate-y-1/2 pointer-events-none animate-in fade-in zoom-in duration-200"
+                style={{
+                  left: featureData[activeFeature].position.left,
+                  top: featureData[activeFeature].position.top,
+                }}
+              >
+                <div className="absolute inset-0 bg-sky-400 rounded-full animate-ping opacity-50" />
+                <div className="absolute inset-0 dp-gradient rounded-full" />
+              </div>
+            )}
+          </div>
+
+          <div className="h-[60px] md:h-[70px] mt-1.5 md:mt-3 flex items-start justify-center">
+            {activeFeature ? (
+              <div className="text-center animate-in fade-in duration-200 max-w-md px-2 md:px-4">
+                <h3 className="font-medium dp-gradient-text text-[11px] md:text-sm mb-0.5">
+                  {featureData[activeFeature].label}
+                </h3>
+                <p className="text-neutral-500 text-[9px] md:text-xs leading-relaxed">
+                  {featureData[activeFeature].description}
+                </p>
+              </div>
+            ) : (
+              <p className="text-neutral-300 text-[9px] md:text-[11px]">Select a feature above</p>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
