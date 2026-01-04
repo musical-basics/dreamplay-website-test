@@ -181,7 +181,7 @@ export default function HowItWorksPage() {
                 }
                 /* Shared Container Styles */
                 .dp-container-box {
-                    background: #0a0a0a;
+                    background: #080a0f; /* darker midnight base */
                     border: 1px solid rgba(255, 255, 255, 0.1);
                     border-radius: 3rem;
                     width: 100%;
@@ -210,12 +210,21 @@ export default function HowItWorksPage() {
                 @media (min-width: 1024px) { .dp-solution-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
                 
                 .dp-card {
-                   background: #111111;
+                   background: rgba(30, 41, 59, 0.4); /* Slate-800/900 tint */
+                   backdrop-filter: blur(12px);
+                   -webkit-backdrop-filter: blur(12px);
                    border-radius: 2rem;
                    padding: 2.5rem;
                    border: 1px solid rgba(255, 255, 255, 0.08);
                    display: flex;
                    flex-direction: column;
+                   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+                }
+                .dp-card:hover {
+                   transform: translateY(-5px) scale(1.005);
+                   box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+                   border-color: rgba(255, 255, 255, 0.2);
+                   z-index: 10;
                 }
 
                 /* Outcome Section Styles */
@@ -223,7 +232,7 @@ export default function HowItWorksPage() {
                 .dp-outcome-title { font-size: 2.4rem; line-height: 1.1; font-weight: 700; color: #fff; margin-bottom: 1rem; }
                 .dp-outcome-subtitle { font-size: 1.1rem; color: #9ca3af; line-height: 1.7; }
                 .dp-card-outcome { 
-                   display: flex; flex-direction: column; gap: 1.5rem; background: #111111; border-radius: 2rem; padding: 2.5rem; border: 1px solid rgba(255, 255, 255, 0.08); transition: transform 0.4s ease;
+                   display: flex; flex-direction: column; gap: 1.5rem; background: #0c111c; border-radius: 2rem; padding: 2.5rem; border: 1px solid rgba(255, 255, 255, 0.08); transition: transform 0.4s ease;
                 }
                 .dp-card-outcome:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.15); }
 
@@ -234,8 +243,8 @@ export default function HowItWorksPage() {
 
                 /* Research Section Styles */
                 .dp-research-grid { display: grid; gap: 1.5rem; margin-top: 2rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-                .dp-pill-card { border-radius: 1.25rem; border: 1px solid rgba(255,255,255,0.1); background: #111111; padding: 1.5rem 1.75rem; display: flex; flex-direction: column; align-items: flex-start; transition: transform 0.2s; }
-                .dp-pill-card:hover { transform: translateY(-2px); background: #161616; border-color: rgba(255,255,255,0.2); }
+                .dp-pill-card { border-radius: 1.25rem; border: 1px solid rgba(255,255,255,0.1); background: #0c111c; padding: 1.5rem 1.75rem; display: flex; flex-direction: column; align-items: flex-start; transition: transform 0.2s; }
+                .dp-pill-card:hover { transform: translateY(-2px); background: #131b2b; border-color: rgba(255,255,255,0.2); }
                 .dp-cta { display: inline-flex; align-items: center; gap: .4rem; border-radius: 999px; background: #fff; color: #000; padding: .45rem 1rem; font-size: 0.8rem; font-weight: 700; text-decoration: none; margin-top: auto; transition: background 0.2s; }
                 .dp-cta:hover { background: #e5e5e5; }
             `}</style>
@@ -257,12 +266,27 @@ export default function HowItWorksPage() {
                                     <div className="dp-card-title" style={{ fontSize: '1.5rem', fontWeight: 600 }}>Find Your Zone</div>
                                 </div>
                                 <div className="dp-slider-wrapper" style={{ marginBottom: '2.5rem', position: 'relative' }}>
-                                    <div className="dp-field-label-row" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                                    <div className="dp-field-label-row" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '0.75rem', position: 'relative', zIndex: 2 }}>
                                         <div className="dp-field-label" style={{ fontSize: '0.8rem', fontWeight: 500, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.14em' }}>Your hand span (thumb to pinky)</div>
                                         <div className="dp-handspan-value" style={{ fontSize: '1.9rem', fontWeight: 700, color: calcResult.activeColor }}>
                                             {calcResult.realVal.toFixed(1)} in <span style={{ fontSize: '1rem', fontWeight: 400, color: '#9ca3af' }}>/ {calcResult.cm.toFixed(1)} cm</span>
                                         </div>
                                     </div>
+
+                                    {/* Slider Glow Effect */}
+                                    <div style={{
+                                        position: 'absolute',
+                                        top: '50px', /* Adjust based on label height */
+                                        left: 0,
+                                        right: 0,
+                                        height: '20px',
+                                        background: 'linear-gradient(90deg, rgba(244, 63, 94, 0.4) 0%, rgba(245, 158, 11, 0.4) 50%, rgba(45, 212, 191, 0.4) 100%)',
+                                        filter: 'blur(20px)',
+                                        borderRadius: '999px',
+                                        pointerEvents: 'none',
+                                        zIndex: 0
+                                    }}></div>
+
                                     <input
                                         type="range"
                                         min="0" max="100" step="0.5"
@@ -271,7 +295,9 @@ export default function HowItWorksPage() {
                                         className="dp-slider"
                                         style={{
                                             width: '100%', height: '6px', borderRadius: '999px', appearance: 'none',
-                                            background: `linear-gradient(to right, ${calcResult.activeColor} 0%, ${calcResult.activeColor} ${sliderValue}%, rgba(255,255,255,0.1) ${sliderValue}%, rgba(255,255,255,0.1) 100%)`
+                                            position: 'relative', zIndex: 1,
+                                            background: `linear-gradient(to right, ${calcResult.activeColor} 0%, ${calcResult.activeColor} ${sliderValue}%, rgba(255,255,255,0.1) ${sliderValue}%, rgba(255,255,255,0.1) 100%)`,
+                                            cursor: 'pointer'
                                         }}
                                     />
                                     <div className="dp-slider-label-row" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#9ca3af', marginTop: '0.5rem' }}>
@@ -378,11 +404,22 @@ export default function HowItWorksPage() {
                                         <div className="dp-stat-label">of females</div>
                                         <p className="dp-stat-desc">Have hand spans smaller than the 8.5 inch minimum that standard keyboards expect.</p>
                                     </div>
-                                    <div className="dp-card" style={{ alignItems: 'center', background: '#111' }}>
+                                    <div className="dp-card" style={{ alignItems: 'center', background: '#0c111c' }}>
                                         <div className="dp-chart-shell" style={{ width: '200px', height: '200px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                             <div className="dp-donut" data-target-degree="313.2" style={{ width: '100%', height: '100%', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'conic-gradient(#333 0deg 360deg)' }}>
-                                                <div className="dp-donut-inner" style={{ width: '120px', height: '120px', background: '#111', borderRadius: '50%', position: 'absolute' }}></div>
+                                                <div className="dp-donut-inner" style={{ width: '120px', height: '120px', background: '#0c111c', borderRadius: '50%', position: 'absolute' }}></div>
                                                 <div className="dp-donut-value" style={{ position: 'absolute', zIndex: 2, fontSize: '2rem', fontWeight: 700, color: '#ff2d55' }}>87%</div>
+                                            </div>
+                                        </div>
+                                        {/* Legend */}
+                                        <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginTop: '1.5rem' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ff2d55' }}></span>
+                                                <span style={{ fontSize: '0.85rem', color: '#9ca3af' }}>Too small</span>
+                                            </div>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#34c759' }}></span>
+                                                <span style={{ fontSize: '0.85rem', color: '#9ca3af' }}>Comfortable</span>
                                             </div>
                                         </div>
                                     </div>
@@ -393,13 +430,40 @@ export default function HowItWorksPage() {
                                         <div className="dp-stat-label">of males</div>
                                         <p className="dp-stat-desc">Also fall below the comfortable reach threshold for a standard 6.5 inch keyboard.</p>
                                     </div>
-                                    <div className="dp-card" style={{ alignItems: 'center', background: '#111' }}>
+                                    <div className="dp-card" style={{ alignItems: 'center', background: '#0c111c' }}>
                                         <div className="dp-chart-shell" style={{ width: '200px', height: '200px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                             <div className="dp-donut dp-donut-male" data-target-degree="86.4" style={{ width: '100%', height: '100%', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'conic-gradient(#333 0deg 360deg)' }}>
-                                                <div className="dp-donut-inner" style={{ width: '120px', height: '120px', background: '#111', borderRadius: '50%', position: 'absolute' }}></div>
+                                                <div className="dp-donut-inner" style={{ width: '120px', height: '120px', background: '#0c111c', borderRadius: '50%', position: 'absolute' }}></div>
                                                 <div className="dp-donut-value" style={{ position: 'absolute', zIndex: 2, fontSize: '2rem', fontWeight: 700, color: '#ff2d55' }}>24%</div>
                                             </div>
                                         </div>
+                                        {/* Legend */}
+                                        <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginTop: '1.5rem' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ff2d55' }}></span>
+                                                <span style={{ fontSize: '0.85rem', color: '#9ca3af' }}>Too small</span>
+                                            </div>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                                                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#34c759' }}></span>
+                                                <span style={{ fontSize: '0.85rem', color: '#9ca3af' }}>Comfortable</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Bottom Stats Row */}
+                            <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', marginTop: '4rem', paddingTop: '3rem' }}>
+                                <div style={{ display: 'grid', gap: '3rem', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
+                                    <div>
+                                        <div style={{ fontSize: '4rem', fontWeight: 700, lineHeight: 1, marginBottom: '0.5rem' }}>8.5"</div>
+                                        <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.75rem' }}>The Threshold</div>
+                                        <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6 }}>Minimum hand span needed to play a conventional 6.5 inch keyboard from Yamaha or Steinway with real comfort.</p>
+                                    </div>
+                                    <div>
+                                        <div style={{ fontSize: '4rem', fontWeight: 700, lineHeight: 1, marginBottom: '0.5rem' }}>25 to 30%</div>
+                                        <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.75rem' }}>Larger Reach Required</div>
+                                        <p style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6 }}>Hand span often needs to be at least one quarter larger than the octave just to reach 8ths, 9ths, and 10ths without strain.</p>
                                     </div>
                                 </div>
                             </div>
