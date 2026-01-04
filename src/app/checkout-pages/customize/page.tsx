@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
+import { SpecialOfferHeader } from "@/components/special-offer/header";
 import Navbar from "@/components/Navbar";
 
 // Types
@@ -285,10 +286,10 @@ export default function CustomizePage() {
             {/* --- FIXED HEADERS WRAPPER --- */}
             <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
                 {/* Main Navbar */}
-                <Navbar />
+                <SpecialOfferHeader />
 
                 {/* Steps Sub-Navbar */}
-                <header id="sticky-nav" className="w-full transition-all duration-300 transform translate-y-0">
+                <header id="sticky-nav" className="w-full transition-all duration-300 transform translate-y-0 mt-14 md:mt-16">
                     <div className="mx-auto max-w-7xl px-4 md:px-6">
                         <div className="flex h-12 md:h-14 items-center justify-between backdrop-blur-md bg-[#0a0a0f]/90 border-b border-white/5 rounded-b-2xl px-6 shadow-lg">
                             {/* Hidden Logo since it's in Main Navbar */}
@@ -333,7 +334,6 @@ export default function CustomizePage() {
                 </header>
             </div>
 
-            {/* --- SECTIONS --- */}
 
             {/* SECTION 0: HERO */}
             <section ref={el => { if (sectionRefs.current) sectionRefs.current[0] = el }} id="section-0" className="journey-section relative flex h-screen items-center justify-center overflow-hidden bg-[#0a0a0f]">
