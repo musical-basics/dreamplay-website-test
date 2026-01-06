@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { PostHogProvider } from "./providers/PostHogProvider";
+import NewsletterPopup from "@/components/NewsletterPopup";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -44,6 +45,7 @@ export default function RootLayout({
         <PostHogProvider>
           {children}
         </PostHogProvider>
+        <NewsletterPopup />
 
         {/* Scripts */}
         <Script
