@@ -286,7 +286,7 @@ export default function CustomizePage() {
             {/* --- FIXED HEADERS WRAPPER --- */}
             <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
                 {/* Main Navbar */}
-                <SpecialOfferHeader />
+                <SpecialOfferHeader forceOpaque={true} />
 
                 {/* Steps Sub-Navbar */}
                 <header id="sticky-nav" className="w-full transition-all duration-300 transform translate-y-0 mt-14 md:mt-16">

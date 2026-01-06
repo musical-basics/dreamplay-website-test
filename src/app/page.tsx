@@ -4,6 +4,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useABAnalytics } from "@/hooks/use-ab-analytics";
+import WebflowBackgroundVideo from "@/components/WebflowBackgroundVideo";
 
 export default function Home() {
   const { trackClick } = useABAnalytics("home_control");
@@ -140,36 +141,12 @@ export default function Home() {
           </div>
         </section>
         <section className="section-video">
-          <div data-poster-url="/videos/Clip-4-poster-00001.jpg" data-video-urls="/videos/Clip-4-transcode.mp4,/videos/Clip-4-transcode.webm" data-autoplay="true" data-loop="true" data-wf-ignore="true" className="background-video w-background-video w-background-video-atom">
-            <video id="4e62a9f2-c6eb-7386-5791-e43c1255e09b-video" autoPlay loop muted playsInline style={{ backgroundImage: 'url("/videos/Clip-4-poster-00001.jpg")' }} data-wf-ignore="true" data-object-fit="cover">
-              <source src="/videos/Clip-4-transcode.mp4" data-wf-ignore="true" />
-              <source src="/videos/Clip-4-transcode.webm" data-wf-ignore="true" />
-            </video>
-            <noscript>
-              <style>{`
-                [data-wf-bgvideo-fallback-img] {
-                  display: none;
-                }
-                @media (prefers-reduced-motion: reduce) {
-                  [data-wf-bgvideo-fallback-img] {
-                    position: absolute;
-                    z-index: -100;
-                    display: inline-block;
-                    height: 100%;
-                    width: 100%;
-                    object-fit: cover;
-                  }
-                }
-              `}</style>
-              <img data-wf-bgvideo-fallback-img="true" src="/videos/Clip-4-poster-00001.jpg" alt="" />
-            </noscript>
-            <div aria-live="polite">
-              <button type="button" data-w-bg-video-control="true" aria-controls="4e62a9f2-c6eb-7386-5791-e43c1255e09b-video" className="w-backgroundvideo-backgroundvideoplaypausebutton play-pause-btn w-background-video--control">
-                <span className="play-state"><img src="https://uploads-ssl.webflow.com/6022af993a6b2191db3ed10c/628299f8aa233b83918e24fd_Pause.svg" loading="lazy" alt="Pause video" className="play-sate-image" /></span>
-                <span hidden className="pause-state"><img loading="lazy" alt="Play video" src="https://uploads-ssl.webflow.com/6022af993a6b2191db3ed10c/628298b20ae0236682d4b87f_Play-24.svg" className="pause-state-image" /></span>
-              </button>
-            </div>
-          </div>
+          <WebflowBackgroundVideo
+            posterUrl="/videos/Clip-4-poster-00001.jpg"
+            videoMp4="/videos/Clip-4-transcode.mp4"
+            videoWebm="/videos/Clip-4-transcode.webm"
+            id="4e62a9f2-c6eb-7386-5791-e43c1255e09b-video"
+          />
         </section>
         <section id="Sizing" className="section-product">
           <div className="section-padding">
@@ -317,12 +294,12 @@ export default function Home() {
         </section>
 
         <section className="section-video">
-          <div data-poster-url="/videos/Clip-6_poster.0000000.jpg" data-video-urls="/videos/Clip-6_mp4.mp4,/videos/Clip-6_webm.webm" data-autoplay="true" data-loop="true" data-wf-ignore="true" className="background-video w-background-video w-background-video-atom">
-            <video id="b54bc504-e392-a5be-2c03-818d3fff894c-video" autoPlay loop muted playsInline style={{ backgroundImage: 'url("/videos/Clip-6_poster.0000000.jpg")' }} data-wf-ignore="true" data-object-fit="cover">
-              <source src="/videos/Clip-6_mp4.mp4" data-wf-ignore="true" />
-              <source src="/videos/Clip-6_webm.webm" data-wf-ignore="true" />
-            </video>
-          </div>
+          <WebflowBackgroundVideo
+            posterUrl="/videos/Clip-6_poster.0000000.jpg"
+            videoMp4="/videos/Clip-6_mp4.mp4"
+            videoWebm="/videos/Clip-6_webm.webm"
+            id="b54bc504-e392-a5be-2c03-818d3fff894c-video"
+          />
         </section>
 
         <section id="details" className="section-product">

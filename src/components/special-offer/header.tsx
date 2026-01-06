@@ -6,7 +6,11 @@ import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import { useABAnalytics } from "@/hooks/use-ab-analytics"
 
-export function SpecialOfferHeader() {
+interface SpecialOfferHeaderProps {
+    forceOpaque?: boolean;
+}
+
+export function SpecialOfferHeader({ forceOpaque = false }: SpecialOfferHeaderProps) {
     const { trackClick } = useABAnalytics("special_offer_variant", { trackTime: false })
     const [scrolled, setScrolled] = useState(false)
 
@@ -18,9 +22,11 @@ export function SpecialOfferHeader() {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
+    const isScrolled = forceOpaque || scrolled;
+
     return (
         <header
-            className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent"
+            className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${isScrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent"
                 }`}
         >
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -29,7 +35,7 @@ export function SpecialOfferHeader() {
                     <img
                         src="/images/Logo.svg"
                         alt="DreamPlay Pianos"
-                        className={`h-8 transition-all ${scrolled ? "" : "brightness-0 invert"}`}
+                        className={`h-8 transition-all ${isScrolled ? "brightness-0" : "brightness-0 invert"}`}
                     />
                 </Link>
 
@@ -44,7 +50,7 @@ export function SpecialOfferHeader() {
                         <Link
                             key={item.label}
                             href={item.href}
-                            className={`text-sm transition-colors ${scrolled
+                            className={`text-sm transition-colors ${isScrolled
                                 ? i === 0
                                     ? "text-neutral-900 font-medium"
                                     : "text-neutral-700 hover:text-neutral-900"
@@ -63,19 +69,19 @@ export function SpecialOfferHeader() {
                     <Link
                         onClick={() => trackClick("header", "pre_order_now")}
                         href="/checkout-pages/customize"
-                        className={`hidden md:flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${scrolled
+                        className={`hidden md:flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${isScrolled
                             ? "bg-white border border-neutral-200 text-neutral-900 hover:border-neutral-400"
                             : "bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20"
                             }`}
                     >
                         Pre-Order Now
                         <span
-                            className={`w-6 h-6 rounded-full flex items-center justify-center ${scrolled ? "bg-black" : "bg-white"}`}
+                            className={`w-6 h-6 rounded-full flex items-center justify-center ${isScrolled ? "bg-black" : "bg-white"}`}
                         >
-                            <ArrowRight className={`w-3 h-3 ${scrolled ? "text-white" : "text-black"}`} />
+                            <ArrowRight className={`w-3 h-3 ${isScrolled ? "text-white" : "text-black"}`} />
                         </span>
                     </Link>
-                    <Button variant="ghost" size="icon" className={`md:hidden ${scrolled ? "text-neutral-900" : "text-white"}`}>
+                    <Button variant="ghost" size="icon" className={`md:hidden ${isScrolled ? "text-neutral-900" : "text-white"}`}>
                         <Menu className="w-5 h-5" />
                     </Button>
                 </div>

@@ -44,3 +44,28 @@ a {
     color-scheme: dark;
   }
 }
+
+/* Video section styles */
+.section-video {
+  position: relative;
+  width: 100%;
+  height: 56.25vw;
+  /* 16:9 aspect ratio */
+  max-height: 80vh;
+  min-height: 300px;
+  overflow: hidden;
+}
+
+.section-video .background-video,
+.section-video .w-background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.section-video .w-background-video>video {
+  z-index: 1;
+  /* Override the z-index: -100 from webflow.css */
+}
