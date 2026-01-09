@@ -102,7 +102,7 @@ export default function NewsletterPopup() {
                                 {isLoading ? "Unlocking..." : "Unlock My 10% Discount"}
                             </button>
                             <p className="text-xs text-center text-gray-400">
-                                We respect your privacy. Unsubscribe at any time. (v1.1)
+                                We respect your privacy. Unsubscribe at any time.
                             </p>
                         </form>
                     </>

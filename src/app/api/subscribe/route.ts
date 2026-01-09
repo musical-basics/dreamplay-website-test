@@ -18,24 +18,9 @@ export async function POST(request: Request) {
         // Initialize Supabase Admin Client
         // We use the SERVICE_ROLE_KEY to bypass Row Level Security (RLS) so we can insert anyone
         // Initialized inside handler to avoid build-time errors
-        const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-        // DEBUG: Verify authentication role
-        try {
-            if (supabaseKey) {
-                const payload = JSON.parse(Buffer.from(supabaseKey.split('.')[1], 'base64').toString());
-                console.log('🔑 Supabase Key Role:', payload.role); // Should be 'service_role'
-                if (payload.role !== 'service_role') {
-                    console.warn('⚠️ WARNING: You are not using the service_role key. RLS may block this request.');
-                }
-            }
-        } catch (e) {
-            console.error('Error checking key role:', e);
-        }
-
         const supabase = createClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL,
-            supabaseKey
+            process.env.SUPABASE_SERVICE_ROLE_KEY
         );
 
         // 1. Check if customer already exists to avoid overwriting their ID
@@ -75,21 +60,7 @@ export async function POST(request: Request) {
 
         if (error) {
             console.error('Supabase error:', error);
-            // Determine if we are using the correct key
-            const isServiceRole = supabaseKey?.includes(process.env.SUPABASE_SERVICE_ROLE_KEY || 'MISSING'); // Checking if var matches
-
-            let debugMessage = '';
-            try {
-                if (supabaseKey) {
-                    const payload = JSON.parse(Buffer.from(supabaseKey.split('.')[1], 'base64').toString());
-                    debugMessage = ` (Key Role: ${payload.role})`;
-                }
-            } catch (e) { }
-
-            return NextResponse.json({
-                error: error.message + debugMessage,
-                details: error
-            }, { status: 500 });
+            return NextResponse.json({ error: error.message }, { status: 500 });
         }
 
         return NextResponse.json({ success: true });
