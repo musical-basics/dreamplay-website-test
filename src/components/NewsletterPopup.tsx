@@ -39,14 +39,17 @@ export default function NewsletterPopup() {
                 body: JSON.stringify({ email }),
             });
 
-            if (!response.ok) throw new Error("Failed to subscribe");
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.error || "Failed to subscribe");
+            }
 
             // On success, show the code
             setIsSubmitted(true);
             localStorage.setItem("dreamplay_popup_seen", "true");
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert("Something went wrong. Please try again.");
+            alert(error.message || "Something went wrong. Please try again.");
         } finally {
             setIsLoading(false);
         }
@@ -99,7 +102,7 @@ export default function NewsletterPopup() {
                                 {isLoading ? "Unlocking..." : "Unlock My 10% Discount"}
                             </button>
                             <p className="text-xs text-center text-gray-400">
-                                We respect your privacy. Unsubscribe at any time.
+                                We respect your privacy. Unsubscribe at any time. (v1.1)
                             </p>
                         </form>
                     </>
