@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
+import { Resend } from 'resend';
 
 export async function POST(request: Request) {
     try {
@@ -16,12 +17,19 @@ export async function POST(request: Request) {
         }
 
         // Initialize Supabase Admin Client
-        // We use the SERVICE_ROLE_KEY to bypass Row Level Security (RLS) so we can insert anyone
-        // Initialized inside handler to avoid build-time errors
         const supabase = createClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL,
             process.env.SUPABASE_SERVICE_ROLE_KEY
         );
+
+        // Initialize Resend
+        const resendApiKey = process.env.RESEND_API_KEY;
+        let resend: Resend | null = null;
+        if (resendApiKey) {
+            resend = new Resend(resendApiKey);
+        } else {
+            console.warn('RESEND_API_KEY is missing. Emails will not be sent.');
+        }
 
         // 1. Check if customer already exists to avoid overwriting their ID
         const { data: existingUser } = await supabase
@@ -49,7 +57,7 @@ export async function POST(request: Request) {
             const { error: insertError } = await supabase
                 .from('Customer')
                 .insert({
-                    id: uuidv4(), // Generating ID manually as per your schema requirements
+                    id: uuidv4(),
                     email: email,
                     name: '', // Optional based on your schema
                     tags: ['newsletter-10-off'],
@@ -61,6 +69,37 @@ export async function POST(request: Request) {
         if (error) {
             console.error('Supabase error:', error);
             return NextResponse.json({ error: error.message }, { status: 500 });
+        }
+
+        // 3. Send Welcome Email via Resend
+        if (resend) {
+            try {
+                await resend.emails.send({
+                    from: 'DreamPlay <onboarding@resend.dev>', // Update this domain once you verify your own
+                    to: email,
+                    subject: 'Welcome to DreamPlay! Here is your discount code',
+                    html: `
+                        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+                            <h1>Welcome to the DreamPlay mailing list!</h1>
+                            <p>We look forward to sharing future news about upcoming sales and new products with you.</p>
+                            
+                            <div style="background-color: #f4f4f4; padding: 20px; border-radius: 8px; text-align: center; margin: 30px 0;">
+                                <p style="margin-bottom: 10px; font-weight: bold;">Here is your discount code:</p>
+                                <div style="font-size: 24px; font-family: monospace; font-weight: bold; color: #2563eb; letter-spacing: 2px;">WELCOME10</div>
+                            </div>
+
+                            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;" />
+                            
+                            <p style="font-size: 12px; color: #666;">
+                                If this wasn't you who signed up, you can ignore this email or unsubscribe below.
+                            </p>
+                        </div>
+                    `,
+                });
+            } catch (emailError) {
+                // Log but don't fail the request since database update worked
+                console.error('Failed to send email:', emailError);
+            }
         }
 
         return NextResponse.json({ success: true });

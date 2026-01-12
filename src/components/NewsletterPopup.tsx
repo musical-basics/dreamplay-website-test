@@ -108,18 +108,20 @@ export default function NewsletterPopup() {
                     </>
                 ) : (
                     <div className="text-center py-8">
-                        <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                            Welcome Aboard!
-                        </h3>
-                        <p className="text-gray-600 mb-6">Here is your discount code:</p>
-                        <div className="bg-gray-100 p-4 rounded-lg font-mono text-xl font-bold tracking-wider text-blue-600 select-all border border-dashed border-gray-300">
-                            WELCOME10
+                        <div className="mx-auto bg-green-50 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                            <Mail className="text-green-600" size={32} />
                         </div>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                            Check Your Inbox!
+                        </h3>
+                        <p className="text-gray-600 mb-8 max-w-xs mx-auto">
+                            We've sent the 10% discount code to your email address.
+                        </p>
                         <button
                             onClick={handleClose}
-                            className="mt-6 text-sm text-gray-500 hover:text-gray-900 underline"
+                            className="bg-black text-white font-semibold py-3 px-8 rounded-lg hover:bg-gray-800 transition-colors"
                         >
-                            Close and continue shopping
+                            Close
                         </button>
                     </div>
                 )}
