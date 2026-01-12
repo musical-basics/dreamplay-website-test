@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import ProductSelectionForm from "@/components/checkout/ProductSelectionForm";
+import TestimonialsSection from "@/components/checkout/TestimonialsSection";
 
 export const metadata = {
     title: "Join the DreamPlay Founder's Circle | DreamPlay",
@@ -97,6 +98,9 @@ export default function BuyProductPage() {
                         </div>
                     </div>
                 </section>
+
+                {/* --- Testimonials / Why We're Doing This --- */}
+                <TestimonialsSection />
 
                 {/* --- Join Waitlist Section --- */}
                 <section className="py-20 bg-neutral-50/50" id="rsv">
