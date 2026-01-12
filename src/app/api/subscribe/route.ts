@@ -24,6 +24,8 @@ export async function POST(request: Request) {
 
         // Initialize Resend
         const resendApiKey = process.env.RESEND_API_KEY;
+        console.log("DEBUG: Checking Resend API Key:", resendApiKey ? "Present (" + resendApiKey.slice(0, 4) + "...)" : "Missing");
+
         let resend: Resend | null = null;
         if (resendApiKey) {
             resend = new Resend(resendApiKey);
@@ -73,8 +75,9 @@ export async function POST(request: Request) {
 
         // 3. Send Welcome Email via Resend
         if (resend) {
+            console.log("DEBUG: Attempting to send email to:", email);
             try {
-                await resend.emails.send({
+                const emailResponse = await resend.emails.send({
                     from: 'DreamPlay <onboarding@resend.dev>', // Update this domain once you verify your own
                     to: email,
                     subject: 'Welcome to DreamPlay! Here is your discount code',
@@ -96,10 +99,13 @@ export async function POST(request: Request) {
                         </div>
                     `,
                 });
+                console.log("DEBUG: Email sent successfully. Response:", emailResponse);
             } catch (emailError) {
                 // Log but don't fail the request since database update worked
-                console.error('Failed to send email:', emailError);
+                console.error('DEBUG: Failed to send email. Error:', emailError);
             }
+        } else {
+            console.log("DEBUG: Resend client not initialized, skipping email.");
         }
 
         return NextResponse.json({ success: true });
