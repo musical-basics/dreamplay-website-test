@@ -67,14 +67,14 @@ export function SpecialOfferHeader({ forceOpaque = false }: SpecialOfferHeaderPr
                 {/* CTA Button */}
                 <div className="flex items-center gap-4">
                     <Link
-                        onClick={() => trackClick("header", "pre_order_now")}
-                        href="/checkout-pages/customize"
+                        onClick={() => trackClick("header", "join_waitlist")}
+                        href="/checkout-pages/buy-product"
                         className={`hidden md:flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${isScrolled
                             ? "bg-white border border-neutral-200 text-neutral-900 hover:border-neutral-400"
                             : "bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20"
                             }`}
                     >
-                        Pre-Order Now
+                        Join The Waitlist
                         <span
                             className={`w-6 h-6 rounded-full flex items-center justify-center ${isScrolled ? "bg-black" : "bg-white"}`}
                         >

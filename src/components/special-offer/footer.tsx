@@ -28,10 +28,10 @@ export function SpecialOfferFooter() {
                     </nav>
 
                     <Link
-                        href="/checkout-pages/customize"
+                        href="/checkout-pages/buy-product"
                         className="flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors"
                     >
-                        Pre-Order Now
+                        Join The Waitlist
                         <span className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
                             <ArrowRight className="w-3 h-3 text-black" />
                         </span>

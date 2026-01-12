@@ -62,14 +62,14 @@ export function LessonsSection() {
                         className={`flex flex-col justify-center items-center text-center transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"}`}
                     >
                         <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold text-neutral-900 mb-3 md:mb-4 leading-tight">
-                            Stop fighting a keyboard
+                            Standard Piano Keys
                             <br className="hidden md:block" />
                             <span className="md:hidden"> </span>
-                            that wasn&apos;t built for you.
+                            Are Too Wide
                         </h2>
 
                         <p className="text-neutral-600 text-sm md:text-base mb-4 md:mb-6 leading-relaxed">
-                            The DreamPlay One changes that. A professional-grade digital piano designed for every hand size.
+                            Stop over-stretching. DreamPlay One offers narrower keys designed for your handspan.
                         </p>
 
                         <ul className="grid grid-cols-2 gap-x-4 gap-y-2 md:gap-x-6 md:gap-y-3 max-w-md mx-auto">
@@ -89,33 +89,17 @@ export function LessonsSection() {
                         </ul>
 
                         <Link
-                            href="/why-narrow"
-                            className={`mt-6 md:mt-8 inline-flex items-center gap-2.5 px-5 py-2.5 md:px-6 md:py-3 rounded-full border border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-slate-100 hover:text-slate-700 text-xs md:text-sm font-medium transition-all duration-300 shadow-sm hover:shadow ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                            href="/checkout-pages/buy-product"
+                            className={`mt-6 md:mt-8 inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-neutral-900 text-white text-sm font-medium transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                                 }`}
                             style={{ transitionDelay: "800ms" }}
                         >
-                            <svg
-                                className="w-3.5 h-3.5 md:w-4 md:h-4 text-slate-500"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={1.5}
-                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                                />
-                            </svg>
-                            Read Published Research Studies
-                            <svg
-                                className="w-3.5 h-3.5 md:w-4 md:h-4 opacity-40"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
+                            Join The Waitlist
+                            <span className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+                                <svg className="w-3 h-3 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </span>
                         </Link>
                     </div>
                 </div>

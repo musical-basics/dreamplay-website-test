@@ -32,39 +32,25 @@ export function HeroSection() {
                         className={`text-5xl md:text-6xl lg:text-7xl font-semibold text-white leading-[1.1] tracking-tight mb-6 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                             }`}
                     >
-                        Finally, A Piano
+                        Introducing:
                         <br />
-                        That Fits
+                        DreamPlay One
                     </h1>
 
                     <p
                         className={`text-neutral-300 text-lg mb-8 max-w-lg transition-all duration-1000 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                             }`}
                     >
-                        Introducing the DreamPlay One. The world's first professional keyboard built to DS5.5 and DS6.0 standards
-                        for smaller hands.
+                        The keyboard that feels like a dream to play.
                     </p>
 
-                    {/* Pricing section */}
-                    <div
-                        className={`mb-8 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                            }`}
-                    >
-                        <p className="text-neutral-400 text-sm mb-2">Pre-order today and lock in the founder's price</p>
-                        <div className="flex items-baseline gap-3">
-                            <span className="text-neutral-500 text-2xl line-through">$599</span>
-                            <span className="text-white text-5xl font-semibold">$499</span>
-                            <span className="text-white text-sm font-medium">Save $100</span>
-                        </div>
-                    </div>
-
                     <Link
-                        onClick={() => trackClick("hero_section", "pre_order_now")}
-                        href="/checkout-pages/customize"
-                        className={`inline-flex items-center gap-3 bg-white text-neutral-900 rounded-full px-8 py-4 text-base font-medium hover:bg-neutral-100 transition-all duration-1000 delay-500 hover:scale-105 hover:shadow-xl ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                        onClick={() => trackClick("hero_section", "join_waitlist")}
+                        href="/checkout-pages/buy-product"
+                        className={`inline-flex items-center gap-3 bg-white text-neutral-900 rounded-full px-8 py-4 text-base font-medium hover:bg-neutral-100 transition-all duration-1000 delay-300 hover:scale-105 hover:shadow-xl ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                             }`}
                     >
-                        Pre-Order Now
+                        Join The Waitlist
                         <span className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
                             <ArrowRight className="w-4 h-4 text-white" />
                         </span>

@@ -90,11 +90,11 @@ export default function Navbar() {
                         <div>
                             <Link
                                 data-wf--button-primary--variant="secondary"
-                                href="/checkout-pages/customize"
+                                href="/checkout-pages/buy-product"
                                 className="button w-variant-1ae2a9c7-3071-e35e-921a-e41dc6d6ad44 w-inline-block"
                             >
                                 <div className="button_text">
-                                    <div>Reserve Now</div>
+                                    <div>Join The Waitlist</div>
                                 </div>
                                 <div className="button_icon">
                                     <svg
@@ -124,11 +124,11 @@ export default function Navbar() {
                     <div className="navigation5_button-wrapper">
                         <Link
                             data-wf--button-primary--variant="base"
-                            href="/checkout-pages/customize"
+                            href="/checkout-pages/buy-product"
                             className="button w-inline-block"
                         >
                             <div className="button_text">
-                                <div>Pre-Order Now</div>
+                                <div>Join The Waitlist</div>
                             </div>
                             <div className="button_icon">
                                 <svg
