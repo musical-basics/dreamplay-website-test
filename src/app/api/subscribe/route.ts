@@ -78,7 +78,7 @@ export async function POST(request: Request) {
             console.log("DEBUG: Attempting to send email to:", email);
             try {
                 const emailResponse = await resend.emails.send({
-                    from: 'DreamPlay <onboarding@resend.dev>', // Update this domain once you verify your own
+                    from: 'DreamPlay <noreply@musicalbasics.com>', // User must verify 'musicalbasics.com' in Resend
                     to: email,
                     subject: 'Welcome to DreamPlay! Here is your discount code',
                     html: `
