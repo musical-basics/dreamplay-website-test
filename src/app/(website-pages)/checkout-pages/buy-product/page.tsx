@@ -16,22 +16,20 @@ export default function BuyProductPage() {
 
             <main>
                 {/* --- Hero Section --- */}
-                <section className="pt-32 pb-16 md:pt-40 md:pb-24 lg:pt-48">
+                {/* --- Hero Section --- */}
+                <section className="pt-32 pb-8 md:pt-40 md:pb-16 lg:pt-48">
                     <div className="container mx-auto px-6">
                         <div className="max-w-4xl mx-auto text-center">
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 animate-fade-in-up">
-                                Join the DreamPlay <br className="hidden md:block" />Founder&apos;s Circle
+                            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight mb-8 animate-fade-in-up">
+                                Be The First In Line
                             </h1>
-                            <p className="text-lg md:text-xl text-neutral-600 mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-100">
-                                Pay a fully refundable $1 deposit to secure guaranteed access to the lowest Super Early Bird price and receive your exclusive rewards.
-                            </p>
 
-                            <div className="relative w-full max-w-3xl mx-auto aspect-[16/9] rounded-2xl overflow-hidden shadow-2xl animate-fade-in-up delay-200">
+                            <div className="relative w-full max-w-4xl mx-auto aspect-[16/9] md:aspect-[2/1] animate-fade-in-up delay-200">
                                 <Image
-                                    src="/images/Frame-78.png"
-                                    alt="DreamPlay Founder's Circle"
+                                    src="/images/DS6.0-Black-1.png"
+                                    alt="DreamPlay One"
                                     fill
-                                    className="object-cover"
+                                    className="object-contain transform scale-125"
                                     priority
                                 />
                             </div>
@@ -40,43 +38,41 @@ export default function BuyProductPage() {
                 </section>
 
                 {/* --- Benefits Section --- */}
-                <section className="py-20 bg-neutral-50 border-y border-neutral-100">
+                <section className="py-20 bg-white">
                     <div className="container mx-auto px-6">
                         <div className="max-w-5xl mx-auto">
-                            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-                                Your $1 Founder’s Circle deposit unlocks
+                            <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 tracking-tight">
+                                Founder&apos;s Circle Perks
                             </h2>
 
-                            <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+                            <div className="grid md:grid-cols-2 gap-x-12 gap-y-12">
                                 {/* Benefit 1 */}
-                                <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-sm border border-neutral-100 transition-all hover:shadow-md">
-                                    <div className="w-12 h-12 flex-shrink-0 relative">
+                                <div className="flex items-start gap-4">
+                                    <div className="w-8 h-8 flex-shrink-0 relative mt-1">
                                         <Image src="/images/Frame-85.svg" alt="Price Icon" fill className="object-contain" />
                                     </div>
                                     <div>
                                         <p className="font-medium text-lg text-neutral-900 leading-snug">
-                                            Guaranteed access to the limited Super Early Bird Price
-                                            <span className="text-neutral-500 font-normal block mt-1 text-base">(up to $50 cheaper than any other price available)</span>
+                                            Discounts not available anywhere else (including up to $100 off the main price!)
                                         </p>
                                     </div>
                                 </div>
 
                                 {/* Benefit 2 */}
-                                <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-sm border border-neutral-100 transition-all hover:shadow-md">
-                                    <div className="w-12 h-12 flex-shrink-0 relative">
+                                <div className="flex items-start gap-4">
+                                    <div className="w-8 h-8 flex-shrink-0 relative mt-1">
                                         <Image src="/images/Vector-6.svg" alt="Journal Icon" fill className="object-contain" />
                                     </div>
                                     <div>
                                         <p className="font-medium text-lg text-neutral-900 leading-snug">
-                                            The Founder&apos;s Journal
-                                            <span className="text-neutral-500 font-normal block mt-1 text-base">(Insider Access to our development journey)</span>
+                                            The Founder&apos;s Journal (Insider Access)
                                         </p>
                                     </div>
                                 </div>
 
                                 {/* Benefit 3 */}
-                                <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-sm border border-neutral-100 transition-all hover:shadow-md">
-                                    <div className="w-12 h-12 flex-shrink-0 relative">
+                                <div className="flex items-start gap-4">
+                                    <div className="w-8 h-8 flex-shrink-0 relative mt-1">
                                         <Image src="/images/Frame-84.svg" alt="Music Icon" fill className="object-contain" />
                                     </div>
                                     <div>
@@ -87,14 +83,13 @@ export default function BuyProductPage() {
                                 </div>
 
                                 {/* Benefit 4 */}
-                                <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-sm border border-neutral-100 transition-all hover:shadow-md">
-                                    <div className="w-12 h-12 flex-shrink-0 relative">
+                                <div className="flex items-start gap-4">
+                                    <div className="w-8 h-8 flex-shrink-0 relative mt-1">
                                         <Image src="/images/Frame-82.svg" alt="Shipping Icon" fill className="object-contain" />
                                     </div>
                                     <div>
                                         <p className="font-medium text-lg text-neutral-900 leading-snug">
-                                            Priority Shipping
-                                            <span className="text-neutral-500 font-normal block mt-1 text-base">- you will receive your keyboard earlier than anybody else</span>
+                                            Priority Shipping - you will receive your keyboard earlier than anybody else
                                         </p>
                                     </div>
                                 </div>
@@ -103,31 +98,16 @@ export default function BuyProductPage() {
                     </div>
                 </section>
 
-                {/* --- Selection Form Section --- */}
-                <section className="py-20 md:py-32" id="rsv">
+                {/* --- Join Waitlist Section --- */}
+                <section className="py-20 bg-neutral-50/50" id="rsv">
                     <div className="container mx-auto px-6">
-                        <div className="max-w-4xl mx-auto text-center mb-16">
-                            <h2 className="text-3xl md:text-5xl font-bold mb-6">
-                                Help Us Plan Our <br />First Production Run
+                        <div className="max-w-4xl mx-auto">
+                            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-neutral-800">
+                                Join The Waitlist & Receive The Best Price
                             </h2>
-                            <p className="text-lg text-neutral-600 mb-4 max-w-2xl mx-auto">
-                                To make sure we build the keyboard you&apos;re most excited about, please let us know your current preference below.
-                            </p>
-                            <p className="text-sm font-semibold text-neutral-900 bg-neutral-100 inline-block px-4 py-2 rounded-full">
-                                Your choice is not final and you can change your selection after the campaign
-                            </p>
+
+                            <ProductSelectionForm />
                         </div>
-
-                        <ProductSelectionForm />
-                    </div>
-                </section>
-
-                {/* --- CTA / Reassurance --- */}
-                <section className="py-16 bg-neutral-900 text-white text-center">
-                    <div className="container mx-auto px-6">
-                        <p className="text-xl md:text-2xl font-medium">
-                            100% Fully Refundable Deposit. Cancel Anytime.
-                        </p>
                     </div>
                 </section>
             </main>

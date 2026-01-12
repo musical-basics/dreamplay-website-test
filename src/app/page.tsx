@@ -82,7 +82,7 @@ export default function Home() {
             <div className="container">
               <div className="hero-content-wrapper">
                 <div className="hero-title-block">
-                  <h1 data-w-id="a59ecacd-c7ce-77bd-8ce2-30263c56d483" className="h1-heading text-white">Introducing:&nbsp; Standard Piano Keys Are Too Wide</h1>
+                  <h1 data-w-id="a59ecacd-c7ce-77bd-8ce2-30263c56d483" className="h1-heading text-white">Standard Piano Keys Are Too Wide</h1>
                 </div>
                 <div data-w-id="ca99a284-ce87-a7a3-e5b5-f127871c8368" className="hero-lower-content">
                   <p className="p-large text-white-80"><strong>Stop over-stretching. The DreamPlay One offers narrower keys designed for your handspan.</strong></p>

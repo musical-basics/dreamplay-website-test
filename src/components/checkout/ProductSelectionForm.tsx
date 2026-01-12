@@ -88,16 +88,18 @@ export default function ProductSelectionForm({ className }: ProductSelectionForm
             {/* Country Field (Hidden/Read-only style in original, but let's make it visible as a disabled input or just hidden state if intended) 
             Original HTML used a text field: <input ... id="country-field"> 
         */}
-            <div className="mb-8">
+            {/* Country Field Hidden */}
+            <div className="hidden">
                 <input
                     type="text"
                     value={country}
                     readOnly
-                    className="w-full bg-transparent border-b border-neutral-300 py-2 text-neutral-500 focus:outline-none focus:border-neutral-900 transition-colors cursor-not-allowed"
-                    placeholder="Detecting Country..."
+                    className="w-full"
                 />
             </div>
 
+            {/* 
+            Hidden as requested
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
                 {pianoOptions.map((option) => (
                     <label key={option.id} className="relative cursor-pointer group">
@@ -109,7 +111,6 @@ export default function ProductSelectionForm({ className }: ProductSelectionForm
                             onChange={(e) => setSelectedPiano(e.target.value)}
                             className="peer sr-only"
                         />
-                        {/* Image Container with Border Logic */}
                         <div className="p-2 border-2 border-transparent rounded-xl transition-all duration-200 peer-checked:border-black peer-checked:bg-neutral-50 hover:bg-neutral-50">
                             <div className="relative aspect-[3/4] w-full mb-3">
                                 <Image
@@ -123,53 +124,51 @@ export default function ProductSelectionForm({ className }: ProductSelectionForm
                                 <span className="text-xs font-medium text-neutral-600 peer-checked:text-black">{option.label}</span>
                             </div>
                         </div>
-                        {/* Custom Radio Circle (Visual only, original didn't strictly have one but used CSS for border) */}
                     </label>
                 ))}
-            </div>
+            </div> 
+            */}
 
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-neutral-100 mb-8">
-                <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-transparent mb-8">
+                <div className="space-y-4 max-w-lg mx-auto">
                     <div>
-                        <label htmlFor="fullName" className="block text-sm font-medium text-neutral-700 mb-2">Full Name</label>
                         <input
                             type="text"
                             id="fullName"
                             required
                             value={fullName}
                             onChange={(e) => setFullName(e.target.value)}
-                            placeholder="Enter your full name"
-                            className="w-full px-4 py-3 rounded-lg bg-neutral-50 border-transparent focus:bg-white focus:border-neutral-900 focus:ring-0 transition-all placeholder:text-neutral-400"
+                            placeholder="Full name"
+                            className="w-full px-6 py-4 rounded-xl bg-neutral-100 border-transparent focus:bg-white focus:border-neutral-900 focus:ring-0 transition-all placeholder:text-neutral-500 font-medium"
                         />
                     </div>
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-2">Email Address</label>
                         <input
                             type="email"
                             id="email"
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Enter your email"
-                            className="w-full px-4 py-3 rounded-lg bg-neutral-50 border-transparent focus:bg-white focus:border-neutral-900 focus:ring-0 transition-all placeholder:text-neutral-400"
+                            placeholder="Email address"
+                            className="w-full px-6 py-4 rounded-xl bg-neutral-100 border-transparent focus:bg-white focus:border-neutral-900 focus:ring-0 transition-all placeholder:text-neutral-500 font-medium"
                         />
                     </div>
                 </div>
             </div>
 
-            <div className="flex justify-center">
+            <div className="flex flex-col items-center justify-center gap-6">
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="bg-neutral-900 text-white px-10 py-4 rounded-full text-lg font-medium hover:bg-neutral-800 hover:scale-105 active:scale-95 transition-all disabled:opacity-70 disabled:hover:scale-100 shadow-lg hover:shadow-xl"
+                    className="bg-black text-white px-12 py-4 rounded-full text-base font-semibold hover:bg-neutral-800 transition-all disabled:opacity-70 shadow-lg hover:shadow-xl w-full max-w-sm"
                 >
-                    {isSubmitting ? "Processing..." : "Reserve Now for $1"}
+                    {isSubmitting ? "Processing..." : "Join the Waitlist"}
                 </button>
-            </div>
 
-            <p className="text-center text-sm text-neutral-400 mt-6">
-                Secure checkout powered by Stripe
-            </p>
+                <p className="text-center text-base text-neutral-600 font-medium">
+                    100% Fully Refundable Deposit. Cancel Anytime.
+                </p>
+            </div>
         </form>
     );
 }
