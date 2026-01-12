@@ -99,8 +99,7 @@ export default function BuyProductPage() {
                     </div>
                 </section>
 
-                {/* --- Testimonials / Why We're Doing This --- */}
-                <TestimonialsSection />
+
 
                 {/* --- Join Waitlist Section --- */}
                 <section className="py-20 bg-neutral-50/50" id="rsv">
@@ -114,6 +113,9 @@ export default function BuyProductPage() {
                         </div>
                     </div>
                 </section>
+
+                {/* --- Testimonials / Why We're Doing This --- */}
+                <TestimonialsSection />
             </main>
 
             <Footer />
