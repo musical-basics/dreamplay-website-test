@@ -28,7 +28,7 @@ export function FlashSale() {
 
         <p className="text-sm text-white font-medium tracking-widest uppercase">Complete Premium Bundle</p>
 
-        <button className="mt-2 inline-flex items-center gap-2.5 px-10 py-4 border border-white/90 rounded-full text-white font-semibold text-lg hover:bg-white hover:text-neutral-950 transition-all duration-300 hover:scale-105">
+        <button className="mt-2 inline-flex items-center gap-2.5 px-10 py-4 border-2 border-solid border-white rounded-full text-white font-semibold text-lg hover:bg-white hover:text-neutral-950 transition-all duration-300 hover:scale-105">
           Claim Your Bundle Now
           <ArrowRight className="w-5 h-5" />
         </button>
