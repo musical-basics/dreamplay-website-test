@@ -91,11 +91,11 @@ export function CTASection() {
                     </div>
 
                     <Link
-                        onClick={() => trackClick("cta_section", "secure_my_discount")}
+                        onClick={() => trackClick("cta_section", "join_waitlist")}
                         href="/checkout-pages/customize"
                         className={`inline-flex items-center gap-3 bg-white text-neutral-900 rounded-full px-10 py-5 text-lg font-medium hover:bg-neutral-100 hover:scale-105 transition-all duration-500 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                     >
-                        Secure My Discount
+                        Join The Waitlist
                         <span className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
                             <ArrowRight className="w-4 h-4 text-white" />
                         </span>
@@ -105,12 +105,11 @@ export function CTASection() {
                     <div
                         className={`mt-8 mb-4 transition-all duration-700 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                     >
-                        <p className="text-white text-sm mb-3 font-medium">Lock in the $499 Founder&apos;s Price</p>
+                        <p className="text-white text-sm mb-3 font-medium">Lock in the $599 Founder&apos;s Price</p>
                         <div className="flex items-baseline justify-center gap-4">
-                            <span className="text-white/50 text-2xl line-through">$599</span>
-                            <span className="text-5xl md:text-6xl font-semibold">$499</span>
+                            <span className="text-white/50 text-2xl line-through">$899</span>
+                            <span className="text-5xl md:text-6xl font-semibold">$599</span>
                         </div>
-                        <p className="text-white/60 text-sm mt-2">The lowest price we will ever offer</p>
                     </div>
 
                     <p
