@@ -124,7 +124,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="product-btn-wrapper">
-                  <Link data-wf--button-primary--variant="base" data-w-id="3571025f-8656-4207-fe0a-7eddcbc423cd" href="/how-it-works" className="button w-inline-block">
+                  <Link data-wf--button-primary--variant="base" data-w-id="3571025f-8656-4207-fe0a-7eddcbc423cd" href="/how-it-works" className="button w-inline-block !border-2 !border-solid !border-black rounded-full">
                     <div className="button_text">
                       <div>Learn More About These Statistics</div>
                     </div>
@@ -237,7 +237,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="product-btn-wrapper">
-                    <a data-wf--button-primary--variant="base" data-w-id="3571025f-8656-4207-fe0a-7eddcbc423cd" href="https://www.dropbox.com/scl/fi/9b72rbi4ga0pjterxyoan/DreamPlay-Infographic.pdf?rlkey=mc08i1ahn5tp3thdd0qjnag2d&amp;st=olbh1t9w&amp;dl=1" target="_blank" className="button w-inline-block">
+                    <a data-wf--button-primary--variant="base" data-w-id="3571025f-8656-4207-fe0a-7eddcbc423cd" href="https://www.dropbox.com/scl/fi/9b72rbi4ga0pjterxyoan/DreamPlay-Infographic.pdf?rlkey=mc08i1ahn5tp3thdd0qjnag2d&amp;st=olbh1t9w&amp;dl=1" target="_blank" className="button w-inline-block !border-2 !border-solid !border-black rounded-full">
                       <div className="button_text">
                         <div>Download Our Hand-Measuring Guide</div>
                       </div>
