@@ -1,0 +1,12 @@
+export function FinalCta() {
+  return (
+    <section className="sticky top-0 z-[80] bg-white py-12 px-6 h-[200px] flex items-center">
+      <div className="max-w-md mx-auto w-full">
+        <button className="w-full bg-neutral-900 text-white py-4 px-8 rounded-full text-lg font-medium hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2">
+          Claim Your Bundle Now
+          <span className="text-xl">→</span>
+        </button>
+      </div>
+    </section>
+  )
+}

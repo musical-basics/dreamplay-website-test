@@ -20,6 +20,10 @@ module.exports = {
                     dim: "#2563eb33",
                     foreground: "#ffffff",
                 },
+                brand: {
+                    DEFAULT: "var(--brand)",
+                    foreground: "var(--brand-foreground)",
+                },
             },
             fontFamily: {
                 sans: ["Inter", "sans-serif"],
