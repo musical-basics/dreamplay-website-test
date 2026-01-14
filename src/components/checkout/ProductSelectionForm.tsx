@@ -35,19 +35,25 @@ export default function ProductSelectionForm({ className }: ProductSelectionForm
         e.preventDefault();
         setIsSubmitting(true);
 
-        // Simulate submission delay or analytics tracking here if needed
-        // For now, we just redirect to the Stripe URL as requested
+        try {
+            // Save to Waitlist via API
+            await fetch('/api/waitlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    fullName,
+                    email,
+                }),
+            });
+        } catch (error) {
+            console.error('Failed to save to waitlist:', error);
+            // We continue to redirect even if saving failed to not block the purchase flow
+        }
 
-        // Construct Stripe URL with prefilled email if possible, though the provided URL is a payment link
-        // Standard Stripe Payment Links don't always accept params easily without configuration, 
-        // but specific ones do. The user provided: https://buy.stripe.com/cNifZa4lh9k867Y1xtcMM00
-        // We will standard redirect.
-
-        // In a real app, we might want to save this data to Supabase/PostHog before redirecting.
-
-        setTimeout(() => {
-            window.location.href = "https://buy.stripe.com/cNifZa4lh9k867Y1xtcMM00?prefilled_email=" + encodeURIComponent(email);
-        }, 500);
+        // Redirect to Stripe
+        window.location.href = "https://buy.stripe.com/cNifZa4lh9k867Y1xtcMM00?prefilled_email=" + encodeURIComponent(email);
     };
 
     const pianoOptions = [
