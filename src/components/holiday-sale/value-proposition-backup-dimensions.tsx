@@ -34,114 +34,104 @@ export function ValueProposition() {
     <section className="sticky top-0 z-40 min-h-screen flex">
       {/* 
         PRECISE FLEX LAYOUT
-        Calculated from user-provided pixel dimensions:
-        Row 1 (270px height) / Total (570px) = 47.37%
-        Row 2 (300px height) / Total (570px) = 52.63%
-        
-        Col 1 (345px) / Total (1205px) = 28.63%
-        Col 2 (425px) / Total (1205px) = 35.27%
-        Col 3 (435px) / Total (1205px) = 36.10%
+        Calculated from image native dimensions to ensure 1:1 aspect ratio match.
+        Row 1 AR Sum: 5.168 -> 45.71% Height of Image Area
+        Row 2 AR Sum: 4.353 -> 54.29% Height of Image Area
       */}
 
       {/* LEFT SIDE: IMAGES (72% width approx to match reference balance) */}
       <div className="w-[72%] flex flex-col h-screen">
 
-        {/* ROW 1 (47.37% Height) */}
-        <div className="flex w-full" style={{ height: "47.37%" }}>
-          {/* Slot 1: Bench (345px width) */}
+        {/* ROW 1 (45.71% Height) */}
+        <div className="flex w-full" style={{ height: "45.71%" }}>
+          {/* Slot 1: Bench (AR 1.318 -> 25.5%) */}
           <div
-            className="h-full relative overflow-hidden flex items-center justify-center group"
-            style={{ width: "28.63%", backgroundColor: imageSlots.benchTop.bg }}
+            className="h-full relative overflow-hidden flex items-center justify-center"
+            style={{ width: "25.5%", backgroundColor: imageSlots.benchTop.bg }}
           >
             <img
               src="/holiday-sale/images/slot-1-bench.png"
               alt={imageSlots.benchTop.label}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="hidden absolute inset-0 flex items-center justify-center text-neutral-400 text-xs font-medium">
               Slot 1
             </div>
           </div>
 
-          {/* Slot 2: Keyboard (425px width) */}
+          {/* Slot 2: Keyboard (AR 1.832 -> 35.4%) */}
           <div
-            className="h-full relative overflow-hidden flex items-center justify-center group"
-            style={{ width: "35.27%", backgroundColor: imageSlots.keyboardTop.bg }}
+            className="h-full relative overflow-hidden flex items-center justify-center"
+            style={{ width: "35.4%", backgroundColor: imageSlots.keyboardTop.bg }}
           >
             <img
               src="/holiday-sale/images/slot-2-piano-top.png"
               alt={imageSlots.keyboardTop.label}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="hidden absolute inset-0 flex items-center justify-center text-neutral-400 text-xs font-medium">
               Slot 2
             </div>
           </div>
 
-          {/* Slot 3: Rest (435px width) */}
+          {/* Slot 3: Rest (AR 2.018 -> 39.1%) */}
           <div
-            className="h-full relative overflow-hidden flex items-center justify-center group"
-            style={{ width: "36.10%", backgroundColor: imageSlots.pianoMusicRest.bg }}
+            className="h-full relative overflow-hidden flex items-center justify-center"
+            style={{ width: "39.1%", backgroundColor: imageSlots.pianoMusicRest.bg }}
           >
             <img
-              src="/holiday-sale/images/slot-3-piano-rest-gray-2.png"
+              src="/holiday-sale/images/slot-3-piano-rest.png"
               alt={imageSlots.pianoMusicRest.label}
-              className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="hidden absolute inset-0 flex items-center justify-center text-neutral-400 text-xs font-medium">
               Slot 3
             </div>
           </div>
         </div>
 
-        {/* ROW 2 (52.63% Height) */}
-        <div className="flex w-full" style={{ height: "52.63%" }}>
-          {/* Slot 4: Pedal (345px width) */}
+        {/* ROW 2 (54.29% Height) */}
+        <div className="flex w-full" style={{ height: "54.29%" }}>
+          {/* Slot 4: Pedal (AR 1.513 -> 34.7%) */}
           <div
-            className="h-full relative overflow-hidden flex items-center justify-center group"
-            style={{ width: "28.63%", backgroundColor: imageSlots.pianoStandDark.bg }}
+            className="h-full relative overflow-hidden flex items-center justify-center"
+            style={{ width: "34.7%", backgroundColor: imageSlots.pianoStandDark.bg }}
           >
             <img
               src="/holiday-sale/images/slot-4-pedal.jpg"
               alt={imageSlots.pianoStandDark.label}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="hidden absolute inset-0 flex items-center justify-center text-neutral-400 text-xs font-medium">
               Slot 4
             </div>
           </div>
 
-          {/* Slot 5: X-Stand (425px width) */}
+          {/* Slot 5: X-Stand (AR 1.291 -> 29.7%) */}
           <div
-            className="h-full relative overflow-hidden flex items-center justify-center group"
-            style={{ width: "35.27%", backgroundColor: imageSlots.xStand.bg }}
+            className="h-full relative overflow-hidden flex items-center justify-center"
+            style={{ width: "29.7%", backgroundColor: imageSlots.xStand.bg }}
           >
             <img
               src="/holiday-sale/images/slot-5-x-stand.png"
               alt={imageSlots.xStand.label}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="hidden absolute inset-0 flex items-center justify-center text-neutral-400 text-xs font-medium">
               Slot 5
             </div>
           </div>
 
-          {/* Slot 6: Stand (435px width) */}
+          {/* Slot 6: Stand (AR 1.548 -> 35.6%) */}
           <div
-            className="h-full relative overflow-hidden flex items-center justify-center group"
-            style={{ width: "36.10%", backgroundColor: imageSlots.pianoAngled.bg }}
+            className="h-full relative overflow-hidden flex items-center justify-center"
+            style={{ width: "35.6%", backgroundColor: imageSlots.pianoAngled.bg }}
           >
             <img
               src="/holiday-sale/images/slot-6-piano-stand.png"
               alt={imageSlots.pianoAngled.label}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="hidden absolute inset-0 flex items-center justify-center text-neutral-400 text-xs font-medium">
               Slot 6
             </div>
@@ -151,6 +141,10 @@ export function ValueProposition() {
       </div>
 
       {/* RIGHT SIDE: TEXT (28% width) */}
+      {/* 
+        Note: The container for text needs to handle overflow gracefully or resize if screen is too small.
+        In reference, text block seems to have fixed readable width. We use % here to fill remaining space.
+      */}
       <div className="w-[28%] bg-black flex flex-col justify-center px-8 lg:px-10 py-10 relative z-10">
         <div className="inline-flex items-center gap-2 bg-white/10 text-white text-xs font-medium px-3 py-1.5 rounded-full w-fit mb-8 border border-white/10">
           <Gift className="w-3.5 h-3.5" />
@@ -188,7 +182,7 @@ export function ValueProposition() {
           ))}
         </div>
 
-        <button className="mt-8 inline-flex items-center justify-center gap-2 border border-white text-white px-6 lg:px-8 py-3 rounded-full text-sm font-medium hover:bg-white hover:text-black transition-colors w-fit">
+        <button className="mt-8 inline-flex items-center justify-center gap-2 border border-white/20 text-white px-6 lg:px-8 py-3 rounded-full text-sm font-medium hover:bg-white hover:text-black transition-colors w-fit">
           Claim Your Bundle
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
