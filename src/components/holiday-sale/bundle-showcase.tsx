@@ -14,9 +14,9 @@ export function BundleShowcase() {
 
           <div className="mt-8 pt-8 border-t border-white/10">
             <h3 className="text-2xl md:text-3xl font-bold tracking-tight">DreamPlay One</h3>
-            <button className="mt-6 border-2 border-solid border-white text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-white hover:text-black transition-colors">
+            <a href="https://dreamplay-pianos.myshopify.com/products/dreamplay-piano-bundle-mlk-sale" className="mt-6 border-2 border-solid border-white text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-white hover:text-black transition-colors inline-block">
               PRE-ORDER NOW
-            </button>
+            </a>
           </div>
         </div>
 

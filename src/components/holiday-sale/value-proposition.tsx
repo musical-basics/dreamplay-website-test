@@ -188,12 +188,12 @@ export function ValueProposition() {
           ))}
         </div>
 
-        <button className="mt-8 inline-flex items-center justify-center gap-2 border-2 border-solid border-white text-white px-6 lg:px-8 py-3 rounded-full text-sm font-medium hover:bg-white hover:text-black transition-colors w-fit">
+        <a href="https://dreamplay-pianos.myshopify.com/products/dreamplay-piano-bundle-mlk-sale" className="mt-8 inline-flex items-center justify-center gap-2 border-2 border-solid border-white text-white px-6 lg:px-8 py-3 rounded-full text-sm font-medium hover:bg-white hover:text-black transition-colors w-fit">
           Claim Your Bundle
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
-        </button>
+        </a>
       </div>
 
     </section>

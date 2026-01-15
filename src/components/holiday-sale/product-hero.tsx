@@ -30,9 +30,9 @@ export function ProductHero() {
 
           <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-white/20">
             <p className="text-white text-2xl md:text-3xl font-bold tracking-tight">DreamPlay One</p>
-            <button className="mt-4 px-6 py-2.5 border-2 border-solid border-white text-white text-sm font-medium rounded-full hover:bg-white hover:text-black transition-colors">
+            <a href="https://dreamplay-pianos.myshopify.com/products/dreamplay-piano-bundle-mlk-sale" className="mt-4 px-6 py-2.5 border-2 border-solid border-white text-white text-sm font-medium rounded-full hover:bg-white hover:text-black transition-colors inline-block">
               PRE-ORDER NOW
-            </button>
+            </a>
           </div>
         </div>
       </div>
