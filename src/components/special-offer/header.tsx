@@ -5,12 +5,14 @@ import { ArrowRight, Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import { useABAnalytics } from "@/hooks/use-ab-analytics"
+import { cn } from "@/lib/utils"
 
 interface SpecialOfferHeaderProps {
     forceOpaque?: boolean;
+    className?: string;
 }
 
-export function SpecialOfferHeader({ forceOpaque = false }: SpecialOfferHeaderProps) {
+export function SpecialOfferHeader({ forceOpaque = false, className = "" }: SpecialOfferHeaderProps) {
     const { trackClick } = useABAnalytics("special_offer_variant", { trackTime: false })
     const [scrolled, setScrolled] = useState(false)
 
@@ -26,8 +28,11 @@ export function SpecialOfferHeader({ forceOpaque = false }: SpecialOfferHeaderPr
 
     return (
         <header
-            className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${isScrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent"
-                }`}
+            className={cn(
+                "fixed top-0 left-0 right-0 z-[100] transition-all duration-300",
+                isScrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent",
+                className
+            )}
         >
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
                 {/* Logo */}
