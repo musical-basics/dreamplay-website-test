@@ -1,6 +1,6 @@
 export function UrgencySection() {
   return (
-    <section className="sticky top-0 z-[70] bg-white py-16 px-6 min-h-[60vh] flex items-center">
+    <section className="sticky top-0 z-[70] bg-white py-12 px-6 flex items-center">
       <div className="max-w-2xl mx-auto text-center">
         <p className="text-neutral-500 text-base md:text-lg leading-relaxed">
           Don't Miss This Chance to Make A Life-Changing Transformation to Your Piano Playing!
