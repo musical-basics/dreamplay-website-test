@@ -242,8 +242,8 @@ export default function ShippingPage() {
                                 </div>
                             </div>
                             <div className="reveal delay-200 relative">
-                                <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
-                                    <img src="/images/packaging-care.jpg" alt="Packaging" className="w-full h-auto object-contain" />
+                                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl">
+                                    <img src="/images/piano-in-the-box.png" alt="Packaging" className="w-full aspect-square object-cover scale-110" />
                                 </div>
                             </div>
                         </div>
