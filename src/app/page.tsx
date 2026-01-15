@@ -75,17 +75,22 @@ export default function Home() {
 
   return (
     <div className="page-wrapper">
+      {/* Navbar Section */}
+      <div className="bg-[#0a0a0f] relative z-[100] min-h-[90px] flex flex-col justify-center">
+        <Navbar />
+      </div>
+
+      {/* MLK Banner - Sticky Parallax */}
       <div className="w-full bg-black sticky top-0 z-0">
         <Link href="/mlk-holiday-sale">
           <img
-            src="/images/mlk-banner.jpg"
+            src="/images/holiday-sale-banner.jpg"
             alt="MLK Holiday Sale"
             className="w-full h-auto object-cover mx-auto hover:opacity-95 transition-opacity"
           />
         </Link>
       </div>
       <div className="relative z-10 bg-white">
-        <Navbar />
         <main className="main-wrapper">
           <section className="section-hero bg-[#0a0a0f]">
             <div className="global-padding">
