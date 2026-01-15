@@ -8,7 +8,7 @@ export function UrgencySection() {
 
         <div className="mt-8 pt-8 border-t border-neutral-200">
           <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 leading-snug text-balance">
-            Secure The Complete DreamPlay Experience Before Your Spot Is Gone.
+            Secure The Complete DreamPlay Experience before we run out of stock.
           </h2>
         </div>
       </div>

@@ -30,8 +30,8 @@ export default function MLKHolidaySalePage() {
             <div className="relative">
                 {/* 1. Product & Countdown */}
                 <div className="sticky top-0 z-10 bg-neutral-950 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
-                    <ProductHero />
                     <CountdownTimer />
+                    <ProductHero />
                 </div>
 
                 {/* 2. Value Proposition */}
