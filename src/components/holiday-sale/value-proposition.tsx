@@ -15,7 +15,7 @@ export function ValueProposition() {
   const badges = [
     { icon: Truck, label: "Free Shipping" },
     { icon: Package, label: "Complete Bundle" },
-    { icon: Clock, label: "Ships in 2-3 Days" },
+    { icon: Clock, label: "Est. Shipping July 2026" },
   ]
 
   // Each slot has a unique ID and background color matching reference
