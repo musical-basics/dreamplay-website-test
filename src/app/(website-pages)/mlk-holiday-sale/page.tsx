@@ -1,7 +1,7 @@
 import { Header } from "@/components/holiday-sale/header"
 import { CountdownTimer } from "@/components/holiday-sale/countdown-timer"
 import { ProductHero } from "@/components/holiday-sale/product-hero"
-import { FlashSale } from "@/components/holiday-sale/flash-sale"
+
 import { BundleIncludes } from "@/components/holiday-sale/bundle-includes"
 import { ValueProposition } from "@/components/holiday-sale/value-proposition"
 import { BundleShowcase } from "@/components/holiday-sale/bundle-showcase"
@@ -16,17 +16,24 @@ export const metadata = {
 export default function MLKHolidaySalePage() {
     return (
         <main className="min-h-screen bg-neutral-950">
-            <div className="h-screen flex flex-col">
-                <Header />
+            <Header />
+            <div className="w-full sticky top-0 z-0">
+                <img
+                    src="/images/mlk-hero.jpg"
+                    alt="MLK Holiday Sale"
+                    className="w-full h-auto object-cover"
+                />
+            </div>
+            <div className="relative z-10 bg-neutral-950">
                 <ProductHero />
                 <CountdownTimer />
+
+                <ValueProposition />
+                <BundleShowcase />
+                <BundleIncludes />
+                <UrgencySection />
+                <FinalCta />
             </div>
-            <FlashSale />
-            <ValueProposition />
-            <BundleShowcase />
-            <BundleIncludes />
-            <UrgencySection />
-            <FinalCta />
         </main>
     )
 }
