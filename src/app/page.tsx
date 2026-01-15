@@ -75,6 +75,15 @@ export default function Home() {
 
   return (
     <div className="page-wrapper">
+      <div className="w-full bg-black">
+        <Link href="/mlk-holiday-sale">
+          <img
+            src="/images/mlk-banner.jpg"
+            alt="MLK Holiday Sale"
+            className="w-full h-auto object-cover mx-auto hover:opacity-95 transition-opacity"
+          />
+        </Link>
+      </div>
       <Navbar />
       <main className="main-wrapper">
         <section className="section-hero">
