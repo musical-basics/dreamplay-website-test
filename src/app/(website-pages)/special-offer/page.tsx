@@ -30,7 +30,7 @@ export default function SpecialOfferPage() {
             <div className="w-full bg-black sticky top-0 z-0">
                 <Link href="/mlk-holiday-sale">
                     <img
-                        src="/images/mlk-banner.jpg"
+                        src="/images/holiday-sale-banner.jpg"
                         alt="MLK Holiday Sale"
                         className="w-full h-auto object-cover mx-auto hover:opacity-95 transition-opacity"
                     />

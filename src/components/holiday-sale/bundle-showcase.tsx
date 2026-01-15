@@ -23,10 +23,10 @@ export function BundleShowcase() {
         {/* Right: Image */}
         <div className="relative aspect-[4/3] md:aspect-auto min-h-[300px]">
           <Image
-            src="/holiday-sale/images/image.png"
-            alt="Person playing DreamPlay piano"
+            src="/images/piano-bench-bundle.png"
+            alt="DreamPlay Piano and Bench Bundle"
             fill
-            className="object-cover object-left"
+            className="object-cover object-center"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>

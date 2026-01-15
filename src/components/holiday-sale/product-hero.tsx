@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export function ProductHero() {
   return (
-    <section className="relative flex-1 bg-neutral-100">
+    <section className="relative h-[600px] bg-neutral-100">
       <div className="relative w-full h-full overflow-hidden">
         <Image
           src="/holiday-sale/images/bundle-hero.jpg"
