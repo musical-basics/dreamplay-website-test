@@ -3,7 +3,7 @@ import Image from "next/image"
 export function BundleShowcase() {
   return (
     <section className="sticky top-0 z-50 bg-black text-white min-h-[70vh]">
-      <div className="grid md:grid-cols-2 h-full min-h-[70vh]">
+      <div className="grid md:grid-cols-[1fr_3.5fr] h-full min-h-[70vh]">
         {/* Left: Info */}
         <div className="p-8 md:p-12 flex flex-col justify-center">
           <div className="space-y-1 text-sm text-white/60">
@@ -27,7 +27,9 @@ export function BundleShowcase() {
             alt="DreamPlay Piano and Bench Bundle"
             fill
             className="object-cover object-center"
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="(max-width: 768px) 100vw, 60vw"
+            quality={100}
+            priority
           />
         </div>
       </div>
