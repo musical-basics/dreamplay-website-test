@@ -265,7 +265,7 @@ export default function ShippingPage() {
                                 </div>
                                 <div className="flex justify-between items-start mb-2">
                                     <h3 className="text-2xl font-semibold">DS5.5</h3>
-                                    <div className="text-right"><div className="text-xs text-subtle uppercase">Ships</div><div className="font-medium">June 2026</div></div>
+                                    <div className="text-right"><div className="text-xs text-subtle uppercase">Ships</div><div className="font-medium">August 2026</div></div>
                                 </div>
                                 <p className="text-subtle text-sm border-t border-white/10 pt-4 mt-4">Zone A: Smaller Hands</p>
                             </div>
@@ -277,20 +277,19 @@ export default function ShippingPage() {
                                 </div>
                                 <div className="flex justify-between items-start mb-2">
                                     <h3 className="text-2xl font-semibold">DS6.0</h3>
-                                    <div className="text-right"><div className="text-xs text-subtle uppercase">Ships</div><div className="font-medium">June 2026</div></div>
+                                    <div className="text-right"><div className="text-xs text-subtle uppercase">Ships</div><div className="font-medium">August 2026</div></div>
                                 </div>
                                 <p className="text-subtle text-sm border-t border-white/10 pt-4 mt-4">Zone B: Medium Hands</p>
                             </div>
 
                             {/* DS6.5 */}
                             <div className="card-base theme-card-dark reveal delay-300 bg-gradient-to-br from-[#2d2d2f] to-[#1a1a1c]">
-                                <span className="inline-block px-3 py-1 rounded-full bg-brand/20 text-brand text-xs font-bold uppercase mb-4" style={{ backgroundColor: 'rgba(0,102,204,0.2)', color: '#0066cc' }}>First to Ship</span>
                                 <div className="aspect-[4/3] bg-section-dark rounded-2xl mb-6 flex items-center justify-center p-4">
                                     <img src="/images/DS6.5-Black.png" alt="DS6.5" className="max-h-full object-contain" />
                                 </div>
                                 <div className="flex justify-between items-start mb-2">
                                     <h3 className="text-2xl font-semibold">DS6.5</h3>
-                                    <div className="text-right"><div className="text-xs text-subtle uppercase">Ships</div><div className="text-brand font-medium">March 2026</div></div>
+                                    <div className="text-right"><div className="text-xs text-subtle uppercase">Ships</div><div className="text-brand font-medium">August 2026</div></div>
                                 </div>
                                 <p className="text-subtle text-sm border-t border-white/10 pt-4 mt-4">Zone C: Standard Size</p>
                             </div>
