@@ -23,7 +23,7 @@ export function ProductHero() {
           </p>
 
           <div className="mt-6 md:mt-8 space-y-1">
-            <p className="text-white/60 text-xs md:text-sm">*Free Shipping</p>
+            <p className="text-white/60 text-xs md:text-sm">*Discounted Shipping</p>
             <p className="text-white/60 text-xs md:text-sm">Complete Bundle</p>
             <p className="text-white/60 text-xs md:text-sm">Est. Shipping July 2026</p>
           </div>
