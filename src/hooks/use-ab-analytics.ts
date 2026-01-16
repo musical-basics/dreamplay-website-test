@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import posthog from "posthog-js"
+import { logEvent } from "@/lib/analytics"
 
 export type ABVariant = "control" | "variant"
 
@@ -18,7 +18,6 @@ export function useABAnalytics(pageName: string, options: { trackTime: boolean }
 
     // Track Time on Page
     useEffect(() => {
-        console.log(`[Analytics] Hook initialized for page: ${pageName}`)
         if (!options.trackTime) return;
 
         startTime.current = Date.now()
@@ -29,12 +28,13 @@ export function useABAnalytics(pageName: string, options: { trackTime: boolean }
             const duration = (Date.now() - startTime.current) / 1000 // seconds
             const bucket = getBucket()
 
-            posthog.capture("time_on_page", {
-                page: pageName,
-                duration_seconds: duration,
-                ab_test_bucket: bucket,
+            logEvent("time_on_page", {
+                path: pageName,
+                metadata: {
+                    duration_seconds: duration,
+                    ab_test_bucket: bucket,
+                }
             })
-            console.log(`[Analytics] Time on page (${pageName}): ${duration}s (Bucket: ${bucket})`)
             hasTrackedTime.current = true
         }
 
@@ -62,10 +62,11 @@ export function useABAnalytics(pageName: string, options: { trackTime: boolean }
             label,
             ab_test_bucket: bucket,
         }
-        console.log(`[Analytics] Sending 'cta_click' to PostHog:`, payload)
 
-        posthog.capture("cta_click", payload)
-        console.log(`[Analytics] Click tracked: ${label} @ ${location} (Bucket: ${bucket})`)
+        logEvent("cta_click", {
+            path: pageName,
+            metadata: payload
+        })
     }
 
     return { trackClick }

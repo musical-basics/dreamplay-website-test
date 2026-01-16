@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { PostHogProvider } from "./providers/PostHogProvider";
+import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import NewsletterPopup from "@/components/NewsletterPopup";
 import "./globals.css";
 
@@ -42,9 +42,8 @@ export default function RootLayout({
         </Script>
       </head>
       <body>
-        <PostHogProvider>
-          {children}
-        </PostHogProvider>
+        <AnalyticsTracker />
+        {children}
         <NewsletterPopup />
 
         {/* Scripts */}

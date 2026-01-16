@@ -1,18 +1,10 @@
-import { getABTestStats } from "@/lib/posthog-server"
-import { AlertTriangle, BarChart3, Clock, MousePointer2, Users } from "lucide-react"
+import { getRecentLogs } from "@/lib/analytics"
+import { Activity, BarChart3 } from "lucide-react"
 
 export const dynamic = 'force-dynamic'
 
 export default async function AnalyticsPage() {
-    const stats = await getABTestStats()
-    const hasCredentials = process.env.POSTHOG_PROJECT_ID && process.env.POSTHOG_PERSONAL_API_KEY
-
-    // Normalize stats to ensure we have Control/Variant
-    const getBucketStats = (bucket: string) =>
-        stats.find(s => s.bucket === bucket) || { bucket, visitors: 0, clicks: 0, avgTime: 0 }
-
-    const control = getBucketStats('control')
-    const variant = getBucketStats('variant')
+    const logs = await getRecentLogs()
 
     return (
         <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -20,105 +12,76 @@ export default async function AnalyticsPage() {
                 <header className="mb-10">
                     <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
                         <BarChart3 className="w-8 h-8 text-indigo-600" />
-                        A/B Test Dashboard
+                        Website Analytics
                     </h1>
-                    <p className="mt-2 text-gray-600">Comparing Home Page (Control) vs Special Offer (Variant)</p>
+                    <p className="mt-2 text-gray-600">Internal tracking dashboard</p>
                 </header>
 
-                {!hasCredentials && (
-                    <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-8">
-                        <div className="flex">
-                            <div className="flex-shrink-0">
-                                <AlertTriangle className="h-5 w-5 text-yellow-400" aria-hidden="true" />
-                            </div>
-                            <div className="ml-3">
-                                <p className="text-sm text-yellow-700">
-                                    <strong>Setup Required:</strong> Please add <code>POSTHOG_PROJECT_ID</code> and <code>POSTHOG_PERSONAL_API_KEY</code> to your <code>.env.local</code> file to view real data.
-                                </p>
-                            </div>
+                {/* Raw Logs Section */}
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div className="px-6 py-5 border-b border-gray-100 bg-gray-50/50">
+                        <div className="flex items-center gap-3">
+                            <Activity className="w-5 h-5 text-gray-400" />
+                            <h2 className="text-lg font-semibold text-gray-900">Recent Activity Logs</h2>
                         </div>
                     </div>
-                )}
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Control Card */}
-                    <VariantCard
-                        title="Control (Home)"
-                        description="Original Home Page"
-                        data={control}
-                        color="blue"
-                    />
-
-                    {/* Variant Card */}
-                    <VariantCard
-                        title="Variant (Special Offer)"
-                        description="New Dark Mode Landing Page"
-                        data={variant}
-                        color="indigo"
-                        isWinner={variant.clicks > control.clicks || (variant.visitors > 0 && (variant.clicks / variant.visitors) > (control.clicks / (control.visitors || 1)))}
-                    />
-                </div>
-            </div>
-        </div>
-    )
-}
-
-function VariantCard({ title, description, data, color, isWinner }: any) {
-    const ctr = data.visitors > 0 ? ((data.clicks / data.visitors) * 100).toFixed(1) : "0.0"
-    const avgTime = data.avgTime.toFixed(0)
-
-    return (
-        <div className={`bg-white rounded-2xl shadow-sm border ${isWinner ? 'border-2 border-indigo-500 ring-4 ring-indigo-50' : 'border-gray-200'} overflow-hidden`}>
-            <div className={`px-6 py-5 border-b border-gray-100 ${color === 'blue' ? 'bg-blue-50/50' : 'bg-indigo-50/50'}`}>
-                <div className="flex justify-between items-start">
-                    <div>
-                        <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
-                        <p className="text-sm text-gray-500 mt-1">{description}</p>
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Path</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Device</th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {logs.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={5} className="px-6 py-12 text-center text-sm text-gray-500">
+                                            No recent logs found. Navigate around the site to generate data.
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    logs.map((log) => (
+                                        <tr key={log.id} className="hover:bg-gray-50">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {new Date(log.created_at).toLocaleString()}
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${log.event_name === 'cta_click' ? 'bg-green-100 text-green-800' :
+                                                        log.event_name === 'pageview' ? 'bg-blue-100 text-blue-800' :
+                                                            'bg-gray-100 text-gray-800'
+                                                    }`}>
+                                                    {log.event_name}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <div className="flex flex-col">
+                                                    <span title={log.user_id || 'Anonymous'} className="truncate max-w-[150px]">{log.user_id || 'Anonymous'}</span>
+                                                    <span className="text-xs text-gray-400">{log.ip_address}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <span title={log.path} className="truncate max-w-[200px] block">
+                                                    {log.path}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <div className="flex flex-col">
+                                                    <span className="truncate max-w-[200px]" title={log.user_agent || ''}>
+                                                        {log.user_agent ? (log.user_agent.includes('Mac') ? 'Mac OS' : log.user_agent.includes('Windows') ? 'Windows' : 'Other') : 'Unknown'}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
                     </div>
-                    {isWinner && (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                            Current Leader
-                        </span>
-                    )}
                 </div>
-            </div>
-
-            <div className="p-6 grid grid-cols-2 gap-6">
-                <StatItem
-                    icon={<Users className="w-4 h-4 text-gray-400" />}
-                    label="Unique Visitors"
-                    value={data.visitors}
-                />
-                <StatItem
-                    icon={<MousePointer2 className="w-4 h-4 text-gray-400" />}
-                    label="CTA Clicks"
-                    value={data.clicks}
-                />
-                <StatItem
-                    icon={<BarChart3 className="w-4 h-4 text-gray-400" />}
-                    label="Conversion Rate"
-                    value={`${ctr}%`}
-                    highlight
-                />
-                <StatItem
-                    icon={<Clock className="w-4 h-4 text-gray-400" />}
-                    label="Avg Time on Page"
-                    value={`${avgTime}s`}
-                />
-            </div>
-        </div>
-    )
-}
-
-function StatItem({ icon, label, value, highlight }: any) {
-    return (
-        <div>
-            <div className="flex items-center gap-2 mb-1">
-                {icon}
-                <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">{label}</span>
-            </div>
-            <div className={`text-2xl font-bold ${highlight ? 'text-indigo-600' : 'text-gray-900'}`}>
-                {value}
             </div>
         </div>
     )
