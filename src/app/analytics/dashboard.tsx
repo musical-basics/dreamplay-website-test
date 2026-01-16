@@ -53,8 +53,8 @@ export function AnalyticsDashboard() {
                     <button
                         onClick={() => setActiveTab('overview')}
                         className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${activeTab === 'overview'
-                                ? 'border-indigo-500 text-indigo-600'
-                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                            ? 'border-indigo-500 text-indigo-600'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                             }`}
                     >
                         Traffic Overview
@@ -62,8 +62,8 @@ export function AnalyticsDashboard() {
                     <button
                         onClick={() => setActiveTab('logs')}
                         className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${activeTab === 'logs'
-                                ? 'border-indigo-500 text-indigo-600'
-                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                            ? 'border-indigo-500 text-indigo-600'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                             }`}
                     >
                         Raw Logs
@@ -103,8 +103,8 @@ export function AnalyticsDashboard() {
                                         key={range}
                                         onClick={() => setTimeRange(range)}
                                         className={`px-3 py-1 text-sm font-medium rounded-md transition-all ${timeRange === range
-                                                ? 'bg-white text-gray-900 shadow-sm'
-                                                : 'text-gray-500 hover:text-gray-700'
+                                            ? 'bg-white text-gray-900 shadow-sm'
+                                            : 'text-gray-500 hover:text-gray-700'
                                             }`}
                                     >
                                         {range === '24h' ? '24h' : range === '7d' ? '7 Days' : '30 Days'}
@@ -185,8 +185,8 @@ export function AnalyticsDashboard() {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${log.event_name === 'cta_click' ? 'bg-green-100 text-green-800' :
-                                                        log.event_name === 'pageview' ? 'bg-blue-100 text-blue-800' :
-                                                            'bg-gray-100 text-gray-800'
+                                                    log.event_name === 'pageview' ? 'bg-blue-100 text-blue-800' :
+                                                        'bg-gray-100 text-gray-800'
                                                     }`}>
                                                     {log.event_name}
                                                 </span>
