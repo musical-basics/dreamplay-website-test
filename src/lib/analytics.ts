@@ -67,3 +67,67 @@ export async function getRecentLogs(): Promise<AnalyticsLog[]> {
         return []
     }
 }
+
+export type TimeRange = '24h' | '7d' | '30d'
+
+export async function getAnalyticsStats(range: TimeRange) {
+    try {
+        const now = new Date()
+        const startDate = new Date()
+
+        if (range === '24h') {
+            startDate.setHours(startDate.getHours() - 24)
+        } else if (range === '7d') {
+            startDate.setDate(startDate.getDate() - 7)
+        } else {
+            startDate.setDate(startDate.getDate() - 30)
+        }
+
+        const { data: logs, error } = await supabase
+            .from('analytics_logs')
+            .select('created_at, path')
+            .gte('created_at', startDate.toISOString())
+            .order('created_at', { ascending: true })
+
+        if (error) {
+            console.error('Error fetching analytics stats:', error)
+            return { chartData: [], totalViews: 0, uniquePaths: 0 }
+        }
+
+        // Aggregate data for chart
+        const chartDataMap = new Map<string, number>()
+
+        // Define format based on range
+        const getKey = (dateStr: string) => {
+            const date = new Date(dateStr)
+            if (range === '24h') {
+                return date.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true })
+            } else {
+                return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+            }
+        }
+
+        logs.forEach(log => {
+            const key = getKey(log.created_at)
+            chartDataMap.set(key, (chartDataMap.get(key) || 0) + 1)
+        })
+
+        // Fill in gaps if needed (optional optimization for smoother charts)
+        // For simplicity, we'll just map the existing data points for now
+
+        const chartData = Array.from(chartDataMap.entries()).map(([date, views]) => ({
+            date,
+            views
+        }))
+
+        return {
+            chartData,
+            totalViews: logs.length,
+            uniquePaths: new Set(logs.map(l => l.path)).size
+        }
+
+    } catch (error) {
+        console.error('Failed to get analytics stats:', error)
+        return { chartData: [], totalViews: 0, uniquePaths: 0 }
+    }
+}
