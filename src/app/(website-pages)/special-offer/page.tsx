@@ -27,7 +27,7 @@ export default function SpecialOfferPage() {
             `}</style>
 
             {/* MLK Banner - Sticky Parallax */}
-            <div className="w-full bg-black sticky top-0 z-0">
+            <div className="w-full bg-black sticky top-0 z-0 after:absolute after:bottom-0 after:left-0 after:w-full after:h-[50px] after:bg-gradient-to-b after:from-transparent after:to-neutral-900 after:pointer-events-none after:content-['']">
                 <Link href="/mlk-holiday-sale">
                     <img
                         src="/images/holiday-sale-banner.jpg"
