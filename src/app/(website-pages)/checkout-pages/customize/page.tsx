@@ -2,9 +2,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
+import script from "next/script";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import Navbar from "@/components/Navbar";
+import { getCountdownDate } from "@/actions/admin-actions";
 
 // Types
 interface KeyboardZone {
@@ -36,7 +37,8 @@ export default function CustomizePage() {
     // Sizing Tool State
     const [sliderValue, setSliderValue] = useState(50);
     const [customerCount, setCustomerCount] = useState(1247);
-    const [countdown, setCountdown] = useState({ days: 0, hours: 11, mins: 4, secs: 42 });
+    const [countdown, setCountdown] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
+    const [countDownDate, setCountDownDate] = useState<number | null>(null);
 
     // Refs for scrolling
     const sectionRefs = useRef<(HTMLElement | null)[]>([]);
@@ -105,19 +107,38 @@ export default function CustomizePage() {
     }, []);
 
     useEffect(() => {
-        // Countdown Interval
-        const interval = setInterval(() => {
-            setCountdown(prev => {
-                let { days, hours, mins, secs } = prev;
-                secs--;
-                if (secs < 0) { secs = 59; mins--; }
-                if (mins < 0) { mins = 59; hours--; }
-                if (hours < 0) { hours = 23; days--; }
-                return { days, hours, mins, secs };
-            });
-        }, 1000);
-        return () => clearInterval(interval);
+        // Fetch Countdown Date from DB
+        getCountdownDate().then((dateStr) => {
+            // Fallback default if null (though migration sets it)
+            const target = dateStr ? new Date(dateStr).getTime() : new Date("2026-01-19T21:00:00-08:00").getTime();
+            setCountDownDate(target);
+        });
     }, []);
+
+    useEffect(() => {
+        if (!countDownDate) return;
+
+        const updateTimer = () => {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            if (distance < 0) {
+                setCountdown({ days: 0, hours: 0, mins: 0, secs: 0 });
+                return;
+            }
+
+            setCountdown({
+                days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+                hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+                mins: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+                secs: Math.floor((distance % (1000 * 60)) / 1000)
+            });
+        };
+
+        updateTimer();
+        const interval = setInterval(updateTimer, 1000);
+        return () => clearInterval(interval);
+    }, [countDownDate]);
 
     useEffect(() => {
         console.log('[CustomizePage Debug] Setting up pageshow listener');
@@ -610,8 +631,8 @@ export default function CustomizePage() {
                                     key={tier.id}
                                     onClick={() => handleSelectTier(tier.id)}
                                     className={`group relative flex flex-col items-center overflow-visible rounded-2xl p-6 text-center transition-all duration-300 md:p-8 ${isSelected
-                                            ? 'border-2 border-white bg-white/20 shadow-2xl backdrop-blur-md scale-105 z-10'
-                                            : 'border border-white/20 bg-white/10 backdrop-blur-md hover:border-white/40 hover:bg-white/15'
+                                        ? 'border-2 border-white bg-white/20 shadow-2xl backdrop-blur-md scale-105 z-10'
+                                        : 'border border-white/20 bg-white/10 backdrop-blur-md hover:border-white/40 hover:bg-white/15'
                                         }`}
                                 >
                                     {/* Sale Badge for Pay in Full */}
@@ -650,8 +671,8 @@ export default function CustomizePage() {
                                     )}
 
                                     <div className={`mt-6 rounded-full px-6 py-2.5 text-sm transition-all ${isSelected
-                                            ? 'bg-red-500 text-white font-bold shadow-[0_0_15px_rgba(239,68,68,0.4)] hover:bg-red-600'
-                                            : 'bg-white/20 text-white hover:bg-white/30'
+                                        ? 'bg-red-500 text-white font-bold shadow-[0_0_15px_rgba(239,68,68,0.4)] hover:bg-red-600'
+                                        : 'bg-white/20 text-white hover:bg-white/30'
                                         }`}>
                                         {isSelected ? (isSaleTier ? 'Claim Offer' : 'Selected') : 'Select Option'}
                                     </div>

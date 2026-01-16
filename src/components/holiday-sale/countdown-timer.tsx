@@ -1,12 +1,31 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { getCountdownDate } from "@/actions/admin-actions"
 
 export function CountdownTimer() {
+  const [targetDate, setTargetDate] = useState<number | null>(null)
+
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  })
+
+  // Fetch target date
+  useEffect(() => {
+    getCountdownDate().then((dateStr) => {
+      const t = dateStr ? new Date(dateStr).getTime() : new Date("2026-01-19T21:00:00-08:00").getTime()
+      setTargetDate(t)
+    })
+  }, [])
+
   const calculateTimeLeft = () => {
-    const TARGET_DATE = new Date("2026-01-19T21:00:00-08:00").getTime()
+    if (!targetDate) return { days: 0, hours: 0, minutes: 0, seconds: 0 }
+
     const now = new Date().getTime()
-    const difference = TARGET_DATE - now
+    const difference = targetDate - now
 
     if (difference <= 0) {
       return { days: 0, hours: 0, minutes: 0, seconds: 0 }
@@ -20,21 +39,16 @@ export function CountdownTimer() {
     }
   }
 
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  })
-
-  // Initialize on mount to avoid hydration mismatch
+  // Timer effect
   useEffect(() => {
+    if (!targetDate) return
+
     setTimeLeft(calculateTimeLeft())
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft())
     }, 1000)
     return () => clearInterval(timer)
-  }, [])
+  }, [targetDate])
 
   const pad = (n: number) => n.toString().padStart(2, "0")
 
