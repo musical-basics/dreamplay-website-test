@@ -43,7 +43,7 @@ export default function CustomizePage() {
 
     // --- DATA ---
     const tiers = [
-        { id: 'full', name: 'Pay in Full', price: '$599', subtitle: 'Best Value', description: 'Get the complete bundle with extras', bundleDetails: 'Includes matching stand, bench, pedal ($120 value)', recommended: true, icon: 'gift' },
+        { id: 'full', name: 'Pay in Full', price: '$549', subtitle: 'Best Value', description: 'Get the complete bundle with extras', bundleDetails: 'Includes matching stand, bench, pedal ($120 value)', recommended: true, icon: 'gift' },
         { id: 'deposit', name: 'Reserve Your Spot', price: '$299', subtitle: '50% Now', description: 'Be first in line, pay 50% later', bundleDetails: 'Includes matching stand and pedal ($65 value)', recommended: false, icon: 'zap' },
         { id: 'waitlist', name: 'Join Waitlist', price: 'Free', subtitle: 'No Payment', description: 'Just your email, no commitment', bundleDetails: '', recommended: false, icon: 'mail' }
     ];
@@ -344,11 +344,33 @@ export default function CustomizePage() {
                     }}
                 ></div>
                 <div className="relative z-10 mx-auto max-w-4xl px-4 text-center md:px-6">
-                    <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1.5 text-xs text-white/60 backdrop-blur-sm md:mb-4 md:px-4 md:py-2 md:text-sm">
+                    <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1.5 text-xs text-white/60 backdrop-blur-sm md:mb-6 md:px-4 md:py-2 md:text-sm border border-white/10">
                         <span className="h-2 w-2 animate-pulse rounded-full bg-[#4a9eff]"></span>
                         Limited Pre-Order Available
                     </div>
-                    <h1 className="mb-3 text-balance text-3xl font-bold tracking-tight text-white md:mb-4 md:text-6xl lg:text-7xl">
+
+                    <div className="mb-8 space-y-4">
+                        <h2 className="text-4xl md:text-6xl font-black tracking-tight text-white drop-shadow-[0_0_15px_rgba(239,68,68,0.5)]">
+                            <span className="inline-block animate-bounce mr-2">🎉</span>
+                            <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">MLK HOLIDAY SALE</span>
+                            <span className="inline-block animate-bounce ml-2">🎉</span>
+                        </h2>
+
+                        <div className="flex flex-col items-center justify-center gap-1">
+                            <div className="flex items-baseline gap-3">
+                                <span className="text-xl md:text-2xl text-white/40 line-through decoration-white/40">$899</span>
+                                <span className="text-4xl md:text-5xl font-bold text-white">$549</span>
+                                <span className="text-lg md:text-xl font-bold text-white uppercase tracking-wide">Premium Bundle</span>
+                            </div>
+                            <p className="text-sm md:text-base text-[#ff9f9f] font-medium">(Keyboard + Stand + Bench)</p>
+                        </div>
+
+                        <p className="text-xs md:text-sm text-white/60 font-medium tracking-wide uppercase">
+                            Invite Only. Jan 16 - Jan 20. Extremely limited supply.
+                        </p>
+                    </div>
+
+                    <h1 className="mb-3 text-balance text-3xl font-bold tracking-tight text-white md:mb-4 md:text-5xl lg:text-6xl">
                         Find Your Perfect
                         <span className="mt-1 block bg-gradient-to-r from-[#4a9eff] to-[#60b8ff] bg-clip-text text-transparent md:mt-2">
                             DreamPlay One
@@ -581,19 +603,57 @@ export default function CustomizePage() {
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
                         {tiers.map(tier => {
                             const isSelected = appState.selectedTier === tier.id;
+                            const isSaleTier = tier.id === 'full';
+
                             return (
-                                <button key={tier.id} onClick={() => handleSelectTier(tier.id)} className={`group relative flex flex-col items-center overflow-hidden rounded-2xl p-6 text-center transition-all duration-300 md:p-8 ${isSelected ? 'border-2 border-white bg-white/20 shadow-2xl backdrop-blur-md scale-105 z-10' : 'border border-white/20 bg-white/10 backdrop-blur-md hover:border-white/40 hover:bg-white/15'}`}>
-                                    {tier.recommended && <div className="absolute right-3 top-3 rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#4a9eff] shadow-lg md:text-xs">Best Value</div>}
+                                <button
+                                    key={tier.id}
+                                    onClick={() => handleSelectTier(tier.id)}
+                                    className={`group relative flex flex-col items-center overflow-visible rounded-2xl p-6 text-center transition-all duration-300 md:p-8 ${isSelected
+                                            ? 'border-2 border-white bg-white/20 shadow-2xl backdrop-blur-md scale-105 z-10'
+                                            : 'border border-white/20 bg-white/10 backdrop-blur-md hover:border-white/40 hover:bg-white/15'
+                                        }`}
+                                >
+                                    {/* Sale Badge for Pay in Full */}
+                                    {isSaleTier && (
+                                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-gradient-to-r from-red-500 to-red-600 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white shadow-[0_0_20px_rgba(239,68,68,0.6)] z-20">
+                                            🎉 MLK Holiday Sale
+                                        </div>
+                                    )}
+
+                                    {/* Regular Recommended Badge (only if not sale tier, or handle overlap) */}
+                                    {tier.recommended && !isSaleTier && (
+                                        <div className="absolute right-3 top-3 rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#4a9eff] shadow-lg md:text-xs">
+                                            Best Value
+                                        </div>
+                                    )}
+
                                     <div className={`mb-4 flex h-14 w-14 items-center justify-center rounded-2xl transition-all ${isSelected ? 'bg-white/30' : 'bg-white/10'}`}>
-                                        {/* Simplified Icons */}
-                                        <span className="text-2xl">⚡</span>
+                                        <span className="text-2xl">{tier.icon === 'gift' ? '🎁' : tier.icon === 'zap' ? '⚡' : '✉️'}</span>
                                     </div>
-                                    <div className="text-3xl font-bold text-white md:text-4xl tracking-tight">{tier.price}</div>
-                                    <div className="mt-2 text-base font-semibold text-white md:text-lg">{tier.name}</div>
+
+                                    {/* Price Display */}
+                                    <div className="flex items-baseline gap-2 mb-1">
+                                        {isSaleTier && (
+                                            <span className="text-xl text-white/50 line-through decoration-white/50">$899</span>
+                                        )}
+                                        <div className="text-3xl font-bold text-white md:text-4xl tracking-tight">{tier.price}</div>
+                                    </div>
+
+                                    <div className="mt-1 text-base font-semibold text-white md:text-lg">{tier.name}</div>
                                     <div className="mt-2 text-xs text-white/70 md:text-sm leading-relaxed">{tier.description}</div>
-                                    {tier.bundleDetails && <div className="mt-3 text-xs text-white/80 font-medium md:text-sm border-t border-white/10 pt-3 w-full">{tier.bundleDetails}</div>}
-                                    <div className={`mt-6 rounded-full px-6 py-2.5 text-sm transition-all ${isSelected ? 'bg-white text-[#4a9eff] font-bold shadow-lg' : 'bg-white/20 text-white hover:bg-white/30'}`}>
-                                        {isSelected ? 'Selected' : 'Select Option'}
+
+                                    {tier.bundleDetails && (
+                                        <div className="mt-3 text-xs text-white/80 font-medium md:text-sm border-t border-white/10 pt-3 w-full">
+                                            {tier.bundleDetails}
+                                        </div>
+                                    )}
+
+                                    <div className={`mt-6 rounded-full px-6 py-2.5 text-sm transition-all ${isSelected
+                                            ? 'bg-red-500 text-white font-bold shadow-[0_0_15px_rgba(239,68,68,0.4)] hover:bg-red-600'
+                                            : 'bg-white/20 text-white hover:bg-white/30'
+                                        }`}>
+                                        {isSelected ? (isSaleTier ? 'Claim Offer' : 'Selected') : 'Select Option'}
                                     </div>
                                 </button>
                             )
