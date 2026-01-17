@@ -130,7 +130,8 @@ export function FeaturesPianoSection() {
                                     x2={Number.parseFloat(featureData[activeFeature].position.left)}
                                     y2={Number.parseFloat(featureData[activeFeature].position.top)}
                                     stroke="#171717"
-                                    strokeWidth="0.15"
+                                    strokeWidth="1.5"
+                                    vectorEffect="non-scaling-stroke"
                                 />
                                 <circle
                                     cx={Number.parseFloat(featureData[activeFeature].position.left)}
