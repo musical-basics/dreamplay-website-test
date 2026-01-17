@@ -167,8 +167,8 @@ export default function ProductSelectionForm({ className }: ProductSelectionForm
                 />
             </div>
 
-            {/* Piano Selection */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
+            {/* Piano Selection - Hidden for now */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10 hidden">
                 {pianoOptions.map((option) => (
                     <label key={option.id} className="relative cursor-pointer group">
                         <input
