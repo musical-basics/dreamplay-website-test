@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowRight, Menu } from "lucide-react"
+import { ArrowRight, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import { useABAnalytics } from "@/hooks/use-ab-analytics"
@@ -15,6 +15,7 @@ interface SpecialOfferHeaderProps {
 export function SpecialOfferHeader({ forceOpaque = false, className = "" }: SpecialOfferHeaderProps) {
     const { trackClick } = useABAnalytics("special_offer_variant", { trackTime: false })
     const [scrolled, setScrolled] = useState(false)
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -24,7 +25,7 @@ export function SpecialOfferHeader({ forceOpaque = false, className = "" }: Spec
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
-    const isScrolled = forceOpaque || scrolled;
+    const isScrolled = forceOpaque || scrolled || isMobileMenuOpen;
 
     return (
         <header
@@ -40,7 +41,7 @@ export function SpecialOfferHeader({ forceOpaque = false, className = "" }: Spec
                     <img
                         src="/images/Logo.svg"
                         alt="DreamPlay Pianos"
-                        className={`h-8 transition-all ${isScrolled ? "brightness-0" : "brightness-0 invert"}`}
+                        className={`h-8 transition-all ${isScrolled ? "brightness-0" : "invert"}`}
                     />
                 </Link>
 
@@ -86,11 +87,54 @@ export function SpecialOfferHeader({ forceOpaque = false, className = "" }: Spec
                             <ArrowRight className={`w-3 h-3 ${isScrolled ? "text-white" : "text-black"}`} />
                         </span>
                     </Link>
-                    <Button variant="ghost" size="icon" className={`md:hidden ${isScrolled ? "text-neutral-900" : "text-white"}`}>
-                        <Menu className="w-5 h-5" />
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className={`md:hidden ${isScrolled ? "text-neutral-900" : "text-white"}`}
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    >
+                        {isMobileMenuOpen ? (
+                            <X className="w-5 h-5" />
+                        ) : (
+                            <Menu className="w-5 h-5" />
+                        )}
                     </Button>
                 </div>
             </div>
+
+            {/* Mobile Menu */}
+            {isMobileMenuOpen && (
+                <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-b border-gray-100 shadow-xl animate-in slide-in-from-top-2 duration-200">
+                    <nav className="flex flex-col p-4">
+                        {[
+                            { label: "DreamPlay One", href: "/" },
+                            { label: "How It Works", href: "/how-it-works" },
+                            { label: "Our Story", href: "/our-story" },
+                            { label: "FAQ", href: "/information-and-policies/faq" },
+                        ].map((item) => (
+                            <Link
+                                key={item.label}
+                                href={item.href}
+                                className="py-3 text-neutral-600 hover:text-black font-medium border-b border-gray-50 last:border-0"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                                {item.label}
+                            </Link>
+                        ))}
+                        <Link
+                            href="/checkout-pages/buy-product"
+                            className="mt-4 flex items-center justify-center gap-2 w-full bg-black text-white rounded-full py-3 font-medium"
+                            onClick={() => {
+                                trackClick("header", "join_waitlist_mobile")
+                                setIsMobileMenuOpen(false)
+                            }}
+                        >
+                            Join The Waitlist
+                            <ArrowRight className="w-4 h-4" />
+                        </Link>
+                    </nav>
+                </div>
+            )}
         </header>
     )
 }

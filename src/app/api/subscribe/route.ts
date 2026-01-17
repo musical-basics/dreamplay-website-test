@@ -45,11 +45,11 @@ export async function POST(request: Request) {
         if (existingUser) {
             // 2a. Update existing user: Append the tag if it's not already there
             const currentTags = existingUser.tags || [];
-            if (!currentTags.includes('newsletter-10-off')) {
+            if (!currentTags.includes('newsletter-5-off')) {
                 const { error: updateError } = await supabase
                     .from('Customer')
                     .update({
-                        tags: [...currentTags, 'newsletter-10-off']
+                        tags: [...currentTags, 'newsletter-5-off']
                     })
                     .eq('id', existingUser.id);
                 error = updateError;
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
                     id: uuidv4(),
                     email: email,
                     name: '', // Optional based on your schema
-                    tags: ['newsletter-10-off'],
+                    tags: ['newsletter-5-off'],
                     createdAt: new Date().toISOString(),
                 });
             error = insertError;
@@ -88,7 +88,7 @@ export async function POST(request: Request) {
                             
                             <div style="background-color: #f4f4f4; padding: 20px; border-radius: 8px; text-align: center; margin: 30px 0;">
                                 <p style="margin-bottom: 10px; font-weight: bold;">Here is your discount code:</p>
-                                <div style="font-size: 24px; font-family: monospace; font-weight: bold; color: #2563eb; letter-spacing: 2px;">WELCOME10</div>
+                                <div style="font-size: 24px; font-family: monospace; font-weight: bold; color: #2563eb; letter-spacing: 2px;">WELCOME5</div>
                             </div>
 
                             <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;" />
