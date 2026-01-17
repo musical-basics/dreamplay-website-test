@@ -194,7 +194,7 @@ export default function ShippingPage() {
                                     </div>
                                     <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                                 </div>
-                                <div className="text-5xl font-semibold mb-2">+$70</div>
+                                <div className="text-5xl font-semibold mb-2">$50-$70</div>
                                 <p className="opacity-40 text-sm mb-8">Estimated Shipping August 2026</p>
                                 <div className="space-y-3 max-h-60 overflow-y-auto custom-scroll">
                                     {['Australia', 'China', 'Japan', 'South Korea', 'New Zealand', 'Singapore', 'Switzerland', 'Taiwan', 'Hawaii (US)'].map(c => (
