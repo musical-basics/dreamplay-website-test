@@ -37,7 +37,7 @@ export default function MLKHolidaySalePage() {
                 </div>
 
                 {/* 2. Value Proposition */}
-                <div className="sticky top-0 z-20 bg-neutral-950 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
+                <div className="relative lg:sticky top-0 z-20 bg-neutral-950 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
                     <ValueProposition />
                 </div>
 
