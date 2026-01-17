@@ -387,7 +387,7 @@ export default function CustomizePage() {
                         </div>
 
                         <p className="text-xs md:text-sm text-white/60 font-medium tracking-wide uppercase">
-                            Invite Only. Jan 16 - Jan 20. Extremely limited supply.
+                            Invite Only. Jan 17 - Jan 19. Extremely limited supply.
                         </p>
                     </div>
 
