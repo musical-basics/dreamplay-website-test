@@ -81,6 +81,7 @@ export default function Home() {
       </div>
 
       {/* MLK Banner - Sticky Parallax */}
+      {/* MLK Banner - Sticky Parallax */}
       <div className="w-full bg-black sticky top-0 z-0 after:absolute after:bottom-0 after:left-0 after:w-full after:h-[150px] after:bg-gradient-to-b after:from-transparent after:to-[#0a0a0f] after:pointer-events-none after:content-['']">
         <Link href="/mlk-holiday-sale">
           <img

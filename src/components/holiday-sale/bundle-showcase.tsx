@@ -7,7 +7,7 @@ export function BundleShowcase() {
         {/* Left: Info */}
         <div className="p-8 md:p-12 flex flex-col justify-center">
           <div className="space-y-1 text-sm text-white/60">
-            <p>*Discounted Shipping</p>
+            <p>*Free Shipping</p>
             <p>Complete Bundle</p>
             <p>Est. Shipping July 2026</p>
           </div>

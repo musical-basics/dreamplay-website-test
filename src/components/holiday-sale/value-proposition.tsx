@@ -13,7 +13,7 @@ export function ValueProposition() {
   ]
 
   const badges = [
-    { icon: Truck, label: "Discounted Shipping" },
+    { icon: Truck, label: "Free Shipping" },
     { icon: Package, label: "Complete Bundle" },
     { icon: Clock, label: "Est. Shipping July 2026" },
   ]
