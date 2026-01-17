@@ -30,10 +30,17 @@ export default function SpecialOfferPage() {
             {/* MLK Banner - Sticky Parallax */}
             <div className="w-full bg-black sticky top-0 z-0 after:absolute after:bottom-0 after:left-0 after:w-full after:h-[50px] after:bg-gradient-to-b after:from-transparent after:to-neutral-900 after:pointer-events-none after:content-['']">
                 <Link href="/mlk-holiday-sale">
+                    {/* Desktop Banner */}
                     <img
                         src="/images/holiday-sale-banner.jpg"
                         alt="MLK Holiday Sale"
-                        className="w-full h-auto object-cover mx-auto hover:opacity-95 transition-opacity"
+                        className="hidden md:block w-full h-auto object-cover mx-auto hover:opacity-95 transition-opacity"
+                    />
+                    {/* Mobile Banner */}
+                    <img
+                        src="/images/mlk-banner-mobile.png"
+                        alt="MLK Holiday Sale"
+                        className="block md:hidden w-full h-auto object-cover mx-auto hover:opacity-95 transition-opacity"
                     />
                 </Link>
             </div>
