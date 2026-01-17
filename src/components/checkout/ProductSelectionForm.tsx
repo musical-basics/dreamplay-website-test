@@ -8,7 +8,7 @@ interface ProductSelectionFormProps {
 }
 
 export default function ProductSelectionForm({ className }: ProductSelectionFormProps) {
-    const [selectedPiano, setSelectedPiano] = useState<string>("");
+    const [selectedPiano, setSelectedPiano] = useState<string>("DS-6.0-Black");
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [country, setCountry] = useState("Loading...");
@@ -52,8 +52,74 @@ export default function ProductSelectionForm({ className }: ProductSelectionForm
             // We continue to redirect even if saving failed to not block the purchase flow
         }
 
-        // Redirect to Stripe
-        window.location.href = "https://buy.stripe.com/cNifZa4lh9k867Y1xtcMM00?prefilled_email=" + encodeURIComponent(email);
+        // --- PREPARE SHOPIFY SUBMISSION ---
+        // Parse selected size and color from value like "DS 6.0 - Black"
+        // The values in pianoOptions below are setup as "DS 5.5 - Black" etc.
+        let selectedSize = 'Not Selected';
+        let selectedColor = 'Not Selected';
+
+        // Find the selected option object to be sure (or just parse the state string)
+        const selectedOption = pianoOptions.find(opt => opt.value === selectedPiano);
+        const valueToParse = selectedOption ? selectedOption.value : selectedPiano;
+
+        if (valueToParse && valueToParse.includes('-')) {
+            const parts = valueToParse.split('-');
+            // Example: "DS 5.5 - Black" -> ["DS 5.5 ", " Black"]
+            selectedSize = parts[0].trim();
+            // Handle if there are multiple hyphens or just one, but based on options:
+            // "DS 5.5 - Black" -> Size: "DS 5.5", Color: "Black"
+            // "DS 6.0 - Black" -> Size: "DS 6.0", Color: "Black"
+            if (parts.length >= 2) {
+                selectedColor = parts[1].trim();
+            }
+        }
+
+        // If "Not sure" is selected
+        if (valueToParse === "Not sure") {
+            selectedSize = "Not sure";
+            selectedColor = "Not sure";
+        }
+
+        const PRODUCT_VARIANT_ID = '52240288776506';
+        const STORE_DOMAIN = 'dreamplay-pianos.myshopify.com';
+
+        // Prepare Return URL params
+        const checkoutParams = [];
+        if (email) checkoutParams.push(`checkout[email]=${encodeURIComponent(email)}`);
+
+        if (fullName) {
+            const nameParts = fullName.trim().split(' ');
+            const firstName = nameParts[0];
+            const lastName = nameParts.slice(1).join(' ');
+            if (firstName) checkoutParams.push(`checkout[shipping_address][first_name]=${encodeURIComponent(firstName)}`);
+            if (lastName) checkoutParams.push(`checkout[shipping_address][last_name]=${encodeURIComponent(lastName)}`);
+        }
+
+        const queryString = checkoutParams.length > 0 ? '?' + checkoutParams.join('&') : '';
+
+
+        // Create and submit form
+        const shopifyForm = document.createElement('form');
+        shopifyForm.method = 'POST';
+        shopifyForm.action = `https://${STORE_DOMAIN}/cart/add`;
+        shopifyForm.style.display = 'none';
+
+        const addInput = (name: string, value: string) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = name;
+            input.value = value;
+            shopifyForm.appendChild(input);
+        };
+
+        addInput('id', PRODUCT_VARIANT_ID);
+        addInput('quantity', '1');
+        addInput('properties[Size]', selectedSize);
+        addInput('properties[Finish]', selectedColor);
+        addInput('return_to', '/checkout' + queryString);
+
+        document.body.appendChild(shopifyForm);
+        shopifyForm.submit();
     };
 
     const pianoOptions = [
@@ -91,9 +157,6 @@ export default function ProductSelectionForm({ className }: ProductSelectionForm
 
     return (
         <form onSubmit={handleSubmit} className={`w-full max-w-4xl mx-auto ${className}`}>
-            {/* Country Field (Hidden/Read-only style in original, but let's make it visible as a disabled input or just hidden state if intended) 
-            Original HTML used a text field: <input ... id="country-field"> 
-        */}
             {/* Country Field Hidden */}
             <div className="hidden">
                 <input
@@ -104,8 +167,7 @@ export default function ProductSelectionForm({ className }: ProductSelectionForm
                 />
             </div>
 
-            {/* 
-            Hidden as requested
+            {/* Piano Selection */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
                 {pianoOptions.map((option) => (
                     <label key={option.id} className="relative cursor-pointer group">
@@ -132,8 +194,7 @@ export default function ProductSelectionForm({ className }: ProductSelectionForm
                         </div>
                     </label>
                 ))}
-            </div> 
-            */}
+            </div>
 
             <div className="bg-transparent mb-8">
                 <div className="space-y-4 max-w-lg mx-auto">
@@ -168,7 +229,7 @@ export default function ProductSelectionForm({ className }: ProductSelectionForm
                     disabled={isSubmitting}
                     className="bg-black text-white px-12 py-4 rounded-full text-base font-semibold hover:bg-neutral-800 transition-all disabled:opacity-70 shadow-lg hover:shadow-xl w-full max-w-sm"
                 >
-                    {isSubmitting ? "Processing..." : "Join the Waitlist"}
+                    {isSubmitting ? "Redirecting..." : "Join the Waitlist"}
                 </button>
 
                 <p className="text-center text-base text-neutral-600 font-medium">
