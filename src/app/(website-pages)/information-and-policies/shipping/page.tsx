@@ -122,7 +122,7 @@ export default function ShippingPage() {
                     </div>
                     <div className="container mx-auto px-6 relative z-10 text-center">
                         <h1 className="hero-title text-dark mb-2 reveal">Global Delivery.</h1>
-                        <h1 className="hero-title text-brand mb-12 reveal delay-100">Expedited Shipping.</h1>
+                        <h1 className="hero-title text-brand mb-12 reveal delay-100">Complimentary Shipping.</h1>
                         <div className="max-w-4xl mx-auto mb-16 reveal delay-200">
                             <img src="/images/Worldmap.png" alt="World Map" className="w-full h-auto object-contain opacity-90" />
                         </div>
