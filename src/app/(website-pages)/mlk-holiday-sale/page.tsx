@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar"
 import { CountdownTimer } from "@/components/holiday-sale/countdown-timer"
 import { ProductHero } from "@/components/holiday-sale/product-hero"
 import { BundleIncludes } from "@/components/holiday-sale/bundle-includes"
@@ -17,7 +16,6 @@ export default function MLKHolidaySalePage() {
     return (
         <main className="min-h-screen bg-neutral-950">
             <GlobalStyleOverride />
-            <Navbar />
 
             {/* Sticky Hero Image - Bottom Layer */}
             <div className="w-full bg-black sticky top-0 z-0">
