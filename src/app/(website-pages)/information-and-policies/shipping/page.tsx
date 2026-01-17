@@ -124,7 +124,18 @@ export default function ShippingPage() {
                         <h1 className="hero-title text-dark mb-2 reveal">Global Delivery.</h1>
                         <h1 className="hero-title text-brand mb-12 reveal delay-100">Expedited Shipping.</h1>
                         <div className="max-w-4xl mx-auto mb-16 reveal delay-200">
-                            <img src="/images/gemini-generated-image-7eppgr7eppgr7epp.png" alt="World Map" className="w-full h-auto object-contain opacity-90" />
+                            <img src="/images/Worldmap.png" alt="World Map" className="w-full h-auto object-contain opacity-90" />
+                        </div>
+
+                        <div className="flex flex-wrap justify-center gap-8 mb-16 reveal delay-200">
+                            <div className="flex items-center gap-3">
+                                <div className="w-3 h-3 rounded-full bg-[#0066cc]"></div>
+                                <span className="text-sm font-medium text-subtle">Free Shipping</span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <div className="w-3 h-3 rounded-full bg-[#2dd4bf]"></div>
+                                <span className="text-sm font-medium text-subtle">Extended Region</span>
+                            </div>
                         </div>
                         <p className="text-xl text-subtle max-w-xl mx-auto mb-12 reveal delay-300">
                             Free delivery to the US, Canada, and Europe. Extended shipping available worldwide.
@@ -166,7 +177,7 @@ export default function ShippingPage() {
                                     <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                                 </div>
                                 <div className="text-5xl font-semibold mb-2">Free</div>
-                                <p className="opacity-40 text-sm mb-8">Estimated ~2 months delivery</p>
+                                <p className="opacity-40 text-sm mb-8">Estimated Shipping July 2026</p>
                                 <div className="space-y-3 max-h-60 overflow-y-auto custom-scroll">
                                     {['Austria', 'Belgium', 'Canada', 'Denmark', 'Finland', 'France', 'Germany', 'Ireland', 'Netherlands', 'UK', 'US (Continental)'].map(c => (
                                         <div key={c} className="flex items-center gap-3 text-sm opacity-70"><span className="text-blue-600">✓</span> {c}</div>
@@ -184,7 +195,7 @@ export default function ShippingPage() {
                                     <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                                 </div>
                                 <div className="text-5xl font-semibold mb-2">+$50</div>
-                                <p className="opacity-40 text-sm mb-8">Estimated ~1 month delivery</p>
+                                <p className="opacity-40 text-sm mb-8">Estimated Shipping August 2026</p>
                                 <div className="space-y-3 max-h-60 overflow-y-auto custom-scroll">
                                     {['Australia', 'China', 'Japan', 'South Korea', 'New Zealand', 'Singapore', 'Switzerland', 'Taiwan', 'Hawaii (US)'].map(c => (
                                         <div key={c} className="flex items-center gap-3 text-sm opacity-70"><span className="text-gray-500">✓</span> {c}</div>
@@ -202,7 +213,7 @@ export default function ShippingPage() {
                                     <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                                 </div>
                                 <div className="text-5xl font-semibold mb-2">$150</div>
-                                <p className="opacity-40 text-sm mb-8">Estimated ~2 months delivery</p>
+                                <p className="opacity-40 text-sm mb-8">Estimated Shipping October 2026</p>
                                 <div className="space-y-3 max-h-60 overflow-y-auto custom-scroll">
                                     {['Brazil', 'India', 'Mexico', 'UAE', 'Saudi Arabia', 'Turkey', 'Argentina', 'Egypt'].map(c => (
                                         <div key={c} className="flex items-center gap-3 text-sm opacity-70"><span className="text-gray-600">✓</span> {c}</div>
