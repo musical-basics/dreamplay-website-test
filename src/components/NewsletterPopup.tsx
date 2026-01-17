@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { X, Mail } from "lucide-react";
 
+import { getDiscountPopupStatus } from "@/actions/admin-actions";
+
 export default function NewsletterPopup() {
     const [isOpen, setIsOpen] = useState(false);
     const [email, setEmail] = useState("");
@@ -10,16 +12,24 @@ export default function NewsletterPopup() {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        // check if user has already seen/closed the popup to avoid spamming them
-        const hasSeenPopup = localStorage.getItem("dreamplay_popup_seen");
+        const checkStatus = async () => {
+            // Check global admin setting first
+            const status = await getDiscountPopupStatus();
+            if (status !== 'true') return;
 
-        if (!hasSeenPopup) {
-            const timer = setTimeout(() => {
-                setIsOpen(true);
-            }, 5000); // 5 seconds delay
+            // check if user has already seen/closed the popup to avoid spamming them
+            const hasSeenPopup = localStorage.getItem("dreamplay_popup_seen");
 
-            return () => clearTimeout(timer);
-        }
+            if (!hasSeenPopup) {
+                const timer = setTimeout(() => {
+                    setIsOpen(true);
+                }, 5000); // 5 seconds delay
+
+                return () => clearTimeout(timer);
+            }
+        };
+
+        checkStatus();
     }, []);
 
     const handleClose = () => {

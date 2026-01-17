@@ -1,28 +1,63 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getCountdownDate, updateCountdownDate } from '@/actions/admin-actions'
+import { getCountdownDate, updateCountdownDate, getDiscountPopupStatus, updateDiscountPopupStatus, loginAdmin } from '@/actions/admin-actions'
 
 export default function AdminPage() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [password, setPassword] = useState('')
+    const [authError, setAuthError] = useState('')
+
+    // Date State
     const [date, setDate] = useState('')
+
+    // Feature Toggle State
+    const [showDiscount, setShowDiscount] = useState(true)
+
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
     const [message, setMessage] = useState('')
 
     useEffect(() => {
-        loadData()
+        const storedAuth = localStorage.getItem('admin_token')
+        if (storedAuth === 'sorenkier_valid') {
+            setIsAuthenticated(true)
+            loadData()
+        } else {
+            setLoading(false)
+        }
     }, [])
+
+    async function handleLogin(e: React.FormEvent) {
+        e.preventDefault()
+        setAuthError('')
+
+        const res = await loginAdmin(password)
+        if (res.success) {
+            localStorage.setItem('admin_token', 'sorenkier_valid')
+            setIsAuthenticated(true)
+            loadData()
+        } else {
+            setAuthError('Invalid Password')
+        }
+    }
 
     async function loadData() {
         setLoading(true)
-        const val = await getCountdownDate()
-        if (val) setDate(val)
-        // Default fall back if DB is empty or error
+        const [dateVal, discountVal] = await Promise.all([
+            getCountdownDate(),
+            getDiscountPopupStatus()
+        ])
+
+        if (dateVal) setDate(dateVal)
         else setDate('2026-01-19T21:00:00-08:00')
+
+        setShowDiscount(discountVal === 'true')
+
         setLoading(false)
     }
 
-    async function handleSave(e: React.FormEvent) {
+    async function handleSaveCountdown(e: React.FormEvent) {
         e.preventDefault()
         setSaving(true)
         setMessage('')
@@ -36,6 +71,48 @@ export default function AdminPage() {
         setSaving(false)
     }
 
+    async function handleToggleDiscount() {
+        // Optimistic update
+        const newValue = !showDiscount
+        setShowDiscount(newValue)
+
+        const res = await updateDiscountPopupStatus(newValue)
+        if (!res.success) {
+            // Revert if failed
+            setShowDiscount(!newValue)
+            alert('Failed to update discount status')
+        }
+    }
+
+    if (!isAuthenticated && !loading) {
+        return (
+            <div className="min-h-screen bg-neutral-950 flex items-center justify-center text-white p-4">
+                <div className="w-full max-w-md bg-neutral-900 p-8 rounded-xl border border-neutral-800 shadow-2xl">
+                    <h1 className="text-2xl font-bold mb-6 text-center">Admin Access</h1>
+                    <form onSubmit={handleLogin} className="space-y-4">
+                        <div>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Enter Password"
+                                className="w-full bg-black border border-neutral-700 rounded-lg p-3 text-white focus:border-blue-500 outline-none"
+                                autoFocus
+                            />
+                        </div>
+                        {authError && <p className="text-red-500 text-sm text-center">{authError}</p>}
+                        <button
+                            type="submit"
+                            className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-lg transition-colors"
+                        >
+                            Login
+                        </button>
+                    </form>
+                </div>
+            </div>
+        )
+    }
+
     if (loading) {
         return (
             <div className="min-h-screen bg-neutral-950 flex items-center justify-center text-white">
@@ -47,15 +124,53 @@ export default function AdminPage() {
     return (
         <div className="min-h-screen bg-neutral-950 text-white p-8 font-sans">
             <div className="max-w-2xl mx-auto">
-                <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
-                <p className="text-neutral-400 mb-8">Manage global site settings and configurations.</p>
+                <div className="flex justify-between items-center mb-8">
+                    <div>
+                        <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
+                        <p className="text-neutral-400">Manage global site settings and configurations.</p>
+                    </div>
+                    <button
+                        onClick={() => {
+                            localStorage.removeItem('admin_token')
+                            window.location.reload()
+                        }}
+                        className="text-xs text-red-400 hover:text-red-300 underline"
+                    >
+                        Logout
+                    </button>
+                </div>
 
+                {/* DISCOUNT POPUP TOGGLE */}
+                <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl mb-8">
+                    <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                        <span>📢</span> Marketing Features
+                    </h2>
+
+                    <div className="flex items-center justify-between p-4 bg-black/40 rounded-lg border border-neutral-800">
+                        <div>
+                            <h3 className="font-medium text-white">5% Discount Popup</h3>
+                            <p className="text-sm text-neutral-500">Enable or disable the newsletter popup globally.</p>
+                        </div>
+                        <button
+                            onClick={handleToggleDiscount}
+                            className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none ${showDiscount ? 'bg-green-600' : 'bg-neutral-700'
+                                }`}
+                        >
+                            <span
+                                className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${showDiscount ? 'translate-x-6' : 'translate-x-1'
+                                    }`}
+                            />
+                        </button>
+                    </div>
+                </div>
+
+                {/* COUNTDOWN SETTINGS */}
                 <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl">
                     <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
                         <span>⏳</span> Countdown Settings
                     </h2>
 
-                    <form onSubmit={handleSave} className="space-y-6">
+                    <form onSubmit={handleSaveCountdown} className="space-y-6">
                         <div>
                             <label className="block text-sm font-medium text-neutral-300 mb-2">
                                 Countdown End Date (ISO Format)
