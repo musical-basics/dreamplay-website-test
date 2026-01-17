@@ -122,7 +122,7 @@ export default function ShippingPage() {
                     </div>
                     <div className="container mx-auto px-6 relative z-10 text-center">
                         <h1 className="hero-title text-dark mb-2 reveal">Global Delivery.</h1>
-                        <h1 className="hero-title text-brand mb-12 reveal delay-100">Complimentary Shipping.</h1>
+                        <h1 className="hero-title text-brand mb-12 reveal delay-100">Discounted Shipping.</h1>
                         <div className="max-w-4xl mx-auto mb-16 reveal delay-200">
                             <img src="/images/Worldmap.png" alt="World Map" className="w-full h-auto object-contain opacity-90" />
                         </div>
@@ -130,7 +130,7 @@ export default function ShippingPage() {
                         <div className="flex flex-wrap justify-center gap-8 mb-16 reveal delay-200">
                             <div className="flex items-center gap-3">
                                 <div className="w-3 h-3 rounded-full bg-[#2F80ED]"></div>
-                                <span className="text-sm font-medium text-subtle">Free Shipping</span>
+                                <span className="text-sm font-medium text-subtle">Discounted Shipping</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <div className="w-3 h-3 rounded-full bg-[#00C2CB]"></div>
@@ -142,12 +142,12 @@ export default function ShippingPage() {
                         </p>
                         <div className="flex flex-wrap justify-center gap-8 md:gap-16 reveal delay-300">
                             <div className="text-center">
-                                <div className="text-5xl font-semibold text-dark">Free</div>
+                                <div className="text-5xl font-semibold text-dark">Under $40</div>
                                 <div className="text-sm text-subtle mt-2">US & Europe</div>
                             </div>
                             <div className="hidden md:block w-px bg-gray-300 h-16"></div>
                             <div className="text-center">
-                                <div className="text-5xl font-semibold text-dark">+$50</div>
+                                <div className="text-5xl font-semibold text-dark">+$70</div>
                                 <div className="text-sm text-subtle mt-2">Extended Regions</div>
                             </div>
                             <div className="hidden md:block w-px bg-gray-300 h-16"></div>
@@ -172,11 +172,11 @@ export default function ShippingPage() {
                                 <div className="flex justify-between items-start mb-6">
                                     <div className="flex items-center gap-2">
                                         <div className="w-2 h-2 rounded-full bg-blue-600"></div>
-                                        <span className="text-xs uppercase tracking-wider opacity-60">Complimentary</span>
+                                        <span className="text-xs uppercase tracking-wider opacity-60">Discounted</span>
                                     </div>
                                     <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                                 </div>
-                                <div className="text-5xl font-semibold mb-2">Free</div>
+                                <div className="text-5xl font-semibold mb-2">Under $40</div>
                                 <p className="opacity-40 text-sm mb-8">Estimated Shipping July 2026</p>
                                 <div className="space-y-3 max-h-60 overflow-y-auto custom-scroll">
                                     {['Austria', 'Belgium', 'Canada', 'Denmark', 'Finland', 'France', 'Germany', 'Ireland', 'Netherlands', 'UK', 'US (Continental)'].map(c => (
@@ -194,7 +194,7 @@ export default function ShippingPage() {
                                     </div>
                                     <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                                 </div>
-                                <div className="text-5xl font-semibold mb-2">+$50</div>
+                                <div className="text-5xl font-semibold mb-2">+$70</div>
                                 <p className="opacity-40 text-sm mb-8">Estimated Shipping August 2026</p>
                                 <div className="space-y-3 max-h-60 overflow-y-auto custom-scroll">
                                     {['Australia', 'China', 'Japan', 'South Korea', 'New Zealand', 'Singapore', 'Switzerland', 'Taiwan', 'Hawaii (US)'].map(c => (
