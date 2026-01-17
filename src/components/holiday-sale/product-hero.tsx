@@ -5,12 +5,13 @@ export function ProductHero() {
     <section className="relative h-[600px] bg-neutral-100">
       <div className="relative w-full h-full overflow-hidden">
         <Image
-          src="/holiday-sale/images/bundle-hero.jpg"
+          src="/images/piano-front-2.jpg"
           alt="DreamPlay Digital Piano with bench"
           fill
           className="object-cover object-[center_40%]"
           priority
           sizes="100vw"
+          quality={100}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
         <div className="absolute left-6 md:left-12 lg:left-16 top-[calc(50%+50px)] -translate-y-1/2 max-w-md lg:max-w-lg">
