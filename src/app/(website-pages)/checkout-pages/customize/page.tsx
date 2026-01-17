@@ -63,7 +63,7 @@ export default function CustomizePage() {
             tagline: 'Perfect for average hands',
             description: 'Ideal for most men and women',
             zone: 'Zone B',
-            imgSrc: '/images/DS5.5-white_1.png' // Utilizing same image as placeholder or specific if exists
+            imgSrc: '/images/DS6.0-Black-1.png'
         },
         'DS6.5': {
             name: 'DreamPlay One DS6.5',
