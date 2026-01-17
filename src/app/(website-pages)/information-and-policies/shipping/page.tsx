@@ -129,11 +129,11 @@ export default function ShippingPage() {
 
                         <div className="flex flex-wrap justify-center gap-8 mb-16 reveal delay-200">
                             <div className="flex items-center gap-3">
-                                <div className="w-3 h-3 rounded-full bg-[#0066cc]"></div>
+                                <div className="w-3 h-3 rounded-full bg-[#2F80ED]"></div>
                                 <span className="text-sm font-medium text-subtle">Free Shipping</span>
                             </div>
                             <div className="flex items-center gap-3">
-                                <div className="w-3 h-3 rounded-full bg-[#2dd4bf]"></div>
+                                <div className="w-3 h-3 rounded-full bg-[#00C2CB]"></div>
                                 <span className="text-sm font-medium text-subtle">Extended Region</span>
                             </div>
                         </div>
