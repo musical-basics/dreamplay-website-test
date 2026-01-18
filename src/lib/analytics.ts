@@ -131,3 +131,120 @@ export async function getAnalyticsStats(range: TimeRange) {
         return { chartData: [], totalViews: 0, uniquePaths: 0 }
     }
 }
+
+export interface ConversionDetail {
+    ip_address: string
+    converted_at: string
+}
+
+export interface VisitorDetail {
+    ip_address: string
+    first_seen_at: string
+}
+
+export interface ABTestStats {
+    variant: string
+    visitors: number
+    conversions: number
+    conversionRate: number
+    conversionDetails: ConversionDetail[]
+    visitorDetails: VisitorDetail[]
+}
+
+export async function getABTestStats(): Promise<ABTestStats[]> {
+    try {
+        // We want to count distinct IPs for each bucket that visited ANY page (Total Visitors)
+        // And distinct IPs for each bucket that performed 'cta_click' with label 'join_waitlist' (Conversions)
+        // Since we store JSON in metadata, we need to extract it.
+        // Supabase/Postgres JSON extraction: metadata->>'ab_test_bucket'
+
+        // 1. Get Visitors per Bucket
+        const { data: visitors, error: visitorsError } = await supabase
+            .from('analytics_logs')
+            .select('ip_address, metadata, created_at')
+            .not('metadata->>ab_test_bucket', 'is', null)
+
+        if (visitorsError) throw visitorsError
+
+        // 2. Get Conversions per Bucket
+        const { data: conversions, error: conversionsError } = await supabase
+            .from('analytics_logs')
+            .select('ip_address, metadata, created_at')
+            .eq('event_name', 'cta_click')
+            .eq('metadata->>label', 'join_waitlist')
+            .not('metadata->>ab_test_bucket', 'is', null)
+
+        if (conversionsError) throw conversionsError
+
+        // Process in JS for simplicity (could be complex SQL)
+        const buckets = ['control', 'variant']
+        const stats: ABTestStats[] = buckets.map(bucket => {
+            // Process Visitors
+            const rawBucketVisitors = visitors.filter((l: any) => l.metadata?.ab_test_bucket === bucket)
+            const uniqueVisitorIps = new Set(rawBucketVisitors.map((l: any) => l.ip_address))
+            const bucketVisitors = uniqueVisitorIps.size
+
+            const visitorDetails: VisitorDetail[] = []
+            uniqueVisitorIps.forEach(ip => {
+                const events = rawBucketVisitors.filter((l: any) => l.ip_address === ip)
+                events.sort((a: any, b: any) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
+                if (events.length > 0) {
+                    visitorDetails.push({
+                        ip_address: events[0].ip_address,
+                        first_seen_at: events[0].created_at
+                    })
+                }
+            })
+
+            // Filter conversions for this bucket
+            const rawBucketConversions = conversions.filter((l: any) => l.metadata?.ab_test_bucket === bucket)
+
+            // Get unique IPs
+            const uniqueConvertedIps = new Set(
+                rawBucketConversions.map((l: any) => l.ip_address)
+            )
+            const bucketConversions = uniqueConvertedIps.size
+
+            // Get details: Map distinct IPs to their events. 
+            // If we want to show ALL events, we just map rawBucketConversions.
+            // If we want one per IP (the first one), we group.
+            // The user requested "see 2 events... and 9 separate events" matching the counts. 
+            // Since the count logic above relies on Sets (unique IPs), we should probably show the unique conversion events.
+            // However, seeing exactly WHEN they clicked is useful. If a user clicked 5 times, showing 5 rows might be noisy but accurate to "events".
+            // BUT, the summary count is Unique IPs. If we list all events, the list length won't match the summary count if there are duplicates.
+            // User asked: "see 2 events for the 'control' and 9 separate events for the 'variant'" matching the screenshot counts.
+            // Screenshot counts are typically unique visitors/conversions.
+            // I will return ALL events but we can group them in UI or just list the first one per IP.
+            // Let's list the FIRST event per unique IP to match the count exactly.
+
+            const conversionDetails: ConversionDetail[] = []
+            uniqueConvertedIps.forEach(ip => {
+                // Find all events for this IP
+                const events = rawBucketConversions.filter((l: any) => l.ip_address === ip)
+                // Sort by time ascending to get the first conversion
+                events.sort((a: any, b: any) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
+                if (events.length > 0) {
+                    conversionDetails.push({
+                        ip_address: events[0].ip_address,
+                        converted_at: events[0].created_at
+                    })
+                }
+            })
+
+            return {
+                variant: bucket,
+                visitors: bucketVisitors,
+                conversions: bucketConversions,
+                conversionRate: bucketVisitors > 0 ? (bucketConversions / bucketVisitors) * 100 : 0,
+                conversionDetails: conversionDetails.sort((a, b) => new Date(b.converted_at).getTime() - new Date(a.converted_at).getTime()),
+                visitorDetails: visitorDetails.sort((a, b) => new Date(b.first_seen_at).getTime() - new Date(a.first_seen_at).getTime())
+            }
+        })
+
+        return stats
+
+    } catch (error) {
+        console.error('Failed to get AB Test stats:', error)
+        return []
+    }
+}

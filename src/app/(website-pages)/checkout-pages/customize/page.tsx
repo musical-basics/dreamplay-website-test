@@ -6,6 +6,7 @@ import script from "next/script";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import Navbar from "@/components/Navbar";
 import { getCountdownDate } from "@/actions/admin-actions";
+import { useABAnalytics } from "@/hooks/use-ab-analytics";
 
 // Types
 interface KeyboardZone {
@@ -234,11 +235,17 @@ export default function CustomizePage() {
         }
     };
 
+    // --- ANALYTICS ---
+    const { trackClick } = useABAnalytics("customize_waitlist_form", { trackTime: false });
+
     const handleSubmitWaitlist = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const form = e.currentTarget;
         const email = (form.elements.namedItem('email') as HTMLInputElement).value;
         const fullName = (form.elements.namedItem('full-name') as HTMLInputElement).value;
+
+        // Track conversion
+        trackClick("form_submission", "join_waitlist");
 
         const ACTION_URL = 'https://dreamplaypianos.us12.list-manage.com/subscribe/post?u=90fbaa21ba86eecae78c767a8&id=cc37fd2637&f_id=00c46be9f0';
 

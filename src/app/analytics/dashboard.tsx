@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { getAnalyticsStats, getRecentLogs, AnalyticsLog } from "@/lib/analytics"
-import { Activity, RefreshCw } from "lucide-react"
+import { getAnalyticsStats, getRecentLogs, AnalyticsLog, getABTestStats, ABTestStats } from "@/lib/analytics"
+import { Activity, RefreshCw, Split, Users, MousePointer2 } from "lucide-react"
 import {
     LineChart,
     Line,
@@ -13,15 +13,129 @@ import {
     ResponsiveContainer,
     AreaChart,
     Area,
+    BarChart,
+    Bar,
+    Legend
 } from "recharts"
+import { ChevronDown, ChevronUp } from "lucide-react"
+
+function ABTestRow({ item }: { item: ABTestStats }) {
+    const [expanded, setExpanded] = useState(false)
+    const [detailTab, setDetailTab] = useState<'conversions' | 'visitors'>('conversions')
+
+    return (
+        <>
+            <tr
+                key={item.variant}
+                className="hover:bg-gray-50 cursor-pointer transition-colors"
+                onClick={() => setExpanded(!expanded)}
+            >
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 capitalize flex items-center gap-2">
+                    {expanded ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+                    {item.variant}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <div className="flex items-center gap-2">
+                        <Users className="w-4 h-4" />
+                        {item.visitors}
+                    </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <div className="flex items-center gap-2">
+                        <MousePointer2 className="w-4 h-4" />
+                        {item.conversions}
+                    </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-indigo-600">
+                    {item.conversionRate.toFixed(2)}%
+                </td>
+            </tr>
+            {expanded && (
+                <tr className="bg-gray-50">
+                    <td colSpan={4} className="px-6 py-4">
+                        <div className="flex gap-4 mb-4 border-b border-gray-200">
+                            <button
+                                className={`pb-2 text-sm font-medium ${detailTab === 'conversions' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
+                                onClick={(e) => { e.stopPropagation(); setDetailTab('conversions'); }}
+                            >
+                                Conversion Details ({item.conversions})
+                            </button>
+                            <button
+                                className={`pb-2 text-sm font-medium ${detailTab === 'visitors' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
+                                onClick={(e) => { e.stopPropagation(); setDetailTab('visitors'); }}
+                            >
+                                Visitor Details ({item.visitors})
+                            </button>
+                        </div>
+
+                        {detailTab === 'conversions' && (
+                            <>
+                                {item.conversionDetails && item.conversionDetails.length > 0 ? (
+                                    <div className="bg-white rounded border border-gray-200 overflow-hidden">
+                                        <table className="min-w-full divide-y divide-gray-100">
+                                            <thead className="bg-gray-50">
+                                                <tr>
+                                                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">IP Address</th>
+                                                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">Converted At</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-gray-100">
+                                                {item.conversionDetails.map((detail, idx) => (
+                                                    <tr key={idx} className="hover:bg-gray-50">
+                                                        <td className="px-4 py-2 text-sm text-gray-600 font-mono">{detail.ip_address}</td>
+                                                        <td className="px-4 py-2 text-sm text-gray-600">{new Date(detail.converted_at).toLocaleString()}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ) : (
+                                    <div className="text-sm text-gray-500 italic">No detailed conversion events found.</div>
+                                )}
+                            </>
+                        )}
+
+                        {detailTab === 'visitors' && (
+                            <>
+                                {item.visitorDetails && item.visitorDetails.length > 0 ? (
+                                    <div className="bg-white rounded border border-gray-200 overflow-hidden">
+                                        <table className="min-w-full divide-y divide-gray-100">
+                                            <thead className="bg-gray-50">
+                                                <tr>
+                                                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">IP Address</th>
+                                                    <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">First Seen At</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-gray-100">
+                                                {item.visitorDetails.map((detail, idx) => (
+                                                    <tr key={idx} className="hover:bg-gray-50">
+                                                        <td className="px-4 py-2 text-sm text-gray-600 font-mono">{detail.ip_address}</td>
+                                                        <td className="px-4 py-2 text-sm text-gray-600">{new Date(detail.first_seen_at).toLocaleString()}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ) : (
+                                    <div className="text-sm text-gray-500 italic">No detailed visitor events found.</div>
+                                )}
+                            </>
+                        )}
+                    </td>
+                </tr>
+            )}
+        </>
+    )
+}
 
 export function AnalyticsDashboard() {
-    const [activeTab, setActiveTab] = useState<'overview' | 'logs'>('overview')
+    const [activeTab, setActiveTab] = useState<'overview' | 'logs' | 'ab-test'>('overview')
     const [timeRange, setTimeRange] = useState<'24h' | '7d' | '30d'>('7d')
 
     // Data states
     const [logs, setLogs] = useState<AnalyticsLog[]>([])
     const [stats, setStats] = useState<{ chartData: any[], totalViews: number, uniquePaths: number } | null>(null)
+    const [abStats, setAbStats] = useState<ABTestStats[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -34,6 +148,9 @@ export function AnalyticsDashboard() {
             if (activeTab === 'logs') {
                 const recentLogs = await getRecentLogs()
                 setLogs(recentLogs)
+            } else if (activeTab === 'ab-test') {
+                const testStats = await getABTestStats()
+                setAbStats(testStats)
             } else {
                 const analyticsStats = await getAnalyticsStats(timeRange)
                 setStats(analyticsStats)
@@ -58,6 +175,15 @@ export function AnalyticsDashboard() {
                             }`}
                     >
                         Traffic Overview
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('ab-test')}
+                        className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${activeTab === 'ab-test'
+                            ? 'border-indigo-500 text-indigo-600'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                            }`}
+                    >
+                        A/B Test Results
                     </button>
                     <button
                         onClick={() => setActiveTab('logs')}
@@ -148,6 +274,52 @@ export function AnalyticsDashboard() {
                                     />
                                 </AreaChart>
                             </ResponsiveContainer>
+                        </div>
+                    </div>
+                </div>
+            ) : activeTab === 'ab-test' ? (
+                <div>
+                    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                        <div className="px-6 py-5 border-b border-gray-100 bg-gray-50/50">
+                            <div className="flex items-center gap-3">
+                                <Split className="w-5 h-5 text-gray-400" />
+                                <h2 className="text-lg font-semibold text-gray-900">Conversion Results ("Join the Waitlist")</h2>
+                            </div>
+                        </div>
+
+                        {/* Chart */}
+                        <div className="p-6 border-b border-gray-100">
+                            <div className="h-[300px] w-full">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={abStats} layout="vertical" margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                                        <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f3f4f6" />
+                                        <XAxis type="number" tickFormatter={(val) => `${val}%`} />
+                                        <YAxis dataKey="variant" type="category" />
+                                        <Tooltip cursor={{ fill: 'transparent' }} formatter={(value: number | undefined) => [value ? `${value.toFixed(2)}%` : '0%', 'Conversion Rate']} />
+                                        <Legend />
+                                        <Bar dataKey="conversionRate" name="Conversion Rate (%)" fill="#4f46e5" radius={[0, 4, 4, 0]} barSize={40} />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
+
+                        {/* Detailed Table */}
+                        <div className="overflow-x-auto">
+                            <table className="min-w-full divide-y divide-gray-200">
+                                <thead className="bg-gray-50">
+                                    <tr>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bucket (Variant)</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Visitors</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Conversions</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Conversion Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200">
+                                    {abStats.map((item) => (
+                                        <ABTestRow key={item.variant} item={item} />
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
