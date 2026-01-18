@@ -54,7 +54,17 @@ export default function SpecialOfferPage() {
                     <HeroSection />
                 </div>
 
-                <div className="relative z-[12] bg-white shadow-[0_-20px_50px_rgba(0,0,0,0.3)]">
+                {/* Section: Lessons (Woman with piano) - STICKY */}
+                <div className="sticky top-0 z-[11] min-h-screen shadow-[0_-20px_50px_rgba(0,0,0,0.15)]" id="lessons">
+                    <LessonsSection />
+                </div>
+
+                {/* Section: Find Your Fit - STICKY */}
+                <div className="sticky top-0 z-[12] min-h-screen bg-neutral-950 shadow-[0_-10px_40px_rgba(0,0,0,0.4)]" id="find-your-fit">
+                    <FindYourFitSection />
+                </div>
+
+                <div className="relative z-[13] bg-white shadow-[0_-20px_50px_rgba(0,0,0,0.3)]">
                     <CountdownTimer />
                 </div>
 
@@ -77,15 +87,9 @@ export default function SpecialOfferPage() {
                     <FeaturesPianoSection />
                 </div>
 
-                {/* Section 5: Lessons (Woman with piano) - STICKY */}
-                <div className="sticky top-0 z-40 min-h-screen shadow-[0_-20px_50px_rgba(0,0,0,0.15)]" id="lessons">
-                    <LessonsSection />
-                </div>
 
-                {/* Section 6: Find Your Fit - SCROLL (normal flow) */}
-                <div className="relative z-50 bg-neutral-950 shadow-[0_-10px_40px_rgba(0,0,0,0.4)]" id="find-your-fit">
-                    <FindYourFitSection />
-                </div>
+
+
 
                 {/* Section 7: Guarantee - STICKY */}
                 <div className="sticky top-0 z-[60] min-h-screen shadow-[0_-20px_50px_rgba(0,0,0,0.15)]" id="guarantee">

@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect, useRef } from "react"
 import { useABAnalytics } from "@/hooks/use-ab-analytics"
+import { getCountdownDate } from "@/actions/admin-actions"
 
 export function CTASection() {
     const { trackClick } = useABAnalytics("special_offer_variant", { trackTime: false })
@@ -33,13 +34,21 @@ export function CTASection() {
         return () => observer.disconnect()
     }, [])
 
+    const [targetDate, setTargetDate] = useState<number | null>(null)
+
     useEffect(() => {
-        // Target date: January 15, 2026
-        const targetDate = new Date("2026-01-15T23:59:59")
+        getCountdownDate().then((dateStr) => {
+            const t = dateStr ? new Date(dateStr).getTime() : new Date("2026-01-19T21:00:00-08:00").getTime()
+            setTargetDate(t)
+        })
+    }, [])
+
+    useEffect(() => {
+        if (!targetDate) return
 
         const timer = setInterval(() => {
             const now = new Date()
-            const difference = targetDate.getTime() - now.getTime()
+            const difference = targetDate - now.getTime()
 
             if (difference > 0) {
                 setTimeLeft({
@@ -54,7 +63,7 @@ export function CTASection() {
         }, 1000)
 
         return () => clearInterval(timer)
-    }, [])
+    }, [targetDate])
 
     return (
         <section

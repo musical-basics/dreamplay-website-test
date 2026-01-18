@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { getCountdownDate } from "@/actions/admin-actions"
 
 export function CountdownTimer() {
     const [timeLeft, setTimeLeft] = useState({
@@ -10,13 +11,21 @@ export function CountdownTimer() {
         seconds: 0,
     })
 
+    const [targetDate, setTargetDate] = useState<number | null>(null)
+
     useEffect(() => {
-        // Target date: January 15, 2026
-        const targetDate = new Date("2026-01-15T23:59:59")
+        getCountdownDate().then((dateStr) => {
+            const t = dateStr ? new Date(dateStr).getTime() : new Date("2026-01-19T21:00:00-08:00").getTime()
+            setTargetDate(t)
+        })
+    }, [])
+
+    useEffect(() => {
+        if (!targetDate) return
 
         const timer = setInterval(() => {
             const now = new Date()
-            const difference = targetDate.getTime() - now.getTime()
+            const difference = targetDate - now.getTime()
 
             if (difference > 0) {
                 setTimeLeft({
@@ -32,7 +41,7 @@ export function CountdownTimer() {
         }, 1000)
 
         return () => clearInterval(timer)
-    }, [])
+    }, [targetDate])
 
     return (
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 py-4">

@@ -32,16 +32,14 @@ export function HeroSection() {
                         className={`text-5xl md:text-6xl lg:text-7xl font-semibold text-white leading-[1.1] tracking-tight mb-6 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                             }`}
                     >
-                        Introducing:
-                        <br />
-                        DreamPlay One
+                        Don’t injure your hand playing the piano.
                     </h1>
 
                     <p
                         className={`text-neutral-300 text-lg mb-8 max-w-lg transition-all duration-1000 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                             }`}
                     >
-                        The keyboard that feels like a dream to play.
+                        Our narrow keyboard helps your hands relax.
                     </p>
 
                     <Link
