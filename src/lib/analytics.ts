@@ -83,19 +83,33 @@ export async function getAnalyticsStats(range: TimeRange) {
             startDate.setDate(startDate.getDate() - 30)
         }
 
-        const { data: logs, error } = await supabase
-            .from('analytics_logs')
-            .select('created_at, path')
-            .gte('created_at', startDate.toISOString())
-            .order('created_at', { ascending: true })
+        let allLogs: any[] = []
+        let from = 0
+        const limit = 1000
 
-        if (error) {
-            console.error('Error fetching analytics stats:', error)
-            return { chartData: [], totalViews: 0, uniquePaths: 0 }
+        while (true) {
+            const { data, error } = await supabase
+                .from('analytics_logs')
+                .select('created_at, path, ip_address')
+                .gte('created_at', startDate.toISOString())
+                .order('created_at', { ascending: true })
+                .range(from, from + limit - 1)
+
+            if (error) {
+                console.error('Error fetching analytics stats:', error)
+                if (from === 0) return { chartData: [], uniqueVisitors: 0, uniquePaths: 0 }
+                break
+            }
+
+            if (!data || data.length === 0) break
+
+            allLogs = [...allLogs, ...data]
+            if (data.length < limit) break
+            from += limit
         }
 
-        // Aggregate data for chart
-        const chartDataMap = new Map<string, number>()
+        // Aggregate data for chart (Unique Visitors per bucket)
+        const chartDataMap = new Map<string, Set<string>>()
 
         // Define format based on range
         const getKey = (dateStr: string) => {
@@ -107,28 +121,32 @@ export async function getAnalyticsStats(range: TimeRange) {
             }
         }
 
-        logs.forEach(log => {
+        allLogs.forEach(log => {
             const key = getKey(log.created_at)
-            chartDataMap.set(key, (chartDataMap.get(key) || 0) + 1)
+            if (!chartDataMap.has(key)) {
+                chartDataMap.set(key, new Set())
+            }
+            chartDataMap.get(key)!.add(log.ip_address)
         })
 
-        // Fill in gaps if needed (optional optimization for smoother charts)
-        // For simplicity, we'll just map the existing data points for now
-
-        const chartData = Array.from(chartDataMap.entries()).map(([date, views]) => ({
+        const chartData = Array.from(chartDataMap.entries()).map(([date, ipSet]) => ({
             date,
-            views
+            visitors: ipSet.size
         }))
+
+        // Sort chartData by date if needed, but the map insertion order might strictly follow log order 
+        // if keys are distinct. However, Map iterates in insertion order. 
+        // Since logs are sorted by created_at, keys are inserted in time order.
 
         return {
             chartData,
-            totalViews: logs.length,
-            uniquePaths: new Set(logs.map(l => l.path)).size
+            uniqueVisitors: new Set(allLogs.map(l => l.ip_address)).size,
+            uniquePaths: new Set(allLogs.map(l => l.path)).size
         }
 
     } catch (error) {
         console.error('Failed to get analytics stats:', error)
-        return { chartData: [], totalViews: 0, uniquePaths: 0 }
+        return { chartData: [], uniqueVisitors: 0, uniquePaths: 0 }
     }
 }
 
@@ -159,22 +177,42 @@ export async function getABTestStats(): Promise<ABTestStats[]> {
         // Supabase/Postgres JSON extraction: metadata->>'ab_test_bucket'
 
         // 1. Get Visitors per Bucket
-        const { data: visitors, error: visitorsError } = await supabase
-            .from('analytics_logs')
-            .select('ip_address, metadata, created_at')
-            .not('metadata->>ab_test_bucket', 'is', null)
+        let visitors: any[] = []
+        let vFrom = 0
+        const vLimit = 1000
+        while (true) {
+            const { data, error } = await supabase
+                .from('analytics_logs')
+                .select('ip_address, metadata, created_at')
+                .not('metadata->>ab_test_bucket', 'is', null)
+                .range(vFrom, vFrom + vLimit - 1)
 
-        if (visitorsError) throw visitorsError
+            if (error) throw error
+            if (!data || data.length === 0) break
+            visitors = [...visitors, ...data]
+            if (data.length < vLimit) break
+            vFrom += vLimit
+        }
 
         // 2. Get Conversions per Bucket
-        const { data: conversions, error: conversionsError } = await supabase
-            .from('analytics_logs')
-            .select('ip_address, metadata, created_at')
-            .eq('event_name', 'cta_click')
-            .eq('metadata->>label', 'join_waitlist')
-            .not('metadata->>ab_test_bucket', 'is', null)
+        let conversions: any[] = []
+        let cFrom = 0
+        const cLimit = 1000
+        while (true) {
+            const { data, error } = await supabase
+                .from('analytics_logs')
+                .select('ip_address, metadata, created_at')
+                .eq('event_name', 'cta_click')
+                .eq('metadata->>label', 'join_waitlist')
+                .not('metadata->>ab_test_bucket', 'is', null)
+                .range(cFrom, cFrom + cLimit - 1)
 
-        if (conversionsError) throw conversionsError
+            if (error) throw error
+            if (!data || data.length === 0) break
+            conversions = [...conversions, ...data]
+            if (data.length < cLimit) break
+            cFrom += cLimit
+        }
 
         // Process in JS for simplicity (could be complex SQL)
         const buckets = ['control', 'variant']

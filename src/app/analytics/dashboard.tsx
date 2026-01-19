@@ -134,7 +134,7 @@ export function AnalyticsDashboard() {
 
     // Data states
     const [logs, setLogs] = useState<AnalyticsLog[]>([])
-    const [stats, setStats] = useState<{ chartData: any[], totalViews: number, uniquePaths: number } | null>(null)
+    const [stats, setStats] = useState<{ chartData: any[], uniqueVisitors: number, uniquePaths: number } | null>(null)
     const [abStats, setAbStats] = useState<ABTestStats[]>([])
     const [loading, setLoading] = useState(true)
 
@@ -207,8 +207,8 @@ export function AnalyticsDashboard() {
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 mb-8">
                         <div className="bg-white overflow-hidden shadow rounded-lg">
                             <div className="px-4 py-5 sm:p-6">
-                                <dt className="text-sm font-medium text-gray-500 truncate">Total Page Views</dt>
-                                <dd className="mt-1 text-3xl font-semibold text-gray-900">{stats.totalViews}</dd>
+                                <dt className="text-sm font-medium text-gray-500 truncate">Unique Visitors</dt>
+                                <dd className="mt-1 text-3xl font-semibold text-gray-900">{stats.uniqueVisitors}</dd>
                             </div>
                         </div>
                         <div className="bg-white overflow-hidden shadow rounded-lg">
@@ -266,7 +266,7 @@ export function AnalyticsDashboard() {
                                     />
                                     <Area
                                         type="monotone"
-                                        dataKey="views"
+                                        dataKey="visitors"
                                         stroke="#4f46e5"
                                         strokeWidth={3}
                                         fillOpacity={1}
