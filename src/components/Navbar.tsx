@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 export default function Navbar() {
     const [showDropdown, setShowDropdown] = React.useState(false);
+    const [showAboutDropdown, setShowAboutDropdown] = React.useState(false);
     const pathname = usePathname();
     const isCustomizePage = pathname === "/checkout-pages/customize";
 
@@ -73,19 +74,55 @@ export default function Navbar() {
                             How It Works
                         </Link>
                         <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
-                        <Link
-                            href="/our-story"
-                            className={getLinkClass("/our-story")}
+                        <div
+                            className="relative group h-full flex items-center"
+                            onMouseEnter={() => setShowAboutDropdown(true)}
+                            onMouseLeave={() => setShowAboutDropdown(false)}
                         >
-                            Our Story
-                        </Link>
-                        <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
-                        <Link
-                            href="https://blog.dreamplaypianos.com/blog"
-                            className={getLinkClass("https://blog.dreamplaypianos.com/blog")}
-                        >
-                            Our Blog
-                        </Link>
+                            <div className={`${getLinkClass("/about-us")} cursor-pointer !flex items-center gap-2 whitespace-nowrap`}>
+                                About Us
+                                <svg
+                                    width="10"
+                                    height="6"
+                                    viewBox="0 0 10 6"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className={`transition-transform duration-200 ${showAboutDropdown ? 'rotate-180' : ''}`}
+                                >
+                                    <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            </div>
+
+                            <div
+                                className={`absolute top-full right-0 mt-2 w-48 rounded-lg shadow-xl overflow-hidden transition-all duration-200 border ${isCustomizePage
+                                    ? 'bg-[#0a0a0f] border-white/10'
+                                    : 'bg-white border-black/5 ring-1 ring-black/5'
+                                    } ${showAboutDropdown
+                                        ? 'opacity-100 translate-y-0 visible'
+                                        : 'opacity-0 translate-y-2 invisible'
+                                    }`}
+                                style={{ zIndex: 100 }}
+                            >
+                                <Link
+                                    href="/our-story"
+                                    className={`block px-4 py-3 text-sm transition-colors ${isCustomizePage
+                                        ? 'text-gray-400 hover:text-white hover:bg-white/5'
+                                        : 'text-gray-600 hover:text-black hover:bg-black/5'
+                                        }`}
+                                >
+                                    Our Story
+                                </Link>
+                                <Link
+                                    href="https://blog.dreamplaypianos.com/blog"
+                                    className={`block px-4 py-3 text-sm transition-colors ${isCustomizePage
+                                        ? 'text-gray-400 hover:text-white hover:bg-white/5'
+                                        : 'text-gray-600 hover:text-black hover:bg-black/5'
+                                        }`}
+                                >
+                                    Our Blog
+                                </Link>
+                            </div>
+                        </div>
                         <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
                         <div
                             className="relative group h-full flex items-center"
