@@ -7,27 +7,17 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                background: "#fafaf9",
-                foreground: "#1c1917",
-                primary: "#1c1917",
-                secondary: "#f5f5f4",
-                muted: "#f5f5f4",
-                "muted-foreground": "#78716c",
-                "dark-section": "#0c0a09",
-                "dark-text": "#f5f5f4",
-                accent: {
-                    DEFAULT: "#2563eb",
-                    dim: "#2563eb33",
-                    foreground: "#ffffff",
-                },
-                brand: {
-                    DEFAULT: "var(--brand)",
-                    foreground: "var(--brand-foreground)",
-                },
+                background: "#000000",
+                foreground: "#ffffff",
+                // Precise colors from your original CSS
+                "midnight-box": "#080a0f",
+                "glass-card": "rgba(30, 41, 59, 0.4)",
+                "zone-a": "#f43f5e", // Rose
+                "zone-b": "#f59e0b", // Amber
+                "zone-c": "#2dd4bf", // Teal
             },
             fontFamily: {
-                sans: ["Inter", "sans-serif"],
-                serif: ["Lora", "serif"],
+                sans: ["Manrope", "Inter", "sans-serif"],
             },
         },
     },
