@@ -80,6 +80,13 @@ export default function Navbar() {
                             Our Story
                         </Link>
                         <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
+                        <Link
+                            href="https://blog.dreamplaypianos.com/blog"
+                            className={getLinkClass("https://blog.dreamplaypianos.com/blog")}
+                        >
+                            Our Blog
+                        </Link>
+                        <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
                         <div
                             className="relative group h-full flex items-center"
                             onMouseEnter={() => setShowDropdown(true)}
@@ -101,8 +108,8 @@ export default function Navbar() {
 
                             <div
                                 className={`absolute top-full right-0 mt-2 w-48 rounded-lg shadow-xl overflow-hidden transition-all duration-200 border ${isCustomizePage
-                                        ? 'bg-[#0a0a0f] border-white/10'
-                                        : 'bg-white border-black/5 ring-1 ring-black/5'
+                                    ? 'bg-[#0a0a0f] border-white/10'
+                                    : 'bg-white border-black/5 ring-1 ring-black/5'
                                     } ${showDropdown
                                         ? 'opacity-100 translate-y-0 visible'
                                         : 'opacity-0 translate-y-2 invisible'
@@ -112,8 +119,8 @@ export default function Navbar() {
                                 <Link
                                     href="/information-and-policies/faq"
                                     className={`block px-4 py-3 text-sm transition-colors ${isCustomizePage
-                                            ? 'text-gray-400 hover:text-white hover:bg-white/5'
-                                            : 'text-gray-600 hover:text-black hover:bg-black/5'
+                                        ? 'text-gray-400 hover:text-white hover:bg-white/5'
+                                        : 'text-gray-600 hover:text-black hover:bg-black/5'
                                         }`}
                                 >
                                     FAQ
@@ -121,8 +128,8 @@ export default function Navbar() {
                                 <Link
                                     href="/information-and-policies/shipping"
                                     className={`block px-4 py-3 text-sm transition-colors ${isCustomizePage
-                                            ? 'text-gray-400 hover:text-white hover:bg-white/5'
-                                            : 'text-gray-600 hover:text-black hover:bg-black/5'
+                                        ? 'text-gray-400 hover:text-white hover:bg-white/5'
+                                        : 'text-gray-600 hover:text-black hover:bg-black/5'
                                         }`}
                                 >
                                     Shipping
