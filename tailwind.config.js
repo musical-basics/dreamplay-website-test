@@ -9,7 +9,28 @@ module.exports = {
             colors: {
                 background: "#000000",
                 foreground: "#ffffff",
-                // Precise colors from your original CSS
+
+                // -- Brand Colors (Used in Home/Holiday Sale) --
+                brand: {
+                    DEFAULT: "#2563eb",
+                    foreground: "#ffffff",
+                },
+
+                // -- Our Story Specific Colors (Restored) --
+                accent: {
+                    DEFAULT: "#2563eb", // Blue accent
+                    dim: "#2563eb33",
+                    foreground: "#ffffff",
+                },
+                "dark-section": "#0c0a09", // The dark background for "The Struggle"
+                "dark-text": "#f5f5f4",
+                muted: {
+                    DEFAULT: "#f5f5f4",
+                    foreground: "#78716c",
+                },
+                secondary: "#f5f5f4",
+
+                // -- How It Works Specific Colors --
                 "midnight-box": "#080a0f",
                 "glass-card": "rgba(30, 41, 59, 0.4)",
                 "zone-a": "#f43f5e", // Rose
@@ -18,6 +39,7 @@ module.exports = {
             },
             fontFamily: {
                 sans: ["Manrope", "Inter", "sans-serif"],
+                serif: ["Lora", "serif"], // Restored serif for "Our Story"
             },
         },
     },
