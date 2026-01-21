@@ -20,7 +20,7 @@ const SectionContainer = ({ children, className }: { children: React.ReactNode; 
 
 /**
  * Split-Color Donut Chart (Red vs Green)
- * "Fatter" ring design
+ * "Fatter" ring design (smaller inner circle)
  */
 const DonutChart = ({ percent, label }: { percent: number; label: string }) => {
     const [currentPercent, setCurrentPercent] = useState(0);
@@ -37,9 +37,7 @@ const DonutChart = ({ percent, label }: { percent: number; label: string }) => {
                     const elapsed = time - startTime;
                     const progress = Math.min(elapsed / duration, 1);
                     const ease = 1 - Math.pow(1 - progress, 4); // easeOutQuart
-
                     setCurrentPercent(target * ease);
-
                     if (progress < 1) requestAnimationFrame(animate);
                 };
                 requestAnimationFrame(animate);
@@ -54,7 +52,7 @@ const DonutChart = ({ percent, label }: { percent: number; label: string }) => {
     return (
         <div ref={ref} className="flex flex-col items-center">
             <div className="relative w-[220px] h-[220px] flex items-center justify-center">
-                {/* Split Conic Gradient: Red (Too Small) vs Green (Comfortable) */}
+                {/* Split Conic Gradient */}
                 <div
                     className="absolute inset-0 rounded-full transition-all duration-75"
                     style={{
@@ -84,7 +82,6 @@ const AnimatedBar = ({ targetWidth, color }: { targetWidth: number; color: strin
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
-                // Small delay for dramatic effect
                 setTimeout(() => setWidth(targetWidth), 200);
                 observer.disconnect();
             }
@@ -200,57 +197,63 @@ export default function HowItWorksPage() {
 
                                     {/* The Static Tri-Color Glow (Red -> Amber -> Teal) */}
                                     <div
-                                        className="absolute left-0 right-0 h-2 rounded-full blur-md opacity-60"
+                                        className="absolute left-0 right-0 h-3 rounded-full blur-md opacity-80"
                                         style={{
-                                            background: 'linear-gradient(90deg, #f43f5e 0%, #f59e0b 50%, #2dd4bf 100%)'
+                                            background: 'linear-gradient(90deg, #f43f5e 0%, #f43f5e 33%, #f59e0b 33%, #f59e0b 66%, #2dd4bf 66%, #2dd4bf 100%)'
                                         }}
                                     ></div>
 
-                                    {/* The Background Track (Dark line) */}
-                                    <div className="absolute left-0 right-0 h-1.5 bg-white/10 rounded-full"></div>
+                                    {/* The Background Track (Visible Line) */}
+                                    <div
+                                        className="absolute left-0 right-0 h-1.5 rounded-full"
+                                        style={{
+                                            background: 'linear-gradient(90deg, #f43f5e 0%, #f43f5e 33%, #f59e0b 33%, #f59e0b 66%, #2dd4bf 66%, #2dd4bf 100%)'
+                                        }}
+                                    ></div>
 
-                                    {/* The Active Fill (Changes based on selection) */}
+                                    {/* The Slider Input (Transparent track, custom thumb) */}
                                     <input
                                         type="range"
                                         min="0" max="100" step="0.5"
                                         value={sliderValue}
                                         onChange={(e) => setSliderValue(parseFloat(e.target.value))}
                                         className="w-full h-1.5 bg-transparent rounded-full appearance-none cursor-pointer relative z-10"
-                                        style={{
-                                            backgroundImage: `linear-gradient(to right, ${result.activeColor} 0%, ${result.activeColor} ${sliderValue}%, transparent ${sliderValue}%)`,
-                                            backgroundSize: '100% 100%',
-                                            backgroundRepeat: 'no-repeat',
-                                        }}
                                     />
 
                                     {/* Thumb Styling */}
                                     <style jsx>{`
                       input[type=range]::-webkit-slider-thumb {
                         -webkit-appearance: none;
-                        height: 24px;
-                        width: 24px;
+                        height: 28px;
+                        width: 28px;
                         border-radius: 50%;
                         background: #ffffff;
                         cursor: pointer;
-                        border: 4px solid ${result.activeColor}; /* Thumb matches active zone */
-                        box-shadow: 0 0 15px ${result.activeColor};
-                        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-                        margin-top: -9px; /* Align center */
+                        border: 4px solid ${result.activeColor}; /* Thumb matches active zone color */
+                        box-shadow: 0 0 20px ${result.activeColor};
+                        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+                        margin-top: -12px; /* Center thumb on track */
                       }
                       input[type=range]::-moz-range-thumb {
-                        height: 24px;
-                        width: 24px;
+                        height: 28px;
+                        width: 28px;
                         border-radius: 50%;
                         background: #ffffff;
                         cursor: pointer;
                         border: 4px solid ${result.activeColor};
-                        box-shadow: 0 0 15px ${result.activeColor};
-                        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+                        box-shadow: 0 0 20px ${result.activeColor};
+                        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+                        margin-top: -12px;
+                      }
+                      /* Chrome/Safari track reset */
+                      input[type=range]::-webkit-slider-runnable-track {
+                        background: transparent;
+                        height: 6px;
                       }
                     `}</style>
                                 </div>
 
-                                <div className="flex justify-between text-xs text-gray-500 mt-2 font-medium">
+                                <div className="flex justify-between text-xs text-gray-500 mt-4 font-medium px-1">
                                     <span>Small (6 in)</span>
                                     <span>Average (8 in)</span>
                                     <span>Large (10 in)</span>
@@ -277,9 +280,15 @@ export default function HowItWorksPage() {
 
                         {/* RESULT CARD */}
                         <div className="lg:col-span-5 rounded-[2rem] border border-white/10 p-8 md:p-10 bg-[#0c111c] flex flex-col transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
-                            <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Your match</div>
+                            <div className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Your match</div>
                             <div className={`text-5xl font-bold mb-2 ${result.activeTwColor}`}>Zone {result.zone}</div>
-                            <div className="text-sm text-gray-400 mb-8 font-medium">Recommended: <span className="text-white">{result.model}</span></div>
+                            <div className="text-sm text-gray-400 mb-8 font-medium">Hand span range: {result.val < 7.6 ? '6.0 to 7.6 inches' : result.val <= 8.5 ? '7.6 to 8.5 inches' : '8.5 inches +'}</div>
+
+                            {/* MODEL NAME */}
+                            <div className="text-6xl font-bold text-white mb-2 tracking-tight">{result.model}</div>
+
+                            {/* RECOMMENDED LABEL (BLUE) */}
+                            <div className="text-blue-400 font-medium text-lg mb-8">Recommended model</div>
 
                             <p className="text-gray-400 leading-relaxed text-lg mb-8 flex-grow">
                                 {result.desc}
