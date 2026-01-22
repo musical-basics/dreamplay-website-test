@@ -1,56 +1,76 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { type NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
-// Simple in-memory counter for round-robin assignment
-// In a serverless environment, this will be per-instance, which still provides
-// better balancing than pure random.
-let bucketCounter = 0
+// Initialize simpler client for middleware (Edge compatible)
+const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
-export function middleware(request: NextRequest) {
-    const AB_COOKIE_NAME = 'ab-test-bucket'
-    let bucket = request.cookies.get(AB_COOKIE_NAME)?.value
+export async function middleware(request: NextRequest) {
+    const url = request.nextUrl;
+    const pathname = url.pathname;
 
-    // If no bucket, assign one
-    if (!bucket) {
-        // Round-robin: Even = control, Odd = variant
-        // 0 -> control, 1 -> variant, 2 -> control, ...
-        bucket = (bucketCounter++ % 2 === 0) ? 'control' : 'variant'
-        console.log(`[Middleware] New visitor. Assigned bucket: ${bucket}`)
-    } else {
-        console.log(`[Middleware] Returning visitor. Bucket: ${bucket}`)
+    // 1. Check DB for active tests on this path
+    // (In production, you would cache this response to avoid hitting DB on every request)
+    const { data: activeTest } = await supabase
+        .from("ab_tests")
+        .select("*, ab_variants(*)")
+        .eq("target_path", pathname)
+        .eq("status", "active")
+        .single();
+
+    if (!activeTest || !activeTest.ab_variants) {
+        return NextResponse.next(); // No test running, proceed as normal
     }
 
-    // Handle URL rendering based on bucket
-    // If user is designated for 'variant' and visits '/', show them '/special-offer' content
-    if (request.nextUrl.pathname === '/') {
-        if (bucket === 'variant') {
-            const url = request.nextUrl.clone()
-            url.pathname = '/special-offer'
-            const response = NextResponse.rewrite(url)
-            // Ensure cookie is set
-            if (!request.cookies.has(AB_COOKIE_NAME)) {
-                response.cookies.set(AB_COOKIE_NAME, bucket, { httpOnly: false })
+    // 2. Check if user is already bucketed via Cookie
+    const cookieName = `ab_${activeTest.slug}`;
+    let assignedVariantId = request.cookies.get(cookieName)?.value;
+    let variant = activeTest.ab_variants.find((v: any) => v.id === assignedVariantId);
+
+    // 3. Logic: If Winner Declared, force everyone to winner
+    if (activeTest.winning_variant_id) {
+        variant = activeTest.ab_variants.find((v: any) => v.id === activeTest.winning_variant_id);
+    }
+    // 4. Logic: If no bucket, assign one based on traffic %
+    else if (!variant) {
+        const random = Math.random() * 100;
+        let accumulated = 0;
+        for (const v of activeTest.ab_variants) {
+            accumulated += v.traffic_percent;
+            if (random <= accumulated) {
+                variant = v;
+                break;
             }
-            return response
         }
     }
 
-    // Default response (Control or other pages)
-    const response = NextResponse.next()
+    // 5. Rewrite Request
+    if (variant && variant.path_rewrite !== pathname) {
+        const rewriteUrl = request.nextUrl.clone();
+        rewriteUrl.pathname = variant.path_rewrite;
 
-    // Set cookie if missing
-    if (!request.cookies.has(AB_COOKIE_NAME)) {
-        response.cookies.set(AB_COOKIE_NAME, bucket, { httpOnly: false })
+        // Pass test info headers so the Client Component knows what to track
+        const response = NextResponse.rewrite(rewriteUrl);
+        response.cookies.set(cookieName, variant.id);
+        response.headers.set("x-ab-test-id", activeTest.id);
+        response.headers.set("x-ab-variant-id", variant.id);
+        return response;
     }
 
-    return response
+    // Even if it's the Control (no rewrite), we set headers for tracking
+    const response = NextResponse.next();
+    if (variant) {
+        response.cookies.set(cookieName, variant.id);
+        response.headers.set("x-ab-test-id", activeTest.id);
+        response.headers.set("x-ab-variant-id", variant.id);
+    }
+    return response;
 }
 
 export const config = {
     matcher: [
-        // Match root path mainly, but also must run on root to set cookie.
-        // We want to run on '/' to potentially rewrite.
-        '/',
-        // We can also match others if we want to track them, but for now we only rewrite '/'
+        "/((?!_next/static|_next/image|favicon.ico|api|admin).*)", // Exclude API and Admin
     ],
-}
+};
