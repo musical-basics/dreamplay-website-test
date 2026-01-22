@@ -113,6 +113,15 @@ export default function Navbar() {
                                     Our Story
                                 </Link>
                                 <Link
+                                    href="/about-us/ds-standard"
+                                    className={`block px-4 py-3 text-sm transition-colors ${isCustomizePage
+                                        ? 'text-gray-400 hover:text-white hover:bg-white/5'
+                                        : 'text-gray-600 hover:text-black hover:bg-black/5'
+                                        }`}
+                                >
+                                    The DS Standard
+                                </Link>
+                                <Link
                                     href="https://blog.dreamplaypianos.com/blog"
                                     className={`block px-4 py-3 text-sm transition-colors ${isCustomizePage
                                         ? 'text-gray-400 hover:text-white hover:bg-white/5'
