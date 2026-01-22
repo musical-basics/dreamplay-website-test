@@ -1,6 +1,6 @@
 "use client"
 
-import Link from "next/link"
+import Navbar from "@/components/Navbar"
 import { HeroSection } from "@/components/special-offer/hero-section"
 import { CountdownTimer } from "@/components/special-offer/countdown-timer"
 import { FeaturesPianoSection } from "@/components/special-offer/features-piano-section"
@@ -9,7 +9,6 @@ import { LessonsSection } from "@/components/special-offer/lessons-section"
 import { FindYourFitSection } from "@/components/special-offer/find-your-fit-section"
 import { GuaranteeSection } from "@/components/special-offer/guarantee-section"
 import { CTASection } from "@/components/special-offer/cta-section"
-import { SpecialOfferHeader } from "@/components/special-offer/header"
 import { SpecialOfferFooter } from "@/components/special-offer/footer"
 import { useABAnalytics } from "@/hooks/use-ab-analytics"
 import { VideoSection1 } from "@/components/special-offer/video-section-1"
@@ -29,7 +28,7 @@ export default function SpecialOfferPage() {
 
 
 
-            <SpecialOfferHeader className="sticky top-0 mb-[-4rem] z-[100]" />
+            <Navbar />
 
             {/* Card-stacking parallax sections */}
             <div className="relative">
