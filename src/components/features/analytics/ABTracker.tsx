@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
@@ -13,7 +13,7 @@ function getCookie(name: string) {
     return null;
 }
 
-export function ABTracker() {
+function ABTrackerContent() {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const startTime = useRef(Date.now());
@@ -93,3 +93,12 @@ export function ABTracker() {
 
     return null;
 }
+
+export function ABTracker() {
+    return (
+        <Suspense fallback={null}>
+            <ABTrackerContent />
+        </Suspense>
+    );
+}
+
