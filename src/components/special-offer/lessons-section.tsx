@@ -49,8 +49,8 @@ export function LessonsSection() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                             <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-center text-white">
-                                <h3 className="text-xl md:text-3xl font-sans font-semibold mb-2 md:mb-3">Did you know?</h3>
-                                <p className="text-xs md:text-sm leading-relaxed text-white/90 max-w-sm mx-auto">
+                                <h3 className="text-2xl md:text-4xl font-sans font-semibold mb-2 md:mb-3">Did you know?</h3>
+                                <p className="text-sm md:text-base leading-relaxed text-white/90 max-w-sm mx-auto">
                                     Traditional pianos are designed for handspans of 8.5&quot; or more, leaving behind most women and nearly a
                                     third of men.
                                 </p>
@@ -61,14 +61,14 @@ export function LessonsSection() {
                     <div
                         className={`flex flex-col justify-center items-center text-center transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"}`}
                     >
-                        <h2 className="text-xl md:text-3xl lg:text-4xl font-semibold text-neutral-900 mb-3 md:mb-4 leading-tight">
+                        <h2 className="text-2xl md:text-4xl lg:text-5xl font-semibold text-neutral-900 mb-3 md:mb-4 leading-tight">
                             Standard Piano Keys
                             <br className="hidden md:block" />
                             <span className="md:hidden"> </span>
                             Are Too Wide
                         </h2>
 
-                        <p className="text-neutral-600 text-sm md:text-base mb-4 md:mb-6 leading-relaxed">
+                        <p className="text-neutral-600 text-base md:text-lg mb-4 md:mb-6 leading-relaxed">
                             Stop over-stretching. DreamPlay One offers narrower keys designed for your handspan.
                         </p>
 
@@ -81,7 +81,7 @@ export function LessonsSection() {
                                     style={{ transitionDelay: `${400 + index * 100}ms` }}
                                 >
                                     <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-neutral-900 rounded-full shrink-0" />
-                                    <span className="text-neutral-800 text-[10px] md:text-xs font-medium leading-snug whitespace-pre-line text-left">
+                                    <span className="text-neutral-800 text-xs md:text-sm font-medium leading-snug whitespace-pre-line text-left">
                                         {benefit}
                                     </span>
                                 </li>
