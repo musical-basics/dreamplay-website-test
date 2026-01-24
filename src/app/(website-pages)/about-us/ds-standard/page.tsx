@@ -9,6 +9,14 @@ import { ArrowRight, CheckCircle2, Globe, MapPin } from "lucide-react";
 
 export default function DSStandardPage() {
     return (
+        <React.Suspense fallback={null}>
+            <DSStandardContent />
+        </React.Suspense>
+    );
+}
+
+function DSStandardContent() {
+    return (
         <div className="min-h-screen bg-black text-white font-sans selection:bg-accent/30">
             <Navbar />
 
