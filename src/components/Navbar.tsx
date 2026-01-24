@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 export default function Navbar() {
     const [showDropdown, setShowDropdown] = React.useState(false);
     const [showAboutDropdown, setShowAboutDropdown] = React.useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
     const pathname = usePathname();
     const isCustomizePage = pathname === "/checkout-pages/customize";
 
@@ -249,7 +250,10 @@ export default function Navbar() {
                             </div>
                         </Link>
                     </div>
-                    <div className="navigation5_menu-button w-nav-button">
+                    <div
+                        className={`navigation5_menu-button w-nav-button ${mobileMenuOpen ? 'w--open' : ''}`}
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    >
                         <div className="navigation5_menu-icon">
                             <div className="navigation_menu_line-top navigation-menu-line-background-wrfrm"></div>
                             <div className="navigation_menu_line-middle navigation-menu-line-background-wrfrm">
@@ -260,6 +264,96 @@ export default function Navbar() {
                     </div>
                 </div>
             </div>
+
+            {/* Mobile Menu Overlay */}
+            {mobileMenuOpen && (
+                <div
+                    className="fixed inset-0 bg-black/50 z-[999]"
+                    onClick={() => setMobileMenuOpen(false)}
+                />
+            )}
+
+            {/* Mobile Menu */}
+            <div
+                className={`fixed top-[70px] left-0 right-0 bg-white shadow-xl z-[1001] transition-all duration-300 ${mobileMenuOpen
+                        ? 'opacity-100 translate-y-0 visible'
+                        : 'opacity-0 -translate-y-4 invisible pointer-events-none'
+                    }`}
+            >
+                <div className="flex flex-col py-4">
+                    <Link
+                        href="/"
+                        className="px-6 py-4 text-lg font-medium text-gray-800 hover:bg-gray-100"
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        DreamPlay One
+                    </Link>
+                    <Link
+                        href="/why-narrow"
+                        className="px-6 py-4 text-lg font-medium text-gray-800 hover:bg-gray-100"
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        Why Narrow?
+                    </Link>
+                    <Link
+                        href="/how-it-works"
+                        className="px-6 py-4 text-lg font-medium text-gray-800 hover:bg-gray-100"
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        How It Works
+                    </Link>
+                    <div className="border-t border-gray-200 my-2" />
+                    <div className="px-6 py-2 text-sm font-semibold text-gray-500 uppercase">About Us</div>
+                    <Link
+                        href="/our-story"
+                        className="px-6 py-3 text-base text-gray-700 hover:bg-gray-100"
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        Our Story
+                    </Link>
+                    <Link
+                        href="/about-us/ds-standard"
+                        className="px-6 py-3 text-base text-gray-700 hover:bg-gray-100"
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        The DS Standard
+                    </Link>
+                    <Link
+                        href="https://blog.dreamplaypianos.com/blog"
+                        className="px-6 py-3 text-base text-gray-700 hover:bg-gray-100"
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        Our Blog
+                    </Link>
+                    <div className="border-t border-gray-200 my-2" />
+                    <div className="px-6 py-2 text-sm font-semibold text-gray-500 uppercase">Information & Policies</div>
+                    <Link
+                        href="/information-and-policies/faq"
+                        className="px-6 py-3 text-base text-gray-700 hover:bg-gray-100"
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        FAQ
+                    </Link>
+                    <Link
+                        href="/information-and-policies/shipping"
+                        className="px-6 py-3 text-base text-gray-700 hover:bg-gray-100"
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        Shipping
+                    </Link>
+                    <div className="border-t border-gray-200 my-2" />
+                    <div className="px-6 py-4">
+                        <Link
+                            href="/checkout-pages/buy-product"
+                            className="block w-full text-center py-3 px-6 bg-black text-white rounded-full font-medium"
+                            onClick={() => setMobileMenuOpen(false)}
+                        >
+                            Join The Waitlist
+                        </Link>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
+
