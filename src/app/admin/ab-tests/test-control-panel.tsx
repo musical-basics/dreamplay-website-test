@@ -1,3 +1,5 @@
+"use client";
+
 import { useTransition } from "react";
 import { setWinner, toggleTestStatus } from "@/actions/ab-actions";
 
@@ -62,7 +64,7 @@ export function TestControlPanel({ test }: { test: Test }) {
                         className="text-sm border rounded px-2 py-1 bg-white dark:bg-gray-900"
                     >
                         <option value="none">Running (No Winner)</option>
-                        {test.ab_variants.map(v => (
+                        {(test.ab_variants || []).map(v => (
                             <option key={v.id} value={v.id}>Force {v.name}</option>
                         ))}
                     </select>

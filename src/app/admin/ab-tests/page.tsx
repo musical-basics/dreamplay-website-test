@@ -1,35 +1,33 @@
 
 import Link from "next/link";
-import { createClient } from "@supabase/supabase-js";
 import { Button } from "@/components/ui/button";
 import { toggleTestStatus } from "@/actions/ab-actions";
 import { TestControlPanel } from "./test-control-panel";
-
-// Initialize Service Role Client for Admin Page
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { createAdminClient } from "@/lib/supabase/server";
 
 export const revalidate = 0; // Disable cache for admin panel
 
 export default async function ABTestsPage() {
+    // Initialize Service Role Client for Admin Page
+    const supabase = await createAdminClient();
     // 1. Fetch Tests
     const { data: tests, error } = await supabase
         .from("ab_tests")
         .select("*, ab_variants(*)")
         .order("created_at", { ascending: false });
 
-    if (error || !tests) {
-        return <div className="p-8">Error loading tests: {error?.message}</div>;
+    if (error) {
+        return <div className="p-8">Error loading tests: {error.message}</div>;
     }
+
+    const safeTests = tests || [];
 
     // 2. Fetch Aggregated Stats
     // Note: For production, use RPC or specialized analytics table. 
     // Here we do a simple aggregation in-memory for the simpler setup.
     const statsMap: Record<string, any> = {};
 
-    for (const test of tests) {
+    for (const test of safeTests) {
         // Fetch events for this test
         // Limit to recent 10000 events for performance protection in this basic implementation
         const { data: events } = await supabase
@@ -55,7 +53,7 @@ export default async function ABTestsPage() {
             </div>
 
             <div className="grid gap-8">
-                {tests.map((test) => (
+                {safeTests.map((test) => (
                     <div key={test.id} className="border rounded-xl p-6 shadow-sm bg-white dark:bg-gray-900">
                         <div className="flex justify-between items-start mb-4">
                             <div>
@@ -91,7 +89,7 @@ export default async function ABTestsPage() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {test.ab_variants.map((variant: any) => {
+                                    {(test.ab_variants || []).map((variant: any) => {
                                         const vStats = statsMap[test.id]?.[variant.id] || { views: 0, conversions: 0, avgTime: 0 };
                                         const rate = vStats.views > 0 ? ((vStats.conversions / vStats.views) * 100).toFixed(1) : "0.0";
                                         const isWinner = test.winning_variant_id === variant.id;
@@ -118,7 +116,7 @@ export default async function ABTestsPage() {
                     </div>
                 ))}
 
-                {tests.length === 0 && (
+                {safeTests.length === 0 && (
                     <div className="text-center py-20 bg-gray-50 dark:bg-gray-800 rounded-xl border border-dashed">
                         <p className="text-gray-500 mb-4">No active experiments found.</p>
                         <Link href="/admin/ab-tests/create">
@@ -136,7 +134,7 @@ function calculateStats(events: any[], variants: any[]) {
     const stats: Record<string, { views: number; conversions: number; totalTime: number; timeCount: number; avgTime: number }> = {};
 
     // Initialize
-    variants.forEach(v => {
+    (variants || []).forEach(v => {
         stats[v.id] = { views: 0, conversions: 0, totalTime: 0, timeCount: 0, avgTime: 0 };
     });
 
