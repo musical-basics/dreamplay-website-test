@@ -433,6 +433,12 @@ export default function WhyNarrowPage() {
                   </div>
                 </div>
               </div>
+              <div style={{ marginTop: "2.5rem", textAlign: "center" }}>
+                <a href="/about-us/ds-standard" className="dp-card-cta" style={{ display: "inline-flex" }}>
+                  Learn more about the DS Standard
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+                </a>
+              </div>
             </div>
           </div>
         </section>
