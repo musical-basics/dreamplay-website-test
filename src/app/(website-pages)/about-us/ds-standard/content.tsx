@@ -123,7 +123,7 @@ export default function DSStandardContent() {
                                         src="/images/David-Linda.jpg"
                                         alt="David and Linda Steinbuhler"
                                         fill
-                                        className="object-cover"
+                                        className="object-cover object-[70%_center]"
                                     />
                                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-8 pt-24">
                                         <p className="text-white font-medium text-lg">David & Linda Steinbuhler</p>
