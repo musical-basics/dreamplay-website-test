@@ -434,7 +434,13 @@ export default function CustomizePage() {
                             Step One
                         </div>
                         <h2 className="mb-2 text-balance text-2xl font-bold text-white md:mb-3 md:text-4xl lg:text-5xl">Select Your Hand Size</h2>
-                        <p className="mx-auto max-w-xl text-sm text-white/60 md:text-base">Choose the option that best describes your hand size.</p>
+                        <p className="mx-auto max-w-xl text-sm text-white/60 md:text-base">
+                            Choose the option that best describes your hand size.{" "}
+                            <a href="/about-us/ds-standard" target="_blank" className="inline-flex items-center gap-1 text-[#4a9eff] hover:text-[#4a9eff]/80 transition-colors">
+                                <span className="underline">Learn about sizes</span>
+                                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </a>
+                        </p>
                     </div>
 
                     <div className="mb-8 flex justify-center">
@@ -516,7 +522,10 @@ export default function CustomizePage() {
                         </div>
                         <h2 className="mb-2 text-balance text-2xl font-bold text-white md:mb-3 md:text-4xl lg:text-5xl">Your Recommended Size</h2>
                         <p className="mx-auto max-w-xl text-sm text-white/60 md:text-base">
-                            Based on your hand span, we recommend the <span className="font-semibold text-[#4a9eff]">{appState.size || 'DS6.0'}</span>.
+                            Based on your hand span, we recommend the <span className="font-semibold text-[#4a9eff]">{appState.size || 'DS6.0'}</span>.{" "}
+                            <a href="/about-us/ds-standard" target="_blank" className="inline-flex items-center gap-1 text-[#4a9eff] hover:text-[#4a9eff]/80 transition-colors whitespace-nowrap">
+                                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </a>
                         </p>
                     </div>
                     <div className="grid gap-3 md:gap-4 lg:grid-cols-3">

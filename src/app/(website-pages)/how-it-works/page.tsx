@@ -288,7 +288,10 @@ export default function HowItWorksPage() {
                             <div className="text-6xl font-bold text-white mb-2 tracking-tight">{result.model}</div>
 
                             {/* RECOMMENDED LABEL (BLUE) */}
-                            <div className="text-blue-400 font-medium text-lg mb-8">Recommended model</div>
+                            <div className="text-blue-400 font-medium text-lg mb-8">
+                                Recommended model <br />
+                                <a href="/about-us/ds-standard" className="text-sm underline hover:text-blue-300 transition-colors">Learn about the DS Standard</a>
+                            </div>
 
                             <p className="text-gray-400 leading-relaxed text-lg mb-8 flex-grow">
                                 {result.desc}

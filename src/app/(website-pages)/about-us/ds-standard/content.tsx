@@ -299,7 +299,7 @@ export default function DSStandardContent() {
                                             That being said, pianists have generally reported feeling more relaxed after practicing on a narrower keyboard, and the technique improvements translate to the standard piano.
                                         </p>
                                         <p className="text-gray-400">
-                                            “Another surprising effect for me was that playing this (DS6.0) also has a positive effect when you go back to the normal keyboard.” — <span className="text-white/80 not-italic">Hubert Ness</span>, Professor of Jazz Piano, HMDK University of Stuttgart, Germany
+                                            For more information, see our <a href="/information-and-policies/faq" className="underline hover:text-white transition-colors">FAQ</a>.
                                         </p>
                                     </div>
                                 </AnimatedSection>

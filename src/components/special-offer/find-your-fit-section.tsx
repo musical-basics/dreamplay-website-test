@@ -96,8 +96,8 @@ export function FindYourFitSection() {
                                 key={size}
                                 onClick={() => setActiveSize(size)}
                                 className={`px-3 md:px-6 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium transition-all ${activeSize === size
-                                        ? "bg-gradient-to-r from-sky-400 to-blue-500 text-white shadow-lg"
-                                        : "text-white/70 hover:text-white"
+                                    ? "bg-gradient-to-r from-sky-400 to-blue-500 text-white shadow-lg"
+                                    : "text-white/70 hover:text-white"
                                     }`}
                             >
                                 {sizeData[size].name}
@@ -154,6 +154,14 @@ export function FindYourFitSection() {
                         Hand Span Distribution
                     </h3>
                     <HandSpanGraph activeSize={activeSize} highlightBars={currentSize.highlightBars} />
+                    <div className="text-center mt-6">
+                        <p className="text-white/60 text-xs md:text-sm">
+                            All models are built to the International DS Standard.{" "}
+                            <a href="/about-us/ds-standard" className="text-sky-400 hover:text-sky-300 underline transition-colors">
+                                Learn More
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>

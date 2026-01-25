@@ -21,7 +21,7 @@ export function Header() {
         </div>
 
         <div className="text-sm text-white/70">
-          <span className="text-sky-400">DS6.0</span>
+          <a href="/about-us/ds-standard" target="_blank" className="text-sky-400 hover:text-sky-300 transition-colors underline decoration-sky-400/30">DS6.0</a>
           <span className="mx-2 text-white/30">·</span>
           <span>White</span>
         </div>

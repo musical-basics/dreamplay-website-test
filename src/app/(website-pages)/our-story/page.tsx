@@ -159,7 +159,7 @@ export default function OurStoryPage() {
                                         Then I met David Steinbuhler.
                                     </h2>
                                     <div className="space-y-6 text-base md:text-lg text-stone-700 leading-relaxed max-w-2xl">
-                                        <p>3 years ago, I met a man named David Steinbuhler, who owns a textile factory in northern Pennsylvania. In the small corner of his factory, he had a small operation going, where he made narrower keyboards for pianists all around the world since 1992.</p>
+                                        <p>3 years ago, I met a man named David Steinbuhler, who owns a textile factory in northern Pennsylvania. In the small corner of his factory, he had a small operation going, where he made narrower keyboards for pianists all around the world since 1992, creating the <a href="/about-us/ds-standard" target="_blank" className="underline hover:text-accent font-bold">Donison-Steinbuhler (DS) Standard®</a>.</p>
                                         <p>Focusing on grand pianos, he would create the keybed plus the entire action (which includes the felt hammers and pivots), for pianists and universities to swap out from their existing grand pianos.</p>
                                         <p>David took my Kawai MP11SE, replacing the existing DS6.5 keys for a narrower, reduced DS6.0 size. To this day, my Kawai MP11SE keyboard is the only DS6.0-sized keyboard with the same wood used for premium, grand pianos.</p>
                                     </div>
