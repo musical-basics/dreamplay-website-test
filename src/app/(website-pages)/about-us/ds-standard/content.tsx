@@ -293,6 +293,15 @@ export default function DSStandardContent() {
                                             </p>
                                         </div>
                                     </div>
+
+                                    <div className="mt-8 pt-8 border-t border-white/10 text-sm text-gray-500 leading-relaxed italic">
+                                        <p className="mb-2">
+                                            That being said, pianists have generally reported feeling more relaxed after practicing on a narrower keyboard, and the technique improvements translate to the standard piano.
+                                        </p>
+                                        <p className="text-gray-400">
+                                            “Another surprising effect for me was that playing this (DS6.0) also has a positive effect when you go back to the normal keyboard.” — <span className="text-white/80 not-italic">Hubert Ness</span>, Professor of Jazz Piano, HMDK University of Stuttgart, Germany
+                                        </p>
+                                    </div>
                                 </AnimatedSection>
                             </div>
 
