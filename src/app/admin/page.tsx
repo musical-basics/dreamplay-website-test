@@ -140,6 +140,20 @@ export default function AdminPage() {
                     </button>
                 </div>
 
+                {/* FAQ MANAGER LINK */}
+                <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl mb-8">
+                    <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
+                        <span>📚</span> Content Management
+                    </h2>
+                    <a href="/admin/faq" className="flex items-center justify-between p-4 bg-black/40 rounded-lg border border-neutral-800 hover:border-blue-500/50 transition-colors group">
+                        <div>
+                            <h3 className="font-medium text-white group-hover:text-blue-400 transition-colors">Manage FAQs</h3>
+                            <p className="text-sm text-neutral-500">Edit, add, or remove questions from the FAQ page.</p>
+                        </div>
+                        <span className="text-neutral-500 group-hover:text-blue-400 transition-colors">→</span>
+                    </a>
+                </div>
+
                 {/* DISCOUNT POPUP TOGGLE */}
                 <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl mb-8">
                     <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
