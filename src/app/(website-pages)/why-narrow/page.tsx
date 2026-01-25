@@ -445,6 +445,33 @@ export default function WhyNarrowPage() {
 
         {/* --- CTA SECTION --- */}
         <section className="dp-section-wrapper" style={{ padding: "0 0 8rem" }}>
+          <style jsx>{`
+            .dp-section-wrapper {
+              width: 100%;
+              background-color: #000000;
+              color: #ffffff;
+              font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            }
+            .dp-content-container {
+              width: 100%;
+              max-width: 80rem;
+              padding: 0 1.5rem;
+              box-sizing: border-box;
+            }
+            .dp-center { text-align: center; }
+            .dp-h2 {
+              font-size: 2.5rem;
+              font-weight: 700;
+              letter-spacing: -0.02em;
+              margin: 0 0 1.5rem;
+              line-height: 1.1;
+              color: #fff;
+            }
+            @media (min-width: 768px) { .dp-h2 { font-size: 3rem; } }
+          `}</style>
           <div className="dp-content-container dp-center">
             <h2 className="dp-h2" style={{ marginBottom: "2rem" }}>Don't let your instrument hold you back.</h2>
             <a href="/checkout-pages/customize" className="group inline-flex items-center gap-3 bg-white text-black px-8 py-4 text-lg font-bold rounded-full hover:scale-105 transition-transform">
