@@ -233,7 +233,9 @@ export default function ProductSelectionForm({ className }: ProductSelectionForm
                 </button>
 
                 <p className="text-center text-base text-neutral-600 font-medium">
-                    100% Fully Refundable Deposit. Cancel Anytime.
+                    <a href="/information-and-policies/shipping" target="_blank" className="hover:underline hover:text-neutral-900 transition-colors">
+                        100% Fully Refundable Deposit. Cancel Anytime.
+                    </a>
                 </p>
             </div>
         </form>

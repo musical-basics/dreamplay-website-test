@@ -278,6 +278,14 @@ export default function OurStoryPage() {
                                     <p className="text-stone-400 text-lg md:text-xl leading-relaxed">
                                         Nearly all of my female students, and a quarter of my male students. I desperately wanted them to just play once on my DS6.0 keyboard, to feel how easy it was.
                                     </p>
+                                    <div className="mt-8">
+                                        <a href="/how-it-works" className="inline-flex items-center gap-2 text-accent font-bold tracking-wide uppercase hover:text-white transition-colors">
+                                            Measure your hand size
+                                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                            </svg>
+                                        </a>
+                                    </div>
                                 </div>
                                 {/* Abstract bg decoration */}
                                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-accent/20 to-transparent pointer-events-none"></div>

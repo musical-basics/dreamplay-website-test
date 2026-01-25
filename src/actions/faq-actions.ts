@@ -46,7 +46,7 @@ const DEFAULT_FAQ_ITEMS: FAQItem[] = [
     {
         id: '5',
         question: "How does pre-ordering work?",
-        answer: `<p class="p-regular text-gray">Reserve your keyboard by pre-ordering now. Your support helps us finish our prototype and start production. We’ll keep you updated, with shipping planned for June 2026.</p>`
+        answer: `<p class="p-regular text-gray">Reserve your keyboard by pre-ordering now. Your support helps us finish our prototype and start production. We’ll keep you updated, with shipping planned for June 2026. <a href="/information-and-policies/shipping" class="text-blue-500 underline hover:text-blue-600 transition-colors">Read our full Shipping & Refund Policy.</a></p>`
     },
     {
         id: '6',

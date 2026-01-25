@@ -42,6 +42,9 @@ export default async function ABTestsPage() {
 
     return (
         <div className="p-8 max-w-7xl mx-auto">
+            <Link href="/admin" className="text-gray-500 hover:text-gray-900 mb-4 inline-flex items-center gap-2">
+                ← Back to Dashboard
+            </Link>
             <div className="flex justify-between items-center mb-8">
                 <div>
                     <h1 className="text-3xl font-bold">A/B Experiments</h1>
