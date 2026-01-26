@@ -1,5 +1,7 @@
 'use server';
 
+import { headers } from "next/headers";
+
 interface SubscribePayload {
     email: string;
     first_name?: string;
@@ -14,10 +16,22 @@ interface SubscribeResponse {
 
 export async function subscribeToNewsletter(payload: SubscribePayload): Promise<SubscribeResponse> {
     try {
+        const headerStore = await headers();
+        const city = headerStore.get("x-vercel-ip-city") || "Unknown";
+        const country = headerStore.get("x-vercel-ip-country") || "Unknown";
+        const ip = headerStore.get("x-forwarded-for") || "Unknown";
+
+        const apiPayload = {
+            ...payload,
+            city,
+            country,
+            ip_address: ip
+        };
+
         const response = await fetch("https://email.dreamplaypianos.com/api/webhooks/subscribe", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(apiPayload)
         });
 
         if (!response.ok) {
