@@ -37,15 +37,15 @@ export default function ProductSelectionForm({ className }: ProductSelectionForm
 
         try {
             // Save to Waitlist via API
-            await fetch('/api/waitlist', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            // Save to Waitlist via API
+            await fetch("https://email.dreamplaypianos.com/api/webhooks/subscribe", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    fullName,
-                    email,
-                }),
+                    email: email,
+                    first_name: fullName,
+                    tags: ["Waitlist", "Product Launch"]
+                })
             });
         } catch (error) {
             console.error('Failed to save to waitlist:', error);

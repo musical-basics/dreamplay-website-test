@@ -33,46 +33,33 @@ export default function Footer() {
     const form = e.currentTarget;
     const email = (form.elements.namedItem("EMAIL") as HTMLInputElement).value;
     const fname = (form.elements.namedItem("FNAME") as HTMLInputElement).value;
-    const ACTION_URL = 'https://dreamplaypianos.us12.list-manage.com/subscribe/post?u=90fbaa21ba86eecae78c767a8&id=cc37fd2637&f_id=00c46be9f0';
 
-    // Create hidden iframe and form to simulate the submission
-    const iframeName = 'footer_iframe_' + Date.now();
-    const iframe = document.createElement('iframe');
-    iframe.name = iframeName;
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
+    try {
+      await fetch("https://email.dreamplaypianos.com/api/webhooks/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email,
+          first_name: fname,
+          tags: ["Footer Form", "General Newsletter"]
+        })
+      });
 
-    const hiddenForm = document.createElement('form');
-    hiddenForm.action = ACTION_URL;
-    hiddenForm.method = 'POST';
-    hiddenForm.target = iframeName;
+      setSuccess(true);
+      alert('Thanks for subscribing!');
 
-    const payload = { EMAIL: email, FNAME: fname };
-    for (const [key, value] of Object.entries(payload)) {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = value;
-      hiddenForm.appendChild(input);
+    } catch (error) {
+      console.error("Subscription failed", error);
+      alert("Something went wrong. Please try again.");
     }
 
-    document.body.appendChild(hiddenForm);
-    hiddenForm.submit();
+    setLoading(false);
 
-    // Mock success after delay (since we can't easily read iframe response cross-origin)
+    // Cleanup
     setTimeout(() => {
-      alert('Thanks for subscribing!');
-      setSuccess(true);
-      setLoading(false);
-
-      // Cleanup
-      setTimeout(() => {
-        setSuccess(false);
-        document.body.removeChild(hiddenForm);
-        document.body.removeChild(iframe);
-        form.reset();
-      }, 2000);
-    }, 1500);
+      setSuccess(false);
+      form.reset();
+    }, 2000);
   };
 
   return (

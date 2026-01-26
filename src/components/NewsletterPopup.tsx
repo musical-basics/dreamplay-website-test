@@ -43,15 +43,19 @@ export default function NewsletterPopup() {
         setIsLoading(true);
 
         try {
-            const response = await fetch("/api/subscribe", {
+            const response = await fetch("https://email.dreamplaypianos.com/api/webhooks/subscribe", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({
+                    email: email,
+                    tags: ["Discount Offer", "5% Off"]
+                }),
             });
 
             if (!response.ok) {
-                const data = await response.json();
-                throw new Error(data.error || "Failed to subscribe");
+                // If it's a 4xx or 5xx, treat as error.
+                // Note: If your webhook API returns something specific, parse it here
+                throw new Error("Failed to subscribe");
             }
 
             // On success, show the code
