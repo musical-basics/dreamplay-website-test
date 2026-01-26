@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { ABTracker } from "@/components/features/analytics/ABTracker";
+import { EmailTracker } from "@/components/EmailTracker";
 import NewsletterPopup from "@/components/NewsletterPopup";
 import "./globals.css";
 
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body>
         <AnalyticsTracker />
         <ABTracker />
+        <EmailTracker />
         {children}
         <NewsletterPopup />
 
