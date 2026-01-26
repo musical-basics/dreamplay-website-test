@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { X, Mail } from "lucide-react";
 
 import { getDiscountPopupStatus } from "@/actions/admin-actions";
+import { subscribeToNewsletter } from "@/actions/email-actions";
 
 export default function NewsletterPopup() {
     const [isOpen, setIsOpen] = useState(false);
@@ -43,19 +44,13 @@ export default function NewsletterPopup() {
         setIsLoading(true);
 
         try {
-            const response = await fetch("https://email.dreamplaypianos.com/api/webhooks/subscribe", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    email: email,
-                    tags: ["Discount Offer", "5% Off"]
-                }),
+            const res = await subscribeToNewsletter({
+                email: email,
+                tags: ["Discount Offer", "5% Off"]
             });
 
-            if (!response.ok) {
-                // If it's a 4xx or 5xx, treat as error.
-                // Note: If your webhook API returns something specific, parse it here
-                throw new Error("Failed to subscribe");
+            if (!res.success) {
+                throw new Error(res.error || "Failed to subscribe");
             }
 
             // On success, show the code

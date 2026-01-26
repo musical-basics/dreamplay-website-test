@@ -2,6 +2,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import { subscribeToNewsletter } from "@/actions/email-actions";
 
 export default function Footer() {
   const [loading, setLoading] = useState(false);
@@ -35,15 +36,15 @@ export default function Footer() {
     const fname = (form.elements.namedItem("FNAME") as HTMLInputElement).value;
 
     try {
-      await fetch("https://email.dreamplaypianos.com/api/webhooks/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: email,
-          first_name: fname,
-          tags: ["Footer Form", "General Newsletter"]
-        })
+      const res = await subscribeToNewsletter({
+        email: email,
+        first_name: fname,
+        tags: ["Footer Form", "General Newsletter"]
       });
+
+      if (!res.success) {
+        throw new Error(res.error);
+      }
 
       setSuccess(true);
       alert('Thanks for subscribing!');
