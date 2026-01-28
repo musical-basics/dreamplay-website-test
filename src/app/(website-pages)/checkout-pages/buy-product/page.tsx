@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import Image from "next/image";
 import ProductSelectionForm from "@/components/checkout/ProductSelectionForm";
 import TestimonialsSection from "@/components/checkout/TestimonialsSection";
+import JoinUsers from "@/components/social-proof/JoinUsers";
 
 export const metadata = {
     title: "Join the DreamPlay Founder's Circle | DreamPlay",
@@ -108,6 +109,8 @@ export default function BuyProductPage() {
                             <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-neutral-800">
                                 Join The Waitlist & Receive The Best Price
                             </h2>
+
+                            <JoinUsers />
 
                             <ProductSelectionForm />
                         </div>
