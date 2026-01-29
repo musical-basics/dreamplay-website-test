@@ -1,47 +1,8 @@
 import React from "react";
-import Image from "next/image";
 
 const JoinUsers = () => {
     return (
-        <div className="flex flex-col items-center justify-center gap-3 mb-8">
-            <div className="flex -space-x-3 overflow-hidden p-1">
-                <div className="relative inline-block h-10 w-10 rounded-full ring-2 ring-white">
-                    <Image
-                        className="h-full w-full rounded-full object-cover"
-                        src="/images/Profile-Image_1.webp"
-                        alt="User 1"
-                        width={40}
-                        height={40}
-                    />
-                </div>
-                <div className="relative inline-block h-10 w-10 rounded-full ring-2 ring-white">
-                    <Image
-                        className="h-full w-full rounded-full object-cover"
-                        src="/images/Jen-McCabe.png"
-                        alt="User 2"
-                        width={40}
-                        height={40}
-                    />
-                </div>
-                <div className="relative inline-block h-10 w-10 rounded-full ring-2 ring-white">
-                    <Image
-                        className="h-full w-full rounded-full object-cover"
-                        src="/images/Kathryn-Ananda-Owens.png"
-                        alt="User 3"
-                        width={40}
-                        height={40}
-                    />
-                </div>
-                <div className="relative inline-block h-10 w-10 rounded-full ring-2 ring-white">
-                    <Image
-                        className="h-full w-full rounded-full object-cover"
-                        src="/images/carol-leone.png"
-                        alt="User 4"
-                        width={40}
-                        height={40}
-                    />
-                </div>
-            </div>
+        <div className="flex flex-col items-center justify-center mb-8">
             <div className="text-center">
                 <span className="inline-flex items-center gap-1.5 py-1 px-3 rounded-full bg-yellow-100/50 border border-yellow-200 text-yellow-800 text-sm font-medium">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-yellow-500">
