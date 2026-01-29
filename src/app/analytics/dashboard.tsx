@@ -338,6 +338,7 @@ export function AnalyticsDashboard() {
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event</th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Path</th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Device</th>
                                 </tr>
@@ -345,7 +346,7 @@ export function AnalyticsDashboard() {
                             <tbody className="bg-white divide-y divide-gray-200">
                                 {logs.length === 0 ? (
                                     <tr>
-                                        <td colSpan={5} className="px-6 py-12 text-center text-sm text-gray-500">
+                                        <td colSpan={6} className="px-6 py-12 text-center text-sm text-gray-500">
                                             No recent logs found. Navigate around the site to generate data.
                                         </td>
                                     </tr>
@@ -367,6 +368,11 @@ export function AnalyticsDashboard() {
                                                 <div className="flex flex-col">
                                                     <span title={log.user_id || 'Anonymous'} className="truncate max-w-[150px]">{log.user_id || 'Anonymous'}</span>
                                                     <span className="text-xs text-gray-400">{log.ip_address}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <div className="flex flex-col">
+                                                    <span className="truncate max-w-[150px]">{log.city && log.country ? `${log.city}, ${log.country}` : log.country || '—'}</span>
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

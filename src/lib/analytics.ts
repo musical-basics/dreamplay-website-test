@@ -15,6 +15,8 @@ export interface AnalyticsLog {
     event_name: string
     path: string
     ip_address: string | null
+    country: string | null
+    city: string | null
     user_agent: string | null
     user_id?: string
     metadata?: any
@@ -30,10 +32,31 @@ export async function logEvent(
         const forwardedFor = headerList.get('x-forwarded-for')
         const ip = forwardedFor ? forwardedFor.split(',')[0] : 'unknown'
 
+        // Fetch geolocation data from IP
+        let country: string | null = null
+        let city: string | null = null
+        if (ip && ip !== 'unknown') {
+            try {
+                const geoResponse = await fetch(`https://ipapi.co/${ip}/json/`, {
+                    signal: AbortSignal.timeout(2000) // 2 second timeout
+                })
+                if (geoResponse.ok) {
+                    const geoData = await geoResponse.json()
+                    country = geoData.country_name || null
+                    city = geoData.city || null
+                }
+            } catch (geoError) {
+                // Silently fail - geolocation is not critical
+                console.error('[Analytics] Geolocation lookup failed:', geoError)
+            }
+        }
+
         const { error } = await supabase.from('analytics_logs').insert({
             event_name: eventName,
             path: data.path,
             ip_address: ip,
+            country,
+            city,
             user_agent: userAgent,
             user_id: data.userId,
             metadata: data.metadata,
