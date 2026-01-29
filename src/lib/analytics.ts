@@ -35,19 +35,22 @@ export async function logEvent(
         // Fetch geolocation data from IP
         let country: string | null = null
         let city: string | null = null
-        if (ip && ip !== 'unknown') {
+        if (ip && ip !== 'unknown' && ip !== '::1' && ip !== '127.0.0.1') {
             try {
-                const geoResponse = await fetch(`https://ipapi.co/${ip}/json/`, {
-                    signal: AbortSignal.timeout(2000) // 2 second timeout
+                // Using ip-api.com (free for non-commercial, up to 45 req/min)
+                const geoResponse = await fetch(`http://ip-api.com/json/${ip}`, {
+                    signal: AbortSignal.timeout(2000)
                 })
+
                 if (geoResponse.ok) {
                     const geoData = await geoResponse.json()
-                    country = geoData.country_name || null
-                    city = geoData.city || null
+                    if (geoData.status === 'success') {
+                        country = geoData.country || null
+                        city = geoData.city || null
+                    }
                 }
             } catch (geoError) {
-                // Silently fail - geolocation is not critical
-                console.error('[Analytics] Geolocation lookup failed:', geoError)
+                console.error('[Analytics] Geolocation lookup exception:', geoError)
             }
         }
 
