@@ -192,7 +192,7 @@ export default function Navbar() {
                                 className="button w-variant-1ae2a9c7-3071-e35e-921a-e41dc6d6ad44 w-inline-block"
                             >
                                 <div className="button_text">
-                                    <div>Join The Waitlist</div>
+                                    <div>Back This Project</div>
                                 </div>
                                 <div className="button_icon">
                                     <svg
@@ -226,7 +226,7 @@ export default function Navbar() {
                             className="button w-inline-block"
                         >
                             <div className="button_text">
-                                <div>Join The Waitlist</div>
+                                <div>Back This Project</div>
                             </div>
                             <div className="button_icon">
                                 <svg
@@ -276,8 +276,8 @@ export default function Navbar() {
             {/* Mobile Menu */}
             <div
                 className={`fixed top-[70px] left-0 right-0 bg-white shadow-xl z-[1001] transition-all duration-300 ${mobileMenuOpen
-                        ? 'opacity-100 translate-y-0 visible'
-                        : 'opacity-0 -translate-y-4 invisible pointer-events-none'
+                    ? 'opacity-100 translate-y-0 visible'
+                    : 'opacity-0 -translate-y-4 invisible pointer-events-none'
                     }`}
             >
                 <div className="flex flex-col py-4">
@@ -344,11 +344,11 @@ export default function Navbar() {
                     <div className="border-t border-gray-200 my-2" />
                     <div className="px-6 py-4">
                         <Link
-                            href="/checkout-pages/buy-product"
+                            href="https://crowdfund.dreamplaypianos.com"
                             className="block w-full text-center py-3 px-6 bg-black text-white rounded-full font-medium"
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            Join The Waitlist
+                            Back This Project
                         </Link>
                     </div>
                 </div>

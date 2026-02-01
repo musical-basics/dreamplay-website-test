@@ -101,10 +101,10 @@ export function CTASection() {
 
                     <Link
                         onClick={() => trackClick("cta_section", "join_waitlist")}
-                        href="/checkout-pages/customize"
+                        href="https://crowdfund.dreamplaypianos.com"
                         className={`inline-flex items-center gap-3 bg-white text-neutral-900 rounded-full px-10 py-5 text-lg font-medium hover:bg-neutral-100 hover:scale-105 transition-all duration-500 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                     >
-                        Join The Waitlist
+                        Back This Project
                         <span className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
                             <ArrowRight className="w-4 h-4 text-white" />
                         </span>

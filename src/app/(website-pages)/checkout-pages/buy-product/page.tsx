@@ -7,8 +7,8 @@ import TestimonialsSection from "@/components/checkout/TestimonialsSection";
 import JoinUsers from "@/components/social-proof/JoinUsers";
 
 export const metadata = {
-    title: "Join the DreamPlay Founder's Circle | DreamPlay",
-    description: "Secure guaranteed access to the lowest Super Early Bird price and receive exclusive rewards.",
+    title: "Back the DreamPlay One | DreamPlay Crowdfunding",
+    description: "Support our crowdfunding campaign and secure early bird pricing.",
 };
 
 export default function BuyProductPage() {
@@ -107,7 +107,7 @@ export default function BuyProductPage() {
                     <div className="container mx-auto px-6">
                         <div className="max-w-4xl mx-auto">
                             <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-neutral-800">
-                                Join The Waitlist & Receive The Best Price
+                                Back This Project & Receive The Best Price
                             </h2>
 
                             <JoinUsers />
