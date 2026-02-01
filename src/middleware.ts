@@ -76,37 +76,12 @@ export async function middleware(request: NextRequest) {
     }
 
     // ========================================================================
-    // PRIORITY #2: COOKIES (Returning Visitors - Check Before DB)
+    // PRIORITY #2: COOKIES (Returning Visitors)
     // ========================================================================
-    // Look for any ab_* cookies that match this path
-    // This is a quick check before falling back to database
-    const cookies = request.cookies.getAll();
-    for (const cookie of cookies) {
-        if (cookie.name.startsWith("ab_")) {
-            const testSlug = cookie.name.replace("ab_", "");
-            const variant = cookie.value;
-
-            // If cookie exists with a variant, apply it
-            const pathRewrite = getVariantPath(pathname, variant);
-            if (pathRewrite && pathRewrite !== pathname) {
-                const rewriteUrl = request.nextUrl.clone();
-                rewriteUrl.pathname = pathRewrite;
-
-                const response = NextResponse.rewrite(rewriteUrl);
-                response.headers.set("x-ab-test-id", testSlug);
-                response.headers.set("x-ab-variant-id", variant);
-                return response;
-            }
-
-            // If control variant or path matches, just set headers
-            if (variant === "control" || variant === "a") {
-                const response = NextResponse.next();
-                response.headers.set("x-ab-test-id", testSlug);
-                response.headers.set("x-ab-variant-id", variant);
-                return response;
-            }
-        }
-    }
+    // WE SKIPPED BLIND COOKIE CHECKS HERE because we don't know which path 
+    // a cookie belongs to without checking the DB or hardcoding paths.
+    // Falling back to Priority #3 (Database) ensures we only rewrite 
+    // if the current path actually has an active test.
 
     // ========================================================================
     // PRIORITY #3: DATABASE (Fallback for Organic Traffic)
