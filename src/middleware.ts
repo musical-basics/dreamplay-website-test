@@ -7,12 +7,113 @@ const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
+/**
+ * Helper: Get the variant path from a hardcoded mapping.
+ * This avoids database hits for email visitors.
+ * 
+ * @param currentPath - The current URL pathname (e.g., "/how-it-works")
+ * @param variant - The variant identifier (e.g., "b" or "control")
+ * @returns The rewritten path, or null if no rewrite needed
+ */
+function getVariantPath(currentPath: string, variant: string): string | null {
+    // Control variant = no rewrite, stay on original path
+    if (variant === "control" || variant === "a") {
+        return null;
+    }
+
+    // Remove trailing slash for consistency
+    const basePath = currentPath.replace(/\/$/, "");
+
+    // Simple logic: append variant suffix (e.g., /how-it-works -> /how-it-works-b)
+    // Strip "variant_" prefix if present (e.g., "variant_b" -> "b")
+    const suffix = variant.replace("variant_", "");
+
+    return `${basePath}-${suffix}`;
+}
+
 export async function middleware(request: NextRequest) {
     const url = request.nextUrl;
     const pathname = url.pathname;
+    const searchParams = url.searchParams;
 
-    // 1. Check DB for active tests on this path
-    // (In production, you would cache this response to avoid hitting DB on every request)
+    // ========================================================================
+    // PRIORITY #1: URL PARAMETERS (From Email Links - Instant, No DB Hit)
+    // ========================================================================
+    // If the email link has ?test=hero_test&variant=b, we obey immediately.
+    const forcedTest = searchParams.get("test");     // e.g., "hero_test"
+    const forcedVariant = searchParams.get("variant"); // e.g., "b" or "variant_b"
+
+    if (forcedTest && forcedVariant) {
+        const pathRewrite = getVariantPath(pathname, forcedVariant);
+        const cookieName = `ab_${forcedTest}`;
+
+        // Check if variant path is different from current
+        if (pathRewrite && pathRewrite !== pathname) {
+            const rewriteUrl = request.nextUrl.clone();
+            rewriteUrl.pathname = pathRewrite;
+            // Remove the test params from the rewritten URL to keep it clean
+            rewriteUrl.searchParams.delete("test");
+            rewriteUrl.searchParams.delete("variant");
+
+            const response = NextResponse.rewrite(rewriteUrl);
+
+            // Set cookie so they stay in this variant if they refresh (30 days)
+            response.cookies.set(cookieName, forcedVariant, { maxAge: 60 * 60 * 24 * 30 });
+
+            // Pass headers for analytics tracking
+            response.headers.set("x-ab-test-id", forcedTest);
+            response.headers.set("x-ab-variant-id", forcedVariant);
+
+            return response;
+        }
+
+        // Control variant or same path - just set cookie and headers, no rewrite
+        const response = NextResponse.next();
+        response.cookies.set(cookieName, forcedVariant, { maxAge: 60 * 60 * 24 * 30 });
+        response.headers.set("x-ab-test-id", forcedTest);
+        response.headers.set("x-ab-variant-id", forcedVariant);
+        return response;
+    }
+
+    // ========================================================================
+    // PRIORITY #2: COOKIES (Returning Visitors - Check Before DB)
+    // ========================================================================
+    // Look for any ab_* cookies that match this path
+    // This is a quick check before falling back to database
+    const cookies = request.cookies.getAll();
+    for (const cookie of cookies) {
+        if (cookie.name.startsWith("ab_")) {
+            const testSlug = cookie.name.replace("ab_", "");
+            const variant = cookie.value;
+
+            // If cookie exists with a variant, apply it
+            const pathRewrite = getVariantPath(pathname, variant);
+            if (pathRewrite && pathRewrite !== pathname) {
+                const rewriteUrl = request.nextUrl.clone();
+                rewriteUrl.pathname = pathRewrite;
+
+                const response = NextResponse.rewrite(rewriteUrl);
+                response.headers.set("x-ab-test-id", testSlug);
+                response.headers.set("x-ab-variant-id", variant);
+                return response;
+            }
+
+            // If control variant or path matches, just set headers
+            if (variant === "control" || variant === "a") {
+                const response = NextResponse.next();
+                response.headers.set("x-ab-test-id", testSlug);
+                response.headers.set("x-ab-variant-id", variant);
+                return response;
+            }
+        }
+    }
+
+    // ========================================================================
+    // PRIORITY #3: DATABASE (Fallback for Organic Traffic)
+    // ========================================================================
+    // Only hit the database if neither URL params nor cookies provide the variant.
+    // This preserves existing behavior for visitors who aren't from email campaigns.
+
     const { data: activeTest } = await supabase
         .from("ab_tests")
         .select("*, ab_variants(*)")
@@ -24,16 +125,16 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next(); // No test running, proceed as normal
     }
 
-    // 2. Check if user is already bucketed via Cookie
+    // Check if user is already bucketed via Cookie (legacy check)
     const cookieName = `ab_${activeTest.slug}`;
     let assignedVariantId = request.cookies.get(cookieName)?.value;
     let variant = activeTest.ab_variants.find((v: any) => v.id === assignedVariantId);
 
-    // 3. Logic: If Winner Declared, force everyone to winner
+    // If Winner Declared, force everyone to winner
     if (activeTest.winning_variant_id) {
         variant = activeTest.ab_variants.find((v: any) => v.id === activeTest.winning_variant_id);
     }
-    // 4. Logic: If no bucket, assign one based on traffic %
+    // If no bucket, assign one based on traffic %
     else if (!variant) {
         const random = Math.random() * 100;
         let accumulated = 0;
@@ -46,12 +147,11 @@ export async function middleware(request: NextRequest) {
         }
     }
 
-    // 5. Rewrite Request
+    // Rewrite Request
     if (variant && variant.path_rewrite !== pathname) {
         const rewriteUrl = request.nextUrl.clone();
         rewriteUrl.pathname = variant.path_rewrite;
 
-        // Pass test info headers so the Client Component knows what to track
         const response = NextResponse.rewrite(rewriteUrl);
         response.cookies.set(cookieName, variant.id);
         response.headers.set("x-ab-test-id", activeTest.id);

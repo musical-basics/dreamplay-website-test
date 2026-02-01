@@ -10,10 +10,23 @@ export function useABAnalytics(pageName: string, options: { trackTime: boolean }
     const hasTrackedTime = useRef(false)
 
     // Helper: Get bucket from cookie, or null
-    const getBucket = (): ABVariant | null => {
+    // Supports both legacy "ab-test-bucket" and new "ab_{testSlug}" patterns
+    const getBucket = (testSlug?: string): ABVariant | null => {
         if (typeof document === "undefined") return null
-        const match = document.cookie.match(new RegExp("(^| )ab-test-bucket=([^;]+)"))
-        return match ? (match[2] as ABVariant) : null
+
+        // If testSlug provided, check for specific ab_{testSlug} cookie
+        if (testSlug) {
+            const match = document.cookie.match(new RegExp(`(^| )ab_${testSlug}=([^;]+)`))
+            if (match) return match[2] as ABVariant
+        }
+
+        // Fallback: check legacy cookie
+        const legacyMatch = document.cookie.match(new RegExp("(^| )ab-test-bucket=([^;]+)"))
+        if (legacyMatch) return legacyMatch[2] as ABVariant
+
+        // Also check for any ab_* cookie as a fallback
+        const anyAbMatch = document.cookie.match(new RegExp("(^| )ab_[^=]+=([^;]+)"))
+        return anyAbMatch ? (anyAbMatch[2] as ABVariant) : null
     }
 
     // Track Time on Page

@@ -226,7 +226,7 @@ export default function ProductSelectionForm({ className }: ProductSelectionForm
                     disabled={isSubmitting}
                     className="bg-black text-white px-12 py-4 rounded-full text-base font-semibold hover:bg-neutral-800 transition-all disabled:opacity-70 shadow-lg hover:shadow-xl w-full max-w-sm"
                 >
-                    {isSubmitting ? "Redirecting..." : "Join the Waitlist for $1"}
+                    {isSubmitting ? "Redirecting..." : "Join the Waitlist"}
                 </button>
 
                 <p className="text-center text-base text-neutral-600 font-medium">
