@@ -28,18 +28,19 @@ export function HeroSection() {
             <div className="relative container mx-auto px-4 py-20">
                 <div className="max-w-2xl">
                     {/* Title with slide-up animation */}
+                    {/* Title with slide-up animation */}
                     <h1
-                        className={`text-5xl md:text-6xl lg:text-7xl font-semibold text-white leading-[1.1] tracking-tight mb-6 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                        className={`text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                             }`}
                     >
-                        Don’t injure your hand playing the piano.
+                        Standard Piano Keys Are Too Wide
                     </h1>
 
                     <p
-                        className={`text-neutral-300 text-lg mb-8 max-w-lg transition-all duration-1000 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                        className={`text-xl md:text-2xl text-neutral-300 max-w-2xl mb-12 transition-all duration-1000 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                             }`}
                     >
-                        Our narrow keyboard helps your hands relax.
+                        Stop over-stretching. The DreamPlay One offers narrower keys designed for your handspan.
                     </p>
 
                     <Link
