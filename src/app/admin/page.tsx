@@ -162,7 +162,7 @@ export default function AdminPage() {
 
                     <div className="flex items-center justify-between p-4 bg-black/40 rounded-lg border border-neutral-800">
                         <div>
-                            <h3 className="font-medium text-white">5% Discount Popup</h3>
+                            <h3 className="font-medium text-white">Newsletter Popup</h3>
                             <p className="text-sm text-neutral-500">Enable or disable the newsletter popup globally.</p>
                         </div>
                         <button

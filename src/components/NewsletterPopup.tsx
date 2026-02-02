@@ -46,7 +46,7 @@ export default function NewsletterPopup() {
         try {
             const res = await subscribeToNewsletter({
                 email: email,
-                tags: ["Discount Offer", "5% Off"]
+                tags: ["Newsletter Subscription"]
             });
 
             if (!res.success) {
@@ -84,11 +84,10 @@ export default function NewsletterPopup() {
                                 <Mail className="text-blue-600" size={24} />
                             </div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                                Get 5% Off
+                                Stay Updated
                             </h2>
                             <p className="text-gray-600">
-                                Join our mailing list and get a discount code for your first
-                                order.
+                                Subscribe to our mailling list for news and special offers.
                             </p>
                         </div>
 
@@ -108,7 +107,7 @@ export default function NewsletterPopup() {
                                 disabled={isLoading}
                                 className="w-full bg-black text-white font-semibold py-3 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-70"
                             >
-                                {isLoading ? "Unlocking..." : "Unlock My 5% Discount"}
+                                {isLoading ? "Subscribing..." : "Subscribe"}
                             </button>
                             <p className="text-xs text-center text-gray-400">
                                 We respect your privacy. Unsubscribe at any time.
@@ -121,10 +120,10 @@ export default function NewsletterPopup() {
                             <Mail className="text-green-600" size={32} />
                         </div>
                         <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                            Check Your Inbox!
+                            Thank you for subscribing!
                         </h3>
                         <p className="text-gray-600 mb-8 max-w-xs mx-auto">
-                            We've sent the 5% discount code to your email address.
+                            You have been added to our mailing list.
                         </p>
                         <button
                             onClick={handleClose}
