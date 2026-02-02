@@ -28,9 +28,8 @@ export function HeroSection() {
             <div className="relative container mx-auto px-4 py-20">
                 <div className="max-w-2xl">
                     {/* Title with slide-up animation */}
-                    {/* Title with slide-up animation */}
                     <h1
-                        className={`text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                        className={`text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 text-white transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                             }`}
                     >
                         Standard Piano Keys Are Too Wide
