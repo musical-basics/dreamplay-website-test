@@ -5,6 +5,7 @@ import Image from "next/image";
 import ProductSelectionForm from "@/components/checkout/ProductSelectionForm";
 import TestimonialsSection from "@/components/checkout/TestimonialsSection";
 import JoinUsers from "@/components/social-proof/JoinUsers";
+import { RisksSection } from "@/components/campaign/RisksSection";
 
 export const metadata = {
     title: "Back the DreamPlay One | DreamPlay Crowdfunding",
@@ -119,6 +120,9 @@ export default function BuyProductPage() {
 
                 {/* --- Testimonials / Why We're Doing This --- */}
                 <TestimonialsSection />
+
+                {/* --- Risks & Challenges --- */}
+                <RisksSection />
             </main>
 
             <Footer />

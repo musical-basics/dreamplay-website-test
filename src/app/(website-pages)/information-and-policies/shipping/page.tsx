@@ -156,6 +156,18 @@ export default function ShippingPage() {
                                 <div className="text-sm text-subtle mt-2">Rest of World</div>
                             </div>
                         </div>
+
+                        <div className="mt-8 max-w-2xl mx-auto text-center reveal delay-300">
+                            <div className="bg-red-50/50 border border-red-100 rounded-xl p-4 inline-block">
+                                <p className="text-sm text-red-700/80 font-medium">
+                                    ⚠️ <strong>International Backers (EU/UK/Asia):</strong>
+                                </p>
+                                <p className="text-xs text-red-600/70 mt-1">
+                                    Shipping estimates do not include local VAT, Import Duties, or Customs fees.
+                                    These are collected by your local carrier upon delivery.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </section>
 

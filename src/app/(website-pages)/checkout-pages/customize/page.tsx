@@ -46,9 +46,27 @@ export default function CustomizePage() {
 
     // --- DATA ---
     const tiers = [
-        { id: 'full', name: 'Pay in Full', price: '$549', subtitle: 'Best Value', description: 'Get the complete bundle with extras', bundleDetails: 'Includes matching stand, bench, pedal ($120 value)', recommended: true, icon: 'gift' },
-        { id: 'deposit', name: 'Reserve Your Spot', price: '$299', subtitle: '50% Now', description: 'Be first in line, pay 50% later', bundleDetails: 'Includes matching stand and pedal ($65 value)', recommended: false, icon: 'zap' },
-        { id: 'waitlist', name: 'Join Waitlist', price: 'Free', subtitle: 'No Payment', description: 'Just your email, no commitment', bundleDetails: '', recommended: false, icon: 'mail' }
+        {
+            id: 'bundle', // This maps to your $599 Bundle Variant
+            name: 'The DreamPlay Bundle',
+            price: '$599',
+            subtitle: 'MOST POPULAR', // High visibility badge
+            description: 'The complete experience. Everything you need to play immediately.',
+            bundleDetails: 'Includes: DreamPlay One ($499) + Matching Stand & Bench ($200 Value)',
+            recommended: true,
+            icon: 'gift'
+        },
+        {
+            id: 'solo', // This maps to your $499 Keyboard Variant
+            name: 'Keyboard Only',
+            price: '$499',
+            subtitle: 'Standard',
+            description: 'Just the instrument. Use your own stand and bench.',
+            bundleDetails: 'Includes: DreamPlay One Keyboard, Power Adapter, Sustain Pedal',
+            recommended: false,
+            icon: 'zap'
+        },
+        // { id: 'waitlist', name: 'Join Waitlist', price: 'Free', subtitle: 'No Payment', description: 'Just your email, no commitment', bundleDetails: '', recommended: false, icon: 'mail' }
     ];
 
     const keyboards = {
