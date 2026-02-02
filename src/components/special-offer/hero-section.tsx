@@ -48,7 +48,7 @@ export function HeroSection() {
                         className={`inline-flex items-center gap-3 bg-white text-neutral-900 rounded-full px-8 py-4 text-base font-medium hover:bg-neutral-100 transition-all duration-1000 delay-300 hover:scale-105 hover:shadow-xl ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                             }`}
                     >
-                        Back This Project
+                        Pre-Order Now
                         <span className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
                             <ArrowRight className="w-4 h-4 text-white" />
                         </span>

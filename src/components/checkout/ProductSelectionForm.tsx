@@ -15,7 +15,7 @@ export default function ProductSelectionForm({ className }: ProductSelectionForm
                 href="https://crowdfund.dreamplaypianos.com"
                 className="bg-black text-white px-12 py-4 rounded-full text-base font-semibold hover:bg-neutral-800 transition-all shadow-lg hover:shadow-xl w-full max-w-sm text-center"
             >
-                Back This Project
+                Pre-Order Now
             </a>
         </div>
     );

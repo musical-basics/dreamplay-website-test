@@ -192,7 +192,7 @@ export default function Navbar() {
                                 className="button w-variant-1ae2a9c7-3071-e35e-921a-e41dc6d6ad44 w-inline-block"
                             >
                                 <div className="button_text">
-                                    <div>Back This Project</div>
+                                    <div>Pre-Order Now</div>
                                 </div>
                                 <div className="button_icon">
                                     <svg
@@ -226,7 +226,7 @@ export default function Navbar() {
                             className="button w-inline-block"
                         >
                             <div className="button_text">
-                                <div>Back This Project</div>
+                                <div>Pre-Order Now</div>
                             </div>
                             <div className="button_icon">
                                 <svg
@@ -348,7 +348,7 @@ export default function Navbar() {
                             className="block w-full text-center py-3 px-6 bg-black text-white rounded-full font-medium"
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            Back This Project
+                            Pre-Order Now
                         </Link>
                     </div>
                 </div>

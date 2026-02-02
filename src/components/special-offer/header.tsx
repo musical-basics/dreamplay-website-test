@@ -80,7 +80,7 @@ export function SpecialOfferHeader({ forceOpaque = false, className = "" }: Spec
                             : "bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20"
                             }`}
                     >
-                        Back This Project
+                        Pre-Order Now
                         <span
                             className={`w-6 h-6 rounded-full flex items-center justify-center ${isScrolled ? "bg-black" : "bg-white"}`}
                         >
@@ -129,7 +129,7 @@ export function SpecialOfferHeader({ forceOpaque = false, className = "" }: Spec
                                 setIsMobileMenuOpen(false)
                             }}
                         >
-                            Back This Project
+                            Pre-Order Now
                             <ArrowRight className="w-4 h-4" />
                         </Link>
                     </nav>

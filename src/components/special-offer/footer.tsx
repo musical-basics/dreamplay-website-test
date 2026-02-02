@@ -34,7 +34,7 @@ export function SpecialOfferFooter() {
                         href="https://crowdfund.dreamplaypianos.com"
                         className="flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors"
                     >
-                        Back This Project
+                        Pre-Order Now
                         <span className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
                             <ArrowRight className="w-3 h-3 text-black" />
                         </span>

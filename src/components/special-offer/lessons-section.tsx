@@ -94,7 +94,7 @@ export function LessonsSection() {
                                 }`}
                             style={{ transitionDelay: "800ms" }}
                         >
-                            Back This Project
+                            Pre-Order Now
                             <span className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
                                 <svg className="w-3 h-3 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M5 12h14M12 5l7 7-7 7" />
