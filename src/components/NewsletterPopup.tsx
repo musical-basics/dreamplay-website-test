@@ -87,7 +87,7 @@ export default function NewsletterPopup() {
                                 Stay Updated
                             </h2>
                             <p className="text-gray-600">
-                                Subscribe to our mailling list for news and special offers.
+                                Subscribe for exclusive offers, discounts and news related to the DreamPlay One.
                             </p>
                         </div>
 
