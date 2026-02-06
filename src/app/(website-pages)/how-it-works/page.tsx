@@ -479,7 +479,7 @@ export default function HowItWorksPage() {
                 {/* --- CTA --- */}
                 <section className="py-32 text-center border-t border-white/10 w-full bg-[#080a0f]">
                     <h2 className="text-4xl md:text-5xl font-bold mb-10 text-white">Ready to Play Pain-Free?</h2>
-                    <a href="/checkout-pages/customize" className="inline-block bg-white text-black px-10 py-5 rounded-full font-bold text-xl hover:bg-gray-200 hover:scale-105 transition-all shadow-xl shadow-white/10">
+                    <a href="https://crowdfund.dreamplaypianos.com" className="inline-block bg-white text-black px-10 py-5 rounded-full font-bold text-xl hover:bg-gray-200 hover:scale-105 transition-all shadow-xl shadow-white/10">
                         Reserve Your DreamPlay One
                     </a>
                 </section>
