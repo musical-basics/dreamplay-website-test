@@ -24,7 +24,7 @@ export default function NewsletterPopup() {
             if (!hasSeenPopup) {
                 const timer = setTimeout(() => {
                     setIsOpen(true);
-                }, 5000); // 5 seconds delay
+                }, 10000); // 10 seconds delay
 
                 return () => clearTimeout(timer);
             }
