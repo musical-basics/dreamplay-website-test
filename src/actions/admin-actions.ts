@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@supabase/supabase-js'
+import { revalidatePath } from 'next/cache'
 
 // Initialize Supabase Admin Client
 // Using service_role key to ensure we have permission to manage admin variables
@@ -138,6 +139,7 @@ export async function updateHomepageVersion(version: 'old' | 'special-offer') {
             throw new Error(error.message)
         }
 
+        revalidatePath('/')
         return { success: true }
     } catch (error: any) {
         return { success: false, error: error.message }
