@@ -75,15 +75,17 @@ export default function Home() {
 
   return (
     <div className="page-wrapper">
-      {/* Navbar Section */}
-      <div className="bg-[#0a0a0f] relative z-[100] min-h-[90px] flex flex-col justify-center">
-        <Navbar />
-      </div>
+      <style jsx global>{`
+        .section_navigation5-wrfrm {
+          background-color: transparent !important;
+        }
+      `}</style>
 
+      <Navbar />
 
-      <div className="relative z-10 bg-white">
+      <div className="relative z-10">
         <main className="main-wrapper">
-          <section className="section-hero bg-[#0a0a0f]">
+          <section className="section-hero border-none !m-0 !p-0">
             <div className="global-padding">
               <div className="container">
                 <div className="hero-content-wrapper">
