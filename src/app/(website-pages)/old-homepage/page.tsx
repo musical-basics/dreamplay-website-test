@@ -85,7 +85,7 @@ export default function Home() {
 
       <div className="relative z-10">
         <main className="main-wrapper">
-          <section className="section-hero border-none !m-0 !p-0">
+          <section className="section-hero">
             <div className="global-padding">
               <div className="container">
                 <div className="hero-content-wrapper">
