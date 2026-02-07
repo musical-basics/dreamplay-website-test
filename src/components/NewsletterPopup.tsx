@@ -16,13 +16,19 @@ export default function NewsletterPopup() {
         const checkStatus = async () => {
             // Check global admin setting first
             const status = await getDiscountPopupStatus();
-            if (status !== 'true') return;
+            if (String(status) !== 'true') {
+                console.log("Newsletter popup suppressed by admin setting:", status);
+                return;
+            }
 
             // check if user has already seen/closed the popup to avoid spamming them
             const hasSeenPopup = localStorage.getItem("dreamplay_popup_seen");
+            console.log("Newsletter popup seen status:", hasSeenPopup);
 
             if (!hasSeenPopup) {
+                console.log("Scheduling newsletter popup in 10s...");
                 const timer = setTimeout(() => {
+                    console.log("Showing newsletter popup now");
                     setIsOpen(true);
                 }, 10000); // 10 seconds delay
 
@@ -67,7 +73,7 @@ export default function NewsletterPopup() {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/50 backdrop-blur-sm transition-opacity duration-300">
+        <div className="fixed inset-0 z-[2000] flex items-center justify-center px-4 bg-black/50 backdrop-blur-sm transition-opacity duration-300">
             <div className="relative w-full max-w-md bg-white rounded-xl shadow-2xl p-6 md:p-8 animate-in fade-in zoom-in duration-300">
                 {/* Close Button */}
                 <button
