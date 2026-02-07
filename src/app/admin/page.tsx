@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getCountdownDate, updateCountdownDate, getDiscountPopupStatus, updateDiscountPopupStatus, loginAdmin } from '@/actions/admin-actions'
+import { getCountdownDate, updateCountdownDate, getDiscountPopupStatus, updateDiscountPopupStatus, loginAdmin, getHomepageVersion, updateHomepageVersion } from '@/actions/admin-actions'
 
 export default function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -13,6 +13,7 @@ export default function AdminPage() {
 
     // Feature Toggle State
     const [showDiscount, setShowDiscount] = useState(true)
+    const [homepageVersion, setHomepageVersion] = useState<'old' | 'special-offer'>('special-offer')
 
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
@@ -44,15 +45,17 @@ export default function AdminPage() {
 
     async function loadData() {
         setLoading(true)
-        const [dateVal, discountVal] = await Promise.all([
+        const [dateVal, discountVal, versionVal] = await Promise.all([
             getCountdownDate(),
-            getDiscountPopupStatus()
+            getDiscountPopupStatus(),
+            getHomepageVersion()
         ])
 
         if (dateVal) setDate(dateVal)
         else setDate('2026-01-19T21:00:00-08:00')
 
         setShowDiscount(discountVal === 'true')
+        setHomepageVersion(versionVal as 'old' | 'special-offer')
 
         setLoading(false)
     }
@@ -81,6 +84,18 @@ export default function AdminPage() {
             // Revert if failed
             setShowDiscount(!newValue)
             alert('Failed to update discount status')
+        }
+    }
+
+    async function handleVersionChange(e: React.ChangeEvent<HTMLSelectElement>) {
+        const newVersion = e.target.value as 'old' | 'special-offer'
+        setHomepageVersion(newVersion)
+
+        const res = await updateHomepageVersion(newVersion)
+        if (!res.success) {
+            alert('Failed to update homepage version')
+            // Revert on failure
+            loadData()
         }
     }
 
@@ -175,6 +190,21 @@ export default function AdminPage() {
                                     }`}
                             />
                         </button>
+                    </div>
+
+                    <div className="mt-4 flex items-center justify-between p-4 bg-black/40 rounded-lg border border-neutral-800">
+                        <div>
+                            <h3 className="font-medium text-white">Homepage Version</h3>
+                            <p className="text-sm text-neutral-500">Switch between the old homepage and the special offer.</p>
+                        </div>
+                        <select
+                            value={homepageVersion}
+                            onChange={handleVersionChange}
+                            className="bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white outline-none focus:border-blue-500"
+                        >
+                            <option value="special-offer">Special Offer</option>
+                            <option value="old">Old Homepage</option>
+                        </select>
                     </div>
                 </div>
 

@@ -101,6 +101,49 @@ export async function updateDiscountPopupStatus(enabled: boolean) {
     }
 }
 
+export async function getHomepageVersion() {
+    try {
+        const { data, error } = await supabase
+            .from('admin_variables')
+            .select('value')
+            .eq('key', 'homepage_version')
+            .single()
+
+        if (error) {
+            // Default to special-offer if not set
+            if (error.code === 'PGRST116') return 'special-offer'
+            console.error('Error fetching homepage version:', error)
+            return 'special-offer'
+        }
+
+        return data?.value || 'special-offer'
+    } catch (error) {
+        console.error('Failed to get homepage version:', error)
+        return 'special-offer'
+    }
+}
+
+export async function updateHomepageVersion(version: 'old' | 'special-offer') {
+    try {
+        const { error } = await supabase
+            .from('admin_variables')
+            .upsert({
+                key: 'homepage_version',
+                value: version,
+                updated_at: new Date().toISOString()
+            })
+
+        if (error) {
+            console.error('Error updating homepage version:', error)
+            throw new Error(error.message)
+        }
+
+        return { success: true }
+    } catch (error: any) {
+        return { success: false, error: error.message }
+    }
+}
+
 export async function loginAdmin(password: string) {
     if (password === 'sorenkier') {
         // In a real app we'd use cookies() from next/headers to set a session

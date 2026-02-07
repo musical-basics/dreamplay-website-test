@@ -1,4 +1,4 @@
-"use client"
+// "use client" - removed as this is now a server component wrapper
 
 import Navbar from "@/components/Navbar"
 import { HeroSection } from "@/components/special-offer/hero-section"
@@ -10,12 +10,13 @@ import { FindYourFitSection } from "@/components/special-offer/find-your-fit-sec
 import { GuaranteeSection } from "@/components/special-offer/guarantee-section"
 import { CTASection } from "@/components/special-offer/cta-section"
 import { SpecialOfferFooter } from "@/components/special-offer/footer"
-import { useABAnalytics } from "@/hooks/use-ab-analytics"
 import { VideoSection1 } from "@/components/special-offer/video-section-1"
 import { VideoSection2 } from "@/components/special-offer/video-section-2"
+import { getHomepageVersion } from "@/actions/admin-actions"
 
-export default function SpecialOfferPage() {
-    useABAnalytics("special_offer_variant")
+// Import components for the old homepage if needed or just use a dynamic import/separate component.
+// Reverting SpecialOfferPage to be used within a server component wrapper.
+function SpecialOfferContent() {
     return (
         <main className="relative">
             <style jsx global>{`
@@ -24,9 +25,6 @@ export default function SpecialOfferPage() {
                     overflow: visible !important;
                 }
             `}</style>
-
-
-
 
             <Navbar />
 
@@ -70,10 +68,6 @@ export default function SpecialOfferPage() {
                     <FeaturesPianoSection />
                 </div>
 
-
-
-
-
                 {/* Section 7: Guarantee - STICKY */}
                 <div className="sticky top-0 z-[60] min-h-screen shadow-[0_-20px_50px_rgba(0,0,0,0.15)]" id="guarantee">
                     <GuaranteeSection />
@@ -91,4 +85,17 @@ export default function SpecialOfferPage() {
             </div>
         </main>
     )
+}
+
+// Dynamically import the old homepage content to keep it clean
+import OldHomepageContent from "./old-homepage/page"
+
+export default async function HomepageWrapper() {
+    const version = await getHomepageVersion()
+
+    if (version === "old") {
+        return <OldHomepageContent />
+    }
+
+    return <SpecialOfferContent />
 }
