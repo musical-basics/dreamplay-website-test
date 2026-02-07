@@ -88,7 +88,7 @@ function SpecialOfferContent() {
 }
 
 // Dynamically import the old homepage content to keep it clean
-import OldHomepageContent from "./old-homepage/page"
+import OldHomepageContent from "./(website-pages)/old-homepage/page"
 
 export default async function HomepageWrapper() {
     const version = await getHomepageVersion()
