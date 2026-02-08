@@ -47,9 +47,10 @@ export default function CustomizePage() {
     // --- DATA ---
     const tiers = [
         {
-            id: 'bundle', // This maps to your $599 Bundle Variant
+            id: 'full', // Changed from 'bundle' to match handler
             name: 'The DreamPlay Bundle',
-            price: '$599',
+            price: '$549',
+            originalPrice: '$599',
             subtitle: 'MOST POPULAR', // High visibility badge
             description: 'The complete experience. Everything you need to play immediately.',
             bundleDetails: 'Includes: DreamPlay One ($499) + Matching Stand & Bench ($200 Value)',
@@ -669,8 +670,8 @@ export default function CustomizePage() {
                                     key={tier.id}
                                     onClick={() => handleSelectTier(tier.id)}
                                     className={`group relative flex flex-col items-center overflow-visible rounded-2xl p-6 text-center transition-all duration-300 md:p-8 ${isSelected
-                                        ? 'border-2 border-white bg-white/20 shadow-2xl backdrop-blur-md scale-105 z-10'
-                                        : 'border border-white/20 bg-white/10 backdrop-blur-md hover:border-white/40 hover:bg-white/15'
+                                        ? `border-2 ${isSaleTier ? 'border-red-500 shadow-[0_0_30px_rgba(239,68,68,0.3)]' : 'border-white'} bg-white/20 shadow-2xl backdrop-blur-md scale-105 z-10`
+                                        : `border ${isSaleTier ? 'border-red-500/50 bg-red-500/5' : 'border-white/20 bg-white/10'} backdrop-blur-md hover:border-white/40 hover:bg-white/15`
                                         }`}
                                 >
                                     {/* Sale Badge for Pay in Full */}
@@ -689,8 +690,8 @@ export default function CustomizePage() {
 
                                     {/* Price Display */}
                                     <div className="flex items-baseline gap-2 mb-1">
-                                        {isSaleTier && (
-                                            <span className="text-xl text-white/50 line-through decoration-white/50">$899</span>
+                                        {(tier as any).originalPrice && (
+                                            <span className="text-xl text-white/50 line-through decoration-white/50">{(tier as any).originalPrice}</span>
                                         )}
                                         <div className="text-3xl font-bold text-white md:text-4xl tracking-tight">{tier.price}</div>
                                     </div>
