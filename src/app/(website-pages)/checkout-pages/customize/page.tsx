@@ -403,7 +403,7 @@ export default function CustomizePage() {
                 <div className="relative z-10 mx-auto max-w-4xl px-4 text-center md:px-6">
                     <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1.5 text-xs text-white/60 backdrop-blur-sm md:mb-6 md:px-4 md:py-2 md:text-sm border border-white/10">
                         <span className="h-2 w-2 animate-pulse rounded-full bg-[#4a9eff]"></span>
-                        Limited Pre-Order Available
+                        Final Units Remaining in Our First Production Batch.
                     </div>
 
                     <div className="mb-8 space-y-4">
