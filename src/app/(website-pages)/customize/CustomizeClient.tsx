@@ -258,23 +258,32 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             const colorParam = encodeURIComponent(appState.color || 'Not Selected');
             const propertiesParams = `&properties[Size]=${sizeParam}&properties[Finish]=${colorParam}`;
 
-            // Determine base URL from props or fallback to hardcoded
+            // Helper to determine payload
+            const getCheckoutUrl = (configValue: string | undefined, defaultId: string) => {
+                const val = configValue?.trim();
+                // If value exists and is numeric (Variant ID), construct URL
+                if (val && /^\d+$/.test(val)) {
+                    return `https://dreamplay-pianos.myshopify.com/cart/add?id=${val}&quantity=1&return_to=/checkout`;
+                }
+
+                // If value exists and is NOT numeric, assume it's a full URL
+                if (val) return val;
+
+                // If empty, use default ID (only if defaultId is provided)
+                if (defaultId) return `https://dreamplay-pianos.myshopify.com/cart/add?id=${defaultId}&quantity=1&return_to=/checkout`;
+
+                // Return empty string if no value and no default
+                return "";
+            }
+
             let baseUrl = "";
 
             if (tierId === 'full') {
-                baseUrl = urls.bundle || "https://dreamplay-pianos.myshopify.com/cart/add?id=52209394549050&quantity=1&return_to=/checkout";
+                baseUrl = getCheckoutUrl(urls.bundle, "52209394549050");
             } else if (tierId === 'deposit') {
-                baseUrl = urls.deposit || "https://dreamplay-pianos.myshopify.com/cart/add?id=52213397291322&quantity=1&return_to=/checkout";
+                baseUrl = getCheckoutUrl(urls.deposit, "52213397291322");
             } else if (tierId === 'solo') {
-                // Previously 'solo' didn't have a redirect logic in the snippet provided, 
-                // but if we want to support it dynamically we should check if a URL is provided.
-                // If no URL is provided for solo, maybe it just scrolls or does nothing?
-                // The prompt implies all 3 buttons should be configurable.
-                // I'll assume if a URL is provided, we redirect. If not, we might need default behavior.
-                // Looking at the original code, 'solo' wasn't in the if-block for redirect, 
-                // so I'll only redirect if a URL is provided or if I should add a default.
-                // For now, if a dynamic URL exists, use it.
-                baseUrl = urls.solo || "";
+                baseUrl = getCheckoutUrl(urls.solo, "");
             }
 
             if (baseUrl) {

@@ -78,46 +78,46 @@ export default function CustomizeUrlsPage() {
                     </h2>
                     <p className="text-sm text-neutral-400 mb-6">
                         Configure the destination URLs for the buttons on the /customize page.
-                        Leave empty to use default behavior (Shopify Cart Add).
+                        Enter a Shopify Variant ID (numeric) or a full redirect URL. Leave empty for default.
                     </p>
 
                     <form onSubmit={handleSave} className="space-y-6">
                         <div>
                             <label className="block text-sm font-medium text-neutral-300 mb-2">
-                                DreamPlay Bundle URL ($549)
+                                DreamPlay Bundle (Variant ID or URL)
                             </label>
                             <input
                                 type="text"
                                 className="w-full bg-black border border-neutral-700 rounded-lg p-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all text-sm"
                                 value={urls.bundle}
                                 onChange={(e) => setUrls({ ...urls, bundle: e.target.value })}
-                                placeholder="e.g. https://checkout.stripe.com/..."
+                                placeholder="e.g. 52209394549050 or https://..."
                             />
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium text-neutral-300 mb-2">
-                                Keyboard Only URL ($499)
+                                Keyboard Only (Variant ID or URL)
                             </label>
                             <input
                                 type="text"
                                 className="w-full bg-black border border-neutral-700 rounded-lg p-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all text-sm"
                                 value={urls.solo}
                                 onChange={(e) => setUrls({ ...urls, solo: e.target.value })}
-                                placeholder="e.g. https://checkout.stripe.com/..."
+                                placeholder="e.g. 1234567890 or https://..."
                             />
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium text-neutral-300 mb-2">
-                                Reserve Yours URL ($299)
+                                Reserve Yours (Variant ID or URL)
                             </label>
                             <input
                                 type="text"
                                 className="w-full bg-black border border-neutral-700 rounded-lg p-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all text-sm"
                                 value={urls.deposit}
                                 onChange={(e) => setUrls({ ...urls, deposit: e.target.value })}
-                                placeholder="e.g. https://checkout.stripe.com/..."
+                                placeholder="e.g. 52213397291322 or https://..."
                             />
                         </div>
 
