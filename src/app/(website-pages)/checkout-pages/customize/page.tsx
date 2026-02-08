@@ -396,11 +396,7 @@ export default function CustomizePage() {
                     </div>
 
                     <div className="mb-8 space-y-4">
-                        <h2 className="text-4xl md:text-6xl font-black tracking-tight text-white drop-shadow-[0_0_15px_rgba(239,68,68,0.5)]">
-                            <span className="inline-block animate-bounce mr-2">🎉</span>
-                            <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">MLK HOLIDAY SALE</span>
-                            <span className="inline-block animate-bounce ml-2">🎉</span>
-                        </h2>
+
 
                         <div className="flex flex-col items-center justify-center gap-1">
                             <div className="flex items-baseline gap-3">
@@ -411,9 +407,7 @@ export default function CustomizePage() {
                             <p className="text-sm md:text-base text-[#ff9f9f] font-medium">(Keyboard + Stand + Bench)</p>
                         </div>
 
-                        <p className="text-xs md:text-sm text-white/60 font-medium tracking-wide uppercase">
-                            Invite Only. Jan 17 - Jan 19. Extremely limited supply.
-                        </p>
+
                     </div>
 
                     <h1 className="mb-3 text-balance text-3xl font-bold tracking-tight text-white md:mb-4 md:text-5xl lg:text-6xl">
@@ -670,11 +664,7 @@ export default function CustomizePage() {
                                         }`}
                                 >
                                     {/* Sale Badge for Pay in Full */}
-                                    {isSaleTier && (
-                                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-gradient-to-r from-red-500 to-red-600 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white shadow-[0_0_20px_rgba(239,68,68,0.6)] z-20">
-                                            🎉 MLK Holiday Sale
-                                        </div>
-                                    )}
+
 
                                     {/* Regular Recommended Badge (only if not sale tier, or handle overlap) */}
                                     {tier.recommended && !isSaleTier && (
