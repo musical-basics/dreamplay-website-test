@@ -711,6 +711,10 @@ export default function CustomizePage() {
                                         }`}>
                                         {isSelected ? (isSaleTier ? 'Claim Offer' : 'Selected') : 'Select Option'}
                                     </div>
+
+                                    <div className="mt-4 text-[10px] text-white/50 leading-tight max-w-[200px] mx-auto">
+                                        Estimated Shipping August 2026. For more details, <a href="/information-and-policies/shipping" target="_blank" className="underline hover:text-white/80 transition-colors" onClick={(e) => e.stopPropagation()}>click here</a>
+                                    </div>
                                 </button>
                             )
                         })}
