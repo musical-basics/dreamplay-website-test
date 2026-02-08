@@ -90,10 +90,10 @@ export default function NewsletterPopup() {
                                 <Mail className="text-blue-600" size={24} />
                             </div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                                Stay Updated
+                                Exclusive Discount
                             </h2>
                             <p className="text-gray-600">
-                                Subscribe for exclusive offers, discounts and news related to the DreamPlay One.
+                                Subscribe for an exclusive discount on your first purchase on our store.
                             </p>
                         </div>
 
