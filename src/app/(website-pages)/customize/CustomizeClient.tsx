@@ -76,9 +76,9 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             id: 'deposit',
             name: 'Reserve Yours',
             price: '$299',
-            subtitle: '50% Deposit',
+            subtitle: '50% Reservation',
             description: 'Pay the rest when ready to ship.',
-            bundleDetails: 'Includes: DreamPlay One Keyboard, Power Adapter, Sustain Pedal',
+            bundleDetails: 'Includes: DreamPlay One ($499) + Matching Stand & Bench ($200 Value)',
             recommended: false,
             icon: 'calendar'
         },
