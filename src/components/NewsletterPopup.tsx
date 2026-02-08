@@ -9,6 +9,7 @@ import { subscribeToNewsletter } from "@/actions/email-actions";
 export default function NewsletterPopup() {
     const [isOpen, setIsOpen] = useState(false);
     const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -52,6 +53,7 @@ export default function NewsletterPopup() {
         try {
             const res = await subscribeToNewsletter({
                 email: email,
+                first_name: name,
                 tags: ["Newsletter Subscription"]
             });
 
@@ -99,14 +101,24 @@ export default function NewsletterPopup() {
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                                <input
-                                    type="email"
-                                    required
-                                    placeholder="Enter your email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-gray-900"
-                                />
+                                <div>
+                                    <input
+                                        type="text"
+                                        required
+                                        placeholder="Enter your name"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        className="w-full mb-3 px-4 py-3 rounded-lg border border-gray-300 bg-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-gray-900"
+                                    />
+                                    <input
+                                        type="email"
+                                        required
+                                        placeholder="Enter your email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-gray-900"
+                                    />
+                                </div>
                             </div>
                             <button
                                 type="submit"
