@@ -8,7 +8,7 @@ export default function Navbar() {
     const [showAboutDropdown, setShowAboutDropdown] = React.useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
     const pathname = usePathname();
-    const isCustomizePage = pathname === "/checkout-pages/customize";
+    const isCustomizePage = pathname === "/customize";
 
     const getLinkClass = (path: string) => {
         const baseClass = "navigation5_link-wrfrm w-nav-link";

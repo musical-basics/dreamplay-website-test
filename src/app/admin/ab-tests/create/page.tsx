@@ -27,7 +27,7 @@ export default function CreateTestPage() {
 
                     <div className="grid gap-2">
                         <Label>Target URL Path</Label>
-                        <Input name="target_path" placeholder="/checkout-pages/customize" required />
+                        <Input name="target_path" placeholder="/customize" required />
                         <p className="text-xs text-gray-500">The page where the test will run.</p>
                     </div>
                 </div>
