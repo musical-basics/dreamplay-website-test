@@ -66,6 +66,16 @@ export default function CustomizePage() {
             recommended: false,
             icon: 'zap'
         },
+        {
+            id: 'deposit',
+            name: 'Reserve Yours',
+            price: '$299',
+            subtitle: '50% Deposit',
+            description: 'Pay the rest when ready to ship.',
+            bundleDetails: 'Includes: DreamPlay One Keyboard, Power Adapter, Sustain Pedal',
+            recommended: false,
+            icon: 'calendar'
+        },
         // { id: 'waitlist', name: 'Join Waitlist', price: 'Free', subtitle: 'No Payment', description: 'Just your email, no commitment', bundleDetails: '', recommended: false, icon: 'mail' }
     ];
 
@@ -635,7 +645,7 @@ export default function CustomizePage() {
                     <div className="mb-8 text-center md:mb-12">
                         <h2 className="mb-3 text-balance text-3xl font-bold text-white md:mb-4 md:text-5xl lg:text-6xl">Be the First to<br />Experience DreamPlay.</h2>
                         <p className="mx-auto mb-6 max-w-lg text-sm text-white/80 md:mb-8 md:text-base lg:text-lg">We've finished the design. Now, we need your help to begin production.</p>
-                        <div className="mb-6 flex items-center justify-center gap-4 md:mb-8 md:gap-8">
+                        {/* <div className="mb-6 flex items-center justify-center gap-4 md:mb-8 md:gap-8">
                             {Object.entries(countdown).map(([label, value], i) => (
                                 <div key={label} className="flex items-center gap-4 md:gap-8">
                                     <div className="text-center">
@@ -645,7 +655,7 @@ export default function CustomizePage() {
                                     {i < 3 && <span className="text-2xl text-white/40 md:text-3xl">:</span>}
                                 </div>
                             ))}
-                        </div>
+                        </div> */}
                         <p className="text-sm text-white/70 md:text-base">Join <span className="font-semibold text-white">~{customerCount.toLocaleString()}</span> customers just like you</p>
                     </div>
 
@@ -674,7 +684,7 @@ export default function CustomizePage() {
                                     )}
 
                                     <div className={`mb-4 flex h-14 w-14 items-center justify-center rounded-2xl transition-all ${isSelected ? 'bg-white/30' : 'bg-white/10'}`}>
-                                        <span className="text-2xl">{tier.icon === 'gift' ? '🎁' : tier.icon === 'zap' ? '⚡' : '✉️'}</span>
+                                        <span className="text-2xl">{tier.icon === 'gift' ? '🎁' : tier.icon === 'zap' ? '⚡' : tier.icon === 'calendar' ? '📅' : '✉️'}</span>
                                     </div>
 
                                     {/* Price Display */}
