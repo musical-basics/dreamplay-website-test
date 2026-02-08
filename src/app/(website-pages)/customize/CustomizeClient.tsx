@@ -753,6 +753,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                     </div>
 
                                     <div className="mt-1 text-base font-semibold text-white md:text-lg">{tier.name}</div>
+                                    <div className="mt-1 text-xs font-bold uppercase tracking-wider text-[#4a9eff]">{tier.subtitle}</div>
                                     <div className="mt-2 text-xs text-white/70 md:text-sm leading-relaxed">{tier.description}</div>
 
                                     {tier.bundleDetails && (
