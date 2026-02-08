@@ -17,7 +17,7 @@ export default function Footer() {
     { text: "Shipping", href: "/information-and-policies/shipping" }, // Corrected local link
     { text: "Refund Policy", href: "https://www.dreamplaypianos.com/reserve" },
     { text: "Contact Us", href: "https://www.dreamplaypianos.com/reserve" },
-    { text: "Careers", href: "https://www.dreamplaypianos.com/reserve" },
+    { text: "Blog", href: "https://blog.dreamplaypianos.com/blog" },
     // { text: "Text Link", href: "#" }, // Filtered out by script logic if href is #
     // { text: "Text Link", href: "#" },
   ];
