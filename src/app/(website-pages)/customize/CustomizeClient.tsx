@@ -693,7 +693,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             </section>
 
             {/* SECTION 4: PRICING */}
-            <section ref={el => { if (sectionRefs.current) sectionRefs.current[4] = el }} id="section-4" className="journey-section relative flex min-h-screen flex-col justify-center bg-gradient-to-br from-[#4a9eff] to-[#2d7ad6] py-20">
+            <section ref={el => { if (sectionRefs.current) sectionRefs.current[4] = el }} id="section-4" className="journey-section relative flex min-h-screen flex-col justify-center bg-gradient-to-br from-[#0f172a] to-[#1e293b] py-20">
                 <div className="mx-auto w-full max-w-4xl px-4 md:px-6">
                     <button onClick={() => scrollToSection(3)} className="mb-4 flex items-center gap-2 text-sm text-white/80 transition-colors hover:text-white">
                         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
@@ -753,7 +753,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                     </div>
 
                                     <div className="mt-1 text-base font-semibold text-white md:text-lg">{tier.name}</div>
-                                    <div className="mt-1 text-xs font-bold uppercase tracking-wider text-[#4a9eff]">{tier.subtitle}</div>
+                                    <div className="mt-1 text-xs font-bold uppercase tracking-wider text-[#a855f7]">{tier.subtitle}</div>
                                     <div className="mt-2 text-xs text-white/70 md:text-sm leading-relaxed">{tier.description}</div>
 
                                     {tier.bundleDetails && (
