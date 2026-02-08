@@ -154,3 +154,70 @@ export async function loginAdmin(password: string) {
     }
     return { success: false, error: 'Invalid password' }
 }
+
+export async function getCustomizePageUrls() {
+    try {
+        const { data, error } = await supabase
+            .from('admin_variables')
+            .select('key, value')
+            .in('key', ['customize_url_bundle', 'customize_url_solo', 'customize_url_deposit'])
+
+        if (error) {
+            console.error('Error fetching customize URLs:', error)
+            return {
+                bundle: '',
+                solo: '',
+                deposit: ''
+            }
+        }
+
+        // Initialize with emptiness
+        const urlMap: Record<string, string> = {
+            'customize_url_bundle': '',
+            'customize_url_solo': '',
+            'customize_url_deposit': ''
+        }
+
+        data?.forEach((row: { key: string, value: string }) => {
+            urlMap[row.key] = row.value
+        })
+
+        return {
+            bundle: urlMap['customize_url_bundle'],
+            solo: urlMap['customize_url_solo'],
+            deposit: urlMap['customize_url_deposit']
+        }
+    } catch (error) {
+        console.error('Failed to get customize URLs:', error)
+        return {
+            bundle: '',
+            solo: '',
+            deposit: ''
+        }
+    }
+}
+
+export async function updateCustomizePageUrls(urls: { bundle: string, solo: string, deposit: string }) {
+    try {
+        const updates = [
+            { key: 'customize_url_bundle', value: urls.bundle, updated_at: new Date().toISOString() },
+            { key: 'customize_url_solo', value: urls.solo, updated_at: new Date().toISOString() },
+            { key: 'customize_url_deposit', value: urls.deposit, updated_at: new Date().toISOString() }
+        ]
+
+        const { error } = await supabase
+            .from('admin_variables')
+            .upsert(updates)
+
+        if (error) {
+            console.error('Error updating customize URLs:', error)
+            throw new Error(error.message)
+        }
+
+        revalidatePath('/customize')
+        return { success: true }
+    } catch (error: any) {
+        return { success: false, error: error.message }
+    }
+}
+

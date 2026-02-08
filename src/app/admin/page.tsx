@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { getCountdownDate, updateCountdownDate, getDiscountPopupStatus, updateDiscountPopupStatus, loginAdmin, getHomepageVersion, updateHomepageVersion } from '@/actions/admin-actions'
 
@@ -160,13 +161,23 @@ export default function AdminPage() {
                     <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
                         <span>📚</span> Content Management
                     </h2>
-                    <a href="/admin/faq" className="flex items-center justify-between p-4 bg-black/40 rounded-lg border border-neutral-800 hover:border-blue-500/50 transition-colors group">
-                        <div>
-                            <h3 className="font-medium text-white group-hover:text-blue-400 transition-colors">Manage FAQs</h3>
-                            <p className="text-sm text-neutral-500">Edit, add, or remove questions from the FAQ page.</p>
-                        </div>
-                        <span className="text-neutral-500 group-hover:text-blue-400 transition-colors">→</span>
-                    </a>
+                    <div className="space-y-4">
+                        <Link href="/admin/faq" className="flex items-center justify-between p-4 bg-black/40 rounded-lg border border-neutral-800 hover:border-blue-500/50 transition-colors group">
+                            <div>
+                                <h3 className="font-medium text-white group-hover:text-blue-400 transition-colors">Manage FAQs</h3>
+                                <p className="text-sm text-neutral-500">Edit, add, or remove questions from the FAQ page.</p>
+                            </div>
+                            <span className="text-neutral-500 group-hover:text-blue-400 transition-colors">→</span>
+                        </Link>
+
+                        <Link href="/admin/customize-urls" className="flex items-center justify-between p-4 bg-black/40 rounded-lg border border-neutral-800 hover:border-blue-500/50 transition-colors group">
+                            <div>
+                                <h3 className="font-medium text-white group-hover:text-blue-400 transition-colors">Customize Page URLs</h3>
+                                <p className="text-sm text-neutral-500">Update destination links for pricing buttons.</p>
+                            </div>
+                            <span className="text-neutral-500 group-hover:text-blue-400 transition-colors">→</span>
+                        </Link>
+                    </div>
                 </div>
 
                 {/* DISCOUNT POPUP TOGGLE */}
