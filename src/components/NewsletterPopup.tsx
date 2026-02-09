@@ -53,7 +53,7 @@ export default function NewsletterPopup() {
         try {
             const res = await subscribeToNewsletter({
                 email: email,
-                first_name: name,
+                first_name: name || undefined, // Send undefined if name is empty (hidden)
                 tags: ["Newsletter Subscription"]
             });
 
@@ -102,6 +102,7 @@ export default function NewsletterPopup() {
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
                                 <div>
+                                    {/* Name field hidden for now
                                     <input
                                         type="text"
                                         required
@@ -110,6 +111,7 @@ export default function NewsletterPopup() {
                                         onChange={(e) => setName(e.target.value)}
                                         className="w-full mb-3 px-4 py-3 rounded-lg border border-gray-300 bg-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-gray-900"
                                     />
+                                    */}
                                     <input
                                         type="email"
                                         required
