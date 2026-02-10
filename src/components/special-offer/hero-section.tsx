@@ -39,7 +39,7 @@ export function HeroSection() {
                         className={`text-xl md:text-2xl text-neutral-300 max-w-2xl mb-12 transition-all duration-1000 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                             }`}
                     >
-                        Stop over-stretching. The DreamPlay One offers narrower keys designed for your handspan.
+                        Stop wasting time practicing on a keyboard that's too big for your hands.
                     </p>
 
                     <Link
