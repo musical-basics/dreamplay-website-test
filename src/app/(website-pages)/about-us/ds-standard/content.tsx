@@ -120,15 +120,11 @@ export default function DSStandardContent() {
                             <AnimatedSection delay={100} className="order-1 lg:order-2">
                                 <div className="relative aspect-[4/5] w-full rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl">
                                     <Image
-                                        src="/images/David-Linda.jpg"
-                                        alt="David and Linda Steinbuhler"
+                                        src="/images/products_DS5.5-Yamaha-CFX-3-1024x711.jpg"
+                                        alt="DS5.5 Yamaha CFX Piano"
                                         fill
-                                        className="object-cover object-[70%_center]"
+                                        className="object-cover"
                                     />
-                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-8 pt-24">
-                                        <p className="text-white font-medium text-lg">David & Linda Steinbuhler</p>
-                                        <p className="text-gray-400 text-sm">Founders, DS Standard Foundation</p>
-                                    </div>
                                 </div>
                             </AnimatedSection>
                         </div>
