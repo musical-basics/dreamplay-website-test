@@ -74,7 +74,7 @@ export function SpecialOfferHeader({ forceOpaque = false, className = "" }: Spec
                 <div className="flex items-center gap-4">
                     <Link
                         onClick={() => trackClick("header", "join_waitlist")}
-                        href="https://crowdfund.dreamplaypianos.com"
+                        href="https://reserve.dreamplaypianos.com"
                         className={`hidden md:flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${isScrolled
                             ? "bg-white border border-neutral-200 text-neutral-900 hover:border-neutral-400"
                             : "bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20"
@@ -122,7 +122,7 @@ export function SpecialOfferHeader({ forceOpaque = false, className = "" }: Spec
                             </Link>
                         ))}
                         <Link
-                            href="https://crowdfund.dreamplaypianos.com"
+                            href="https://reserve.dreamplaypianos.com"
                             className="mt-4 flex items-center justify-center gap-2 w-full bg-black text-white rounded-full py-3 font-medium"
                             onClick={() => {
                                 trackClick("header", "join_waitlist_mobile")

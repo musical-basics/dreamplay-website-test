@@ -31,7 +31,7 @@ export function SpecialOfferFooter() {
                     </nav>
 
                     <Link
-                        href="https://crowdfund.dreamplaypianos.com"
+                        href="https://reserve.dreamplaypianos.com"
                         className="flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors"
                     >
                         Pre-Order Now

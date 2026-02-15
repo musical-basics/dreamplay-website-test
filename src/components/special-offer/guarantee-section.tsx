@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 
-const PREORDER_URL = "https://crowdfund.dreamplaypianos.com"
+const PREORDER_URL = "https://reserve.dreamplaypianos.com"
 
 export function GuaranteeSection() {
     const [isVisible, setIsVisible] = useState(false)
