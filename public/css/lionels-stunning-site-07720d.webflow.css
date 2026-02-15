@@ -225,7 +225,8 @@ figure {
   display: grid;
 }
 
-.u-color-box, .padding-10 {
+.u-color-box,
+.padding-10 {
   padding: 10px;
 }
 
@@ -324,7 +325,7 @@ figure {
 }
 
 .section-hero {
-  background-image: linear-gradient(#0000 31%, #000), url('../images/New-Hero---Gradient.jpg');
+  background-image: linear-gradient(#0000 31%, #000), url('../images/Hero-Image-Final-Version.jpg');
   background-position: 0 0, 50% 25%;
   background-repeat: repeat, repeat;
   background-size: auto, cover;
@@ -384,7 +385,8 @@ figure {
   align-self: auto;
 }
 
-.section-padding, .section-padding.padding-64 {
+.section-padding,
+.section-padding.padding-64 {
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
@@ -1221,7 +1223,11 @@ figure {
   top: 2.5rem;
 }
 
-.margin-bottom, .margin-bottom.margin-large, .margin-bottom.margin-xxlarge, .margin-bottom.margin-xmedium, .margin-bottom.margin-xsmall {
+.margin-bottom,
+.margin-bottom.margin-large,
+.margin-bottom.margin-xxlarge,
+.margin-bottom.margin-xmedium,
+.margin-bottom.margin-xsmall {
   margin-top: 0;
   margin-left: 0;
   margin-right: 0;
@@ -1461,7 +1467,8 @@ figure {
   margin-bottom: 20px;
 }
 
-.margin-top, .margin-top.margin-xlarge {
+.margin-top,
+.margin-top.margin-xlarge {
   margin-bottom: 0;
   margin-left: 0;
   margin-right: 0;
@@ -2118,7 +2125,9 @@ figure {
   height: 50.375rem;
 }
 
-.share-fb, .share-x, .share-email {
+.share-fb,
+.share-x,
+.share-email {
   grid-column-gap: 2.5rem;
   grid-row-gap: 2.5rem;
   border: 1px solid #76767b36;
@@ -2654,7 +2663,8 @@ figure {
     object-fit: cover;
   }
 
-  .pianos-image-column, .all-pianos {
+  .pianos-image-column,
+  .all-pianos {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -2986,7 +2996,8 @@ figure {
     right: 9%;
   }
 
-  .slider-arrow, .slider-arrow.back {
+  .slider-arrow,
+  .slider-arrow.back {
     bottom: 50%;
   }
 
@@ -3039,7 +3050,8 @@ figure {
     grid-row-gap: 1rem;
   }
 
-  .pianos-btn-block, .social-column {
+  .pianos-btn-block,
+  .social-column {
     margin-top: 3rem;
   }
 
@@ -3060,7 +3072,9 @@ figure {
     height: 25rem;
   }
 
-  .share-fb, .share-x, .share-email {
+  .share-fb,
+  .share-x,
+  .share-email {
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
   }
@@ -3316,7 +3330,8 @@ figure {
     max-width: 12.8rem;
   }
 
-  .navigation5_button-primary-wrfrm, .navigation5_button-secondary-wrfrm {
+  .navigation5_button-primary-wrfrm,
+  .navigation5_button-secondary-wrfrm {
     flex: 47%;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -3531,5 +3546,3 @@ figure {
     grid-column: span 1 / span 1;
   }
 }
-
-
