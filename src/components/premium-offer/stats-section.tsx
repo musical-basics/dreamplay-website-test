@@ -58,13 +58,13 @@ export function StatsSection() {
 
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
           <a
-            href="#"
+            href="/how-it-works"
             className="inline-block border border-white px-6 py-3 text-xs font-sans uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-black md:px-8 md:text-sm"
           >
             See the Science of Strain
           </a>
           <a
-            href="#"
+            href="/why-narrow"
             className="inline-block border border-white px-6 py-3 text-xs font-sans uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-black md:px-8 md:text-sm"
           >
             Why Narrow Keys Matter

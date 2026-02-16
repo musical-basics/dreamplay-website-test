@@ -1,9 +1,14 @@
+"use client"
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import Image from "next/image"
+import { useState } from "react"
+import { ZoomIn } from "lucide-react"
 
 const specs = [
   { label: "Keyboard Versions", value: "DS5.5 (7/8ths size) or DS6.0 (15/16ths size)" },
@@ -38,30 +43,72 @@ const soundDetails = [
 ]
 
 export function SpecsSection() {
+  const [showLightbox, setShowLightbox] = useState(false)
+
   return (
-    <section id="specs" className="relative overflow-hidden bg-white">
+    <section id="specs" className="relative overflow-hidden bg-neutral-950">
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
         <div className="mb-16 max-w-2xl">
-          <p className="font-sans text-xs uppercase tracking-[0.3em] text-gray-500">
+          <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400">
             Technical Details
           </p>
-          <h2 className="mt-4 font-serif text-3xl leading-tight text-gray-900 md:text-4xl lg:text-5xl text-balance">
+          <h2 className="mt-4 font-serif text-3xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
             Built without compromise.
           </h2>
         </div>
+
+        {/* Product Dimensions Thumbnail */}
+        <button
+          onClick={() => setShowLightbox(true)}
+          className="group relative mb-16 max-w-xs overflow-hidden rounded-md border border-neutral-800 transition-all hover:border-neutral-600 hover:shadow-lg cursor-pointer"
+        >
+          <Image
+            src="/images/Main Product With Dimensions Info.JPG"
+            alt="DreamPlay One keyboard with dimensions"
+            width={400}
+            height={200}
+            className="w-full object-cover"
+          />
+          <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-all group-hover:bg-black/30">
+            <ZoomIn className="h-6 w-6 text-white opacity-0 transition-opacity group-hover:opacity-100" />
+          </div>
+          <p className="px-3 py-2 text-xs text-neutral-400">Click to enlarge</p>
+        </button>
+
+        {/* Lightbox */}
+        {showLightbox && (
+          <div
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 p-4 cursor-pointer"
+            onClick={() => setShowLightbox(false)}
+          >
+            <button
+              onClick={() => setShowLightbox(false)}
+              className="absolute right-6 top-6 text-white/70 hover:text-white text-3xl font-light"
+            >
+              ✕
+            </button>
+            <Image
+              src="/images/Main Product With Dimensions Info.JPG"
+              alt="DreamPlay One keyboard with dimensions"
+              width={1600}
+              height={900}
+              className="max-h-[90vh] w-auto max-w-full object-contain"
+            />
+          </div>
+        )}
 
         {/* Spec Table */}
         <div className="mb-16">
           {specs.map((spec, i) => (
             <div
               key={spec.label}
-              className={`flex flex-col gap-1 border-b border-gray-200 py-5 md:flex-row md:items-baseline md:gap-8 ${i === 0 ? "border-t" : ""
+              className={`flex flex-col gap-1 border-b border-neutral-800 py-5 md:flex-row md:items-baseline md:gap-8 ${i === 0 ? "border-t" : ""
                 }`}
             >
-              <span className="font-sans text-xs uppercase tracking-[0.2em] text-gray-500 md:w-64 md:shrink-0 md:text-sm">
+              <span className="font-sans text-xs uppercase tracking-[0.2em] text-neutral-400 md:w-64 md:shrink-0 md:text-sm">
                 {spec.label}
               </span>
-              <span className="font-sans text-sm text-gray-900 md:text-base">
+              <span className="font-sans text-sm text-white md:text-base">
                 {spec.value}
               </span>
             </div>
@@ -72,11 +119,11 @@ export function SpecsSection() {
         <div className="grid gap-6 md:grid-cols-2">
           {soundDetails.map((detail) => (
             <Accordion key={detail.title} type="single" collapsible>
-              <AccordionItem value={detail.title} className="border-gray-200">
-                <AccordionTrigger className="font-serif text-lg text-gray-900 hover:no-underline md:text-xl">
+              <AccordionItem value={detail.title} className="border-neutral-800">
+                <AccordionTrigger className="font-serif text-lg text-white hover:no-underline md:text-xl">
                   {detail.title}
                 </AccordionTrigger>
-                <AccordionContent className="font-sans text-sm leading-relaxed text-gray-600 md:text-base">
+                <AccordionContent className="font-sans text-sm leading-relaxed text-neutral-400 md:text-base">
                   {detail.description}
                 </AccordionContent>
               </AccordionItem>

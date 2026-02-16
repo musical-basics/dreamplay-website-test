@@ -13,6 +13,7 @@ import { CreatorSection } from "@/components/premium-offer/creator-section"
 import { TrustSection } from "@/components/premium-offer/trust-section"
 import { PricingSection } from "@/components/premium-offer/pricing-section"
 import { GuaranteeSection } from "@/components/premium-offer/guarantee-section"
+import { HeroImageSection } from "@/components/premium-offer/hero-image-section"
 
 const playfair = Playfair_Display({
     subsets: ["latin"],
@@ -43,13 +44,7 @@ export default function PremiumOfferPage() {
                     <VideoSection />
                 </section>
                 <FeaturesSection />
-                <section className="relative min-h-screen overflow-hidden">
-                    <img
-                        src="/images/Hero-Image-Final-Version.jpg"
-                        alt="Hand in black suit playing piano keys"
-                        className="absolute inset-0 h-full w-full object-cover"
-                    />
-                </section>
+                <HeroImageSection />
                 <SizeFinderSection />
                 <SpecsSection />
                 <CreatorSection />
