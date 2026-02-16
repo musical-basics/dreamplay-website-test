@@ -1,6 +1,7 @@
 "use client"
 
 import Navbar from "@/components/Navbar"
+import TestimonialsSection from "@/components/checkout/TestimonialsSection"
 import { HeroSection } from "@/components/special-offer/hero-section"
 import { CountdownTimer } from "@/components/special-offer/countdown-timer"
 import { FeaturesPianoSection } from "@/components/special-offer/features-piano-section"
@@ -65,6 +66,11 @@ export default function SpecialOfferPage() {
                 {/* Section 4: Features Piano - STICKY */}
                 <div className="sticky top-0 z-30 min-h-screen shadow-[0_-10px_30px_rgba(0,0,0,0.1)]" id="features-piano">
                     <FeaturesPianoSection />
+                </div>
+
+                {/* Section 5: Testimonials - STICKY */}
+                <div className="sticky top-0 z-[40] min-h-screen shadow-[0_-20px_50px_rgba(0,0,0,0.2)]" id="testimonials">
+                    <TestimonialsSection />
                 </div>
 
                 {/* Section 7: Guarantee - STICKY */}

@@ -89,12 +89,12 @@ export function LessonsSection() {
                         </ul>
 
                         <Link
-                            href="https://reserve.dreamplaypianos.com"
+                            href="/customize"
                             className={`mt-6 md:mt-8 inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-neutral-900 text-white text-sm font-medium transition-all duration-300 shadow-sm hover:shadow-lg hover:scale-105 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                                 }`}
                             style={{ transitionDelay: "800ms" }}
                         >
-                            Pre-Order Now
+                            Configure Yours
                             <span className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
                                 <svg className="w-3 h-3 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M5 12h14M12 5l7 7-7 7" />

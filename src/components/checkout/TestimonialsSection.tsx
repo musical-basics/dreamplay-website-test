@@ -37,7 +37,7 @@ export default function TestimonialsSection() {
     const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
 
     return (
-        <section className="bg-black text-white py-20 px-6 overflow-hidden">
+        <section className="bg-black text-white py-20 px-6 overflow-hidden min-h-screen flex items-center">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16">
                     <span className="text-sm font-medium tracking-wider text-white/70 uppercase mb-4 block">Why We’re Doing This</span>

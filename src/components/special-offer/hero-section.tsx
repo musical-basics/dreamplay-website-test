@@ -43,16 +43,27 @@ export function HeroSection() {
                     </p>
 
                     <Link
-                        onClick={() => trackClick("hero_section", "join_waitlist")}
-                        href="https://reserve.dreamplaypianos.com"
+                        onClick={() => trackClick("hero_section", "start_customization")}
+                        href="/customize"
                         className={`inline-flex items-center gap-3 bg-white text-neutral-900 rounded-full px-8 py-4 text-base font-medium hover:bg-neutral-100 transition-all duration-1000 delay-300 hover:scale-105 hover:shadow-xl ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                             }`}
                     >
-                        Pre-Order Now
+                        Configure Yours
                         <span className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
                             <ArrowRight className="w-4 h-4 text-white" />
                         </span>
                     </Link>
+
+                    {/* Pricing context to prevent sticker shock */}
+                    <div className={`mt-6 flex flex-col items-start gap-2 transition-all duration-1000 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+                        <div className="flex items-center gap-3">
+                            <span className="text-white/50 text-lg line-through">$899</span>
+                            <span className="text-white text-2xl font-bold">$549</span>
+                            <span className="bg-sky-500/20 text-sky-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-sky-500/30">
+                                Founder&apos;s Batch
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
 

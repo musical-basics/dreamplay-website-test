@@ -73,14 +73,14 @@ export function SpecialOfferHeader({ forceOpaque = false, className = "" }: Spec
                 {/* CTA Button */}
                 <div className="flex items-center gap-4">
                     <Link
-                        onClick={() => trackClick("header", "join_waitlist")}
-                        href="https://reserve.dreamplaypianos.com"
+                        onClick={() => trackClick("header", "start_customization")}
+                        href="/customize"
                         className={`hidden md:flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${isScrolled
                             ? "bg-white border border-neutral-200 text-neutral-900 hover:border-neutral-400"
                             : "bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20"
                             }`}
                     >
-                        Pre-Order Now
+                        Configure Yours
                         <span
                             className={`w-6 h-6 rounded-full flex items-center justify-center ${isScrolled ? "bg-black" : "bg-white"}`}
                         >
@@ -122,14 +122,14 @@ export function SpecialOfferHeader({ forceOpaque = false, className = "" }: Spec
                             </Link>
                         ))}
                         <Link
-                            href="https://reserve.dreamplaypianos.com"
+                            href="/customize"
                             className="mt-4 flex items-center justify-center gap-2 w-full bg-black text-white rounded-full py-3 font-medium"
                             onClick={() => {
-                                trackClick("header", "join_waitlist_mobile")
+                                trackClick("header", "start_customization_mobile")
                                 setIsMobileMenuOpen(false)
                             }}
                         >
-                            Pre-Order Now
+                            Configure Yours
                             <ArrowRight className="w-4 h-4" />
                         </Link>
                     </nav>
