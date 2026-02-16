@@ -39,10 +39,17 @@ export default function PremiumOfferPage() {
                     <CrowdfundingSection />
                     <StatsSection />
                     <HeroSection />
+                    <SocialProofBar />
+                    <VideoSection />
                 </section>
-                <SocialProofBar />
-                <VideoSection />
                 <FeaturesSection />
+                <section className="relative min-h-screen overflow-hidden">
+                    <img
+                        src="/images/Hero-Image-Final-Version.jpg"
+                        alt="Hand in black suit playing piano keys"
+                        className="absolute inset-0 h-full w-full object-cover"
+                    />
+                </section>
                 <SizeFinderSection />
                 <SpecsSection />
                 <CreatorSection />

@@ -73,9 +73,8 @@ export function StepNav() {
               {/* Thin connecting line */}
               {i > 0 && (
                 <div
-                  className={`h-5 w-px transition-colors duration-700 ${
-                    isActive || isVisited ? "bg-white/40" : "bg-white/10"
-                  }`}
+                  className={`h-5 w-px transition-colors duration-700 ${isActive || isVisited ? "bg-white/40" : "bg-white/10"
+                    }`}
                 />
               )}
 
@@ -88,26 +87,24 @@ export function StepNav() {
               >
                 {/* Number — no border, just typography */}
                 <span
-                  className={`flex h-8 w-8 items-center justify-center rounded-full font-serif text-base leading-none transition-all duration-700 ${
-                    isActive
+                  className={`flex h-8 w-8 items-center justify-center rounded-full font-serif text-base leading-none transition-all duration-700 ${isActive
                       ? "text-white bg-white/15 scale-110"
                       : isVisited
                         ? "text-white/50 group-hover:text-white/70"
                         : "text-white/20 group-hover:text-white/40"
-                  }`}
+                    }`}
                 >
                   {step.number}
                 </span>
 
                 {/* Label — elegant small caps */}
                 <span
-                  className={`mt-1 max-w-[4rem] text-center font-sans text-[7.5px] font-light uppercase tracking-[0.2em] leading-tight transition-all duration-700 ${
-                    isActive
-                      ? "text-white/90 opacity-100"
+                  className={`mt-1 max-w-[4rem] text-center font-sans text-[8.5px] font-medium uppercase tracking-[0.2em] leading-tight transition-all duration-700 ${isActive
+                      ? "text-white opacity-100"
                       : isVisited
-                        ? "text-white/30 opacity-100 group-hover:text-white/50"
-                        : "text-white/0 opacity-0 group-hover:text-white/30 group-hover:opacity-100"
-                  }`}
+                        ? "text-white/50 opacity-100 group-hover:text-white/70"
+                        : "text-white/20 opacity-100 group-hover:text-white/40"
+                    }`}
                 >
                   {step.label}
                 </span>

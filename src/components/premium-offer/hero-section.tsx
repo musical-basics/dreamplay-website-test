@@ -2,16 +2,18 @@ import Image from "next/image"
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[500px] md:min-h-[600px] overflow-hidden">
-      <Image
-        src="/images/Hero-Image-Final-Version.jpg"
-        alt="Hand in black suit playing piano keys"
-        fill
-        sizes="100vw"
-        className="object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
-      <div className="relative z-10 flex h-full min-h-[500px] md:min-h-[600px] flex-col justify-center px-8 md:px-16 lg:px-24">
+    <section className="relative min-h-screen overflow-hidden">
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 h-full w-full object-cover"
+      >
+        <source src="/videos/Clip-3.mp4" type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20" />
+      <div className="relative z-10 flex h-full min-h-screen flex-col justify-center px-8 md:px-16 lg:px-24">
         <div className="max-w-xl">
           <h2 className="font-serif text-3xl italic leading-tight text-white md:text-4xl lg:text-5xl xl:text-6xl">
             This is a

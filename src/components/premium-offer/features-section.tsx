@@ -60,16 +60,6 @@ export function FeaturesSection() {
             </div>
           ))}
         </div>
-
-        <div className="mt-16 overflow-hidden rounded-sm">
-          <Image
-            src="/images/hands-playing-illuminated-piano-keys-learning.jpg"
-            alt="DreamPlay One LED keys illuminated in warm amber"
-            width={1200}
-            height={500}
-            className="w-full object-cover"
-          />
-        </div>
       </div>
     </section>
   )

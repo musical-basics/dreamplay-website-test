@@ -2,18 +2,18 @@ import Image from "next/image"
 
 export function CrowdfundingSection() {
   return (
-    <section className="relative min-h-[500px] md:min-h-[600px] overflow-hidden">
+    <section className="relative min-h-screen overflow-hidden">
       <Image
-        src="/images/sleek-black-digital-piano-keyboard-top-view-minima.jpg"
-        alt="DreamPlay One keyboard on stand"
+        src="/images/Main-Product-In-Studio-1-1_1.avif"
+        alt="DreamPlay One keyboard in studio"
         fill
         sizes="100vw"
         className="object-cover"
         priority
       />
-      <div className="absolute inset-0 bg-black/50" />
-      <div className="relative z-10 flex h-full min-h-[500px] md:min-h-[600px] flex-col justify-center px-8 md:px-16 lg:px-24">
-        <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 md:text-xs">
+      <div className="absolute inset-0 bg-black/65" />
+      <div className="relative z-10 flex h-full min-h-screen flex-col justify-center px-8 md:px-16 lg:px-24">
+        <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/70 md:text-xs">
           Now available to pre-order
         </p>
         <h1 className="mt-4 font-serif text-3xl leading-tight text-white md:text-5xl lg:text-6xl xl:text-7xl text-balance">
@@ -23,7 +23,7 @@ export function CrowdfundingSection() {
           <br />
           Fit the Standard.
         </h1>
-        <p className="mt-6 max-w-md font-sans text-sm leading-relaxed text-white/70 md:text-base">
+        <p className="mt-6 max-w-md font-sans text-sm leading-relaxed text-white/90 md:text-base">
           88 weighted keys. Narrower by design. Built for the 87% of women and
           24% of men whose hands were never the right size for a standard
           keyboard.

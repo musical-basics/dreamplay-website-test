@@ -2,16 +2,16 @@ import Image from "next/image"
 
 export function StatsSection() {
   return (
-    <section className="relative min-h-[500px] md:min-h-[600px] overflow-hidden">
+    <section className="relative min-h-screen overflow-hidden">
       <Image
-        src="/images/special-offer/person-playing-piano-hands-on-keys-warm-natural-li.jpg"
+        src="/images/_DSC1180-2-copy.jpg"
         alt="Hands playing piano"
         fill
         sizes="100vw"
         className="object-cover"
       />
-      <div className="absolute inset-0 bg-black/40" />
-      <div className="relative z-10 flex h-full min-h-[500px] md:min-h-[600px] flex-col items-center justify-center px-6 text-center">
+      <div className="absolute inset-0 bg-black/60" />
+      <div className="relative z-10 flex h-full min-h-screen flex-col items-center justify-center px-6 text-center">
         {/* Mobile/tablet centered layout */}
         <div className="block lg:hidden">
           <p className="font-serif text-7xl text-white md:text-8xl">
