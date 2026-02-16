@@ -78,18 +78,23 @@ export async function POST(request: Request) {
             console.log("DEBUG: Attempting to send email to:", email);
             try {
                 const emailResponse = await resend.emails.send({
-                    from: 'DreamPlay <noreply@updates.dreamplaypianos.com>', // User must verify 'updates.dreamplaypianos.com'
+                    from: 'DreamPlay <noreply@updates.dreamplaypianos.com>',
                     to: email,
-                    subject: 'Welcome to DreamPlay! Here is your discount code',
+                    subject: 'Here is your Hand-Measuring Guide 🎹',
                     html: `
                         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-                            <h1>Welcome to the DreamPlay mailing list!</h1>
-                            <p>We look forward to sharing future news about upcoming sales and new products with you.</p>
+                            <h1>Welcome to DreamPlay!</h1>
+                            <p>As promised, here is your printable guide to figuring out exactly what piano size fits your biology.</p>
                             
-                            <div style="background-color: #f4f4f4; padding: 20px; border-radius: 8px; text-align: center; margin: 30px 0;">
-                                <p style="margin-bottom: 10px; font-weight: bold;">Here is your discount code:</p>
-                                <div style="font-size: 24px; font-family: monospace; font-weight: bold; color: #2563eb; letter-spacing: 2px;">WELCOME5</div>
+                            <div style="background-color: #f4f4f4; padding: 30px; border-radius: 8px; text-align: center; margin: 30px 0;">
+                                <a href="https://www.dropbox.com/scl/fi/9b72rbi4ga0pjterxyoan/DreamPlay-Infographic.pdf?rlkey=mc08i1ahn5tp3thdd0qjnag2d&st=olbh1t9w&dl=1" 
+                                   style="background-color: #2563eb; color: white; padding: 14px 28px; text-decoration: none; border-radius: 50px; font-weight: bold; display: inline-block;">
+                                   Download PDF Guide
+                                </a>
                             </div>
+
+                            <p><strong>A surprise bonus for you...</strong></p>
+                            <p>Because you're taking the first step toward pain-free playing, use the secret code <strong>WELCOME5</strong> at checkout to get an extra discount on top of the pre-order pricing.</p>
 
                             <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;" />
                             

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { X, Mail } from "lucide-react";
+import { X, FileText } from "lucide-react";
 
 import { getDiscountPopupStatus } from "@/actions/admin-actions";
 import { subscribeToNewsletter } from "@/actions/email-actions";
@@ -31,7 +31,7 @@ export default function NewsletterPopup() {
                 const timer = setTimeout(() => {
                     console.log("Showing newsletter popup now");
                     setIsOpen(true);
-                }, 10000); // 10 seconds delay
+                }, 5000); // 5 seconds delay
 
                 return () => clearTimeout(timer);
             }
@@ -54,16 +54,19 @@ export default function NewsletterPopup() {
             const res = await subscribeToNewsletter({
                 email: email,
                 first_name: name || undefined, // Send undefined if name is empty (hidden)
-                tags: ["Newsletter Subscription"]
+                tags: ["Hand Guide Download"]
             });
 
             if (!res.success) {
                 throw new Error(res.error || "Failed to subscribe");
             }
 
-            // On success, show the code
+            // On success
             setIsSubmitted(true);
             localStorage.setItem("dreamplay_popup_seen", "true");
+
+            // Auto-open the PDF in a new tab
+            window.open("https://www.dropbox.com/scl/fi/9b72rbi4ga0pjterxyoan/DreamPlay-Infographic.pdf?rlkey=mc08i1ahn5tp3thdd0qjnag2d&st=olbh1t9w&dl=1", "_blank");
         } catch (error: any) {
             console.error(error);
             alert(error.message || "Something went wrong. Please try again.");
@@ -89,13 +92,13 @@ export default function NewsletterPopup() {
                     <>
                         <div className="mb-6 text-center">
                             <div className="mx-auto bg-blue-50 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                                <Mail className="text-blue-600" size={24} />
+                                <FileText className="text-blue-600" size={24} />
                             </div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                                Exclusive Discount
+                                Are standard keys holding you back?
                             </h2>
-                            <p className="text-gray-600">
-                                Subscribe for an exclusive discount on your first purchase on our store.
+                            <p className="text-gray-600 text-sm">
+                                Enter your email to instantly download our <strong>Printable 1:1 Hand-Measuring Guide</strong> to see exactly which piano size fits your biology.
                             </p>
                         </div>
 
@@ -127,7 +130,7 @@ export default function NewsletterPopup() {
                                 disabled={isLoading}
                                 className="w-full bg-black text-white font-semibold py-3 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-70"
                             >
-                                {isLoading ? "Subscribing..." : "Subscribe"}
+                                {isLoading ? "Sending..." : "Get Free Guide"}
                             </button>
                             <p className="text-xs text-center text-gray-400">
                                 We respect your privacy. Unsubscribe at any time.
@@ -137,13 +140,13 @@ export default function NewsletterPopup() {
                 ) : (
                     <div className="text-center py-8">
                         <div className="mx-auto bg-green-50 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                            <Mail className="text-green-600" size={32} />
+                            <FileText className="text-green-600" size={32} />
                         </div>
                         <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                            Thank you for subscribing!
+                            Your guide is downloading!
                         </h3>
                         <p className="text-gray-600 mb-8 max-w-xs mx-auto">
-                            You have been added to our mailing list.
+                            Check your new tab for the PDF. Print it out, place your hand on the guide, and discover your ideal key size.
                         </p>
                         <button
                             onClick={handleClose}
