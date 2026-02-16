@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { X, FileText } from "lucide-react";
+import { X, Mail, FileText } from "lucide-react";
 
 import { getDiscountPopupStatus } from "@/actions/admin-actions";
 import { subscribeToNewsletter } from "@/actions/email-actions";
@@ -27,11 +27,11 @@ export default function NewsletterPopup() {
             console.log("Newsletter popup seen status:", hasSeenPopup);
 
             if (!hasSeenPopup) {
-                console.log("Scheduling newsletter popup in 10s...");
+                console.log("Scheduling newsletter popup in 8s...");
                 const timer = setTimeout(() => {
                     console.log("Showing newsletter popup now");
                     setIsOpen(true);
-                }, 5000); // 5 seconds delay
+                }, 8000); // 8 seconds delay
 
                 return () => clearTimeout(timer);
             }
@@ -92,7 +92,7 @@ export default function NewsletterPopup() {
                     <>
                         <div className="mb-6 text-center">
                             <div className="mx-auto bg-blue-50 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                                <FileText className="text-blue-600" size={24} />
+                                <Mail className="text-blue-600" size={24} />
                             </div>
                             <h2 className="text-2xl font-bold text-gray-900 mb-2">
                                 Are standard keys holding you back?
