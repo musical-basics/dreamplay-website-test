@@ -3,34 +3,6 @@ import { ArrowRight } from "lucide-react"
 
 const tiers = [
   {
-    badge: "Most Popular",
-    title: "DreamPlay Bundle",
-    subtitle: "Founder's Batch",
-    price: "$599",
-    description:
-      "The complete DreamPlay experience. Keyboard, adjustable stand, responsive sustain pedal, and comfortable padded bench.",
-    includes: ["DreamPlay One Keyboard", "Keyboard Stand", "Sustain Pedal", "Padded Bench"],
-    delivery: "Aug 2026",
-    backers: 208,
-    remaining: 42,
-    total: 250,
-    highlight: true,
-  },
-  {
-    badge: null,
-    title: "DreamPlay One",
-    subtitle: "Founder's Batch",
-    price: "$499",
-    description:
-      "The DreamPlay One Keyboard. Available in DS5.5 or DS6.0. Choose Midnight Black or Pearl White.",
-    includes: ["DreamPlay One Keyboard"],
-    delivery: "Aug 2026",
-    backers: 40,
-    remaining: 10,
-    total: 50,
-    highlight: false,
-  },
-  {
     badge: null,
     title: "Reserve (50%)",
     subtitle: "Late 2026 / Early 2027",
@@ -43,6 +15,34 @@ const tiers = [
     remaining: 8,
     total: 10,
     highlight: false,
+  },
+  {
+    badge: null,
+    title: "DreamPlay One",
+    subtitle: "Founder's Batch",
+    price: "$549",
+    description:
+      "The DreamPlay One Keyboard. Available in DS5.5 or DS6.0. Choose Midnight Black or Pearl White.",
+    includes: ["DreamPlay One Keyboard"],
+    delivery: "Aug 2026",
+    backers: 40,
+    remaining: 10,
+    total: 50,
+    highlight: false,
+  },
+  {
+    badge: "Most Popular",
+    title: "DreamPlay Bundle",
+    subtitle: "Founder's Batch",
+    price: "$599",
+    description:
+      "The complete DreamPlay experience. Keyboard, adjustable stand, responsive sustain pedal, and comfortable padded bench.",
+    includes: ["DreamPlay One Keyboard", "Keyboard Stand", "Sustain Pedal", "Padded Bench"],
+    delivery: "Aug 2026",
+    backers: 208,
+    remaining: 42,
+    total: 250,
+    highlight: true,
   },
 ]
 
@@ -67,11 +67,10 @@ export function PricingSection() {
           {tiers.map((tier) => (
             <div
               key={tier.title}
-              className={`relative flex flex-col border p-8 transition-all md:p-10 ${
-                tier.highlight
+              className={`relative flex flex-col border p-8 transition-all md:p-10 ${tier.highlight
                   ? "border-background/30 bg-background/5"
                   : "border-background/10 bg-transparent"
-              }`}
+                }`}
             >
               {tier.badge && (
                 <span className="mb-4 self-start font-sans text-[10px] uppercase tracking-[0.3em] text-background/50">
@@ -152,11 +151,10 @@ export function PricingSection() {
               {/* CTA */}
               <a
                 href="#"
-                className={`mt-8 group flex items-center justify-center gap-2 border px-6 py-4 text-center font-sans text-xs uppercase tracking-widest transition-colors ${
-                  tier.highlight
+                className={`mt-8 group flex items-center justify-center gap-2 border px-6 py-4 text-center font-sans text-xs uppercase tracking-widest transition-colors ${tier.highlight
                     ? "border-background bg-background text-foreground hover:bg-background/90"
                     : "border-background/30 text-background hover:bg-background/10"
-                }`}
+                  }`}
               >
                 Reserve for {tier.price}
                 <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />

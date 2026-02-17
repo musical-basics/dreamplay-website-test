@@ -1,17 +1,36 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useRef, useState, useCallback } from "react"
 import Image from "next/image"
 import { Play } from "lucide-react"
+
+const VIDEO_SOURCES = [
+  "https://pub-ae162277c7104eb2b558af08104deafc.r2.dev/Final%204k%20Video%20DreamPlay%20Intro.mp4",
+  "/videos/Clip 2.mp4",
+]
 
 export function VideoSection() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  const playNextVideo = useCallback(() => {
+    const nextIndex = (currentIndex + 1) % VIDEO_SOURCES.length
+    setCurrentIndex(nextIndex)
+    if (videoRef.current) {
+      videoRef.current.src = VIDEO_SOURCES[nextIndex]
+      videoRef.current.load()
+      videoRef.current.play()
+    }
+  }, [currentIndex])
 
   function handlePlay() {
     if (videoRef.current) {
+      videoRef.current.src = VIDEO_SOURCES[0]
+      videoRef.current.load()
       videoRef.current.play()
       setIsPlaying(true)
+      setCurrentIndex(0)
     }
   }
 
@@ -26,10 +45,10 @@ export function VideoSection() {
           preload="metadata"
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
-          onEnded={() => setIsPlaying(false)}
+          onEnded={playNextVideo}
         >
           <source
-            src="https://pub-ae162277c7104eb2b558af08104deafc.r2.dev/Final%204k%20Video%20DreamPlay%20Intro.mp4"
+            src={VIDEO_SOURCES[0]}
             type="video/mp4"
           />
           Your browser does not support the video element.
