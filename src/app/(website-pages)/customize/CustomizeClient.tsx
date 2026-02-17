@@ -21,7 +21,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
         handSpan: null as string | null,
         size: null as string | null,
         color: null as string | null,
-        selectedTier: 'full',
+        selectedTier: null as string | null,
     });
 
     const [currentSection, setCurrentSection] = useState(0);
@@ -283,7 +283,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             'FNAME': fullName,
             'DP1SIZE': appState.size || 'Not Selected',
             'DP1FINISH': appState.color || 'Not Selected',
-            'DP1TIER': appState.selectedTier
+            'DP1TIER': appState.selectedTier || ''
         };
 
         for (const [key, value] of Object.entries(payload)) {
@@ -397,8 +397,8 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                     key={btn.id}
                                     onClick={() => handleSelectHandSize(btn.id as any)}
                                     className={`group relative flex flex-col border p-8 text-left transition-all duration-300 md:p-10 ${isSelected
-                                        ? 'border-black bg-neutral-50 text-black shadow-md z-10'
-                                        : 'border-gray-200 bg-white hover:border-gray-400 hover:bg-neutral-50'
+                                        ? 'border-black bg-neutral-50 text-black shadow-xl z-10'
+                                        : 'border-gray-200 bg-white shadow-lg hover:border-gray-400 hover:bg-neutral-50 hover:shadow-xl'
                                         }`}
                                 >
                                     {isSelected && (
@@ -408,14 +408,14 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                     )}
 
                                     <div className="mb-8">
-                                        <p className={`mb-3 font-sans text-[10px] uppercase tracking-[0.3em] ${isSelected ? 'text-black/60' : 'text-neutral-400'}`}>{btn.zoneDesc}</p>
+                                        <p className={`mb-3 font-sans text-[10px] uppercase tracking-[0.3em] ${isSelected ? 'text-black/60' : 'text-neutral-600'}`}>{btn.zoneDesc}</p>
                                         <h3 className={`mb-3 font-serif text-3xl text-neutral-900`}>{btn.zone}</h3>
-                                        <p className={`font-sans text-sm leading-relaxed ${isSelected ? 'text-black/70' : 'text-neutral-500'}`}>{btn.desc}</p>
+                                        <p className={`font-sans text-sm leading-relaxed ${isSelected ? 'text-black/70' : 'text-neutral-700'}`}>{btn.desc}</p>
                                     </div>
 
                                     <div className={`mt-auto w-full border-t pt-6 ${isSelected ? 'border-black/20' : 'border-gray-200'}`}>
                                         <div className="mb-2 flex items-end justify-between">
-                                            <span className={`font-sans text-[10px] uppercase tracking-widest ${isSelected ? 'text-black/50' : 'text-neutral-400'}`}>Hand Span</span>
+                                            <span className={`font-sans text-[10px] uppercase tracking-widest ${isSelected ? 'text-black/50' : 'text-neutral-600'}`}>Hand Span</span>
                                             <span className={`font-sans text-sm font-bold text-neutral-900`}>{btn.range}</span>
                                         </div>
                                     </div>
@@ -450,8 +450,8 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                     key={key}
                                     onClick={() => handleSelectSize(key)}
                                     className={`group relative flex flex-col items-start border text-left transition-all duration-300 ${isSelected
-                                        ? 'z-10 scale-105 border-white bg-white/5 shadow-2xl'
-                                        : 'border-white/20 bg-transparent hover:border-white/50 hover:bg-white/5'
+                                        ? 'z-10 scale-105 border-white bg-white/10 shadow-2xl shadow-black/60'
+                                        : 'border-white/30 bg-white/5 shadow-lg shadow-black/50 hover:border-white/50 hover:bg-white/10'
                                         }`}
                                 >
                                     {isRecommended && (
@@ -461,7 +461,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                     )}
 
                                     {/* Image Container */}
-                                    <div className={`relative flex h-64 w-full items-center justify-center border-b p-8 transition-colors md:h-72 ${isSelected ? 'border-white/30 bg-black/40' : 'border-white/10 bg-black/20'}`}>
+                                    <div className={`relative flex h-64 w-full items-center justify-center border-b p-8 transition-colors md:h-72 ${isSelected ? 'border-white/30 bg-black/30' : 'border-white/15 bg-black/15'}`}>
                                         <img src={kb.imgSrc} alt={kb.name} className="w-auto max-w-[90%] max-h-[80%] object-contain transition-transform duration-700 group-hover:scale-105" />
                                     </div>
 
@@ -518,7 +518,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                 <button
                                     key={color}
                                     onClick={() => handleSelectColor(color)}
-                                    className={`group relative flex flex-col overflow-hidden border text-left transition-all duration-300 ${isSelected ? 'border-black bg-white z-10 scale-105 shadow-xl' : 'border-black/10 bg-transparent hover:border-black/30 hover:bg-white/50'
+                                    className={`group relative flex flex-col overflow-hidden border text-left transition-all duration-300 ${isSelected ? 'border-black bg-white z-10 scale-105 shadow-xl' : 'border-black/10 bg-white shadow-lg hover:border-black/30 hover:shadow-xl'
                                         }`}
                                 >
                                     {isSelected && (
@@ -534,7 +534,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                             <div className={`h-6 w-6 rounded-full border ${isSelected ? 'border-black/50' : 'border-black/20'}`} style={{ backgroundColor: color === 'Black' ? '#000' : '#fff' }}></div>
                                             <h3 className="font-serif text-2xl text-black">{color === 'Black' ? 'Midnight Black' : 'Pearl White'}</h3>
                                         </div>
-                                        <p className="mb-8 flex-1 font-sans text-sm leading-relaxed text-black/60">{color === 'Black' ? 'Classic elegance with a sophisticated matte finish. Commands presence on any stage.' : 'Modern aesthetic with a pristine glossy finish. A striking centerpiece for any studio.'}</p>
+                                        <p className="mb-8 flex-1 font-sans text-sm leading-relaxed text-black/70">{color === 'Black' ? 'Classic elegance with a sophisticated matte finish. Commands presence on any stage.' : 'Modern aesthetic with a pristine glossy finish. A striking centerpiece for any studio.'}</p>
 
                                         <div className={`mt-auto w-full border py-4 text-center font-sans text-xs uppercase tracking-widest transition-colors ${isSelected ? 'border-black bg-black text-white' : 'border-black/30 text-black group-hover:border-black group-hover:bg-black/10'
                                             }`}>
@@ -575,8 +575,8 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                     className={`relative flex flex-col border p-8 text-left transition-all md:p-10 ${isSelected
                                         ? "z-10 scale-105 border-black bg-black text-white shadow-2xl"
                                         : isHighlight
-                                            ? "border-black/30 bg-black/5 hover:border-black/50"
-                                            : "border-black/10 bg-transparent hover:border-black/30 hover:bg-black/5"
+                                            ? "border-black/30 bg-black/5 shadow-lg hover:border-black/50 hover:shadow-xl"
+                                            : "border-black/10 bg-white shadow-lg hover:border-black/30 hover:bg-black/5 hover:shadow-xl"
                                         }`}
                                 >
                                     {tier.badge && (
@@ -651,8 +651,8 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                                 ? "border-black bg-black text-white hover:bg-black/90"
                                                 : "border-black/30 text-black group-hover:border-black group-hover:bg-black/10"
                                             }`}>
-                                            {appState.selectedTier === tier.id ? 'Processing...' : `Reserve for ${tier.price}`}
-                                            {appState.selectedTier !== tier.id && <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />}
+                                            {`Reserve for ${tier.price}`}
+                                            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
                                         </div>
                                     </div>
                                 </button>
