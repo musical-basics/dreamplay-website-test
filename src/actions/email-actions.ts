@@ -24,6 +24,7 @@ export async function subscribeToNewsletter(payload: SubscribePayload): Promise<
 
         const apiPayload = {
             ...payload,
+            first_name: payload.first_name || "",
             city,
             country,
             ip_address: ip
@@ -36,15 +37,22 @@ export async function subscribeToNewsletter(payload: SubscribePayload): Promise<
         });
 
         if (!response.ok) {
-            // Try to parse error message if available
             let errorMessage = "Failed to subscribe";
             try {
                 const errorData = await response.json();
+
+                // If the error is "email already exists", treat as success
+                // so the user still gets their PDF
+                if (response.status === 400 || response.status === 422) {
+                    console.log("Subscriber likely already exists, proceeding anyway.");
+                    return { success: true };
+                }
+
                 if (errorData.error) errorMessage = errorData.error;
             } catch (e) {
-                // Ignore json parse error
+                // failed to parse json
             }
-            console.error('Subscription API error:', response.status, response.statusText);
+            console.error('Subscription API error:', response.status, errorMessage);
             return { success: false, error: errorMessage };
         }
 

@@ -53,7 +53,7 @@ export default function NewsletterPopup() {
         try {
             const res = await subscribeToNewsletter({
                 email: email,
-                first_name: name || undefined, // Send undefined if name is empty (hidden)
+                first_name: name || "", // Send empty string instead of undefined
                 tags: ["Hand Guide Download"]
             });
 
