@@ -315,7 +315,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
         <div className="min-h-screen bg-white font-sans text-neutral-900 selection:bg-neutral-200">
             {/* --- FIXED HEADERS WRAPPER --- */}
             <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
-                <SpecialOfferHeader forceOpaque={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
+                <SpecialOfferHeader forceOpaque={true} darkMode={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
 
                 {/* Steps Sub-Navbar */}
                 <header id="sticky-nav" className="w-full mt-16 bg-[#050505]/95 backdrop-blur-md border-b border-white/5 shadow-sm">

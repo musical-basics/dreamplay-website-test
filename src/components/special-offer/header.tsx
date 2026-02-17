@@ -9,10 +9,11 @@ import { cn } from "@/lib/utils"
 
 interface SpecialOfferHeaderProps {
     forceOpaque?: boolean;
+    darkMode?: boolean;
     className?: string;
 }
 
-export function SpecialOfferHeader({ forceOpaque = false, className = "" }: SpecialOfferHeaderProps) {
+export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, className = "" }: SpecialOfferHeaderProps) {
     const { trackClick } = useABAnalytics("special_offer_variant", { trackTime: false })
     const [scrolled, setScrolled] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -26,6 +27,7 @@ export function SpecialOfferHeader({ forceOpaque = false, className = "" }: Spec
     }, [])
 
     const isScrolled = forceOpaque || scrolled || isMobileMenuOpen;
+    const useDarkText = isScrolled && !darkMode;
 
     return (
         <header
@@ -41,7 +43,7 @@ export function SpecialOfferHeader({ forceOpaque = false, className = "" }: Spec
                     <img
                         src="/images/Logo.svg"
                         alt="DreamPlay Pianos"
-                        className={`h-8 transition-all ${isScrolled ? "brightness-0" : "invert"}`}
+                        className={`h-8 transition-all ${useDarkText ? "brightness-0" : "invert"}`}
                     />
                 </Link>
 
@@ -56,7 +58,7 @@ export function SpecialOfferHeader({ forceOpaque = false, className = "" }: Spec
                         <Link
                             key={item.label}
                             href={item.href}
-                            className={`text-sm transition-colors ${isScrolled
+                            className={`text-sm transition-colors ${useDarkText
                                 ? i === 0
                                     ? "text-neutral-900 font-medium"
                                     : "text-neutral-700 hover:text-neutral-900"
@@ -75,22 +77,22 @@ export function SpecialOfferHeader({ forceOpaque = false, className = "" }: Spec
                     <Link
                         onClick={() => trackClick("header", "start_customization")}
                         href="/customize"
-                        className={`hidden md:flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${isScrolled
+                        className={`hidden md:flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 ${useDarkText
                             ? "bg-white border border-neutral-200 text-neutral-900 hover:border-neutral-400"
                             : "bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20"
                             }`}
                     >
                         Configure Yours
                         <span
-                            className={`w-6 h-6 rounded-full flex items-center justify-center ${isScrolled ? "bg-black" : "bg-white"}`}
+                            className={`w-6 h-6 rounded-full flex items-center justify-center ${useDarkText ? "bg-black" : "bg-white"}`}
                         >
-                            <ArrowRight className={`w-3 h-3 ${isScrolled ? "text-white" : "text-black"}`} />
+                            <ArrowRight className={`w-3 h-3 ${useDarkText ? "text-white" : "text-black"}`} />
                         </span>
                     </Link>
                     <Button
                         variant="ghost"
                         size="icon"
-                        className={`md:hidden ${isScrolled ? "text-neutral-900" : "text-white"}`}
+                        className={`md:hidden ${useDarkText ? "text-neutral-900" : "text-white"}`}
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     >
                         {isMobileMenuOpen ? (
