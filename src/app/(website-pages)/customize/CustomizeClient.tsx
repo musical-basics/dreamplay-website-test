@@ -397,8 +397,8 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                     key={btn.id}
                                     onClick={() => handleSelectHandSize(btn.id as any)}
                                     className={`group relative flex flex-col border p-8 text-left transition-all duration-300 md:p-10 ${isSelected
-                                            ? 'border-black bg-neutral-50 text-black shadow-md z-10'
-                                            : 'border-gray-200 bg-white hover:border-gray-400 hover:bg-neutral-50'
+                                        ? 'border-black bg-neutral-50 text-black shadow-md z-10'
+                                        : 'border-gray-200 bg-white hover:border-gray-400 hover:bg-neutral-50'
                                         }`}
                                 >
                                     {isSelected && (
@@ -450,8 +450,8 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                     key={key}
                                     onClick={() => handleSelectSize(key)}
                                     className={`group relative flex flex-col items-start border text-left transition-all duration-300 ${isSelected
-                                            ? 'z-10 scale-105 border-white bg-white/5 shadow-2xl'
-                                            : 'border-white/20 bg-transparent hover:border-white/50 hover:bg-white/5'
+                                        ? 'z-10 scale-105 border-white bg-white/5 shadow-2xl'
+                                        : 'border-white/20 bg-transparent hover:border-white/50 hover:bg-white/5'
                                         }`}
                                 >
                                     {isRecommended && (
@@ -573,10 +573,10 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                     key={tier.id}
                                     onClick={() => handleSelectTier(tier.id)}
                                     className={`relative flex flex-col border p-8 text-left transition-all md:p-10 ${isSelected
-                                            ? "z-10 scale-105 border-black bg-black text-white shadow-2xl"
-                                            : isHighlight
-                                                ? "border-black/30 bg-black/5 hover:border-black/50"
-                                                : "border-black/10 bg-transparent hover:border-black/30 hover:bg-black/5"
+                                        ? "z-10 scale-105 border-black bg-black text-white shadow-2xl"
+                                        : isHighlight
+                                            ? "border-black/30 bg-black/5 hover:border-black/50"
+                                            : "border-black/10 bg-transparent hover:border-black/30 hover:bg-black/5"
                                         }`}
                                 >
                                     {tier.badge && (
@@ -586,7 +586,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                     )}
 
                                     <h3 className={`w-full font-serif text-xl md:text-2xl ${isSelected ? 'text-white' : 'text-black'}`}>
-                                        {tier.name}
+                                        {tier.title}
                                     </h3>
                                     <p className={`mt-1 w-full font-sans text-[10px] uppercase tracking-wider ${isSelected ? 'text-white/50' : 'text-black/40'}`}>
                                         {tier.subtitle}
@@ -646,10 +646,10 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                     {/* CTA Button */}
                                     <div className="mt-8 w-full pt-4">
                                         <div className={`group flex w-full items-center justify-center gap-2 border px-6 py-4 text-center font-sans text-xs uppercase tracking-widest transition-colors ${isSelected
-                                                ? "border-white bg-white text-black hover:bg-white/90"
-                                                : isHighlight
-                                                    ? "border-black bg-black text-white hover:bg-black/90"
-                                                    : "border-black/30 text-black group-hover:border-black group-hover:bg-black/10"
+                                            ? "border-white bg-white text-black hover:bg-white/90"
+                                            : isHighlight
+                                                ? "border-black bg-black text-white hover:bg-black/90"
+                                                : "border-black/30 text-black group-hover:border-black group-hover:bg-black/10"
                                             }`}>
                                             {appState.selectedTier === tier.id ? 'Processing...' : `Reserve for ${tier.price}`}
                                             {appState.selectedTier !== tier.id && <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />}
