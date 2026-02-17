@@ -68,8 +68,8 @@ export function PricingSection() {
             <div
               key={tier.title}
               className={`relative flex flex-col border p-8 transition-all md:p-10 ${tier.highlight
-                  ? "border-background/30 bg-background/5"
-                  : "border-background/10 bg-transparent"
+                ? "border-background/30 bg-background/5"
+                : "border-background/10 bg-transparent"
                 }`}
             >
               {tier.badge && (
@@ -150,10 +150,10 @@ export function PricingSection() {
 
               {/* CTA */}
               <a
-                href="#"
+                href="/customize"
                 className={`mt-8 group flex items-center justify-center gap-2 border px-6 py-4 text-center font-sans text-xs uppercase tracking-widest transition-colors ${tier.highlight
-                    ? "border-background bg-background text-foreground hover:bg-background/90"
-                    : "border-background/30 text-background hover:bg-background/10"
+                  ? "border-background bg-background text-foreground hover:bg-background/90"
+                  : "border-background/30 text-background hover:bg-background/10"
                   }`}
               >
                 Reserve for {tier.price}

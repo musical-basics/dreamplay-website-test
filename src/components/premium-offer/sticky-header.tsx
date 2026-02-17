@@ -25,11 +25,10 @@ export function StickyHeader() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
-        visible
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${visible
           ? "translate-y-0 opacity-100"
           : "-translate-y-full opacity-0 pointer-events-none"
-      }`}
+        }`}
     >
       <div className="bg-neutral-900/80 backdrop-blur-md border-b border-white/5">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 lg:pl-24">
@@ -56,7 +55,7 @@ export function StickyHeader() {
 
           {/* CTA */}
           <a
-            href="#pricing"
+            href="/customize"
             className="group flex items-center gap-2 bg-white px-5 py-2 font-sans text-[10px] uppercase tracking-widest text-black transition-colors hover:bg-white/90 md:text-xs"
           >
             Pre-Order Now

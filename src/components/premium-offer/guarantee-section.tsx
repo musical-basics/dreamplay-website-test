@@ -1,6 +1,20 @@
+"use client"
+
 import { ShieldCheck, ArrowRight } from "lucide-react"
 
 export function GuaranteeSection() {
+  function handleJoinWaitlist() {
+    const footer = document.querySelector(".dp-glass-card")
+    if (footer) {
+      footer.scrollIntoView({ behavior: "smooth", block: "center" })
+      // Focus the first input after scrolling
+      setTimeout(() => {
+        const input = footer.querySelector("input") as HTMLInputElement | null
+        if (input) input.focus()
+      }, 600)
+    }
+  }
+
   return (
     <section id="guarantee" className="relative overflow-hidden bg-background">
       <div className="mx-auto max-w-4xl px-6 py-20 md:py-28 lg:py-32">
@@ -33,18 +47,18 @@ export function GuaranteeSection() {
 
           <div className="mt-12 flex flex-col gap-4 sm:flex-row">
             <a
-              href="#pricing"
+              href="/customize"
               className="group flex items-center justify-center gap-2 border border-foreground bg-foreground px-8 py-4 font-sans text-xs uppercase tracking-widest text-background transition-colors hover:bg-foreground/90"
             >
               Reserve Now
               <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
             </a>
-            <a
-              href="#"
-              className="group flex items-center justify-center gap-2 border border-foreground px-8 py-4 font-sans text-xs uppercase tracking-widest text-foreground transition-colors hover:bg-foreground hover:text-background"
+            <button
+              onClick={handleJoinWaitlist}
+              className="group flex items-center justify-center gap-2 border border-foreground px-8 py-4 font-sans text-xs uppercase tracking-widest text-foreground transition-colors hover:bg-foreground hover:text-background cursor-pointer"
             >
               Join the Waitlist
-            </a>
+            </button>
           </div>
         </div>
       </div>
