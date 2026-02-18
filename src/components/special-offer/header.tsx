@@ -48,12 +48,16 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                 </Link>
 
                 {/* Main navigation */}
-                <nav className="hidden md:flex items-center gap-8">
+                <nav className="hidden md:flex items-center gap-6">
                     {[
                         { label: "DreamPlay One", href: "/" },
+                        { label: "Why Narrow?", href: "/why-narrow" },
                         { label: "How It Works", href: "/how-it-works" },
                         { label: "Our Story", href: "/our-story" },
+                        { label: "DS Standard", href: "/about-us/ds-standard" },
                         { label: "FAQ", href: "/information-and-policies/faq" },
+                        { label: "Shipping", href: "/information-and-policies/shipping" },
+                        { label: "Blog", href: "https://blog.dreamplaypianos.com/blog" },
                     ].map((item, i) => (
                         <Link
                             key={item.label}
@@ -110,9 +114,13 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                     <nav className="flex flex-col p-4">
                         {[
                             { label: "DreamPlay One", href: "/" },
+                            { label: "Why Narrow?", href: "/why-narrow" },
                             { label: "How It Works", href: "/how-it-works" },
                             { label: "Our Story", href: "/our-story" },
+                            { label: "DS Standard", href: "/about-us/ds-standard" },
                             { label: "FAQ", href: "/information-and-policies/faq" },
+                            { label: "Shipping", href: "/information-and-policies/shipping" },
+                            { label: "Blog", href: "https://blog.dreamplaypianos.com/blog" },
                         ].map((item) => (
                             <Link
                                 key={item.label}

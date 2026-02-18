@@ -1,364 +1,153 @@
-"use client";
-import React, { useEffect, useRef } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import Image from "next/image";
-import Link from "next/link";
+import { SpecialOfferHeader } from "@/components/special-offer/header";
+import { SpecialOfferFooter } from "@/components/special-offer/footer";
 
 export default function ShippingPage() {
-    const scrollRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        const elements = document.querySelectorAll('.reveal');
-        elements.forEach(el => observer.observe(el));
-
-        return () => observer.disconnect();
-    }, []);
-
     return (
-        <div className="page-wrapper font-manrope text-[#1d1d1f]">
-            <Navbar />
-            <style jsx global>{`
-        .font-manrope { font-family: 'Manrope', sans-serif; }
-        .hero-title {
-            font-size: 2.5rem;
-            font-weight: 600;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-        }
-        @media (min-width: 768px) { .hero-title { font-size: 4.5rem; } }
-        .section-label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-        .section-heading {
-            font-size: 2.25rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 1.5rem;
-        }
-        @media (min-width: 768px) { .section-heading { font-size: 3rem; } }
-        .text-brand { color: #0066cc; }
-        .text-dark { color: #1d1d1f; }
-        .text-subtle { color: #86868b; }
-        
-        /* CARDS */
-        .card-base {
-            border-radius: 1.5rem;
-            padding: 2rem;
-            transition: all 0.4s ease-out;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .card-base:hover {
-            transform: scale(1.02) translateY(-4px);
-        }
-        .theme-card-dark { background-color: #2d2d2f; color: white; }
-        .theme-card-dark:hover { border-color: rgba(255,255,255,0.15); }
-        .theme-card-light {
-            background-color: white;
-            color: #1d1d1f;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border: 1px solid #f3f4f6;
-        }
-        .theme-card-light:hover { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
-        
-        /* BUTTONS */
-        .btn-primary {
-            background-color: #0066cc;
-            color: white;
-            padding: 1.25rem 2.5rem;
-            border-radius: 9999px;
-            font-weight: 600;
-            font-size: 1.125rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 15px -3px rgba(0, 102, 204, 0.3);
-        }
-        .btn-primary:hover {
-            background-color: #0055aa;
-            transform: scale(1.05);
-            box-shadow: 0 20px 25px -5px rgba(0, 102, 204, 0.4);
-        }
-        
-        /* SCROLLBARS */
-        .custom-scroll {
-            overscroll-behavior: contain;
-            padding-right: 0.75rem;
-        }
-        .custom-scroll::-webkit-scrollbar { width: 8px; }
-        .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; border: 1px solid rgba(0,0,0,0.1); }
-        .custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.6); cursor: pointer; }
-        
-        /* ANIMATIONS */
-        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .delay-100 { transition-delay: 0.1s; }
-        .delay-200 { transition-delay: 0.2s; }
-        .delay-300 { transition-delay: 0.3s; }
-        
-        .bg-section-light { background-color: #fafafa; }
-        .bg-section-dark { background-color: #1d1d1f; }
-      `}</style>
+        <div className="min-h-screen font-sans selection:bg-white/20">
+            <SpecialOfferHeader forceOpaque={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
+
             <main>
-                {/* HERO SECTION */}
-                <section className="relative bg-section-light pt-32 pb-20 overflow-hidden">
-                    <div className="absolute inset-0 pointer-events-none">
-                        <div className="absolute top-20 left-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl"></div>
-                        <div className="absolute bottom-40 right-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl"></div>
-                    </div>
-                    <div className="container mx-auto px-6 relative z-10 text-center">
-                        <h1 className="hero-title text-dark mb-2 reveal">Global Delivery.</h1>
-                        <h1 className="hero-title text-brand mb-12 reveal delay-100">Discounted Shipping.</h1>
-                        <div className="max-w-4xl mx-auto mb-16 reveal delay-200">
-                            <img src="/images/Worldmap.png" alt="World Map" className="w-full h-auto object-contain opacity-90" />
-                        </div>
 
-                        <div className="flex flex-wrap justify-center gap-8 mb-16 reveal delay-200">
-                            <div className="flex items-center gap-3">
-                                <div className="w-3 h-3 rounded-full bg-[#2F80ED]"></div>
-                                <span className="text-sm font-medium text-subtle">Discounted Shipping</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <div className="w-3 h-3 rounded-full bg-[#00C2CB]"></div>
-                                <span className="text-sm font-medium text-subtle">Extended Region</span>
-                            </div>
-                        </div>
-                        <p className="text-xl text-subtle max-w-xl mx-auto mb-12 reveal delay-300">
-                            Free delivery to the US, Canada, and Europe. Extended shipping available worldwide.
+                {/* ═══ HERO — DARK ═══ */}
+                <section className="bg-[#050505] text-white pt-32 pb-24">
+                    <div className="max-w-5xl mx-auto px-6 text-center">
+                        <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">Policies</p>
+                        <h1 className="font-serif text-5xl md:text-6xl tracking-tight leading-tight mb-6 text-white">Shipping &amp; Delivery</h1>
+                        <p className="font-sans text-base md:text-lg text-white/60 max-w-2xl mx-auto leading-relaxed">
+                            We ship worldwide. All orders are carefully packed and shipped from our fulfillment center.
                         </p>
-                        <div className="flex flex-wrap justify-center gap-8 md:gap-16 reveal delay-300">
-                            <div className="text-center">
-                                <div className="text-5xl font-semibold text-dark">Under $40</div>
-                                <div className="text-sm text-subtle mt-2">US & Europe</div>
-                            </div>
-                            <div className="hidden md:block w-px bg-gray-300 h-16"></div>
-                            <div className="text-center">
-                                <div className="text-5xl font-semibold text-dark">+$70</div>
-                                <div className="text-sm text-subtle mt-2">Extended Regions</div>
-                            </div>
-                            <div className="hidden md:block w-px bg-gray-300 h-16"></div>
-                            <div className="text-center">
-                                <div className="text-5xl font-semibold text-dark">$150</div>
-                                <div className="text-sm text-subtle mt-2">Rest of World</div>
-                            </div>
-                        </div>
-
-                        <div className="mt-8 max-w-2xl mx-auto text-center reveal delay-300">
-                            <div className="bg-red-50/50 border border-red-100 rounded-xl p-4 inline-block">
-                                <p className="text-sm text-red-700/80 font-medium">
-                                    ⚠️ <strong>International Backers (EU/UK/Asia):</strong>
-                                </p>
-                                <p className="text-xs text-red-600/70 mt-1">
-                                    Shipping estimates do not include local VAT, Import Duties, or Customs fees.
-                                    These are collected by your local carrier upon delivery.
-                                </p>
-                            </div>
-                        </div>
                     </div>
                 </section>
 
-                {/* SHIPPING ZONES */}
-                <section className="bg-section-dark py-32 text-white">
-                    <div className="container mx-auto px-6 max-w-7xl">
-                        <div className="text-center mb-20 reveal">
-                            <p className="section-label text-brand">Shipping Zones</p>
-                            <h2 className="section-heading">We ship to over 50 countries</h2>
-                        </div>
-                        <div className="grid md:grid-cols-3 gap-8">
-                            {/* FREE CARD */}
-                            <div className="card-base theme-card-dark reveal delay-100">
-                                <div className="flex justify-between items-start mb-6">
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-2 h-2 rounded-full bg-blue-600"></div>
-                                        <span className="text-xs uppercase tracking-wider opacity-60">Discounted</span>
+                {/* ═══ SHIPPING ZONES — LIGHT ═══ */}
+                <section className="bg-white text-black py-20">
+                    <div className="max-w-5xl mx-auto px-6">
+                        <div className="grid md:grid-cols-3 gap-6">
+                            {/* Zone 1 */}
+                            <div className="rounded-none border border-neutral-200 bg-neutral-50 p-8 flex flex-col hover:border-neutral-400 transition-all">
+                                <div className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-3">Zone 1</div>
+                                <h3 className="font-serif text-2xl font-bold text-black mb-2">United States</h3>
+                                <p className="font-sans text-sm text-neutral-500 mb-6">Continental US (Lower 48)</p>
+                                <div className="mt-auto pt-6 border-t border-neutral-200">
+                                    <div className="flex justify-between items-baseline mb-3">
+                                        <span className="font-sans text-sm text-neutral-600">Standard Shipping</span>
+                                        <span className="font-bold text-black text-lg">Free</span>
                                     </div>
-                                    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-                                </div>
-                                <div className="text-5xl font-semibold mb-2">Under $40</div>
-                                <p className="opacity-40 text-sm mb-8">Estimated Shipping July 2026</p>
-                                <div className="space-y-3 max-h-60 overflow-y-auto custom-scroll">
-                                    {['Austria', 'Belgium', 'Canada', 'Denmark', 'Finland', 'France', 'Germany', 'Ireland', 'Netherlands', 'UK', 'US (Continental)'].map(c => (
-                                        <div key={c} className="flex items-center gap-3 text-sm opacity-70"><span className="text-blue-600">✓</span> {c}</div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* EXTENDED CARD */}
-                            <div className="card-base theme-card-dark reveal delay-200">
-                                <div className="flex justify-between items-start mb-6">
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-2 h-2 rounded-full bg-gray-500"></div>
-                                        <span className="text-xs uppercase tracking-wider opacity-60">Extended</span>
+                                    <div className="flex justify-between items-baseline">
+                                        <span className="font-sans text-sm text-neutral-600">Estimated Delivery</span>
+                                        <span className="font-sans text-sm text-neutral-600">5-7 business days</span>
                                     </div>
-                                    <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-                                </div>
-                                <div className="text-5xl font-semibold mb-2">$50-$70</div>
-                                <p className="opacity-40 text-sm mb-8">Estimated Shipping August 2026</p>
-                                <div className="space-y-3 max-h-60 overflow-y-auto custom-scroll">
-                                    {['Australia', 'China', 'Japan', 'South Korea', 'New Zealand', 'Singapore', 'Switzerland', 'Taiwan', 'Hawaii (US)'].map(c => (
-                                        <div key={c} className="flex items-center gap-3 text-sm opacity-70"><span className="text-gray-500">✓</span> {c}</div>
-                                    ))}
                                 </div>
                             </div>
 
-                            {/* STANDARD CARD */}
-                            <div className="card-base theme-card-dark reveal delay-300">
-                                <div className="flex justify-between items-start mb-6">
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-2 h-2 rounded-full bg-gray-600"></div>
-                                        <span className="text-xs uppercase tracking-wider opacity-60">Standard</span>
+                            {/* Zone 2 */}
+                            <div className="rounded-none border border-neutral-200 bg-neutral-50 p-8 flex flex-col hover:border-neutral-400 transition-all">
+                                <div className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-3">Zone 2</div>
+                                <h3 className="font-serif text-2xl font-bold text-black mb-2">Canada &amp; Mexico</h3>
+                                <p className="font-sans text-sm text-neutral-500 mb-6">North America</p>
+                                <div className="mt-auto pt-6 border-t border-neutral-200">
+                                    <div className="flex justify-between items-baseline mb-3">
+                                        <span className="font-sans text-sm text-neutral-600">Standard Shipping</span>
+                                        <span className="font-bold text-black text-lg">$49</span>
                                     </div>
-                                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-                                </div>
-                                <div className="text-5xl font-semibold mb-2">$150</div>
-                                <p className="opacity-40 text-sm mb-8">Estimated Shipping October 2026</p>
-                                <div className="space-y-3 max-h-60 overflow-y-auto custom-scroll">
-                                    {['Brazil', 'India', 'Mexico', 'UAE', 'Saudi Arabia', 'Turkey', 'Argentina', 'Egypt'].map(c => (
-                                        <div key={c} className="flex items-center gap-3 text-sm opacity-70"><span className="text-gray-600">✓</span> {c}</div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* PACKAGING SECTION */}
-                <section className="bg-section-light py-32 overflow-hidden">
-                    <div className="container mx-auto px-6 max-w-6xl">
-                        <div className="grid md:grid-cols-2 gap-16 items-center">
-                            <div className="reveal">
-                                <p className="section-label text-brand">Premium Protection</p>
-                                <h2 className="section-heading text-dark">Packaged with Care</h2>
-                                <p className="text-subtle text-lg leading-relaxed mb-10">
-                                    Every DreamPlay One is carefully packaged in custom-designed protective casing to ensure it arrives in perfect condition, no matter where you are in the world.
-                                </p>
-                                <div className="space-y-8">
-                                    {[
-                                        { title: 'Custom Foam Inserts', desc: 'Precision-cut protection for every component', icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' },
-                                        { title: 'Double-Wall Boxing', desc: 'Extra durability for long-distance shipping', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
-                                        { title: 'Insured Delivery', desc: 'Full coverage throughout the journey', icon: 'M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0' }
-                                    ].map((item, i) => (
-                                        <div key={i} className="flex gap-4">
-                                            <div className="w-12 h-12 rounded-2xl bg-white shadow-md flex items-center justify-center flex-shrink-0 text-brand">
-                                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon}></path></svg>
-                                            </div>
-                                            <div>
-                                                <h3 className="font-semibold text-dark text-lg">{item.title}</h3>
-                                                <p className="text-subtle text-sm">{item.desc}</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="reveal delay-200 relative">
-                                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl">
-                                    <img src="/images/piano-in-the-box.png" alt="Packaging" className="w-full aspect-square object-cover scale-110" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* AVAILABILITY SECTION */}
-                <section className="bg-section-dark py-32">
-                    <div className="container mx-auto px-6 max-w-7xl">
-                        <div className="text-center mb-16 reveal">
-                            <p className="section-label text-subtle">Coming Soon</p>
-                            <h2 className="section-heading text-white">Product Availability</h2>
-                        </div>
-                        <div className="grid md:grid-cols-3 gap-8">
-                            {/* DS5.5 */}
-                            <div className="card-base theme-card-dark reveal delay-100">
-                                <div className="aspect-[4/3] bg-section-dark rounded-2xl mb-6 flex items-center justify-center p-4">
-                                    <img src="/images/Group-2.png" alt="DS5.5" className="max-h-full object-contain" />
-                                </div>
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-2xl font-semibold">DS5.5</h3>
-                                    <div className="text-right"><div className="text-xs text-subtle uppercase">Ships</div><div className="font-medium">August 2026</div></div>
-                                </div>
-                                <p className="text-subtle text-sm border-t border-white/10 pt-4 mt-4">Zone A: Smaller Hands</p>
-                            </div>
-
-                            {/* DS6.0 */}
-                            <div className="card-base theme-card-dark reveal delay-200">
-                                <div className="aspect-[4/3] bg-section-dark rounded-2xl mb-6 flex items-center justify-center p-4">
-                                    <img src="/images/Group-3.png" alt="DS6.0" className="max-h-full object-contain" />
-                                </div>
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-2xl font-semibold">DS6.0</h3>
-                                    <div className="text-right"><div className="text-xs text-subtle uppercase">Ships</div><div className="font-medium">August 2026</div></div>
-                                </div>
-                                <p className="text-subtle text-sm border-t border-white/10 pt-4 mt-4">Zone B: Medium Hands</p>
-                            </div>
-
-                            {/* DS6.5 */}
-                            <div className="card-base theme-card-dark reveal delay-300 bg-gradient-to-br from-[#2d2d2f] to-[#1a1a1c]">
-                                <div className="aspect-[4/3] bg-section-dark rounded-2xl mb-6 flex items-center justify-center p-4">
-                                    <img src="/images/DS6.5-Black.png" alt="DS6.5" className="max-h-full object-contain" />
-                                </div>
-                                <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-2xl font-semibold">DS6.5</h3>
-                                    <div className="text-right"><div className="text-xs text-subtle uppercase">Ships</div><div className="text-brand font-medium">August 2026</div></div>
-                                </div>
-                                <p className="text-subtle text-sm border-t border-white/10 pt-4 mt-4">Zone C: Standard Size</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* POLICIES SECTION */}
-                <section className="bg-section-light py-32">
-                    <div className="container mx-auto px-6 max-w-6xl">
-                        <div className="text-center mb-16 reveal">
-                            <h2 className="section-heading text-dark">Payment & Policies</h2>
-                        </div>
-                        <div className="grid md:grid-cols-3 gap-8">
-                            {[
-                                { title: 'Payment Terms', desc: '$299 (50%) deposit upfront. The remaining $299 is due once we ship your DreamPlay One.', icon: 'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z' },
-                                { title: 'Duties & Taxes', desc: 'Buyer is responsible for all import duties, taxes, and customs fees. Not included in price.', icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' },
-                                { title: '90-Day Returns', desc: 'No questions asked, full refund within 90 days of receiving your instrument.', icon: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15' }
-                            ].map((item, i) => (
-                                <div key={i} className={`card-base theme-card-light reveal delay-${(i + 1) * 100}`}>
-                                    <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center text-brand mb-6">
-                                        <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon}></path></svg>
+                                    <div className="flex justify-between items-baseline">
+                                        <span className="font-sans text-sm text-neutral-600">Estimated Delivery</span>
+                                        <span className="font-sans text-sm text-neutral-600">7-14 business days</span>
                                     </div>
-                                    <h3 className="text-xl font-semibold text-dark mb-3">{item.title}</h3>
-                                    <p className="text-subtle">{item.desc}</p>
                                 </div>
-                            ))}
+                            </div>
+
+                            {/* Zone 3 */}
+                            <div className="rounded-none border border-neutral-200 bg-neutral-50 p-8 flex flex-col hover:border-neutral-400 transition-all">
+                                <div className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-3">Zone 3</div>
+                                <h3 className="font-serif text-2xl font-bold text-black mb-2">International</h3>
+                                <p className="font-sans text-sm text-neutral-500 mb-6">Europe, Asia, Oceania &amp; more</p>
+                                <div className="mt-auto pt-6 border-t border-neutral-200">
+                                    <div className="flex justify-between items-baseline mb-3">
+                                        <span className="font-sans text-sm text-neutral-600">Standard Shipping</span>
+                                        <span className="font-bold text-black text-lg">$99</span>
+                                    </div>
+                                    <div className="flex justify-between items-baseline">
+                                        <span className="font-sans text-sm text-neutral-600">Estimated Delivery</span>
+                                        <span className="font-sans text-sm text-neutral-600">14-21 business days</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                {/* CTA SECTION */}
-                <section className="bg-section-dark py-32 text-center text-white">
-                    <div className="container mx-auto px-6 reveal">
-                        <h2 className="section-heading mb-6">Ready to order your DreamPlay One?</h2>
-                        <p className="text-subtle text-xl mb-10 max-w-2xl mx-auto">
-                            Secure your pre-order today and be among the first to experience the future of piano.
-                        </p>
-                        <Link href="https://reserve.dreamplaypianos.com" className="btn-primary">
-                            Pre-Order Now
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                        </Link>
+                {/* ═══ DETAILS — DARK ═══ */}
+                <section className="bg-[#050505] text-white py-20">
+                    <div className="max-w-5xl mx-auto px-6">
+                        <div className="grid md:grid-cols-2 gap-8">
+                            {/* Packaging */}
+                            <div className="rounded-none border border-white/10 bg-white/5 p-8">
+                                <h3 className="font-serif text-xl font-bold text-white mb-6">Packaging</h3>
+                                <ul className="space-y-4">
+                                    <li className="flex items-start gap-3">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0"></div>
+                                        <span className="font-sans text-sm text-white/60 leading-relaxed">Each keyboard is packed in a custom-fit, shock-absorbing foam case.</span>
+                                    </li>
+                                    <li className="flex items-start gap-3">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0"></div>
+                                        <span className="font-sans text-sm text-white/60 leading-relaxed">Double-boxed for maximum protection during transit.</span>
+                                    </li>
+                                    <li className="flex items-start gap-3">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0"></div>
+                                        <span className="font-sans text-sm text-white/60 leading-relaxed">Includes all accessories, cables, and documentation.</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            {/* Tracking & Support */}
+                            <div className="rounded-none border border-white/10 bg-white/5 p-8">
+                                <h3 className="font-serif text-xl font-bold text-white mb-6">Tracking &amp; Support</h3>
+                                <ul className="space-y-4">
+                                    <li className="flex items-start gap-3">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0"></div>
+                                        <span className="font-sans text-sm text-white/60 leading-relaxed">Full tracking provided via email once your order ships.</span>
+                                    </li>
+                                    <li className="flex items-start gap-3">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0"></div>
+                                        <span className="font-sans text-sm text-white/60 leading-relaxed">Email us at <strong className="text-white">support@dreamplaypianos.com</strong> for any shipping questions.</span>
+                                    </li>
+                                    <li className="flex items-start gap-3">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0"></div>
+                                        <span className="font-sans text-sm text-white/60 leading-relaxed">Insurance included on all shipments.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </section>
+
+                {/* ═══ RETURNS — LIGHT ═══ */}
+                <section className="bg-white text-black py-20">
+                    <div className="max-w-5xl mx-auto px-6">
+                        <div className="rounded-none border border-neutral-200 bg-neutral-50 p-10 text-center">
+                            <h3 className="font-serif text-2xl font-bold text-black mb-4">Returns &amp; Exchanges</h3>
+                            <p className="font-sans text-base text-neutral-600 leading-relaxed max-w-xl mx-auto mb-8">
+                                We offer a 30-day return policy on all keyboards. Items must be in original condition and packaging. Return shipping is the responsibility of the buyer.
+                            </p>
+                            <a href="/information-and-policies/faq" className="group inline-flex items-center justify-center gap-2 bg-black text-white px-8 py-4 font-sans text-xs uppercase tracking-widest transition-colors hover:bg-neutral-800">
+                                View FAQ for details
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                {/* ═══ CTA — DARK ═══ */}
+                <section className="bg-[#050505] text-white py-32 border-t border-white/10 text-center">
+                    <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">Ready?</p>
+                    <h2 className="font-serif text-3xl md:text-4xl tracking-tight leading-tight mb-8 text-white">Start your journey today.</h2>
+                    <a href="/customize" className="group inline-flex items-center justify-center gap-2 border border-white bg-white px-8 py-4 font-sans text-xs uppercase tracking-widest text-black transition-colors hover:bg-white/90">
+                        Configure Yours
+                    </a>
+                </section>
+
             </main>
-            <Footer />
+            <SpecialOfferFooter />
         </div>
     );
 }

@@ -527,7 +527,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                         </div>
                                     )}
                                     <div className={`relative flex h-72 w-full items-center justify-center border-b p-8 transition-colors duration-500 ${isSelected ? 'border-black/20' : 'border-black/10'}`} style={{ backgroundColor: color === 'Black' ? '#e5e5e5' : '#ffffff' }}>
-                                        <img src={color === 'Black' ? "/images/DS6.5-Black.png" : "/images/DS5.5-White.png"} alt={color} className="h-auto w-full max-h-full object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105" />
+                                        <img src={color === 'Black' ? "/images/DS6.5-Black.png" : "/images/DS5.5-white_1.png"} alt={color} className="h-auto w-full max-h-full object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105" />
                                     </div>
                                     <div className="flex w-full flex-1 flex-col p-8 md:p-10">
                                         <div className="mb-4 flex items-center gap-4">

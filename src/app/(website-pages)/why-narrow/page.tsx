@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { SpecialOfferHeader } from "@/components/special-offer/header";
+import { SpecialOfferFooter } from "@/components/special-offer/footer";
 import TestimonialsSection from "@/components/checkout/TestimonialsSection";
 
 export default function WhyNarrowPage() {
@@ -25,8 +25,8 @@ export default function WhyNarrowPage() {
         const targetDegree = parseFloat(targetStr);
         const duration = 1500;
         let startTime: number | null = null;
-        const colorRed = "#ff2d55";
-        const colorGreen = "#34c759";
+        const colorPrimary = "#ff2d55";
+        const colorSecondary = "#34c759";
 
         function animateFrame(timestamp: number) {
           if (!startTime) startTime = timestamp;
@@ -34,7 +34,7 @@ export default function WhyNarrowPage() {
           const percent = Math.min(progress / duration, 1);
           const ease = 1 - Math.pow(1 - percent, 4);
           const currentAngle = targetDegree * ease;
-          donut.style.background = `conic-gradient(${colorRed} 0deg ${currentAngle}deg, ${colorGreen} ${currentAngle}deg 360deg)`;
+          donut.style.background = `conic-gradient(${colorPrimary} 0deg ${currentAngle}deg, ${colorSecondary} ${currentAngle}deg 360deg)`;
           if (progress < duration) window.requestAnimationFrame(animateFrame);
         }
         window.requestAnimationFrame(animateFrame);
@@ -61,97 +61,21 @@ export default function WhyNarrowPage() {
   }, []);
 
   return (
-    <div className="page-wrapper">
-      <Navbar />
-      <main className="main-wrapper">
+    <div className="min-h-screen">
+      <SpecialOfferHeader forceOpaque={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
+      <main>
 
-        {/* --- STORIES SECTION --- */}
+        {/* ═══ TESTIMONIALS — DARK ═══ */}
         <TestimonialsSection />
 
-        {/* --- DIVIDER --- */}
-        <div style={{ width: "100%", maxWidth: "80rem", height: "1px", backgroundColor: "rgba(255, 255, 255, 0.15)", margin: "0 auto", display: "block" }}></div>
-
-        {/* --- SCIENCE SECTION --- */}
-        <section id="science-section" ref={scienceSectionRef} className="dp-section-wrapper dp-section-padding">
+        {/* ═══ SCIENCE SECTION (Hidden Barrier) — LIGHT ═══ */}
+        <section id="science-section" ref={scienceSectionRef} className="w-full bg-neutral-50 text-black flex flex-col items-center py-24 md:py-40">
           <style jsx>{`
-            .dp-section-wrapper {
-              width: 100%;
-              background-color: #000000;
-              color: #ffffff;
-              font-family: 'Manrope', system-ui, -apple-system, sans-serif;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-            }
-            .dp-section-padding { padding: 6rem 0 10rem; }
-
-            .dp-content-container {
-              width: 100%;
-              max-width: 80rem; /* WIDENED from 68rem */
-              padding: 0 1.5rem;
-              box-sizing: border-box;
-            }
-            .dp-center { text-align: center; }
-            .dp-h2 {
-              font-size: 2.5rem;
-              font-weight: 700;
-              letter-spacing: -0.02em;
-              margin: 0 0 1.5rem;
-              line-height: 1.1;
-              color: #fff;
-            }
-            @media (min-width: 768px) { .dp-h2 { font-size: 3rem; } }
-            .dp-mb-lg { margin-bottom: 4rem; }
-            .dp-stat-number {
-              font-size: 3.5rem;
-              font-weight: 700;
-              letter-spacing: -0.04em;
-              line-height: 1;
-              margin-bottom: 0.5rem;
-              display: block;
-            }
-            .dp-sub-stat {
-              font-size: 1.25rem;
-              font-weight: 600;
-              margin-bottom: 0.25rem;
-              color: #fff;
-            }
-            .dp-text-soft {
-              color: rgba(255, 255, 255, 0.7);
-              font-size: 1rem; /* Slightly larger readability */
-              line-height: 1.6;
-            }
-            .dp-grid-2 {
-              display: grid;
-              grid-template-columns: 1fr;
-              gap: 3rem;
-            }
-            @media (min-width: 768px) { .dp-grid-2 { grid-template-columns: repeat(2, 1fr); } }
-            .dp-chart-card {
-              background: #111111;
-              border: 1px solid rgba(255, 255, 255, 0.1);
-              border-radius: 1.5rem;
-              padding: 2rem;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              transition: transform 0.2s ease;
-            }
-            .dp-chart-card:hover { border-color: rgba(255, 255, 255, 0.2); }
-            .dp-chart-shell {
-              position: relative;
-              width: 200px;
-              height: 200px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              margin-bottom: 1rem;
-            }
             .dp-donut {
               width: 100%;
               height: 100%;
               border-radius: 50%;
-              background: conic-gradient(#333 0deg 360deg);
+              background: conic-gradient(#d4d4d4 0deg 360deg);
               display: flex;
               align-items: center;
               justify-content: center;
@@ -159,7 +83,7 @@ export default function WhyNarrowPage() {
             .dp-donut-inner {
               width: 120px;
               height: 120px;
-              background: #111111;
+              background: #ffffff;
               border-radius: 50%;
               position: absolute;
             }
@@ -170,271 +94,150 @@ export default function WhyNarrowPage() {
               z-index: 2;
               color: #ff2d55;
             }
-            .dp-legend {
-              display: flex;
-              gap: 1.5rem;
-              font-size: 0.85rem;
-              margin-top: 1rem;
-            }
-            .dp-legend-item { display: flex; align-items: center; gap: 0.5rem; color: #ccc; }
-            .dp-dot-small { width: 8px; height: 8px; border-radius: 50%; }
-            .dp-dot-red { background: #ff2d55; }
-            .dp-dot-green { background: #34c759; }
-            .dp-split-stats {
-              margin-top: 4rem;
-              padding-top: 3rem;
-              border-top: 1px solid rgba(255, 255, 255, 0.15);
-              display: grid;
-              grid-template-columns: 1fr;
-              gap: 2rem;
-            }
-            @media (min-width: 768px) { .dp-split-stats { grid-template-columns: repeat(2, 1fr); } }
-            .dp-kpi-val { font-size: 3rem; font-weight: 700; line-height: 1; margin-bottom: 0.5rem; }
-            .dp-kpi-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 0.5rem; display: block; }
           `}</style>
 
-          <div className="dp-content-container">
-            <div className="dp-center dp-mb-lg">
-              <h2 className="dp-h2">The Hidden Barrier</h2>
+          <div className="w-full max-w-[80rem] px-6">
+            <div className="text-center mb-16">
+              <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-4">The Data</p>
+              <h2 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight text-black">The Hidden Barrier</h2>
             </div>
-            <div className="dp-grid-2">
+            <div className="grid md:grid-cols-2 gap-12">
               <div>
-                <div className="dp-center" style={{ marginBottom: "2rem" }}>
-                  <span className="dp-stat-number">87%</span>
-                  <span className="dp-sub-stat">of females</span>
-                  <p className="dp-text-soft" style={{ maxWidth: "18rem", margin: "0.5rem auto 0" }}>Have hand spans smaller than the 8.5 inch minimum that standard keyboards expect.</p>
+                <div className="text-center mb-8">
+                  <span className="font-serif text-6xl font-bold block text-[#ff2d55]">87%</span>
+                  <span className="font-sans text-xl font-medium text-neutral-600">of females</span>
+                  <p className="font-sans text-sm text-neutral-500 max-w-[18rem] mx-auto mt-2 leading-relaxed">Have hand spans smaller than the 8.5 inch minimum that standard keyboards expect.</p>
                 </div>
-                <div className="dp-chart-card">
-                  <div className="dp-chart-shell">
+                <div className="bg-white border border-neutral-200 rounded-none p-8 flex flex-col items-center hover:border-neutral-400 transition-all">
+                  <div className="relative w-[200px] h-[200px] flex items-center justify-center mb-4">
                     <div className="dp-donut" data-target-degree="313.2">
                       <div className="dp-donut-inner"></div>
                       <div className="dp-donut-value">87%</div>
                     </div>
                   </div>
-                  <div className="dp-legend">
-                    <div className="dp-legend-item">
-                      <div className="dp-dot-small dp-dot-red"></div>Too small
+                  <div className="flex gap-6 text-xs font-medium text-neutral-500 mt-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-[#ff2d55]"></div>Too small
                     </div>
-                    <div className="dp-legend-item">
-                      <div className="dp-dot-small dp-dot-green"></div>Comfortable
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-[#34c759]"></div>Comfortable
                     </div>
                   </div>
                 </div>
               </div>
               <div>
-                <div className="dp-center" style={{ marginBottom: "2rem" }}>
-                  <span className="dp-stat-number">24%</span>
-                  <span className="dp-sub-stat">of males</span>
-                  <p className="dp-text-soft" style={{ maxWidth: "18rem", margin: "0.5rem auto 0" }}>Also fall below the comfortable reach threshold for a standard 6.5 inch keyboard.</p>
+                <div className="text-center mb-8">
+                  <span className="font-serif text-6xl font-bold block text-[#ff2d55]">24%</span>
+                  <span className="font-sans text-xl font-medium text-neutral-600">of males</span>
+                  <p className="font-sans text-sm text-neutral-500 max-w-[18rem] mx-auto mt-2 leading-relaxed">Also fall below the comfortable reach threshold for a standard 6.5 inch keyboard.</p>
                 </div>
-                <div className="dp-chart-card">
-                  <div className="dp-chart-shell">
+                <div className="bg-white border border-neutral-200 rounded-none p-8 flex flex-col items-center hover:border-neutral-400 transition-all">
+                  <div className="relative w-[200px] h-[200px] flex items-center justify-center mb-4">
                     <div className="dp-donut" data-target-degree="86.4">
                       <div className="dp-donut-inner"></div>
                       <div className="dp-donut-value">24%</div>
                     </div>
                   </div>
-                  <div className="dp-legend">
-                    <div className="dp-legend-item">
-                      <div className="dp-dot-small dp-dot-red"></div>Too small
+                  <div className="flex gap-6 text-xs font-medium text-neutral-500 mt-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-[#ff2d55]"></div>Too small
                     </div>
-                    <div className="dp-legend-item">
-                      <div className="dp-dot-small dp-dot-green"></div>Comfortable
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-[#34c759]"></div>Comfortable
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="dp-split-stats">
+            <div className="mt-16 pt-12 border-t border-neutral-200 grid md:grid-cols-2 gap-8">
               <div>
-                <div className="dp-kpi-val">8.5"</div>
-                <span className="dp-kpi-label">The Threshold</span>
-                <p className="dp-text-soft">Minimum hand span needed to play a conventional 6.5 inch keyboard from Yamaha or Steinway with real comfort.</p>
+                <div className="font-serif text-5xl font-bold text-black">8.5"</div>
+                <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 block mt-2 mb-2">The Threshold</span>
+                <p className="font-sans text-base text-neutral-600 leading-relaxed">Minimum hand span needed to play a conventional 6.5 inch keyboard from Yamaha or Steinway with real comfort.</p>
               </div>
               <div>
-                <div className="dp-kpi-val">25-30%</div>
-                <span className="dp-kpi-label">Larger Reach Required</span>
-                <p className="dp-text-soft">Hand span often needs to be at least one quarter larger than the octave just to reach 8ths, 9ths, and 10ths without strain.</p>
+                <div className="font-serif text-5xl font-bold text-black">25-30%</div>
+                <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 block mt-2 mb-2">Larger Reach Required</span>
+                <p className="font-sans text-base text-neutral-600 leading-relaxed">Hand span often needs to be at least one quarter larger than the octave just to reach 8ths, 9ths, and 10ths without strain.</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* --- DIVIDER --- */}
-        <div style={{ width: "100%", maxWidth: "80rem", height: "1px", backgroundColor: "rgba(255, 255, 255, 0.15)", margin: "0 auto", display: "block" }}></div>
-
-        {/* --- RESEARCH SECTION --- */}
-        <section className="dp-section-wrapper dp-section-padding-research">
-          <style jsx>{`
-            .dp-section-padding-research { padding: 6rem 0 10rem; }
-            .dp-center { text-align: center; }
-            .dp-mb-lg { margin-bottom: 4rem; }
-            .dp-section-wrapper {
-              width: 100%;
-              background-color: #000000;
-              color: #ffffff;
-              font-family: 'Manrope', system-ui, -apple-system, sans-serif;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-            }
-            .dp-content-container {
-              width: 100%;
-              max-width: 80rem; /* WIDENED from 68rem */
-              padding: 0 1.5rem;
-              box-sizing: border-box;
-            }
-             .dp-research-grid {
-                display: grid;
-                gap: 1.5rem;
-                margin-bottom: 4rem;
-                grid-template-columns: 1fr;
-             }
-             @media (min-width: 768px) { .dp-research-grid { grid-template-columns: repeat(2, 1fr); } }
-             .dp-pill-card {
-                border-radius: 1rem;
-                border: 1px solid rgba(255, 255, 255, 0.15);
-                background: #111111;
-                padding: 2.5rem; /* Increased Padding */
-                transition: all 0.2s ease;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                height: 100%;
-             }
-             .dp-pill-card:hover {
-                background: #161616;
-                transform: translateY(-2px);
-                border-color: rgba(255, 255, 255, 0.3);
-             }
-             .dp-card-title { 
-                font-size: 1.5rem; /* Increased size significantly */
-                font-weight: 700; 
-                color: #fff; 
-                margin-bottom: 0.75rem; 
-                line-height: 1.2; /* Tightened line height */
-             }
-             .dp-card-meta { font-size: 0.9rem; color: #888; margin-bottom: 1.25rem; }
-             .dp-card-body { 
-                font-size: 1rem; 
-                color: rgba(255,255,255,0.7); 
-                line-height: 1.6; 
-                margin-bottom: 2rem; 
-                flex-grow: 1; 
-             }
-             .dp-card-cta {
-                margin-top: auto;
-                display: inline-flex;
-                align-items: center;
-                gap: 0.5rem;
-                background: #fff;
-                color: #000;
-                padding: 0.75rem 1.25rem;
-                border-radius: 999px;
-                font-size: 0.9rem;
-                font-weight: 700;
-                text-decoration: none;
-                transition: background 0.2s;
-             }
-             .dp-card-cta:hover { background: #f0f0f0; }
-
-             .dp-academic-block {
-                background: linear-gradient(145deg, #161616, #0a0a0a); /* Subtler gradient */
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 1.5rem;
-                padding: 2.5rem;
-             }
-             .dp-academic-list {
-                display: grid;
-                gap: 2rem; /* Increased gap */
-                margin-top: 3rem; /* Increased spacing from header */
-                grid-template-columns: 1fr;
-             }
-             @media (min-width: 768px) { .dp-academic-list { grid-template-columns: repeat(2, 1fr); } }
-             
-             .dp-uni-item { display: flex; gap: 1rem; align-items: flex-start; }
-             .dp-check-icon { 
-                width: 24px; height: 24px; 
-                background: #000; 
-                border-radius: 50%; 
-                display: flex; align-items: center; justify-content: center;
-                flex-shrink: 0;
-                border: 1px solid #222; /* Added subtle border */
-             }
-             .dp-check-icon svg { stroke: #34c759; }
-           `}</style>
-
-          <div className="dp-content-container">
-            <div className="dp-center dp-mb-lg">
-              <h2 className="dp-h2">Published Research</h2>
-              <p className="dp-text-soft" style={{ maxWidth: "36rem", margin: "0 auto", fontSize: "1.1rem" }}>Decades of peer reviewed research explain why standard keyboards hold most pianists back.</p>
+        {/* ═══ RESEARCH SECTION — DARK ═══ */}
+        <section className="w-full bg-[#050505] text-white flex flex-col items-center py-24 md:py-40">
+          <div className="w-full max-w-[80rem] px-6">
+            <div className="text-center mb-16">
+              <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">Evidence</p>
+              <h2 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight text-white mb-4">Published Research</h2>
+              <p className="font-sans text-base text-white/60 max-w-[36rem] mx-auto leading-relaxed">Decades of peer reviewed research explain why standard keyboards hold most pianists back.</p>
             </div>
 
-            <div className="dp-research-grid">
-              {/* Card 1 */}
-              <div className="dp-pill-card">
-                <div className="dp-card-title">Hand size and performance related injuries</div>
-                <div className="dp-card-meta">Applied Ergonomics, 2021</div>
-                <div className="dp-card-body">Pianists with smaller hands show <strong>reduced muscular effort and lower perceived strain</strong> when they move to 5.5 inch octave keyboards instead of standard size.</div>
-                <a href="https://www.sciencedirect.com/science/article/abs/pii/S0003687021001654" target="_blank" className="dp-card-cta">
+            <div className="grid md:grid-cols-2 gap-6 mb-16">
+              <div className="border border-white/10 bg-white/5 rounded-none p-10 flex flex-col hover:border-white/20 transition-all">
+                <div className="font-serif text-xl font-bold text-white mb-3">Hand size and performance related injuries</div>
+                <div className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">Applied Ergonomics, 2021</div>
+                <div className="font-sans text-sm text-white/60 leading-relaxed mb-8 flex-grow">Pianists with smaller hands show <strong>reduced muscular effort and lower perceived strain</strong> when they move to 5.5 inch octave keyboards instead of standard size.</div>
+                <a href="https://www.sciencedirect.com/science/article/abs/pii/S0003687021001654" target="_blank" className="group inline-flex items-center justify-center gap-2 border border-white bg-white px-8 py-4 font-sans text-xs uppercase tracking-widest text-black transition-colors hover:bg-white/90 w-fit">
                   Read full study
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
                 </a>
               </div>
-              {/* Card 2 */}
-              <div className="dp-pill-card">
-                <div className="dp-card-title">Gender differences and career impact</div>
-                <div className="dp-card-meta">Susan Tomes</div>
-                <div className="dp-card-body">Studies note that <strong>internationally acclaimed women pianists tend to have larger hands</strong>, which aligns with a repertoire that often expects very wide reaches.</div>
-                <a href="https://www.susantomes.com/blog/hand-size-gender-differences-pianists-acclaim/" target="_blank" className="dp-card-cta">
+              <div className="border border-white/10 bg-white/5 rounded-none p-10 flex flex-col hover:border-white/20 transition-all">
+                <div className="font-serif text-xl font-bold text-white mb-3">Gender differences and career impact</div>
+                <div className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">Susan Tomes</div>
+                <div className="font-sans text-sm text-white/60 leading-relaxed mb-8 flex-grow">Studies note that <strong>internationally acclaimed women pianists tend to have larger hands</strong>, which aligns with a repertoire that often expects very wide reaches.</div>
+                <a href="https://www.susantomes.com/blog/hand-size-gender-differences-pianists-acclaim/" target="_blank" className="group inline-flex items-center justify-center gap-2 border border-white bg-white px-8 py-4 font-sans text-xs uppercase tracking-widest text-black transition-colors hover:bg-white/90 w-fit">
                   Read article
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
                 </a>
               </div>
-              {/* Card 3 */}
-              <div className="dp-pill-card">
-                <div className="dp-card-title">Benefits of ergonomically scaled keyboards</div>
-                <div className="dp-card-meta">Survey of reduced size users</div>
-                <div className="dp-card-body">Players report <strong>relief from pain, faster technical progress, and greater comfort</strong> when they move to keyboards that match their hand span.</div>
-                <a href="https://www.researchgate.net/publication/264457999" target="_blank" className="dp-card-cta">
+              <div className="border border-white/10 bg-white/5 rounded-none p-10 flex flex-col hover:border-white/20 transition-all">
+                <div className="font-serif text-xl font-bold text-white mb-3">Benefits of ergonomically scaled keyboards</div>
+                <div className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">Survey of reduced size users</div>
+                <div className="font-sans text-sm text-white/60 leading-relaxed mb-8 flex-grow">Players report <strong>relief from pain, faster technical progress, and greater comfort</strong> when they move to keyboards that match their hand span.</div>
+                <a href="https://www.researchgate.net/publication/264457999" target="_blank" className="group inline-flex items-center justify-center gap-2 border border-white bg-white px-8 py-4 font-sans text-xs uppercase tracking-widest text-black transition-colors hover:bg-white/90 w-fit">
                   Read full study
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
                 </a>
               </div>
-              {/* Card 4 */}
-              <div className="dp-pill-card">
-                <div className="dp-card-title">Performance quality improvements</div>
-                <div className="dp-card-meta">PASK findings</div>
-                <div className="dp-card-body"><strong>Shorter reaches and reduced wrist travel</strong> on compatible keyboards are linked to better control and lower risk of overuse injuries.</div>
-                <a href="https://paskpiano.org/performance-quality/" target="_blank" className="dp-card-cta">
+              <div className="border border-white/10 bg-white/5 rounded-none p-10 flex flex-col hover:border-white/20 transition-all">
+                <div className="font-serif text-xl font-bold text-white mb-3">Performance quality improvements</div>
+                <div className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">PASK findings</div>
+                <div className="font-sans text-sm text-white/60 leading-relaxed mb-8 flex-grow"><strong>Shorter reaches and reduced wrist travel</strong> on compatible keyboards are linked to better control and lower risk of overuse injuries.</div>
+                <a href="https://paskpiano.org/performance-quality/" target="_blank" className="group inline-flex items-center justify-center gap-2 border border-white bg-white px-8 py-4 font-sans text-xs uppercase tracking-widest text-black transition-colors hover:bg-white/90 w-fit">
                   Learn more
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
                 </a>
               </div>
             </div>
 
-            <div className="dp-academic-block">
-              <h3 style={{ fontSize: "1.5rem", fontWeight: 700, margin: "0 0 0.5rem", color: "#fff" }}>Academic recognition</h3>
-              <p className="dp-text-soft">The Donison Steinbuhler standard appears in research and teaching at leading institutions.</p>
-              <div className="dp-academic-list">
-                <div className="dp-uni-item">
-                  <div className="dp-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}><path d="M20 6 9 17l-5-5"></path></svg></div>
+            <div className="border border-white/10 rounded-none p-10 bg-white/5">
+              <h3 className="font-serif text-2xl font-bold text-white mb-2">Academic recognition</h3>
+              <p className="font-sans text-sm text-white/60 leading-relaxed">The Donison Steinbuhler standard appears in research and teaching at leading institutions.</p>
+              <div className="grid md:grid-cols-2 gap-8 mt-10">
+                <div className="flex gap-4 items-start">
+                  <div className="w-6 h-6 bg-white/10 rounded-none flex items-center justify-center flex-shrink-0 border border-white/10">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }} className="text-[#34c759]"><path d="M20 6 9 17l-5-5"></path></svg>
+                  </div>
                   <div>
-                    <h4 style={{ fontSize: "1.1rem", fontWeight: 700, margin: "0 0 0.25rem", color: "#fff" }}>Stanford University</h4>
-                    <p className="dp-text-soft" style={{ fontSize: "0.95rem", margin: 0 }}>Research and advocacy around scaled keyboards in music education and injury prevention.</p>
+                    <h4 className="font-serif text-lg font-bold text-white mb-1">Stanford University</h4>
+                    <p className="font-sans text-sm text-white/60">Research and advocacy around scaled keyboards in music education and injury prevention.</p>
                   </div>
                 </div>
-                <div className="dp-uni-item">
-                  <div className="dp-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}><path d="M20 6 9 17l-5-5"></path></svg></div>
+                <div className="flex gap-4 items-start">
+                  <div className="w-6 h-6 bg-white/10 rounded-none flex items-center justify-center flex-shrink-0 border border-white/10">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }} className="text-[#34c759]"><path d="M20 6 9 17l-5-5"></path></svg>
+                  </div>
                   <div>
-                    <h4 style={{ fontSize: "1.1rem", fontWeight: 700, margin: "0 0 0.25rem", color: "#fff" }}>Johns Hopkins Peabody Institute</h4>
-                    <p className="dp-text-soft" style={{ fontSize: "0.95rem", margin: 0 }}>Use of alternative sizes inside curriculum and performance programs.</p>
+                    <h4 className="font-serif text-lg font-bold text-white mb-1">Johns Hopkins Peabody Institute</h4>
+                    <p className="font-sans text-sm text-white/60">Use of alternative sizes inside curriculum and performance programs.</p>
                   </div>
                 </div>
               </div>
-              <div style={{ marginTop: "2.5rem", textAlign: "center" }}>
-                <a href="/about-us/ds-standard" className="dp-card-cta" style={{ display: "inline-flex" }}>
+              <div className="mt-10 text-center">
+                <a href="/about-us/ds-standard" className="group inline-flex items-center justify-center gap-2 border border-white bg-white px-8 py-4 font-sans text-xs uppercase tracking-widest text-black transition-colors hover:bg-white/90">
                   Learn more about the DS Standard
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
                 </a>
@@ -443,48 +246,20 @@ export default function WhyNarrowPage() {
           </div>
         </section>
 
-        {/* --- CTA SECTION --- */}
-        <section className="dp-section-wrapper" style={{ padding: "0 0 8rem" }}>
-          <style jsx>{`
-            .dp-section-wrapper {
-              width: 100%;
-              background-color: #000000;
-              color: #ffffff;
-              font-family: 'Manrope', system-ui, -apple-system, sans-serif;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-            }
-            .dp-content-container {
-              width: 100%;
-              max-width: 80rem;
-              padding: 0 1.5rem;
-              box-sizing: border-box;
-            }
-            .dp-center { text-align: center; }
-            .dp-h2 {
-              font-size: 2.5rem;
-              font-weight: 700;
-              letter-spacing: -0.02em;
-              margin: 0 0 1.5rem;
-              line-height: 1.1;
-              color: #fff;
-            }
-            @media (min-width: 768px) { .dp-h2 { font-size: 3rem; } }
-          `}</style>
-          <div className="dp-content-container dp-center">
-            <h2 className="dp-h2" style={{ marginBottom: "2rem" }}>Don't let your instrument hold you back.</h2>
-            <a href="https://reserve.dreamplaypianos.com" className="group inline-flex items-center gap-3 bg-white text-black px-8 py-4 text-lg font-bold rounded-full hover:scale-105 transition-transform">
-              Reserve Your DreamPlay One
+        {/* ═══ CTA — LIGHT ═══ */}
+        <section className="w-full bg-white text-black flex flex-col items-center pb-32 border-t border-neutral-200">
+          <div className="w-full max-w-[80rem] px-6 text-center pt-24">
+            <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-4">Get Started</p>
+            <h2 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight text-black mb-8">Don't let your instrument hold you back.</h2>
+            <a href="/customize" className="group inline-flex items-center justify-center gap-2 bg-black text-white px-8 py-4 font-sans text-xs uppercase tracking-widest transition-colors hover:bg-neutral-800">
+              Configure Yours
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 18, height: 18 }}><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
             </a>
           </div>
         </section>
 
-        {/* Spacer */}
-        <div className="div-block-7" style={{ height: "5rem" }}></div>
       </main>
-      <Footer />
+      <SpecialOfferFooter />
     </div>
   );
 }
