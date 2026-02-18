@@ -711,12 +711,12 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                         <button
                                             type="button"
                                             onClick={(e) => { e.stopPropagation(); setIsSaveModalOpen(true); }}
-                                            className={`mt-4 w-full border py-4 font-sans text-xs uppercase tracking-widest transition-all bg-transparent cursor-pointer ${isSelected
-                                                ? "border-white/20 text-white/60 hover:bg-white/5 hover:text-white"
-                                                : "border-black/15 text-black/50 hover:bg-black/5 hover:text-black"
+                                            className={`mt-4 w-full border border-dashed py-4 font-sans text-[11px] uppercase tracking-widest transition-all bg-transparent cursor-pointer underline underline-offset-4 decoration-1 ${isSelected
+                                                ? "border-white/30 text-white/80 hover:bg-white/10 hover:text-white hover:border-white/50"
+                                                : "border-black/25 text-black/70 hover:bg-black/5 hover:text-black hover:border-black/40"
                                                 }`}
                                         >
-                                            Save This Build &amp; Unlock Free Shipping
+                                            ✉ Save This Build &amp; Unlock Free Shipping
                                         </button>
 
                                         {/* Savings subtext */}
