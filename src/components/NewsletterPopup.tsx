@@ -22,17 +22,31 @@ export default function NewsletterPopup() {
                 return;
             }
 
-            // check if user has already seen/closed the popup to avoid spamming them
-            const hasSeenPopup = localStorage.getItem("dreamplay_popup_seen");
-            console.log("Newsletter popup seen status:", hasSeenPopup);
+            // Never show if user already subscribed
+            const hasSubscribed = localStorage.getItem("dreamplay_subscribed");
+            if (hasSubscribed) {
+                console.log("Newsletter popup suppressed: user already subscribed");
+                return;
+            }
 
-            if (!hasSeenPopup) {
+            // Check if user has dismissed the popup before
+            const hasDismissed = localStorage.getItem("dreamplay_popup_seen");
+
+            if (!hasDismissed) {
+                // First visit: show after 8 seconds
                 console.log("Scheduling newsletter popup in 8s...");
                 const timer = setTimeout(() => {
                     console.log("Showing newsletter popup now");
                     setIsOpen(true);
-                }, 8000); // 8 seconds delay
-
+                }, 8000);
+                return () => clearTimeout(timer);
+            } else {
+                // Previously dismissed: show again after 2 minutes
+                console.log("User dismissed before, scheduling re-show in 2 minutes...");
+                const timer = setTimeout(() => {
+                    console.log("Re-showing newsletter popup after 2 minutes");
+                    setIsOpen(true);
+                }, 120000); // 2 minutes
                 return () => clearTimeout(timer);
             }
         };
@@ -42,7 +56,7 @@ export default function NewsletterPopup() {
 
     const handleClose = () => {
         setIsOpen(false);
-        // Remember that the user closed it so we don't show it again
+        // Mark as dismissed (but NOT subscribed) so it can re-appear after 2 minutes
         localStorage.setItem("dreamplay_popup_seen", "true");
     };
 
@@ -63,6 +77,8 @@ export default function NewsletterPopup() {
 
             // On success
             setIsSubmitted(true);
+            // Mark as subscribed — popup will never show again
+            localStorage.setItem("dreamplay_subscribed", "true");
             localStorage.setItem("dreamplay_popup_seen", "true");
 
             // Auto-open the PDF in a new tab
