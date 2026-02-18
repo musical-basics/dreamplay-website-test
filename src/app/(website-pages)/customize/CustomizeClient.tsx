@@ -69,7 +69,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             title: "DreamPlay One",
             subtitle: "Founder's Batch",
             price: "$549",
-            retailPrice: "$1,199.00",
+            retailPrice: "$1,099.00",
             originalPrice: null,
             description: "The DreamPlay One Keyboard. Available in DS5.5 or DS6.0. Choose Midnight Black or Pearl White.",
             includes: ["DreamPlay One Keyboard"],
