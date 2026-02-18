@@ -1,64 +1,125 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import { SpecialOfferFooter } from "@/components/special-offer/footer";
 import TestimonialsSection from "@/components/checkout/TestimonialsSection";
 
-export default function WhyNarrowPage() {
-  const scienceSectionRef = useRef<HTMLElement>(null);
+/**
+ * 3D Glassmorphic Donut Chart — SVG-based with gradient strokes, drop shadows, and glass inner ring
+ */
+const DonutChart = ({ percent, label, theme = "light" }: { percent: number; label: string; theme?: "light" | "dark" }) => {
+  const [currentPercent, setCurrentPercent] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
 
-  // --- CHART ANIMATION LOGIC ---
   useEffect(() => {
-    const section = scienceSectionRef.current;
-    if (!section) return;
-
-    const donuts = section.querySelectorAll(".dp-donut") as NodeListOf<HTMLElement>;
-    let hasAnimated = false;
-
-    const runAnimation = () => {
-      if (hasAnimated) return;
-      hasAnimated = true;
-
-      donuts.forEach((donut) => {
-        const targetStr = donut.getAttribute("data-target-degree");
-        if (!targetStr) return;
-        const targetDegree = parseFloat(targetStr);
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        const target = percent;
         const duration = 1500;
-        let startTime: number | null = null;
-        const colorPrimary = "#ff2d55";
-        const colorSecondary = "#34c759";
+        const startTime = performance.now();
 
-        function animateFrame(timestamp: number) {
-          if (!startTime) startTime = timestamp;
-          const progress = timestamp - startTime;
-          const percent = Math.min(progress / duration, 1);
-          const ease = 1 - Math.pow(1 - percent, 4);
-          const currentAngle = targetDegree * ease;
-          donut.style.background = `conic-gradient(${colorPrimary} 0deg ${currentAngle}deg, ${colorSecondary} ${currentAngle}deg 360deg)`;
-          if (progress < duration) window.requestAnimationFrame(animateFrame);
-        }
-        window.requestAnimationFrame(animateFrame);
-      });
-    };
+        const animate = (time: number) => {
+          const elapsed = time - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const ease = 1 - Math.pow(1 - progress, 4);
+          setCurrentPercent(target * ease);
+          if (progress < 1) requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+        observer.disconnect();
+      }
+    }, { threshold: 0.5 });
 
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              runAnimation();
-              observer.disconnect();
-            }
-          });
-        },
-        { threshold: 0.3 }
-      );
-      observer.observe(section);
-      return () => observer.disconnect();
-    } else {
-      runAnimation();
-    }
-  }, []);
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [percent]);
+
+  const size = 200;
+  const strokeWidth = 26;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const cx = size / 2;
+  const cy = size / 2;
+
+  const filledLength = (currentPercent / 100) * circumference;
+  const emptyLength = circumference - filledLength;
+
+  const uniqueId = `wn-donut-${percent}-${label.replace(/\s/g, '')}`;
+
+  return (
+    <div ref={ref} className="flex flex-col items-center">
+      <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="transform -rotate-90 drop-shadow-2xl">
+          <defs>
+            <filter id={`${uniqueId}-shadow`} x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="rgba(0,0,0,0.25)" />
+              <feDropShadow dx="0" dy="1" stdDeviation="2" floodColor="rgba(0,0,0,0.15)" />
+            </filter>
+            <linearGradient id={`${uniqueId}-filled`} x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ff4d6d" />
+              <stop offset="40%" stopColor="#ff2d55" />
+              <stop offset="100%" stopColor="#c0223f" />
+            </linearGradient>
+            <linearGradient id={`${uniqueId}-empty`} x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#4ade80" />
+              <stop offset="40%" stopColor="#34c759" />
+              <stop offset="100%" stopColor="#1a8f3c" />
+            </linearGradient>
+          </defs>
+
+          {/* Background ring */}
+          <circle cx={cx} cy={cy} r={radius} fill="none"
+            stroke={theme === "dark" ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.04)"}
+            strokeWidth={strokeWidth + 4} />
+
+          {/* Empty (green) arc */}
+          <circle cx={cx} cy={cy} r={radius} fill="none"
+            stroke={`url(#${uniqueId}-empty)`}
+            strokeWidth={strokeWidth}
+            strokeDasharray={`${circumference}`}
+            strokeDashoffset={0}
+            strokeLinecap="butt"
+            filter={`url(#${uniqueId}-shadow)`} />
+
+          {/* Filled (red) arc */}
+          <circle cx={cx} cy={cy} r={radius} fill="none"
+            stroke={`url(#${uniqueId}-filled)`}
+            strokeWidth={strokeWidth}
+            strokeDasharray={`${filledLength} ${emptyLength}`}
+            strokeDashoffset={0}
+            strokeLinecap="butt"
+            filter={`url(#${uniqueId}-shadow)`} />
+        </svg>
+
+        {/* Glass inner circle */}
+        <div className="absolute rounded-full" style={{
+          width: size - strokeWidth * 2 - 14,
+          height: size - strokeWidth * 2 - 14,
+          background: theme === "dark"
+            ? "radial-gradient(ellipse at 35% 25%, rgba(255,255,255,0.06) 0%, rgba(10,10,15,0.95) 60%)"
+            : "radial-gradient(ellipse at 35% 25%, rgba(255,255,255,0.9) 0%, rgba(250,250,250,0.98) 60%)",
+          boxShadow: theme === "dark"
+            ? "inset 0 2px 8px rgba(255,255,255,0.04), inset 0 -4px 12px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.3)"
+            : "inset 0 2px 8px rgba(255,255,255,0.8), inset 0 -4px 12px rgba(0,0,0,0.06), 0 0 16px rgba(0,0,0,0.04)",
+        }} />
+
+        {/* Percentage text */}
+        <div className="absolute z-10 flex flex-col items-center">
+          <span className="text-4xl font-bold text-[#ff2d55]" style={{
+            textShadow: theme === "dark"
+              ? "0 0 20px rgba(255,45,85,0.3), 0 2px 4px rgba(0,0,0,0.5)"
+              : "0 0 12px rgba(255,45,85,0.1), 0 1px 2px rgba(0,0,0,0.08)"
+          }}>
+            {Math.round(currentPercent)}%
+          </span>
+          {label && <span className={`text-sm font-medium uppercase tracking-wide mt-1 ${theme === "light" ? "text-neutral-500" : "text-white/50"}`}>{label}</span>}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default function WhyNarrowPage() {
 
   return (
     <div className="min-h-screen">
@@ -69,32 +130,7 @@ export default function WhyNarrowPage() {
         <TestimonialsSection />
 
         {/* ═══ SCIENCE SECTION (Hidden Barrier) — LIGHT ═══ */}
-        <section id="science-section" ref={scienceSectionRef} className="w-full bg-neutral-50 text-black flex flex-col items-center py-24 md:py-40">
-          <style jsx>{`
-            .dp-donut {
-              width: 100%;
-              height: 100%;
-              border-radius: 50%;
-              background: conic-gradient(#d4d4d4 0deg 360deg);
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            }
-            .dp-donut-inner {
-              width: 120px;
-              height: 120px;
-              background: #ffffff;
-              border-radius: 50%;
-              position: absolute;
-            }
-            .dp-donut-value {
-              position: absolute;
-              font-size: 2rem;
-              font-weight: 700;
-              z-index: 2;
-              color: #ff2d55;
-            }
-          `}</style>
+        <section id="science-section" className="w-full bg-neutral-50 text-black flex flex-col items-center py-24 md:py-40">
 
           <div className="w-full max-w-[80rem] px-6">
             <div className="text-center mb-16">
@@ -109,18 +145,13 @@ export default function WhyNarrowPage() {
                   <p className="font-sans text-sm text-neutral-500 max-w-[18rem] mx-auto mt-2 leading-relaxed">Have hand spans smaller than the 8.5 inch minimum that standard keyboards expect.</p>
                 </div>
                 <div className="bg-white border border-neutral-200 rounded-none p-8 flex flex-col items-center hover:border-neutral-400 transition-all">
-                  <div className="relative w-[200px] h-[200px] flex items-center justify-center mb-4">
-                    <div className="dp-donut" data-target-degree="313.2">
-                      <div className="dp-donut-inner"></div>
-                      <div className="dp-donut-value">87%</div>
-                    </div>
-                  </div>
-                  <div className="flex gap-6 text-xs font-medium text-neutral-500 mt-4">
+                  <DonutChart percent={87} label="" theme="light" />
+                  <div className="flex gap-6 text-xs font-medium text-neutral-500 mt-6">
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#ff2d55]"></div>Too small
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#ff2d55]"></div>Too small
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#34c759]"></div>Comfortable
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#34c759]"></div>Comfortable
                     </div>
                   </div>
                 </div>
@@ -132,18 +163,13 @@ export default function WhyNarrowPage() {
                   <p className="font-sans text-sm text-neutral-500 max-w-[18rem] mx-auto mt-2 leading-relaxed">Also fall below the comfortable reach threshold for a standard 6.5 inch keyboard.</p>
                 </div>
                 <div className="bg-white border border-neutral-200 rounded-none p-8 flex flex-col items-center hover:border-neutral-400 transition-all">
-                  <div className="relative w-[200px] h-[200px] flex items-center justify-center mb-4">
-                    <div className="dp-donut" data-target-degree="86.4">
-                      <div className="dp-donut-inner"></div>
-                      <div className="dp-donut-value">24%</div>
-                    </div>
-                  </div>
-                  <div className="flex gap-6 text-xs font-medium text-neutral-500 mt-4">
+                  <DonutChart percent={24} label="" theme="light" />
+                  <div className="flex gap-6 text-xs font-medium text-neutral-500 mt-6">
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#ff2d55]"></div>Too small
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#ff2d55]"></div>Too small
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#34c759]"></div>Comfortable
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#34c759]"></div>Comfortable
                     </div>
                   </div>
                 </div>
