@@ -1,18 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, FileText, Package, CheckCircle2 } from "lucide-react";
+import { X, FileText, Package, CheckCircle2, Eye, EyeOff } from "lucide-react";
 
 import { getDiscountPopupStatus } from "@/actions/admin-actions";
 import { subscribeToNewsletter } from "@/actions/email-actions";
+import { createClient } from "@/lib/supabase/client";
 
 type PopupType = "none" | "shipping" | "pdf";
 
 export default function NewsletterPopup() {
     const [activePopup, setActivePopup] = useState<PopupType>("none");
     const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState<PopupType>("none");
     const [isLoading, setIsLoading] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
 
     useEffect(() => {
         const checkStatus = async () => {
@@ -45,7 +49,6 @@ export default function NewsletterPopup() {
             // Timer 2: Show PDF Offer at 30 seconds (Fallback)
             if (!pdfSeen) {
                 timer2 = setTimeout(() => {
-                    // Only show PDF if they haven't subscribed
                     if (localStorage.getItem("dp_subscribed") !== "true") {
                         setActivePopup((current) => {
                             if (current === "none") return "pdf";
@@ -65,6 +68,7 @@ export default function NewsletterPopup() {
     }, []);
 
     const handleClose = () => {
+        setErrorMsg("");
         if (activePopup === "shipping") {
             localStorage.setItem("dp_shipping_seen", "true");
             setActivePopup("none");
@@ -90,36 +94,95 @@ export default function NewsletterPopup() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
+        setErrorMsg("");
 
         const currentOffer = activePopup;
-        const tag = currentOffer === "shipping" ? "Free Shipping Lead" : "Hand Guide Download";
 
         try {
-            const res = await subscribeToNewsletter({
-                email: email,
-                first_name: "",
-                tags: [tag]
-            });
+            if (currentOffer === "shipping") {
+                // ── Shipping Offer: Supabase Auth ──
+                if (password.length < 6) {
+                    setErrorMsg("Password must be at least 6 characters.");
+                    setIsLoading(false);
+                    return;
+                }
 
-            if (!res.success) {
-                throw new Error(res.error || "Failed to subscribe");
+                const supabase = createClient();
+
+                // Try sign up first
+                const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+                    email,
+                    password,
+                });
+
+                if (signUpError) {
+                    // If user already exists, try sign in
+                    if (signUpError.message.toLowerCase().includes("already") || signUpError.message.toLowerCase().includes("registered")) {
+                        const { error: signInError } = await supabase.auth.signInWithPassword({
+                            email,
+                            password,
+                        });
+
+                        if (signInError) {
+                            setErrorMsg("Account exists. Check your password or try a different email.");
+                            setIsLoading(false);
+                            return;
+                        }
+                    } else {
+                        setErrorMsg(signUpError.message);
+                        setIsLoading(false);
+                        return;
+                    }
+                }
+
+                // Sync to mailing list
+                try {
+                    await subscribeToNewsletter({
+                        email,
+                        first_name: "",
+                        tags: ["Free Shipping Lead", "VIP Account"],
+                    });
+                } catch {
+                    // Non-critical — don't block auth flow
+                }
+
+                // Mark as globally subscribed
+                localStorage.setItem("dp_subscribed", "true");
+                localStorage.setItem("dp_shipping_seen", "true");
+                localStorage.setItem("dp_pdf_seen", "true");
+
+                // Redirect to VIP dashboard immediately
+                window.location.href = "/vip";
+                return;
+
+            } else {
+                // ── PDF Offer: Email only (no auth) ──
+                const tag = "Hand Guide Download";
+                const res = await subscribeToNewsletter({
+                    email,
+                    first_name: "",
+                    tags: [tag],
+                });
+
+                if (!res.success) {
+                    throw new Error(res.error || "Failed to subscribe");
+                }
+
+                localStorage.setItem("dp_subscribed", "true");
+                localStorage.setItem("dp_shipping_seen", "true");
+                localStorage.setItem("dp_pdf_seen", "true");
+
+                setIsSubmitted(currentOffer);
+
+                // Auto-open PDF
+                window.open(
+                    "https://www.dropbox.com/scl/fi/9b72rbi4ga0pjterxyoan/DreamPlay-Infographic.pdf?rlkey=mc08i1ahn5tp3thdd0qjnag2d&st=olbh1t9w&dl=1",
+                    "_blank"
+                );
             }
-
-            // Mark as globally subscribed so no more popups ever show
-            localStorage.setItem("dp_subscribed", "true");
-            localStorage.setItem("dp_shipping_seen", "true");
-            localStorage.setItem("dp_pdf_seen", "true");
-
-            setIsSubmitted(currentOffer);
-
-            // If it was the PDF, auto-open it in a new tab
-            if (currentOffer === "pdf") {
-                window.open("https://www.dropbox.com/scl/fi/9b72rbi4ga0pjterxyoan/DreamPlay-Infographic.pdf?rlkey=mc08i1ahn5tp3thdd0qjnag2d&st=olbh1t9w&dl=1", "_blank");
-            }
-
         } catch (error: any) {
             console.error(error);
-            alert(error.message || "Something went wrong. Please try again.");
+            setErrorMsg(error.message || "Something went wrong. Please try again.");
         } finally {
             setIsLoading(false);
         }
@@ -162,10 +225,17 @@ export default function NewsletterPopup() {
 
                             <p className="text-white/60 font-sans text-sm leading-relaxed">
                                 {activePopup === "shipping"
-                                    ? "The DreamPlay One is moving to its official retail price of $1,199 soon. Enter your email to secure a VIP Free Shipping pass (saves $150+) for your reservation."
+                                    ? "Create your VIP Account to secure a Free Shipping pass (saves $150+) and track your order in real time."
                                     : "Enter your email to instantly download our Printable 1:1 Hand-Measuring Guide to see exactly which piano size fits your biology."}
                             </p>
                         </div>
+
+                        {/* Error Message */}
+                        {errorMsg && (
+                            <div className="mb-4 p-3 border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-sans text-center">
+                                {errorMsg}
+                            </div>
+                        )}
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <input
@@ -176,43 +246,73 @@ export default function NewsletterPopup() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="w-full px-4 py-4 rounded-none border border-white/20 bg-transparent placeholder-white/40 text-white focus:ring-1 focus:ring-white focus:border-white outline-none transition-all font-sans text-sm"
                             />
+
+                            {/* Password field — shipping offer only */}
+                            {activePopup === "shipping" && (
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        required
+                                        minLength={6}
+                                        placeholder="Create a password (min 6 characters)"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="w-full px-4 py-4 pr-12 rounded-none border border-white/20 bg-transparent placeholder-white/40 text-white focus:ring-1 focus:ring-white focus:border-white outline-none transition-all font-sans text-sm"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors cursor-pointer"
+                                    >
+                                        {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                    </button>
+                                </div>
+                            )}
+
                             <button
                                 type="submit"
                                 disabled={isLoading}
                                 className="w-full bg-white text-black font-sans text-xs uppercase tracking-widest font-bold py-4 rounded-none hover:bg-white/90 transition-colors disabled:opacity-70 cursor-pointer"
                             >
-                                {isLoading ? "Processing..." : (activePopup === "shipping" ? "Get Free Shipping Pass" : "Get Free PDF Guide")}
+                                {isLoading
+                                    ? "Processing..."
+                                    : activePopup === "shipping"
+                                        ? "Create VIP Account & Unlock Free Shipping"
+                                        : "Get Free PDF Guide"}
                             </button>
-                            <p className="text-[10px] text-center text-white/40 uppercase tracking-widest mt-4">
+
+                            <button
+                                type="button"
+                                onClick={handleClose}
+                                className="w-full mt-1 text-white/30 hover:text-white/60 font-sans text-xs uppercase tracking-widest transition-colors cursor-pointer py-2"
+                            >
+                                Remind Me Later
+                            </button>
+                            <p className="text-[10px] text-center text-white/40 uppercase tracking-widest mt-2">
                                 No spam. Unsubscribe anytime.
                             </p>
                         </form>
+
+                        {/* Login link for existing VIP members */}
+                        {activePopup === "shipping" && (
+                            <p className="text-center mt-6 text-white/40 text-xs font-sans">
+                                Already a VIP?{" "}
+                                <a href="/login" className="text-white/70 hover:text-white underline underline-offset-4 transition-colors">
+                                    Sign in here
+                                </a>
+                            </p>
+                        )}
                     </>
                 ) : (
+                    /* ── PDF Success Screen (Shipping never shows this — it redirects) ── */
                     <div className="text-center py-6">
                         <div className="mx-auto bg-white border border-white/20 w-16 h-16 rounded-none flex items-center justify-center mb-6">
                             <CheckCircle2 className="text-black" size={32} strokeWidth={1.5} />
                         </div>
-                        <h3 className="text-2xl font-serif text-white mb-3">
-                            {isSubmitted === "shipping" ? "VIP Status Confirmed" : "Your guide is downloading!"}
-                        </h3>
-
-                        {isSubmitted === "shipping" ? (
-                            <>
-                                <p className="text-white/60 font-sans text-sm leading-relaxed mb-6">
-                                    Your email is officially on the VIP list. Use the code below at checkout to claim free global shipping.
-                                </p>
-                                <div className="bg-white/5 border border-white/10 p-5 mb-8">
-                                    <p className="text-white/50 text-[10px] uppercase tracking-[0.2em] mb-1">Your Promo Code</p>
-                                    <p className="text-2xl font-mono text-white tracking-widest font-bold">VIP-SHIP-FREE</p>
-                                </div>
-                            </>
-                        ) : (
-                            <p className="text-white/60 font-sans text-sm mb-8 max-w-xs mx-auto leading-relaxed">
-                                Check your new tab for the PDF. Print it out, place your hand on the guide, and discover your ideal key size.
-                            </p>
-                        )}
-
+                        <h3 className="text-2xl font-serif text-white mb-3">Your guide is downloading!</h3>
+                        <p className="text-white/60 font-sans text-sm mb-8 max-w-xs mx-auto leading-relaxed">
+                            Check your new tab for the PDF. Print it out, place your hand on the guide, and discover your ideal key size.
+                        </p>
                         <button
                             onClick={handleClose}
                             className="bg-transparent border border-white/30 text-white font-sans text-xs uppercase tracking-widest font-bold py-4 px-8 w-full rounded-none hover:bg-white/10 transition-colors cursor-pointer"

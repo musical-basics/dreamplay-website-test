@@ -1,7 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { updateSession } from "@/lib/supabase/middleware";
 
-// Initialize simpler client for middleware (Edge compatible)
+// Initialize simpler client for middleware A/B testing (Edge compatible)
 const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -32,8 +33,19 @@ function getVariantPath(currentPath: string, variant: string): string | null {
 }
 
 export async function middleware(request: NextRequest) {
+    // ========================================================================
+    // REFRESH SUPABASE AUTH SESSION (must run on every request)
+    // ========================================================================
+    const sessionResponse = await updateSession(request);
+
     const url = request.nextUrl;
     const pathname = url.pathname;
+
+    // Skip A/B testing for auth-related paths
+    if (pathname.startsWith('/api/auth')) {
+        return sessionResponse;
+    }
+
     const searchParams = url.searchParams;
 
     // ========================================================================
