@@ -82,15 +82,15 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                         onClick={() => trackClick("header", "start_customization")}
                         href="/customize"
                         className={`hidden md:flex items-center gap-2 rounded-none px-5 py-2.5 text-sm font-medium transition-all duration-300 ${useDarkText
-                            ? "bg-white border border-neutral-200 text-neutral-900 hover:border-neutral-400"
-                            : "bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20"
+                            ? "bg-black border border-black text-white hover:bg-neutral-800"
+                            : "bg-black/80 backdrop-blur-sm border border-white/30 text-white hover:bg-black"
                             }`}
                     >
                         Configure Yours
                         <span
-                            className={`w-6 h-6 rounded-none flex items-center justify-center ${useDarkText ? "bg-black" : "bg-white"}`}
+                            className="w-6 h-6 rounded-none flex items-center justify-center bg-white"
                         >
-                            <ArrowRight className={`w-3 h-3 ${useDarkText ? "text-white" : "text-black"}`} />
+                            <ArrowRight className="w-3 h-3 text-black" />
                         </span>
                     </Link>
                     <Button
