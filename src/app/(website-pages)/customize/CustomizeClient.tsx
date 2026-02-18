@@ -4,8 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import { getCountdownDate } from "@/actions/admin-actions";
+import { subscribeToNewsletter } from "@/actions/email-actions";
 import { useABAnalytics } from "@/hooks/use-ab-analytics";
-import { ArrowRight, ArrowLeft, Check, ShieldCheck } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, ShieldCheck, X, CheckCircle2 } from "lucide-react";
 
 interface CustomizeClientProps {
     urls: {
@@ -28,6 +29,13 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
     const [isSizingModalOpen, setIsSizingModalOpen] = useState(false);
     const [isPolicyModalOpen, setIsPolicyModalOpen] = useState(false);
     const [policyUrl, setPolicyUrl] = useState("");
+
+    // Save My Build modal state
+    const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
+    const [saveEmail, setSaveEmail] = useState("");
+    const [saveLoading, setSaveLoading] = useState(false);
+    const [saveSuccess, setSaveSuccess] = useState(false);
+    const [saveError, setSaveError] = useState("");
 
     // Sizing Tool State
     const [sliderValue, setSliderValue] = useState(50);
@@ -252,6 +260,33 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                 const finalParams = separator === '?' ? propertiesParams.substring(1) : propertiesParams;
                 window.location.href = baseUrl + (baseUrl.includes('?') ? propertiesParams : `?${finalParams}`);
             }
+        }
+    };
+
+    // --- SAVE MY BUILD HANDLER ---
+    const handleSaveBuild = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setSaveLoading(true);
+        setSaveError("");
+
+        try {
+            const res = await subscribeToNewsletter({
+                email: saveEmail,
+                first_name: "",
+                tags: ["Free Shipping Lead"],
+            });
+
+            if (!res.success) {
+                throw new Error(res.error || "Failed to save");
+            }
+
+            localStorage.setItem("dp_v2_subscribed", "true");
+            setSaveSuccess(true);
+        } catch (error: any) {
+            console.error(error);
+            setSaveError(error.message || "Something went wrong. Please try again.");
+        } finally {
+            setSaveLoading(false);
         }
     };
 
@@ -654,6 +689,18 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                             {`Reserve for ${tier.price}`}
                                             <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
                                         </div>
+
+                                        {/* Save My Build ghost button */}
+                                        <button
+                                            type="button"
+                                            onClick={(e) => { e.stopPropagation(); setIsSaveModalOpen(true); }}
+                                            className={`mt-4 w-full border py-4 font-sans text-xs uppercase tracking-widest transition-all bg-transparent cursor-pointer ${isSelected
+                                                ? "border-white/20 text-white/60 hover:bg-white/5 hover:text-white"
+                                                : "border-black/15 text-black/50 hover:bg-black/5 hover:text-black"
+                                                }`}
+                                        >
+                                            Save This Build &amp; Unlock Free Shipping
+                                        </button>
                                     </div>
                                 </button>
                             )
@@ -765,6 +812,91 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                         <div className="flex-1 bg-white">
                             <iframe src={policyUrl} className="h-full w-full border-0" title="Policy Page"></iframe>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* --- SAVE MY BUILD MODAL --- */}
+            {isSaveModalOpen && (
+                <div className="fixed inset-0 z-[2000] flex items-center justify-center px-4 bg-black/80 backdrop-blur-sm transition-opacity duration-300">
+                    <div className="relative w-full max-w-md bg-[#050505] border border-white/10 rounded-none shadow-2xl p-8 md:p-10 animate-in fade-in zoom-in-95 duration-300">
+                        <button
+                            onClick={() => { setIsSaveModalOpen(false); setSaveSuccess(false); setSaveError(""); setSaveEmail(""); }}
+                            className="absolute right-4 top-4 text-white/40 hover:text-white transition-colors cursor-pointer"
+                        >
+                            <X size={20} />
+                        </button>
+
+                        {!saveSuccess ? (
+                            <>
+                                <div className="mb-8 text-center">
+                                    <div className="mx-auto bg-white/5 border border-white/10 w-14 h-14 rounded-none flex items-center justify-center mb-6">
+                                        <ShieldCheck className="text-white" size={24} strokeWidth={1.5} />
+                                    </div>
+                                    <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-3">
+                                        VIP Access
+                                    </p>
+                                    <h2 className="text-2xl md:text-3xl font-serif text-white tracking-tight leading-tight mb-4">
+                                        Save Your Custom Build.
+                                    </h2>
+                                    <p className="text-white/60 font-sans text-sm leading-relaxed">
+                                        Save your custom configuration to your VIP profile and reveal your Free Global Shipping pass.
+                                    </p>
+                                </div>
+
+                                {saveError && (
+                                    <div className="mb-4 p-3 border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-sans text-center">
+                                        {saveError}
+                                    </div>
+                                )}
+
+                                <form onSubmit={handleSaveBuild} className="space-y-4">
+                                    <input
+                                        type="email"
+                                        required
+                                        placeholder="Enter your email address"
+                                        value={saveEmail}
+                                        onChange={(e) => setSaveEmail(e.target.value)}
+                                        className="w-full px-4 py-4 rounded-none border border-white/20 bg-transparent placeholder-white/40 text-white focus:ring-1 focus:ring-white focus:border-white outline-none transition-all font-sans text-sm"
+                                    />
+
+                                    <button
+                                        type="submit"
+                                        disabled={saveLoading}
+                                        className="w-full bg-white text-black font-sans text-xs uppercase tracking-widest font-bold py-4 rounded-none hover:bg-white/90 transition-colors disabled:opacity-70 cursor-pointer"
+                                    >
+                                        {saveLoading ? "Saving..." : "Save Build & Get Free Shipping"}
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => { setIsSaveModalOpen(false); setSaveError(""); setSaveEmail(""); }}
+                                        className="w-full mt-1 text-white/30 hover:text-white/60 font-sans text-xs uppercase tracking-widest transition-colors cursor-pointer py-2"
+                                    >
+                                        Maybe Later
+                                    </button>
+                                    <p className="text-[10px] text-center text-white/40 uppercase tracking-widest mt-2">
+                                        No spam. Unsubscribe anytime.
+                                    </p>
+                                </form>
+                            </>
+                        ) : (
+                            <div className="text-center py-6">
+                                <div className="mx-auto bg-white border border-white/20 w-16 h-16 rounded-none flex items-center justify-center mb-6">
+                                    <CheckCircle2 className="text-black" size={32} strokeWidth={1.5} />
+                                </div>
+                                <h3 className="text-2xl font-serif text-white mb-3">Build saved. Check your inbox.</h3>
+                                <p className="text-white/60 font-sans text-sm mb-8 max-w-xs mx-auto leading-relaxed">
+                                    We just sent you a Magic Link to set up your VIP profile. Your Free Shipping pass will be waiting inside.
+                                </p>
+                                <button
+                                    onClick={() => { setIsSaveModalOpen(false); setSaveSuccess(false); setSaveEmail(""); }}
+                                    className="bg-transparent border border-white/30 text-white font-sans text-xs uppercase tracking-widest font-bold py-4 px-8 w-full rounded-none hover:bg-white/10 transition-colors cursor-pointer"
+                                >
+                                    Continue Building
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}

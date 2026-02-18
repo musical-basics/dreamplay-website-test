@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { X, FileText, Package, CheckCircle2 } from "lucide-react";
 
 import { getDiscountPopupStatus } from "@/actions/admin-actions";
@@ -15,6 +16,8 @@ export default function NewsletterPopup() {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
     const pdfTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const hasExitFired = useRef(false);
+    const pathname = usePathname();
 
     useEffect(() => {
         let shippingTimer: NodeJS.Timeout;
@@ -27,14 +30,14 @@ export default function NewsletterPopup() {
                 // proceed if admin check fails
             }
 
-            if (localStorage.getItem("dp_subscribed_v2") === "true") return;
+            if (localStorage.getItem("dp_v2_subscribed") === "true") return;
 
-            const shippingSeen = localStorage.getItem("dp_shipping_seen_v2") === "true";
-            const pdfSeen = localStorage.getItem("dp_pdf_seen_v2") === "true";
+            const shippingSeen = localStorage.getItem("dp_v2_shipping_seen") === "true";
+            const pdfSeen = localStorage.getItem("dp_v2_pdf_seen") === "true";
 
             if (!shippingSeen) {
                 shippingTimer = setTimeout(() => {
-                    if (localStorage.getItem("dp_subscribed_v2") !== "true") {
+                    if (localStorage.getItem("dp_v2_subscribed") !== "true") {
                         setActivePopup("shipping");
                     }
                 }, 8000);
@@ -42,7 +45,7 @@ export default function NewsletterPopup() {
 
             if (!pdfSeen) {
                 pdfTimerRef.current = setTimeout(() => {
-                    if (localStorage.getItem("dp_subscribed_v2") !== "true") {
+                    if (localStorage.getItem("dp_v2_subscribed") !== "true") {
                         setActivePopup((current) => {
                             if (current === "none") return "pdf";
                             return current;
@@ -60,24 +63,46 @@ export default function NewsletterPopup() {
         };
     }, []);
 
+    // --- EXIT-INTENT: fire shipping popup instantly on /customize ---
+    useEffect(() => {
+        if (pathname !== "/customize") return;
+
+        const handleMouseLeave = (e: MouseEvent) => {
+            if (hasExitFired.current) return;
+            if (e.clientY > 0) return; // only trigger when cursor exits top of viewport
+
+            const isSubscribed = localStorage.getItem("dp_v2_subscribed") === "true";
+            const shippingSeen = localStorage.getItem("dp_v2_shipping_seen") === "true";
+            if (isSubscribed || shippingSeen) return;
+
+            hasExitFired.current = true;
+            setActivePopup("shipping");
+        };
+
+        document.documentElement.addEventListener("mouseleave", handleMouseLeave);
+        return () => {
+            document.documentElement.removeEventListener("mouseleave", handleMouseLeave);
+        };
+    }, [pathname]);
+
     const handleClose = () => {
         setErrorMsg("");
         if (activePopup === "shipping") {
-            localStorage.setItem("dp_shipping_seen_v2", "true");
+            localStorage.setItem("dp_v2_shipping_seen", "true");
             setActivePopup("none");
 
-            const pdfSeen = localStorage.getItem("dp_pdf_seen_v2") === "true";
+            const pdfSeen = localStorage.getItem("dp_v2_pdf_seen") === "true";
             if (!pdfSeen) {
                 // Cancel the original 30s timer so it doesn't double-fire
                 if (pdfTimerRef.current) clearTimeout(pdfTimerRef.current);
                 pdfTimerRef.current = setTimeout(() => {
-                    if (localStorage.getItem("dp_subscribed_v2") !== "true") {
+                    if (localStorage.getItem("dp_v2_subscribed") !== "true") {
                         setActivePopup("pdf");
                     }
                 }, 22000);
             }
         } else if (activePopup === "pdf") {
-            localStorage.setItem("dp_pdf_seen_v2", "true");
+            localStorage.setItem("dp_v2_pdf_seen", "true");
             setActivePopup("none");
         } else {
             setActivePopup("none");
@@ -105,9 +130,9 @@ export default function NewsletterPopup() {
                 throw new Error(res.error || "Failed to subscribe");
             }
 
-            localStorage.setItem("dp_subscribed_v2", "true");
-            localStorage.setItem("dp_shipping_seen_v2", "true");
-            localStorage.setItem("dp_pdf_seen_v2", "true");
+            localStorage.setItem("dp_v2_subscribed", "true");
+            localStorage.setItem("dp_v2_shipping_seen", "true");
+            localStorage.setItem("dp_v2_pdf_seen", "true");
 
             setIsSubmitted(currentOffer);
 
