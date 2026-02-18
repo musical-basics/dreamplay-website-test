@@ -105,13 +105,20 @@ export async function subscribeToNewsletter(payload: SubscribePayload): Promise<
                                 </a>
                             </div>
 
-                            <p><strong>A surprise bonus for you...</strong></p>
-                            <p>Because you're taking the first step toward pain-free playing, use the secret code <strong>WELCOME5</strong> at checkout to get an extra discount on top of the pre-order pricing.</p>
+                            <p style="color: #444; line-height: 1.6;"><strong>Want free worldwide shipping too?</strong></p>
+                            <p style="color: #444; line-height: 1.6;">Create a VIP account and get a free shipping pass (saves $150+) for your DreamPlay One reservation.</p>
+
+                            <div style="text-align: center; margin: 25px 0;">
+                                <a href="${activateUrl}" 
+                                   style="background-color: #050505; color: white; padding: 14px 28px; text-decoration: none; font-weight: bold; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; display: inline-block;">
+                                   Become a VIP Member
+                                </a>
+                            </div>
 
                             <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;" />
                             
-                            <p style="font-size: 12px; color: #666;">
-                                If this wasn't you who signed up, you can ignore this email or unsubscribe below.
+                            <p style="font-size: 12px; color: #999;">
+                                If this wasn't you who signed up, you can ignore this email.
                             </p>
                         </div>
                     `;

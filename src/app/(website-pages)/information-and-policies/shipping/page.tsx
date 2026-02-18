@@ -1,9 +1,82 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import { SpecialOfferFooter } from "@/components/special-offer/footer";
+import { subscribeToNewsletter } from "@/actions/email-actions";
 import Link from "next/link";
 
+function InlineShippingCTA() {
+    const [email, setEmail] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [isDone, setIsDone] = useState(false);
+    const [error, setError] = useState("");
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setError("");
+        try {
+            const res = await subscribeToNewsletter({
+                email,
+                first_name: "",
+                tags: ["Free Shipping Lead"],
+            });
+            if (!res.success) throw new Error(res.error || "Failed");
+            setIsDone(true);
+        } catch (err: any) {
+            setError(err.message || "Something went wrong.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <section className="bg-[#0a0a0f] text-white py-20 border-y border-white/5">
+            <div className="max-w-2xl mx-auto px-6 text-center reveal-el opacity-0 translate-y-8 transition-all duration-700">
+                <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/40 mb-4">VIP Offer</p>
+                <h2 className="font-serif text-3xl md:text-4xl tracking-tight leading-tight text-white mb-4">
+                    Waive your Global Shipping Fees.
+                </h2>
+                <p className="font-sans text-base text-white/50 leading-relaxed mb-10 max-w-lg mx-auto">
+                    Join the Founder&apos;s Club to unlock a VIP pass that covers 100% of your shipping costs.
+                </p>
+
+                {!isDone ? (
+                    <>
+                        {error && (
+                            <div className="mb-4 p-3 border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-sans">
+                                {error}
+                            </div>
+                        )}
+                        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                            <input
+                                type="email"
+                                required
+                                placeholder="Enter your email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="flex-1 px-4 py-4 rounded-none border border-white/20 bg-transparent placeholder-white/30 text-white focus:ring-1 focus:ring-white focus:border-white outline-none transition-all font-sans text-sm"
+                            />
+                            <button
+                                type="submit"
+                                disabled={isLoading}
+                                className="bg-white text-black font-sans text-xs uppercase tracking-widest font-bold px-6 py-4 rounded-none hover:bg-white/90 transition-colors disabled:opacity-70 cursor-pointer whitespace-nowrap"
+                            >
+                                {isLoading ? "..." : "Get VIP Pass"}
+                            </button>
+                        </form>
+                        <p className="text-[10px] text-white/30 uppercase tracking-widest mt-4">No spam. Unsubscribe anytime.</p>
+                    </>
+                ) : (
+                    <div className="py-4">
+                        <p className="text-lg font-serif text-white mb-2">Check your inbox.</p>
+                        <p className="text-sm text-white/50">We sent you instructions to lock in your free shipping pass.</p>
+                    </div>
+                )}
+            </div>
+        </section>
+    );
+}
 export default function ShippingPage() {
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
@@ -148,6 +221,9 @@ export default function ShippingPage() {
                         </div>
                     </div>
                 </section>
+
+                {/* ═══ INLINE VIP SHIPPING CTA — DARK ACCENT ═══ */}
+                <InlineShippingCTA />
 
                 {/* ═══ PACKAGING — LIGHT ═══ */}
                 <section className="bg-white text-black py-24">

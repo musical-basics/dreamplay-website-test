@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X, FileText, Package, CheckCircle2 } from "lucide-react";
 
 import { getDiscountPopupStatus } from "@/actions/admin-actions";
@@ -14,8 +14,11 @@ export default function NewsletterPopup() {
     const [isSubmitted, setIsSubmitted] = useState<PopupType>("none");
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
+    const pdfTimerRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
+        let shippingTimer: NodeJS.Timeout;
+
         const checkStatus = async () => {
             try {
                 const status = await getDiscountPopupStatus();
@@ -24,25 +27,22 @@ export default function NewsletterPopup() {
                 // proceed if admin check fails
             }
 
-            if (localStorage.getItem("dp_subscribed") === "true") return;
+            if (localStorage.getItem("dp_subscribed_v2") === "true") return;
 
-            const shippingSeen = localStorage.getItem("dp_shipping_seen") === "true";
-            const pdfSeen = localStorage.getItem("dp_pdf_seen") === "true";
-
-            let timer1: NodeJS.Timeout;
-            let timer2: NodeJS.Timeout;
+            const shippingSeen = localStorage.getItem("dp_shipping_seen_v2") === "true";
+            const pdfSeen = localStorage.getItem("dp_pdf_seen_v2") === "true";
 
             if (!shippingSeen) {
-                timer1 = setTimeout(() => {
-                    if (localStorage.getItem("dp_subscribed") !== "true") {
+                shippingTimer = setTimeout(() => {
+                    if (localStorage.getItem("dp_subscribed_v2") !== "true") {
                         setActivePopup("shipping");
                     }
                 }, 8000);
             }
 
             if (!pdfSeen) {
-                timer2 = setTimeout(() => {
-                    if (localStorage.getItem("dp_subscribed") !== "true") {
+                pdfTimerRef.current = setTimeout(() => {
+                    if (localStorage.getItem("dp_subscribed_v2") !== "true") {
                         setActivePopup((current) => {
                             if (current === "none") return "pdf";
                             return current;
@@ -50,32 +50,34 @@ export default function NewsletterPopup() {
                     }
                 }, 30000);
             }
-
-            return () => {
-                if (timer1) clearTimeout(timer1);
-                if (timer2) clearTimeout(timer2);
-            };
         };
 
         checkStatus();
+
+        return () => {
+            if (shippingTimer) clearTimeout(shippingTimer);
+            if (pdfTimerRef.current) clearTimeout(pdfTimerRef.current);
+        };
     }, []);
 
     const handleClose = () => {
         setErrorMsg("");
         if (activePopup === "shipping") {
-            localStorage.setItem("dp_shipping_seen", "true");
+            localStorage.setItem("dp_shipping_seen_v2", "true");
             setActivePopup("none");
 
-            const pdfSeen = localStorage.getItem("dp_pdf_seen") === "true";
+            const pdfSeen = localStorage.getItem("dp_pdf_seen_v2") === "true";
             if (!pdfSeen) {
-                setTimeout(() => {
-                    if (localStorage.getItem("dp_subscribed") !== "true") {
+                // Cancel the original 30s timer so it doesn't double-fire
+                if (pdfTimerRef.current) clearTimeout(pdfTimerRef.current);
+                pdfTimerRef.current = setTimeout(() => {
+                    if (localStorage.getItem("dp_subscribed_v2") !== "true") {
                         setActivePopup("pdf");
                     }
                 }, 22000);
             }
         } else if (activePopup === "pdf") {
-            localStorage.setItem("dp_pdf_seen", "true");
+            localStorage.setItem("dp_pdf_seen_v2", "true");
             setActivePopup("none");
         } else {
             setActivePopup("none");
@@ -103,9 +105,9 @@ export default function NewsletterPopup() {
                 throw new Error(res.error || "Failed to subscribe");
             }
 
-            localStorage.setItem("dp_subscribed", "true");
-            localStorage.setItem("dp_shipping_seen", "true");
-            localStorage.setItem("dp_pdf_seen", "true");
+            localStorage.setItem("dp_subscribed_v2", "true");
+            localStorage.setItem("dp_shipping_seen_v2", "true");
+            localStorage.setItem("dp_pdf_seen_v2", "true");
 
             setIsSubmitted(currentOffer);
 

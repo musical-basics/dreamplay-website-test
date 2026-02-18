@@ -37,10 +37,10 @@ const DonutChart = ({ percent, label, theme = "light" }: { percent: number; labe
         return () => observer.disconnect();
     }, [percent]);
 
-    // Red/Green regardless of light/dark theme for consistency
-    const filledColor = "#ff2d55";
-    const emptyColor = "#34c759";
-    const innerBg = theme === "light" ? "#f5f5f5" : "#050505";
+    // Darker, premium red/green tones
+    const filledColor = "#c0392b";
+    const emptyColor = "#1e7a3a";
+    const innerBg = theme === "light" ? "#f5f5f5" : "#0a0a0f";
 
     return (
         <div ref={ref} className="flex flex-col items-center">
@@ -53,7 +53,7 @@ const DonutChart = ({ percent, label, theme = "light" }: { percent: number; labe
                 />
                 <div className="absolute inset-8 rounded-full" style={{ backgroundColor: innerBg }} />
                 <div className="relative z-10 flex flex-col items-center">
-                    <span className="text-5xl font-bold text-[#ff2d55]">{Math.round(currentPercent)}%</span>
+                    <span className="text-5xl font-bold text-[#c0392b]">{Math.round(currentPercent)}%</span>
                     {label && <span className={`text-sm font-medium uppercase tracking-wide mt-1 ${theme === "light" ? "text-neutral-500" : "text-white/50"}`}>{label}</span>}
                 </div>
             </div>
@@ -301,29 +301,29 @@ export default function HowItWorksPage() {
                 </section>
 
 
-                {/* ═══ SECTION 3: THE HIDDEN BARRIER — LIGHT ═══ */}
-                <section className="w-full bg-neutral-50 text-black py-12 md:py-24 px-4 flex justify-center">
+                {/* ═══ SECTION 3: THE HIDDEN BARRIER — DARK ═══ */}
+                <section className="w-full bg-[#050505] text-white py-12 md:py-24 px-4 flex justify-center">
                     <div className="w-full max-w-[80rem] p-6 md:p-16">
                         <div className="text-center mb-20">
-                            <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-4">The Data</p>
-                            <h2 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight mb-6 text-black">The Hidden Barrier</h2>
+                            <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">The Data</p>
+                            <h2 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight mb-6 text-white">The Hidden Barrier</h2>
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-16 lg:gap-24 mb-20">
                             {/* Chart 1: Females */}
                             <div className="flex flex-col items-center">
                                 <div className="text-center mb-10">
-                                    <div className="font-serif text-6xl font-bold mb-3 text-[#ff2d55]">87%</div>
-                                    <div className="font-sans text-xl font-medium text-neutral-600 mb-3">of females</div>
-                                    <p className="font-sans text-sm text-neutral-500 max-w-[280px] mx-auto leading-relaxed">
+                                    <div className="font-serif text-6xl font-bold mb-3 text-[#c0392b]">87%</div>
+                                    <div className="font-sans text-xl font-medium text-white/60 mb-3">of females</div>
+                                    <p className="font-sans text-sm text-white/40 max-w-[280px] mx-auto leading-relaxed">
                                         Have hand spans smaller than the 8.5 inch minimum that standard keyboards expect.
                                     </p>
                                 </div>
-                                <div className="bg-white border border-neutral-200 rounded-none p-10 w-full max-w-sm flex flex-col items-center hover:border-neutral-400 transition-all duration-500">
-                                    <DonutChart percent={87} label="" theme="light" />
-                                    <div className="flex gap-8 text-xs font-medium text-neutral-500 mt-8">
-                                        <div className="flex items-center gap-2.5"><span className="w-2.5 h-2.5 rounded-full bg-[#ff2d55]"></span>Too small</div>
-                                        <div className="flex items-center gap-2.5"><span className="w-2.5 h-2.5 rounded-full bg-[#34c759]"></span>Comfortable</div>
+                                <div className="bg-white/[0.03] border border-white/10 rounded-none p-10 w-full max-w-sm flex flex-col items-center hover:border-white/20 transition-all duration-500">
+                                    <DonutChart percent={87} label="" theme="dark" />
+                                    <div className="flex gap-8 text-xs font-medium text-white/50 mt-8">
+                                        <div className="flex items-center gap-2.5"><span className="w-2.5 h-2.5 rounded-full bg-[#c0392b]"></span>Too small</div>
+                                        <div className="flex items-center gap-2.5"><span className="w-2.5 h-2.5 rounded-full bg-[#1e7a3a]"></span>Comfortable</div>
                                     </div>
                                 </div>
                             </div>
@@ -331,34 +331,34 @@ export default function HowItWorksPage() {
                             {/* Chart 2: Males */}
                             <div className="flex flex-col items-center">
                                 <div className="text-center mb-10">
-                                    <div className="font-serif text-6xl font-bold mb-3 text-[#ff2d55]">24%</div>
-                                    <div className="font-sans text-xl font-medium text-neutral-600 mb-3">of males</div>
-                                    <p className="font-sans text-sm text-neutral-500 max-w-[280px] mx-auto leading-relaxed">
+                                    <div className="font-serif text-6xl font-bold mb-3 text-[#c0392b]">24%</div>
+                                    <div className="font-sans text-xl font-medium text-white/60 mb-3">of males</div>
+                                    <p className="font-sans text-sm text-white/40 max-w-[280px] mx-auto leading-relaxed">
                                         Also fall below the comfortable reach threshold for a standard 6.5 inch keyboard.
                                     </p>
                                 </div>
-                                <div className="bg-white border border-neutral-200 rounded-none p-10 w-full max-w-sm flex flex-col items-center hover:border-neutral-400 transition-all duration-500">
-                                    <DonutChart percent={24} label="" theme="light" />
-                                    <div className="flex gap-8 text-xs font-medium text-neutral-500 mt-8">
-                                        <div className="flex items-center gap-2.5"><span className="w-2.5 h-2.5 rounded-full bg-[#ff2d55]"></span>Too small</div>
-                                        <div className="flex items-center gap-2.5"><span className="w-2.5 h-2.5 rounded-full bg-[#34c759]"></span>Comfortable</div>
+                                <div className="bg-white/[0.03] border border-white/10 rounded-none p-10 w-full max-w-sm flex flex-col items-center hover:border-white/20 transition-all duration-500">
+                                    <DonutChart percent={24} label="" theme="dark" />
+                                    <div className="flex gap-8 text-xs font-medium text-white/50 mt-8">
+                                        <div className="flex items-center gap-2.5"><span className="w-2.5 h-2.5 rounded-full bg-[#c0392b]"></span>Too small</div>
+                                        <div className="flex items-center gap-2.5"><span className="w-2.5 h-2.5 rounded-full bg-[#1e7a3a]"></span>Comfortable</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="border-t border-neutral-200 pt-16 mt-8 grid md:grid-cols-2 gap-12 text-center md:text-left">
+                        <div className="border-t border-white/10 pt-16 mt-8 grid md:grid-cols-2 gap-12 text-center md:text-left">
                             <div className="px-4">
-                                <div className="font-serif text-6xl font-bold mb-3 text-black">8.5"</div>
-                                <div className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-4">The Threshold</div>
-                                <p className="font-sans text-base leading-relaxed text-neutral-600">
+                                <div className="font-serif text-6xl font-bold mb-3 text-white">8.5"</div>
+                                <div className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">The Threshold</div>
+                                <p className="font-sans text-base leading-relaxed text-white/60">
                                     Minimum hand span needed to play a conventional 6.5 inch keyboard from Yamaha or Steinway with real comfort.
                                 </p>
                             </div>
                             <div className="px-4">
-                                <div className="font-serif text-6xl font-bold mb-3 text-black">25 to 30%</div>
-                                <div className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-4">Larger Reach Required</div>
-                                <p className="font-sans text-base leading-relaxed text-neutral-600">
+                                <div className="font-serif text-6xl font-bold mb-3 text-white">25 to 30%</div>
+                                <div className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">Larger Reach Required</div>
+                                <p className="font-sans text-base leading-relaxed text-white/60">
                                     Hand span often needs to be at least one quarter larger than the octave just to reach 8ths, 9ths, and 10ths without strain.
                                 </p>
                             </div>
