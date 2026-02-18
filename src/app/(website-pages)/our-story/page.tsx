@@ -105,7 +105,7 @@ export default function OurStoryPage() {
                                 </div>
                                 <div className="relative group">
                                     <div className="aspect-[4/5] overflow-hidden rounded-none border border-neutral-200">
-                                        <img src="/images/carnegie-hall-performance.png" alt="Pianist performing" className="w-full h-full object-cover transition-all duration-700 opacity-90" />
+                                        <img src="/images/carnegie-hall-performance.png" alt="Pianist performing" className="w-full h-full object-cover transition-all duration-700" />
                                     </div>
                                 </div>
                             </div>
@@ -175,7 +175,7 @@ export default function OurStoryPage() {
                     </div>
                     {/* Full Width Image */}
                     <div className="relative w-full aspect-[21/9] overflow-hidden">
-                        <img src="/images/article-main-placeholder.jpg" alt="Piano close up" className="w-full h-full object-cover opacity-80 transition-all duration-700" />
+                        <img src="/images/article-main-placeholder.jpg" alt="Piano close up" className="w-full h-full object-cover transition-all duration-700" />
                         <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/50"></div>
                     </div>
 

@@ -1,149 +1,283 @@
+"use client";
+import React, { useEffect } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import { SpecialOfferFooter } from "@/components/special-offer/footer";
+import Link from "next/link";
 
 export default function ShippingPage() {
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-8');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const elements = document.querySelectorAll('.reveal-el');
+        elements.forEach(el => observer.observe(el));
+
+        return () => observer.disconnect();
+    }, []);
+
     return (
         <div className="min-h-screen font-sans selection:bg-white/20">
             <SpecialOfferHeader forceOpaque={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
 
             <main>
 
-                {/* ═══ HERO — DARK ═══ */}
-                <section className="bg-[#050505] text-white pt-32 pb-24">
+                {/* ═══ HERO — LIGHT ═══ */}
+                <section className="bg-neutral-50 text-black pt-32 pb-20 overflow-hidden">
                     <div className="max-w-5xl mx-auto px-6 text-center">
-                        <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">Policies</p>
-                        <h1 className="font-serif text-5xl md:text-6xl tracking-tight leading-tight mb-6 text-white">Shipping &amp; Delivery</h1>
-                        <p className="font-sans text-base md:text-lg text-white/60 max-w-2xl mx-auto leading-relaxed">
-                            We ship worldwide. All orders are carefully packed and shipped from our fulfillment center.
+                        <h1 className="font-serif text-4xl md:text-6xl tracking-tight leading-tight mb-2 text-black reveal-el opacity-0 translate-y-8 transition-all duration-700">Global Delivery.</h1>
+                        <h1 className="font-serif text-4xl md:text-6xl tracking-tight leading-tight mb-12 text-[#0066cc] reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-100">Discounted Shipping.</h1>
+
+                        {/* World Map */}
+                        <div className="max-w-4xl mx-auto mb-16 reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-200">
+                            <img src="/images/Worldmap.png" alt="World Map showing shipping regions" className="w-full h-auto object-contain" />
+                        </div>
+
+                        {/* Map Legend */}
+                        <div className="flex flex-wrap justify-center gap-8 mb-16 reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-200">
+                            <div className="flex items-center gap-3">
+                                <div className="w-3 h-3 rounded-full bg-[#2F80ED]"></div>
+                                <span className="text-sm font-medium text-neutral-500">Discounted Shipping</span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <div className="w-3 h-3 rounded-full bg-[#00C2CB]"></div>
+                                <span className="text-sm font-medium text-neutral-500">Extended Region</span>
+                            </div>
+                        </div>
+
+                        <p className="font-sans text-lg text-neutral-500 max-w-xl mx-auto mb-12 reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-300">
+                            Free delivery to the US, Canada, and Europe. Extended shipping available worldwide.
                         </p>
+
+                        {/* Price Stats */}
+                        <div className="flex flex-wrap justify-center gap-8 md:gap-16 reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-300">
+                            <div className="text-center">
+                                <div className="font-serif text-5xl font-bold text-black">Under $40</div>
+                                <div className="text-sm text-neutral-500 mt-2">US &amp; Europe</div>
+                            </div>
+                            <div className="hidden md:block w-px bg-neutral-300 h-16"></div>
+                            <div className="text-center">
+                                <div className="font-serif text-5xl font-bold text-black">+$70</div>
+                                <div className="text-sm text-neutral-500 mt-2">Extended Regions</div>
+                            </div>
+                            <div className="hidden md:block w-px bg-neutral-300 h-16"></div>
+                            <div className="text-center">
+                                <div className="font-serif text-5xl font-bold text-black">$150</div>
+                                <div className="text-sm text-neutral-500 mt-2">Rest of World</div>
+                            </div>
+                        </div>
+
+                        {/* International Warning */}
+                        <div className="mt-8 max-w-2xl mx-auto text-center reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-300">
+                            <div className="bg-red-50/80 border border-red-200 rounded-none p-4 inline-block">
+                                <p className="text-sm text-red-700/80 font-medium">
+                                    ⚠️ <strong>International Backers (EU/UK/Asia):</strong>
+                                </p>
+                                <p className="text-xs text-red-600/70 mt-1">
+                                    Shipping estimates do not include local VAT, Import Duties, or Customs fees.
+                                    These are collected by your local carrier upon delivery.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
-                {/* ═══ SHIPPING ZONES — LIGHT ═══ */}
-                <section className="bg-white text-black py-20">
-                    <div className="max-w-5xl mx-auto px-6">
-                        <div className="grid md:grid-cols-3 gap-6">
-                            {/* Zone 1 */}
-                            <div className="rounded-none border border-neutral-200 bg-neutral-50 p-8 flex flex-col hover:border-neutral-400 transition-all">
-                                <div className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-3">Zone 1</div>
-                                <h3 className="font-serif text-2xl font-bold text-black mb-2">United States</h3>
-                                <p className="font-sans text-sm text-neutral-500 mb-6">Continental US (Lower 48)</p>
-                                <div className="mt-auto pt-6 border-t border-neutral-200">
-                                    <div className="flex justify-between items-baseline mb-3">
-                                        <span className="font-sans text-sm text-neutral-600">Standard Shipping</span>
-                                        <span className="font-bold text-black text-lg">Free</span>
+                {/* ═══ SHIPPING ZONES — DARK ═══ */}
+                <section className="bg-[#050505] text-white py-24">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="text-center mb-20 reveal-el opacity-0 translate-y-8 transition-all duration-700">
+                            <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-[#0066cc] mb-4 font-semibold">Shipping Zones</p>
+                            <h2 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight text-white">We ship to over 50 countries</h2>
+                        </div>
+                        <div className="grid md:grid-cols-3 gap-8">
+                            {/* Discounted */}
+                            <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-100 border border-white/10 bg-white/5 rounded-none p-8 hover:border-white/20 transition-all">
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-2 h-2 rounded-full bg-[#2F80ED]"></div>
+                                        <span className="text-xs uppercase tracking-wider text-white/50">Discounted</span>
                                     </div>
-                                    <div className="flex justify-between items-baseline">
-                                        <span className="font-sans text-sm text-neutral-600">Estimated Delivery</span>
-                                        <span className="font-sans text-sm text-neutral-600">5-7 business days</span>
-                                    </div>
+                                </div>
+                                <div className="font-serif text-5xl font-bold mb-2 text-white">Under $40</div>
+                                <p className="text-white/40 text-sm mb-8">Estimated Shipping July 2026</p>
+                                <div className="space-y-3">
+                                    {['Austria', 'Belgium', 'Canada', 'Denmark', 'Finland', 'France', 'Germany', 'Ireland', 'Netherlands', 'UK', 'US (Continental)'].map(c => (
+                                        <div key={c} className="flex items-center gap-3 text-sm text-white/60"><span className="text-[#2F80ED]">✓</span> {c}</div>
+                                    ))}
                                 </div>
                             </div>
 
-                            {/* Zone 2 */}
-                            <div className="rounded-none border border-neutral-200 bg-neutral-50 p-8 flex flex-col hover:border-neutral-400 transition-all">
-                                <div className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-3">Zone 2</div>
-                                <h3 className="font-serif text-2xl font-bold text-black mb-2">Canada &amp; Mexico</h3>
-                                <p className="font-sans text-sm text-neutral-500 mb-6">North America</p>
-                                <div className="mt-auto pt-6 border-t border-neutral-200">
-                                    <div className="flex justify-between items-baseline mb-3">
-                                        <span className="font-sans text-sm text-neutral-600">Standard Shipping</span>
-                                        <span className="font-bold text-black text-lg">$49</span>
+                            {/* Extended */}
+                            <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-200 border border-white/10 bg-white/5 rounded-none p-8 hover:border-white/20 transition-all">
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-2 h-2 rounded-full bg-[#00C2CB]"></div>
+                                        <span className="text-xs uppercase tracking-wider text-white/50">Extended</span>
                                     </div>
-                                    <div className="flex justify-between items-baseline">
-                                        <span className="font-sans text-sm text-neutral-600">Estimated Delivery</span>
-                                        <span className="font-sans text-sm text-neutral-600">7-14 business days</span>
-                                    </div>
+                                </div>
+                                <div className="font-serif text-5xl font-bold mb-2 text-white">$50–$70</div>
+                                <p className="text-white/40 text-sm mb-8">Estimated Shipping August 2026</p>
+                                <div className="space-y-3">
+                                    {['Australia', 'China', 'Japan', 'South Korea', 'New Zealand', 'Singapore', 'Switzerland', 'Taiwan', 'Hawaii (US)'].map(c => (
+                                        <div key={c} className="flex items-center gap-3 text-sm text-white/60"><span className="text-[#00C2CB]">✓</span> {c}</div>
+                                    ))}
                                 </div>
                             </div>
 
-                            {/* Zone 3 */}
-                            <div className="rounded-none border border-neutral-200 bg-neutral-50 p-8 flex flex-col hover:border-neutral-400 transition-all">
-                                <div className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-3">Zone 3</div>
-                                <h3 className="font-serif text-2xl font-bold text-black mb-2">International</h3>
-                                <p className="font-sans text-sm text-neutral-500 mb-6">Europe, Asia, Oceania &amp; more</p>
-                                <div className="mt-auto pt-6 border-t border-neutral-200">
-                                    <div className="flex justify-between items-baseline mb-3">
-                                        <span className="font-sans text-sm text-neutral-600">Standard Shipping</span>
-                                        <span className="font-bold text-black text-lg">$99</span>
+                            {/* Standard */}
+                            <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-300 border border-white/10 bg-white/5 rounded-none p-8 hover:border-white/20 transition-all">
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-2 h-2 rounded-full bg-white/40"></div>
+                                        <span className="text-xs uppercase tracking-wider text-white/50">Standard</span>
                                     </div>
-                                    <div className="flex justify-between items-baseline">
-                                        <span className="font-sans text-sm text-neutral-600">Estimated Delivery</span>
-                                        <span className="font-sans text-sm text-neutral-600">14-21 business days</span>
-                                    </div>
+                                </div>
+                                <div className="font-serif text-5xl font-bold mb-2 text-white">$150</div>
+                                <p className="text-white/40 text-sm mb-8">Estimated Shipping October 2026</p>
+                                <div className="space-y-3">
+                                    {['Brazil', 'India', 'Mexico', 'UAE', 'Saudi Arabia', 'Turkey', 'Argentina', 'Egypt'].map(c => (
+                                        <div key={c} className="flex items-center gap-3 text-sm text-white/60"><span className="text-white/40">✓</span> {c}</div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* ═══ DETAILS — DARK ═══ */}
-                <section className="bg-[#050505] text-white py-20">
-                    <div className="max-w-5xl mx-auto px-6">
-                        <div className="grid md:grid-cols-2 gap-8">
-                            {/* Packaging */}
-                            <div className="rounded-none border border-white/10 bg-white/5 p-8">
-                                <h3 className="font-serif text-xl font-bold text-white mb-6">Packaging</h3>
-                                <ul className="space-y-4">
-                                    <li className="flex items-start gap-3">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0"></div>
-                                        <span className="font-sans text-sm text-white/60 leading-relaxed">Each keyboard is packed in a custom-fit, shock-absorbing foam case.</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0"></div>
-                                        <span className="font-sans text-sm text-white/60 leading-relaxed">Double-boxed for maximum protection during transit.</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0"></div>
-                                        <span className="font-sans text-sm text-white/60 leading-relaxed">Includes all accessories, cables, and documentation.</span>
-                                    </li>
-                                </ul>
+                {/* ═══ PACKAGING — LIGHT ═══ */}
+                <section className="bg-white text-black py-24">
+                    <div className="max-w-6xl mx-auto px-6">
+                        <div className="grid md:grid-cols-2 gap-16 items-center">
+                            <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700">
+                                <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-[#0066cc] mb-4 font-semibold">Premium Protection</p>
+                                <h2 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight text-black mb-6">Packaged with Care</h2>
+                                <p className="font-sans text-base text-neutral-600 leading-relaxed mb-10">
+                                    Every DreamPlay One is carefully packaged in custom-designed protective casing to ensure it arrives in perfect condition, no matter where you are in the world.
+                                </p>
+                                <div className="space-y-8">
+                                    {[
+                                        { title: 'Custom Foam Inserts', desc: 'Precision-cut protection for every component' },
+                                        { title: 'Double-Wall Boxing', desc: 'Extra durability for long-distance shipping' },
+                                        { title: 'Insured Delivery', desc: 'Full coverage throughout the journey' }
+                                    ].map((item, i) => (
+                                        <div key={i} className="flex gap-4">
+                                            <div className="w-10 h-10 rounded-none border border-neutral-200 bg-neutral-50 flex items-center justify-center flex-shrink-0 text-[#0066cc]">
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                                            </div>
+                                            <div>
+                                                <h3 className="font-sans font-bold text-black text-lg">{item.title}</h3>
+                                                <p className="font-sans text-sm text-neutral-500">{item.desc}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-
-                            {/* Tracking & Support */}
-                            <div className="rounded-none border border-white/10 bg-white/5 p-8">
-                                <h3 className="font-serif text-xl font-bold text-white mb-6">Tracking &amp; Support</h3>
-                                <ul className="space-y-4">
-                                    <li className="flex items-start gap-3">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0"></div>
-                                        <span className="font-sans text-sm text-white/60 leading-relaxed">Full tracking provided via email once your order ships.</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0"></div>
-                                        <span className="font-sans text-sm text-white/60 leading-relaxed">Email us at <strong className="text-white">support@dreamplaypianos.com</strong> for any shipping questions.</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0"></div>
-                                        <span className="font-sans text-sm text-white/60 leading-relaxed">Insurance included on all shipments.</span>
-                                    </li>
-                                </ul>
+                            <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-200">
+                                <div className="border border-neutral-200 overflow-hidden bg-neutral-50">
+                                    <img src="/images/piano-in-the-box.png" alt="DreamPlay One Packaging" className="w-full aspect-square object-cover scale-110" />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* ═══ RETURNS — LIGHT ═══ */}
-                <section className="bg-white text-black py-20">
-                    <div className="max-w-5xl mx-auto px-6">
-                        <div className="rounded-none border border-neutral-200 bg-neutral-50 p-10 text-center">
-                            <h3 className="font-serif text-2xl font-bold text-black mb-4">Returns &amp; Exchanges</h3>
-                            <p className="font-sans text-base text-neutral-600 leading-relaxed max-w-xl mx-auto mb-8">
-                                We offer a 30-day return policy on all keyboards. Items must be in original condition and packaging. Return shipping is the responsibility of the buyer.
-                            </p>
-                            <a href="/information-and-policies/faq" className="group inline-flex items-center justify-center gap-2 bg-black text-white px-8 py-4 font-sans text-xs uppercase tracking-widest transition-colors hover:bg-neutral-800">
-                                View FAQ for details
-                            </a>
+                {/* ═══ PRODUCT AVAILABILITY — DARK ═══ */}
+                <section className="bg-[#050505] text-white py-24">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="text-center mb-16 reveal-el opacity-0 translate-y-8 transition-all duration-700">
+                            <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">Coming Soon</p>
+                            <h2 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight text-white">Product Availability</h2>
+                        </div>
+                        <div className="grid md:grid-cols-3 gap-8">
+                            {/* DS5.5 */}
+                            <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-100 border border-white/10 bg-white/5 rounded-none p-8 hover:border-white/20 transition-all">
+                                <div className="aspect-[4/3] bg-[#0a0a0a] rounded-none mb-6 flex items-center justify-center p-4">
+                                    <img src="/images/Group-2.png" alt="DS5.5" className="max-h-full object-contain" />
+                                </div>
+                                <div className="flex justify-between items-start mb-2">
+                                    <h3 className="font-serif text-2xl font-bold">DS5.5</h3>
+                                    <div className="text-right">
+                                        <div className="text-[10px] uppercase tracking-wider text-white/50">Ships</div>
+                                        <div className="font-sans font-medium text-sm">August 2026</div>
+                                    </div>
+                                </div>
+                                <p className="text-white/50 text-sm border-t border-white/10 pt-4 mt-4">Zone A: Smaller Hands</p>
+                            </div>
+
+                            {/* DS6.0 */}
+                            <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-200 border border-white/10 bg-white/5 rounded-none p-8 hover:border-white/20 transition-all">
+                                <div className="aspect-[4/3] bg-[#0a0a0a] rounded-none mb-6 flex items-center justify-center p-4">
+                                    <img src="/images/Group-3.png" alt="DS6.0" className="max-h-full object-contain" />
+                                </div>
+                                <div className="flex justify-between items-start mb-2">
+                                    <h3 className="font-serif text-2xl font-bold">DS6.0</h3>
+                                    <div className="text-right">
+                                        <div className="text-[10px] uppercase tracking-wider text-white/50">Ships</div>
+                                        <div className="font-sans font-medium text-sm">August 2026</div>
+                                    </div>
+                                </div>
+                                <p className="text-white/50 text-sm border-t border-white/10 pt-4 mt-4">Zone B: Medium Hands</p>
+                            </div>
+
+                            {/* DS6.5 */}
+                            <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-300 border border-white/10 bg-white/5 rounded-none p-8 hover:border-white/20 transition-all">
+                                <div className="aspect-[4/3] bg-[#0a0a0a] rounded-none mb-6 flex items-center justify-center p-4">
+                                    <img src="/images/DS6.5-Black.png" alt="DS6.5" className="max-h-full object-contain" />
+                                </div>
+                                <div className="flex justify-between items-start mb-2">
+                                    <h3 className="font-serif text-2xl font-bold">DS6.5</h3>
+                                    <div className="text-right">
+                                        <div className="text-[10px] uppercase tracking-wider text-white/50">Ships</div>
+                                        <div className="font-sans font-medium text-[#0066cc] text-sm">August 2026</div>
+                                    </div>
+                                </div>
+                                <p className="text-white/50 text-sm border-t border-white/10 pt-4 mt-4">Zone C: Standard Size</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* ═══ PAYMENT & POLICIES — LIGHT ═══ */}
+                <section className="bg-neutral-50 text-black py-24">
+                    <div className="max-w-6xl mx-auto px-6">
+                        <div className="text-center mb-16 reveal-el opacity-0 translate-y-8 transition-all duration-700">
+                            <h2 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight text-black">Payment &amp; Policies</h2>
+                        </div>
+                        <div className="grid md:grid-cols-3 gap-8">
+                            {[
+                                { title: 'Payment Terms', desc: '$299 (50%) deposit upfront. The remaining $299 is due once we ship your DreamPlay One.', icon: 'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z' },
+                                { title: 'Duties & Taxes', desc: 'Buyer is responsible for all import duties, taxes, and customs fees. Not included in price.', icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' },
+                                { title: '90-Day Returns', desc: 'No questions asked, full refund within 90 days of receiving your instrument.', icon: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15' }
+                            ].map((item, i) => (
+                                <div key={i} className={`reveal-el opacity-0 translate-y-8 transition-all duration-700 border border-neutral-200 bg-white rounded-none p-8 hover:border-neutral-400 transition-all`} style={{ transitionDelay: `${(i + 1) * 100}ms` }}>
+                                    <div className="w-12 h-12 bg-neutral-100 rounded-none flex items-center justify-center text-[#0066cc] mb-6 border border-neutral-200">
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon}></path></svg>
+                                    </div>
+                                    <h3 className="font-serif text-xl font-bold text-black mb-3">{item.title}</h3>
+                                    <p className="font-sans text-sm text-neutral-500 leading-relaxed">{item.desc}</p>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </section>
 
                 {/* ═══ CTA — DARK ═══ */}
                 <section className="bg-[#050505] text-white py-32 border-t border-white/10 text-center">
-                    <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">Ready?</p>
-                    <h2 className="font-serif text-3xl md:text-4xl tracking-tight leading-tight mb-8 text-white">Start your journey today.</h2>
-                    <a href="/customize" className="group inline-flex items-center justify-center gap-2 border border-white bg-white px-8 py-4 font-sans text-xs uppercase tracking-widest text-black transition-colors hover:bg-white/90">
-                        Configure Yours
-                    </a>
+                    <div className="max-w-3xl mx-auto px-6 reveal-el opacity-0 translate-y-8 transition-all duration-700">
+                        <h2 className="font-serif text-3xl md:text-4xl tracking-tight leading-tight mb-6 text-white">Ready to order your DreamPlay One?</h2>
+                        <p className="font-sans text-base text-white/60 mb-10 max-w-xl mx-auto leading-relaxed">
+                            Secure your pre-order today and be among the first to experience the future of piano.
+                        </p>
+                        <Link href="/customize" className="group inline-flex items-center justify-center gap-2 border border-white bg-white px-8 py-4 font-sans text-xs uppercase tracking-widest text-black transition-colors hover:bg-white/90">
+                            Configure Yours
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </Link>
+                    </div>
                 </section>
 
             </main>

@@ -58,23 +58,42 @@ export async function subscribeToNewsletter(payload: SubscribePayload): Promise<
 
         const data = await response.json();
 
-        // Send welcome email with Hand-Measuring Guide via Resend
+        // Send welcome email via Resend based on the Tag
         const resendApiKey = process.env.RESEND_API_KEY;
         if (resendApiKey) {
             try {
                 const resend = new Resend(resendApiKey);
-                await resend.emails.send({
-                    from: 'DreamPlay <noreply@updates.dreamplaypianos.com>',
-                    to: payload.email,
-                    subject: 'Here is your Hand-Measuring Guide 🎹',
-                    html: `
-                        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-                            <h1>Welcome to DreamPlay!</h1>
+
+                const isShippingLead = apiPayload.tags?.includes("Free Shipping Lead");
+
+                const emailSubject = isShippingLead
+                    ? "Your Free Shipping Code is inside 🎹"
+                    : "Here is your Hand-Measuring Guide 🎹";
+
+                const emailHtml = isShippingLead
+                    ? `
+                        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111;">
+                            <h1 style="font-family: serif;">Welcome to DreamPlay.</h1>
+                            <p>Thank you for joining the VIP list. As promised, here is your code for Free Worldwide Shipping on the DreamPlay One:</p>
+                            
+                            <div style="background-color: #f5f5f5; border: 1px solid #e5e5e5; padding: 30px; text-align: center; margin: 30px 0;">
+                                <span style="font-family: monospace; font-size: 24px; font-weight: bold; letter-spacing: 2px;">VIP-SHIP-FREE</span>
+                            </div>
+
+                            <p>Just enter this code at checkout when you configure your piano.</p>
+                            <p>Best,<br>Lionel</p>
+                            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;" />
+                            <p style="font-size: 12px; color: #666;">If you didn't request this, you can unsubscribe below.</p>
+                        </div>
+                    `
+                    : `
+                        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111;">
+                            <h1 style="font-family: serif;">Welcome to DreamPlay!</h1>
                             <p>As promised, here is your printable guide to figuring out exactly what piano size fits your biology.</p>
                             
-                            <div style="background-color: #f4f4f4; padding: 30px; border-radius: 8px; text-align: center; margin: 30px 0;">
+                            <div style="background-color: #f4f4f4; padding: 30px; border-radius: 4px; text-align: center; margin: 30px 0;">
                                 <a href="https://www.dropbox.com/scl/fi/9b72rbi4ga0pjterxyoan/DreamPlay-Infographic.pdf?rlkey=mc08i1ahn5tp3thdd0qjnag2d&st=olbh1t9w&dl=1" 
-                                   style="background-color: #2563eb; color: white; padding: 14px 28px; text-decoration: none; border-radius: 50px; font-weight: bold; display: inline-block;">
+                                   style="background-color: #050505; color: white; padding: 14px 28px; text-decoration: none; font-weight: bold; display: inline-block;">
                                    Download PDF Guide
                                 </a>
                             </div>
@@ -88,8 +107,15 @@ export async function subscribeToNewsletter(payload: SubscribePayload): Promise<
                                 If this wasn't you who signed up, you can ignore this email or unsubscribe below.
                             </p>
                         </div>
-                    `,
+                    `;
+
+                await resend.emails.send({
+                    from: 'DreamPlay <noreply@updates.dreamplaypianos.com>',
+                    to: payload.email,
+                    subject: emailSubject,
+                    html: emailHtml,
                 });
+
                 console.log("Welcome email sent to:", payload.email);
             } catch (emailError) {
                 console.error('Failed to send welcome email:', emailError);
