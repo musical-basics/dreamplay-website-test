@@ -37,12 +37,19 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
             )}
         >
             {/* Global Announcement Bar */}
-            <Link
-                href="/customize"
-                className="bg-[#050505] border-b border-white/10 py-2.5 text-center flex items-center justify-center w-full z-50 text-[10px] sm:text-xs text-white/80 uppercase tracking-[0.2em] font-sans font-medium hover:text-white transition-colors"
-            >
-                Founder&apos;s Batch Closing. Retail MSRP ($1,199) Takes Effect Soon.
-            </Link>
+            {(() => {
+                const endDate = new Date("2026-03-02T23:59:59");
+                const now = new Date();
+                const daysLeft = Math.max(0, Math.ceil((endDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
+                return (
+                    <Link
+                        href="/customize"
+                        className="bg-[#050505] border-b border-white/10 py-2.5 text-center flex items-center justify-center w-full z-50 text-[10px] sm:text-xs text-white/80 uppercase tracking-[0.2em] font-sans font-medium hover:text-white transition-colors"
+                    >
+                        Founder&apos;s Price Ends in {daysLeft} Days. Retail MSRP ($1,199) Takes Effect Soon.
+                    </Link>
+                );
+            })()}
             <div className={cn(
                 "w-full transition-all duration-300",
                 darkMode
