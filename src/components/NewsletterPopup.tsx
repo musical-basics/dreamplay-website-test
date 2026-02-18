@@ -1,26 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, FileText, Package, CheckCircle2, Eye, EyeOff } from "lucide-react";
+import { X, FileText, Package, CheckCircle2 } from "lucide-react";
 
 import { getDiscountPopupStatus } from "@/actions/admin-actions";
 import { subscribeToNewsletter } from "@/actions/email-actions";
-import { createClient } from "@/lib/supabase/client";
 
 type PopupType = "none" | "shipping" | "pdf";
 
 export default function NewsletterPopup() {
     const [activePopup, setActivePopup] = useState<PopupType>("none");
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState<PopupType>("none");
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
 
     useEffect(() => {
         const checkStatus = async () => {
-            // Check global admin setting first
             try {
                 const status = await getDiscountPopupStatus();
                 if (String(status) !== 'true') return;
@@ -28,7 +24,6 @@ export default function NewsletterPopup() {
                 // proceed if admin check fails
             }
 
-            // If they already subscribed globally, never show either popup again
             if (localStorage.getItem("dp_subscribed") === "true") return;
 
             const shippingSeen = localStorage.getItem("dp_shipping_seen") === "true";
@@ -37,7 +32,6 @@ export default function NewsletterPopup() {
             let timer1: NodeJS.Timeout;
             let timer2: NodeJS.Timeout;
 
-            // Timer 1: Show Shipping Offer at 8 seconds
             if (!shippingSeen) {
                 timer1 = setTimeout(() => {
                     if (localStorage.getItem("dp_subscribed") !== "true") {
@@ -46,7 +40,6 @@ export default function NewsletterPopup() {
                 }, 8000);
             }
 
-            // Timer 2: Show PDF Offer at 30 seconds (Fallback)
             if (!pdfSeen) {
                 timer2 = setTimeout(() => {
                     if (localStorage.getItem("dp_subscribed") !== "true") {
@@ -73,7 +66,6 @@ export default function NewsletterPopup() {
             localStorage.setItem("dp_shipping_seen", "true");
             setActivePopup("none");
 
-            // If they closed shipping manually, setup a faster timer for the PDF fallback
             const pdfSeen = localStorage.getItem("dp_pdf_seen") === "true";
             if (!pdfSeen) {
                 setTimeout(() => {
@@ -99,82 +91,26 @@ export default function NewsletterPopup() {
         const currentOffer = activePopup;
 
         try {
-            if (currentOffer === "shipping") {
-                // ── Shipping Offer: Supabase Auth ──
-                if (password.length < 6) {
-                    setErrorMsg("Password must be at least 6 characters.");
-                    setIsLoading(false);
-                    return;
-                }
+            const tag = currentOffer === "shipping" ? "Free Shipping Lead" : "Hand Guide Download";
 
-                const supabase = createClient();
+            const res = await subscribeToNewsletter({
+                email,
+                first_name: "",
+                tags: [tag],
+            });
 
-                // Try sign up first
-                const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-                    email,
-                    password,
-                });
+            if (!res.success) {
+                throw new Error(res.error || "Failed to subscribe");
+            }
 
-                if (signUpError) {
-                    // If user already exists, try sign in
-                    if (signUpError.message.toLowerCase().includes("already") || signUpError.message.toLowerCase().includes("registered")) {
-                        const { error: signInError } = await supabase.auth.signInWithPassword({
-                            email,
-                            password,
-                        });
+            localStorage.setItem("dp_subscribed", "true");
+            localStorage.setItem("dp_shipping_seen", "true");
+            localStorage.setItem("dp_pdf_seen", "true");
 
-                        if (signInError) {
-                            setErrorMsg("Account exists. Check your password or try a different email.");
-                            setIsLoading(false);
-                            return;
-                        }
-                    } else {
-                        setErrorMsg(signUpError.message);
-                        setIsLoading(false);
-                        return;
-                    }
-                }
+            setIsSubmitted(currentOffer);
 
-                // Sync to mailing list
-                try {
-                    await subscribeToNewsletter({
-                        email,
-                        first_name: "",
-                        tags: ["Free Shipping Lead", "VIP Account"],
-                    });
-                } catch {
-                    // Non-critical — don't block auth flow
-                }
-
-                // Mark as globally subscribed
-                localStorage.setItem("dp_subscribed", "true");
-                localStorage.setItem("dp_shipping_seen", "true");
-                localStorage.setItem("dp_pdf_seen", "true");
-
-                // Redirect to VIP dashboard immediately
-                window.location.href = "/vip";
-                return;
-
-            } else {
-                // ── PDF Offer: Email only (no auth) ──
-                const tag = "Hand Guide Download";
-                const res = await subscribeToNewsletter({
-                    email,
-                    first_name: "",
-                    tags: [tag],
-                });
-
-                if (!res.success) {
-                    throw new Error(res.error || "Failed to subscribe");
-                }
-
-                localStorage.setItem("dp_subscribed", "true");
-                localStorage.setItem("dp_shipping_seen", "true");
-                localStorage.setItem("dp_pdf_seen", "true");
-
-                setIsSubmitted(currentOffer);
-
-                // Auto-open PDF
+            // Auto-open PDF for pdf offer
+            if (currentOffer === "pdf") {
                 window.open(
                     "https://www.dropbox.com/scl/fi/9b72rbi4ga0pjterxyoan/DreamPlay-Infographic.pdf?rlkey=mc08i1ahn5tp3thdd0qjnag2d&st=olbh1t9w&dl=1",
                     "_blank"
@@ -194,7 +130,6 @@ export default function NewsletterPopup() {
         <div className="fixed inset-0 z-[2000] flex items-center justify-center px-4 bg-black/80 backdrop-blur-sm transition-opacity duration-300">
             <div className="relative w-full max-w-md bg-[#050505] border border-white/10 rounded-none shadow-2xl p-8 md:p-10 animate-in fade-in zoom-in-95 duration-300">
 
-                {/* Close Button */}
                 <button
                     onClick={handleClose}
                     className="absolute right-4 top-4 text-white/40 hover:text-white transition-colors cursor-pointer"
@@ -225,12 +160,11 @@ export default function NewsletterPopup() {
 
                             <p className="text-white/60 font-sans text-sm leading-relaxed">
                                 {activePopup === "shipping"
-                                    ? "Create your VIP Account to secure a Free Shipping pass (saves $150+) and track your order in real time."
+                                    ? "The DreamPlay One is moving to its official retail price of $1,199 soon. Enter your email to secure a VIP Free Shipping pass (saves $150+) for your reservation."
                                     : "Enter your email to instantly download our Printable 1:1 Hand-Measuring Guide to see exactly which piano size fits your biology."}
                             </p>
                         </div>
 
-                        {/* Error Message */}
                         {errorMsg && (
                             <div className="mb-4 p-3 border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-sans text-center">
                                 {errorMsg}
@@ -247,28 +181,6 @@ export default function NewsletterPopup() {
                                 className="w-full px-4 py-4 rounded-none border border-white/20 bg-transparent placeholder-white/40 text-white focus:ring-1 focus:ring-white focus:border-white outline-none transition-all font-sans text-sm"
                             />
 
-                            {/* Password field — shipping offer only */}
-                            {activePopup === "shipping" && (
-                                <div className="relative">
-                                    <input
-                                        type={showPassword ? "text" : "password"}
-                                        required
-                                        minLength={6}
-                                        placeholder="Create a password (min 6 characters)"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full px-4 py-4 pr-12 rounded-none border border-white/20 bg-transparent placeholder-white/40 text-white focus:ring-1 focus:ring-white focus:border-white outline-none transition-all font-sans text-sm"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors cursor-pointer"
-                                    >
-                                        {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                                    </button>
-                                </div>
-                            )}
-
                             <button
                                 type="submit"
                                 disabled={isLoading}
@@ -277,7 +189,7 @@ export default function NewsletterPopup() {
                                 {isLoading
                                     ? "Processing..."
                                     : activePopup === "shipping"
-                                        ? "Create VIP Account & Unlock Free Shipping"
+                                        ? "Get Free Shipping Pass"
                                         : "Get Free PDF Guide"}
                             </button>
 
@@ -292,19 +204,26 @@ export default function NewsletterPopup() {
                                 No spam. Unsubscribe anytime.
                             </p>
                         </form>
-
-                        {/* Login link for existing VIP members */}
-                        {activePopup === "shipping" && (
-                            <p className="text-center mt-6 text-white/40 text-xs font-sans">
-                                Already a VIP?{" "}
-                                <a href="/login" className="text-white/70 hover:text-white underline underline-offset-4 transition-colors">
-                                    Sign in here
-                                </a>
-                            </p>
-                        )}
                     </>
+                ) : isSubmitted === "shipping" ? (
+                    /* ── Shipping Success: Check your email ── */
+                    <div className="text-center py-6">
+                        <div className="mx-auto bg-white border border-white/20 w-16 h-16 rounded-none flex items-center justify-center mb-6">
+                            <CheckCircle2 className="text-black" size={32} strokeWidth={1.5} />
+                        </div>
+                        <h3 className="text-2xl font-serif text-white mb-3">Check your inbox.</h3>
+                        <p className="text-white/60 font-sans text-sm mb-8 max-w-xs mx-auto leading-relaxed">
+                            We just sent you an email with instructions to lock in your VIP Free Shipping pass. Create your account to claim it.
+                        </p>
+                        <button
+                            onClick={handleClose}
+                            className="bg-transparent border border-white/30 text-white font-sans text-xs uppercase tracking-widest font-bold py-4 px-8 w-full rounded-none hover:bg-white/10 transition-colors cursor-pointer"
+                        >
+                            Continue Exploring
+                        </button>
+                    </div>
                 ) : (
-                    /* ── PDF Success Screen (Shipping never shows this — it redirects) ── */
+                    /* ── PDF Success ── */
                     <div className="text-center py-6">
                         <div className="mx-auto bg-white border border-white/20 w-16 h-16 rounded-none flex items-center justify-center mb-6">
                             <CheckCircle2 className="text-black" size={32} strokeWidth={1.5} />

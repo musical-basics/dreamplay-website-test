@@ -67,23 +67,30 @@ export async function subscribeToNewsletter(payload: SubscribePayload): Promise<
                 const isShippingLead = apiPayload.tags?.includes("Free Shipping Lead");
 
                 const emailSubject = isShippingLead
-                    ? "Your Free Shipping Code is inside 🎹"
+                    ? "Lock in your Free Shipping Pass 🎹"
                     : "Here is your Hand-Measuring Guide 🎹";
+
+                const activateUrl = `https://dreamplaypianos.com/activate?email=${encodeURIComponent(payload.email)}`;
 
                 const emailHtml = isShippingLead
                     ? `
                         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111;">
-                            <h1 style="font-family: serif;">Welcome to DreamPlay.</h1>
-                            <p>Thank you for joining the VIP list. As promised, here is your code for Free Worldwide Shipping on the DreamPlay One:</p>
+                            <h1 style="font-family: serif; font-size: 28px;">Lock in your VIP Free Shipping Pass.</h1>
+                            <p style="color: #444; line-height: 1.6;">You're one step away from free worldwide shipping on the DreamPlay One (saves $150+).</p>
+                            <p style="color: #444; line-height: 1.6;">Create your account by setting up a password and your VIP promo code will be waiting for you inside your personal dashboard.</p>
                             
-                            <div style="background-color: #f5f5f5; border: 1px solid #e5e5e5; padding: 30px; text-align: center; margin: 30px 0;">
-                                <span style="font-family: monospace; font-size: 24px; font-weight: bold; letter-spacing: 2px;">VIP-SHIP-FREE</span>
+                            <div style="text-align: center; margin: 35px 0;">
+                                <a href="${activateUrl}" 
+                                   style="background-color: #050505; color: white; padding: 16px 32px; text-decoration: none; font-weight: bold; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; display: inline-block;">
+                                   Create My VIP Account
+                                </a>
                             </div>
 
-                            <p>Just enter this code at checkout when you configure your piano.</p>
-                            <p>Best,<br>Lionel</p>
+                            <p style="color: #999; font-size: 13px;">This takes less than 30 seconds.</p>
+                            
                             <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;" />
-                            <p style="font-size: 12px; color: #666;">If you didn't request this, you can unsubscribe below.</p>
+                            <p style="font-size: 12px; color: #999;">Best,<br>Lionel & the DreamPlay team</p>
+                            <p style="font-size: 11px; color: #bbb;">If you didn't request this, you can safely ignore this email.</p>
                         </div>
                     `
                     : `
