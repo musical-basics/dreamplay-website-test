@@ -62,7 +62,7 @@ export default function WhyNarrowPage() {
 
   return (
     <div className="min-h-screen">
-      <SpecialOfferHeader forceOpaque={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
+      <SpecialOfferHeader forceOpaque={true} darkMode={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
       <main>
 
         {/* ═══ TESTIMONIALS — DARK ═══ */}

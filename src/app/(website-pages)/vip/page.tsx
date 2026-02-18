@@ -14,7 +14,7 @@ export default async function VIPPage() {
 
     return (
         <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-white/20">
-            <SpecialOfferHeader forceOpaque={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
+            <SpecialOfferHeader forceOpaque={true} darkMode={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
 
             <main className="pt-32 pb-20">
                 <div className="max-w-6xl mx-auto px-6">

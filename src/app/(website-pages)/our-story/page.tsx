@@ -34,7 +34,7 @@ export default function OurStoryPage() {
 
     return (
         <div className="min-h-screen font-sans selection:bg-blue-500/20">
-            <SpecialOfferHeader forceOpaque={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
+            <SpecialOfferHeader forceOpaque={true} darkMode={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
 
             <main className="relative">
 

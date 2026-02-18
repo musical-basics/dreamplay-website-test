@@ -8,7 +8,7 @@ export default async function FAQPage() {
 
     return (
         <div className="min-h-screen bg-white text-neutral-900 font-sans">
-            <SpecialOfferHeader forceOpaque={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
+            <SpecialOfferHeader forceOpaque={true} darkMode={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
 
             <main className="pt-32 pb-24">
                 <div className="max-w-4xl mx-auto px-6">

@@ -131,7 +131,7 @@ export default function HowItWorksPage() {
 
     return (
         <div className="min-h-screen selection:bg-white/20">
-            <SpecialOfferHeader forceOpaque={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
+            <SpecialOfferHeader forceOpaque={true} darkMode={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
 
             <main className="flex flex-col items-center">
 

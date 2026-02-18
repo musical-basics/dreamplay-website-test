@@ -45,7 +45,9 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
             </Link>
             <div className={cn(
                 "w-full transition-all duration-300",
-                isScrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent"
+                darkMode
+                    ? "bg-[#050505]/95 backdrop-blur-md"
+                    : isScrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent"
             )}>
                 <div className="container mx-auto px-4 h-16 flex items-center justify-between">
                     {/* Logo */}
@@ -93,7 +95,7 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                             href="/customize"
                             className={`hidden md:flex items-center gap-2 rounded-none px-5 py-2.5 text-sm font-medium transition-all duration-300 ${useDarkText
                                 ? "bg-black border border-black text-white hover:bg-neutral-800"
-                                : "bg-black/80 backdrop-blur-sm border border-white/30 text-white hover:bg-black"
+                                : "bg-white/5 backdrop-blur-sm border border-white/30 text-white hover:bg-white/15"
                                 }`}
                         >
                             Configure Yours
