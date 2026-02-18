@@ -53,6 +53,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             title: "Reserve (50%)",
             subtitle: "Late 2026 / Early 2027",
             price: "$299",
+            retailPrice: null,
             originalPrice: null,
             description: "Pay 50% now, the rest (50% + shipping/taxes) when ready to ship. Secures your spot in Batch 2.",
             includes: ["DreamPlay One Keyboard", "Keyboard Stand", "Sustain Pedal"],
@@ -68,6 +69,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             title: "DreamPlay One",
             subtitle: "Founder's Batch",
             price: "$549",
+            retailPrice: "$1,199.00",
             originalPrice: null,
             description: "The DreamPlay One Keyboard. Available in DS5.5 or DS6.0. Choose Midnight Black or Pearl White.",
             includes: ["DreamPlay One Keyboard"],
@@ -83,6 +85,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             title: "DreamPlay Bundle",
             subtitle: "Founder's Batch",
             price: "$599",
+            retailPrice: "$1,199.00",
             originalPrice: null,
             description: "The complete DreamPlay experience. Keyboard, adjustable stand, responsive sustain pedal, and comfortable padded bench.",
             includes: ["DreamPlay One Keyboard", "Keyboard Stand", "Sustain Pedal", "Padded Bench"],
@@ -353,7 +356,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                 <SpecialOfferHeader forceOpaque={true} darkMode={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
 
                 {/* Steps Sub-Navbar */}
-                <header id="sticky-nav" className="w-full mt-16 bg-[#050505]/95 backdrop-blur-md border-b border-white/5 shadow-sm">
+                <header id="sticky-nav" className="w-full mt-[100px] bg-[#050505]/95 backdrop-blur-md border-b border-white/5 shadow-sm">
                     <div className="mx-auto max-w-7xl px-4 md:px-6">
                         <div className="flex h-12 md:h-14 items-center justify-between">
                             <div className="hidden md:flex items-center gap-8 text-[10px] uppercase tracking-[0.2em] font-medium text-white/40 mx-auto">
@@ -627,12 +630,24 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                         {tier.subtitle}
                                     </p>
 
-                                    <div className="mt-6 flex w-full items-baseline gap-3">
-                                        <span className={`font-serif text-4xl md:text-5xl ${isSelected ? 'text-white' : 'text-black'}`}>{tier.price}</span>
-                                        {tier.originalPrice && (
-                                            <span className={`text-lg line-through ${isSelected ? 'text-white/40' : 'text-black/40'}`}>
-                                                {tier.originalPrice}
-                                            </span>
+                                    <div className="mt-6 flex w-full flex-col">
+                                        {tier.retailPrice && (
+                                            <p className={`font-sans text-sm uppercase tracking-widest line-through mb-1 ${isSelected ? 'text-white/40' : 'text-black/40'}`}>
+                                                Official Retail MSRP: {tier.retailPrice}
+                                            </p>
+                                        )}
+                                        <div className="flex items-baseline gap-3">
+                                            <span className={`font-serif text-4xl md:text-5xl ${isSelected ? 'text-white' : 'text-black'}`}>{tier.price}</span>
+                                            {tier.originalPrice && (
+                                                <span className={`text-lg line-through ${isSelected ? 'text-white/40' : 'text-black/40'}`}>
+                                                    {tier.originalPrice}
+                                                </span>
+                                            )}
+                                        </div>
+                                        {tier.retailPrice && (
+                                            <p className={`font-sans text-[10px] uppercase tracking-[0.2em] mt-1 ${isSelected ? 'text-white/50' : 'text-black/50'}`}>
+                                                Founder&apos;s Allocation
+                                            </p>
                                         )}
                                     </div>
 
@@ -701,6 +716,13 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                         >
                                             Save This Build &amp; Unlock Free Shipping
                                         </button>
+
+                                        {/* Savings subtext */}
+                                        {tier.retailPrice && (
+                                            <p className={`text-xs text-center mt-4 ${isSelected ? 'text-white/60' : 'text-black/50'}`}>
+                                                Securing your build today saves $300 before public retail pricing takes effect.
+                                            </p>
+                                        )}
                                     </div>
                                 </button>
                             )

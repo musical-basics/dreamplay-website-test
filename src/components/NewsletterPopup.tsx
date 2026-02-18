@@ -90,6 +90,7 @@ export default function NewsletterPopup() {
         if (activePopup === "shipping") {
             localStorage.setItem("dp_v2_shipping_seen", "true");
             setActivePopup("none");
+            setIsSubmitted("none");
 
             const pdfSeen = localStorage.getItem("dp_v2_pdf_seen") === "true";
             if (!pdfSeen) {
@@ -104,6 +105,7 @@ export default function NewsletterPopup() {
         } else if (activePopup === "pdf") {
             localStorage.setItem("dp_v2_pdf_seen", "true");
             setActivePopup("none");
+            setIsSubmitted("none");
         } else {
             setActivePopup("none");
             setIsSubmitted("none");

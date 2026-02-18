@@ -13,6 +13,7 @@ import { TrustSection } from "@/components/premium-offer/trust-section"
 import { PricingSection } from "@/components/premium-offer/pricing-section"
 import { GuaranteeSection } from "@/components/premium-offer/guarantee-section"
 import { HeroImageSection } from "@/components/premium-offer/hero-image-section"
+import { FoundersClosingBlock } from "@/components/FoundersClosingBlock"
 
 const playfair = Playfair_Display({
     subsets: ["latin"],
@@ -48,6 +49,7 @@ export default function HomePage() {
                 <CreatorSection />
                 <TrustSection />
                 <PricingSection />
+                <FoundersClosingBlock />
                 <GuaranteeSection />
             </main>
         </div>
