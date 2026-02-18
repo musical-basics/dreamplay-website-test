@@ -39,7 +39,7 @@ export default function DSStandardContent() {
                         <div className="grid lg:grid-cols-2 gap-16 items-center">
                             <AnimatedSection>
                                 <div className="relative aspect-[4/3] rounded-none overflow-hidden border border-neutral-200">
-                                    <Image src="/images/DSDS6.0-Straightened-1-1024x788.jpg" alt="DS Logo on Piano Keys" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                                    <Image src="/images/DSDS6.0-Straightened-1-1024x788.jpg" alt="DS Logo on Piano Keys" fill className="object-cover transition-all duration-700" />
                                 </div>
                             </AnimatedSection>
                             <AnimatedSection delay={100}>
@@ -79,7 +79,7 @@ export default function DSStandardContent() {
                             </AnimatedSection>
                             <AnimatedSection delay={100} className="order-1 lg:order-2">
                                 <div className="relative aspect-[4/5] w-full rounded-none overflow-hidden border border-white/10">
-                                    <Image src="/images/products_DS5.5-Yamaha-CFX-3-1024x711.jpg" alt="DS5.5 Yamaha CFX Piano" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                                    <Image src="/images/products_DS5.5-Yamaha-CFX-3-1024x711.jpg" alt="DS5.5 Yamaha CFX Piano" fill className="object-cover transition-all duration-700" />
                                 </div>
                             </AnimatedSection>
                         </div>
@@ -202,7 +202,7 @@ export default function DSStandardContent() {
                             </div>
                             {/* Carnegie Hall Image */}
                             <div className="order-1 lg:order-2 relative aspect-[4/3] rounded-none overflow-hidden border border-neutral-200 group">
-                                <Image src="/images/carnegie-hall-performance.png" alt="Performance on stage" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                                <Image src="/images/carnegie-hall-performance.png" alt="Performance on stage" fill className="object-cover transition-all duration-700" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent"></div>
                                 <div className="absolute bottom-8 left-8 font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500">
                                     The Goal: A DS Keyboard on Every Stage

@@ -78,6 +78,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             remaining: 10,
             total: 50,
             highlight: false,
+            savings: "$550",
         },
         {
             id: 'full',
@@ -94,6 +95,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             remaining: 42,
             total: 250,
             highlight: true,
+            savings: "$600",
         }
     ];
 
@@ -720,7 +722,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                         {/* Savings subtext */}
                                         {tier.retailPrice && (
                                             <p className={`text-xs text-center mt-4 ${isSelected ? 'text-white/60' : 'text-black/50'}`}>
-                                                Securing your build today saves $300 before public retail pricing takes effect.
+                                                Securing your build today saves {tier.savings} before public retail pricing takes effect.
                                             </p>
                                         )}
                                     </div>

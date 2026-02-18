@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const stories = [
     {
-        image: "/images/hands-playing-illuminated-piano-keys-learning.jpg",
+        image: "/images/_DSC1180-2-copy.jpg",
         quote: `"I often witness pianists place their hands for the first time on a keyboard that better suits their hand span. How often the pianist spontaneously bursts into tears. A lifetime of struggling with a seemingly insurmountable problem vanishes in the moment they realize, 'It's not me that is the problem; it is the instrument!' Following on that, the joy of possibility overwhelms them."`,
         avatar: "/images/carol-leone.png",
         name: "Dr. Carol Leone",
