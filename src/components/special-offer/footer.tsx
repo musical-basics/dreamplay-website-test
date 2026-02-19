@@ -22,6 +22,9 @@ export function SpecialOfferFooter() {
                         <Link href="/why-narrow" className="text-neutral-400 text-sm hover:text-white transition-colors">
                             Why Narrow?
                         </Link>
+                        <Link href="/better-practice" className="text-neutral-400 text-sm hover:text-white transition-colors">
+                            Better Practice
+                        </Link>
                         <Link href="/our-story" className="text-neutral-400 text-sm hover:text-white transition-colors">
                             Our Story
                         </Link>

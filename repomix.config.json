@@ -21,7 +21,13 @@
             "**/*.pdf",
             "dist/**",
             ".next/**",
-            "migrations/**"
+            "migrations/**",
+            "**/*.xml",
+            "**/*.backup.*",
+            "**/*backup*",
+            "**/old-homepage/**",
+            "**/*.standalone.*",
+            "src/app/(website-pages)/customize/CustomizeClient.backup.tsx"
         ]
     }
 }

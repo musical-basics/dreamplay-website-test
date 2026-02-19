@@ -64,6 +64,7 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                         {[
                             { label: "DreamPlay One", href: "/" },
                             { label: "Why Narrow?", href: "/why-narrow" },
+                            { label: "Better Practice", href: "/better-practice" },
                             { label: "How It Works", href: "/how-it-works" },
                             { label: "Our Story", href: "/our-story" },
                             { label: "DS Standard", href: "/about-us/ds-standard" },
@@ -128,6 +129,7 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                         {[
                             { label: "DreamPlay One", href: "/" },
                             { label: "Why Narrow?", href: "/why-narrow" },
+                            { label: "Better Practice", href: "/better-practice" },
                             { label: "How It Works", href: "/how-it-works" },
                             { label: "Our Story", href: "/our-story" },
                             { label: "DS Standard", href: "/about-us/ds-standard" },
