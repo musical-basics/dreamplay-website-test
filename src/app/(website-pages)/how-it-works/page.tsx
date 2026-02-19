@@ -4,6 +4,7 @@ import { SpecialOfferHeader } from "@/components/special-offer/header";
 import { SpecialOfferFooter } from "@/components/special-offer/footer";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import TestimonialsSection from "@/components/checkout/TestimonialsSection";
 
 // --- HELPERS ---
 
@@ -234,6 +235,9 @@ export default function HowItWorksPage() {
             <SpecialOfferHeader forceOpaque={true} darkMode={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
 
             <main className="flex flex-col items-center">
+
+                {/* ═══ TESTIMONIALS — DARK ═══ */}
+                <TestimonialsSection />
 
                 {/* ═══ SECTION 1: CALCULATOR — DARK ═══ */}
                 <section className="w-full bg-[#050505] text-white pt-24 py-12 md:py-24 px-4 flex justify-center">

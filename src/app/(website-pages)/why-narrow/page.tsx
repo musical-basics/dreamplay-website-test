@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import { SpecialOfferFooter } from "@/components/special-offer/footer";
-import TestimonialsSection from "@/components/checkout/TestimonialsSection";
 
 /**
  * 3D Glassmorphic Donut Chart — SVG-based with gradient strokes, drop shadows, and glass inner ring
@@ -120,8 +119,6 @@ export default function WhyNarrowPage() {
       <SpecialOfferHeader forceOpaque={true} darkMode={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
       <main>
 
-        {/* ═══ TESTIMONIALS — DARK ═══ */}
-        <TestimonialsSection />
 
         {/* ═══ SCIENCE SECTION (Hidden Barrier) — LIGHT ═══ */}
         <section id="science-section" className="w-full bg-neutral-50 text-black flex flex-col items-center py-24 md:py-40">
