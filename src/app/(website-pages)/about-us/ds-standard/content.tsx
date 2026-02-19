@@ -70,10 +70,14 @@ export default function DSStandardContent() {
                                     <p>David played it and was amazed by the ease of adaptation. Christopher explained how a whole new world opened before him when he first got the keyboard.</p>
                                     <p>Combining Christopher's vision with David's engineering background from his family's textile business, they collaborated to create the <strong>Donison-Steinbuhler (DS) Standard®</strong>.</p>
                                     <p>Today, David and his wife Linda continue to champion this ergonomic revolution from Titusville, PA, transforming the lives of pianists worldwide.</p>
+                                    <p>The DS Foundation continues to work with prestigious universities around the world, including <strong>Stanford University</strong>, <strong>Johns Hopkins Peabody Institute</strong>, <strong>Eastman School of Music</strong>, and many more — advancing research, education, and adoption of ergonomically scaled keyboards.</p>
                                 </div>
-                                <div className="mt-10">
+                                <div className="mt-10 flex flex-col sm:flex-row gap-4">
                                     <a href="https://dsstandardfoundation.org/" target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center gap-2 border border-white/20 bg-transparent px-8 py-4 font-sans text-xs uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-black">
                                         Visit the Foundation <ArrowRight className="ml-2 w-5 h-5" />
+                                    </a>
+                                    <a href="https://paskpiano.org/universities-schools/" target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center gap-2 border border-white bg-white px-8 py-4 font-sans text-xs uppercase tracking-widest text-black transition-colors hover:bg-white/90">
+                                        See All Supporting Schools <ArrowRight className="ml-2 w-5 h-5" />
                                     </a>
                                 </div>
                             </AnimatedSection>
