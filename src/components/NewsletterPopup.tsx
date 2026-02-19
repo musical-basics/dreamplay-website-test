@@ -9,6 +9,13 @@ import { subscribeToNewsletter } from "@/actions/email-actions";
 
 type PopupType = "none" | "shipping" | "pdf";
 
+/** Safe analytics wrapper — won't crash if tracker is blocked or hasn't loaded */
+const trackPopup = (action: 'yes' | 'no', popupName: string) => {
+    if (typeof window !== 'undefined' && (window as any).dreamplay?.track) {
+        (window as any).dreamplay.track(`click_popup_${action}`, { popup: popupName });
+    }
+};
+
 export default function NewsletterPopup() {
     const [activePopup, setActivePopup] = useState<PopupType>("none");
     const [email, setEmail] = useState("");
@@ -88,6 +95,7 @@ export default function NewsletterPopup() {
     const handleClose = () => {
         setErrorMsg("");
         if (activePopup === "shipping") {
+            trackPopup('no', 'free_shipping');
             localStorage.setItem("dp_v2_shipping_seen", "true");
             setActivePopup("none");
             setIsSubmitted("none");
@@ -103,6 +111,7 @@ export default function NewsletterPopup() {
                 }, 22000);
             }
         } else if (activePopup === "pdf") {
+            trackPopup('no', 'hand_size');
             localStorage.setItem("dp_v2_pdf_seen", "true");
             setActivePopup("none");
             setIsSubmitted("none");
@@ -137,6 +146,7 @@ export default function NewsletterPopup() {
             localStorage.setItem("dp_v2_pdf_seen", "true");
 
             setIsSubmitted(currentOffer);
+            trackPopup('yes', currentOffer === 'shipping' ? 'free_shipping' : 'hand_size');
 
             // Auto-open PDF for pdf offer
             if (currentOffer === "pdf") {
