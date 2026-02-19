@@ -730,6 +730,11 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                             )
                         })}
                     </div>
+
+                    {/* Pricing footnote */}
+                    <p className="text-center text-xs text-black/40 mt-10 max-w-xl mx-auto leading-relaxed font-sans">
+                        * Founder&apos;s Batch pricing is a limited introductory offer. When this batch closes, prices will increase to the official retail MSRP. Reserve now to lock in the current rate.
+                    </p>
                 </div>
             </section>
 

@@ -199,7 +199,7 @@ export default function NewsletterPopup() {
 
                             <p className="text-white/60 font-sans text-sm leading-relaxed">
                                 {activePopup === "shipping"
-                                    ? "The DreamPlay One is moving to its official retail price of $1,199 soon. Enter your email to secure a VIP Free Shipping pass (saves $150+) for your reservation."
+                                    ? "Join our VIP list and get a Free Global Shipping pass (saves $150+) applied to your next reservation. Limited availability."
                                     : "Enter your email to instantly download our Printable 1:1 Hand-Measuring Guide to see exactly which piano size fits your biology."}
                             </p>
                         </div>
