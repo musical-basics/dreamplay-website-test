@@ -387,7 +387,7 @@ export default function ShippingPage() {
                         </div>
                         <div className="grid md:grid-cols-3 gap-8">
                             {[
-                                { title: 'Payment Terms', desc: '$299 (50%) deposit upfront. The remaining $299 is due once we ship your DreamPlay One.', icon: 'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z' },
+                                { title: 'Make Changes Anytime', desc: 'At any point before we ship out the keyboard, you may modify or cancel your reservation.', icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z' },
                                 { title: 'Duties & Taxes', desc: 'Buyer is responsible for all import duties, taxes, and customs fees. Not included in price.', icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' },
                                 { title: '90-Day Returns', desc: 'No questions asked, full refund within 90 days of receiving your instrument.', icon: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15' }
                             ].map((item, i) => (
