@@ -101,6 +101,66 @@ export default function ShippingPage() {
 
             <main>
 
+                {/* ═══ REFUND POLICY — DARK ═══ */}
+                <section className="bg-[#050505] text-white pt-32 pb-24">
+                    <div className="max-w-4xl mx-auto px-6">
+                        <div className="text-center mb-16 reveal-el opacity-0 translate-y-8 transition-all duration-700">
+                            <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">Zero Risk</p>
+                            <h2 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight text-white mb-6">Our Refund Promise</h2>
+                            <p className="font-sans text-base text-white/60 max-w-2xl mx-auto leading-relaxed">
+                                We are absolutely confident that you will love your DreamPlay One. Our refund policy reflects that confidence.
+                            </p>
+                        </div>
+
+                        <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-100 border border-white/10 bg-white/5 p-8 md:p-12 mb-8">
+                            <div className="space-y-10">
+                                <div className="flex gap-6 items-start">
+                                    <div className="w-12 h-12 bg-white/10 rounded-none flex items-center justify-center flex-shrink-0 border border-white/10">
+                                        <svg className="w-6 h-6 text-[#34c759]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-serif text-xl font-bold text-white mb-2">90-Day Full Refund</h3>
+                                        <p className="font-sans text-sm text-white/60 leading-relaxed">
+                                            If for any reason you are not completely satisfied with your DreamPlay One, return it within 90 days for a full refund — no questions asked. We want you to have plenty of time to experience the difference.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-6 items-start">
+                                    <div className="w-12 h-12 bg-white/10 rounded-none flex items-center justify-center flex-shrink-0 border border-white/10">
+                                        <svg className="w-6 h-6 text-[#34c759]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8 8-4-4m-4 4l4-4 4 4 8-8"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-serif text-xl font-bold text-white mb-2">Free Return Shipping</h3>
+                                        <p className="font-sans text-sm text-white/60 leading-relaxed">
+                                            We cover 100% of return shipping costs. You won&apos;t pay a cent to send it back. We believe in our product enough to take on that cost ourselves.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-6 items-start">
+                                    <div className="w-12 h-12 bg-white/10 rounded-none flex items-center justify-center flex-shrink-0 border border-white/10">
+                                        <svg className="w-6 h-6 text-[#34c759]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-serif text-xl font-bold text-white mb-2">Free Size Exchanges</h3>
+                                        <p className="font-sans text-sm text-white/60 leading-relaxed">
+                                            Not sure if the DS5.5 or DS6.0 is right for you? Try one, and if you decide you&apos;d prefer the other size, we&apos;ll exchange it for free — shipping included both ways.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-200 text-center border border-white/10 bg-white/[0.03] p-8">
+                            <p className="font-serif text-lg md:text-xl text-white/80 italic leading-relaxed">
+                                &ldquo;While we — and every small-handed pianist we know — love the narrower keyboard, we understand that trying something new takes a leap of faith. Our guarantee is designed to make that leap completely risk-free.&rdquo;
+                            </p>
+                            <p className="font-sans text-sm text-white/40 mt-4 uppercase tracking-wider">The DreamPlay Team</p>
+                        </div>
+                    </div>
+                </section>
+
                 {/* ═══ HERO — LIGHT ═══ */}
                 <section className="bg-neutral-50 text-black pt-32 pb-20 overflow-hidden">
                     <div className="max-w-5xl mx-auto px-6 text-center">
@@ -343,65 +403,6 @@ export default function ShippingPage() {
                     </div>
                 </section>
 
-                {/* ═══ REFUND POLICY — DARK ═══ */}
-                <section className="bg-[#050505] text-white py-24 border-t border-white/10">
-                    <div className="max-w-4xl mx-auto px-6">
-                        <div className="text-center mb-16 reveal-el opacity-0 translate-y-8 transition-all duration-700">
-                            <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">Zero Risk</p>
-                            <h2 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight text-white mb-6">Our Refund Promise</h2>
-                            <p className="font-sans text-base text-white/60 max-w-2xl mx-auto leading-relaxed">
-                                We are absolutely confident that you will love your DreamPlay One. Our refund policy reflects that confidence.
-                            </p>
-                        </div>
-
-                        <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-100 border border-white/10 bg-white/5 p-8 md:p-12 mb-8">
-                            <div className="space-y-10">
-                                <div className="flex gap-6 items-start">
-                                    <div className="w-12 h-12 bg-white/10 rounded-none flex items-center justify-center flex-shrink-0 border border-white/10">
-                                        <svg className="w-6 h-6 text-[#34c759]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    </div>
-                                    <div>
-                                        <h3 className="font-serif text-xl font-bold text-white mb-2">90-Day Full Refund</h3>
-                                        <p className="font-sans text-sm text-white/60 leading-relaxed">
-                                            If for any reason you are not completely satisfied with your DreamPlay One, return it within 90 days for a full refund — no questions asked. We want you to have plenty of time to experience the difference.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="flex gap-6 items-start">
-                                    <div className="w-12 h-12 bg-white/10 rounded-none flex items-center justify-center flex-shrink-0 border border-white/10">
-                                        <svg className="w-6 h-6 text-[#34c759]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8 8-4-4m-4 4l4-4 4 4 8-8"></path></svg>
-                                    </div>
-                                    <div>
-                                        <h3 className="font-serif text-xl font-bold text-white mb-2">Free Return Shipping</h3>
-                                        <p className="font-sans text-sm text-white/60 leading-relaxed">
-                                            We cover 100% of return shipping costs. You won&apos;t pay a cent to send it back. We believe in our product enough to take on that cost ourselves.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="flex gap-6 items-start">
-                                    <div className="w-12 h-12 bg-white/10 rounded-none flex items-center justify-center flex-shrink-0 border border-white/10">
-                                        <svg className="w-6 h-6 text-[#34c759]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
-                                    </div>
-                                    <div>
-                                        <h3 className="font-serif text-xl font-bold text-white mb-2">Free Size Exchanges</h3>
-                                        <p className="font-sans text-sm text-white/60 leading-relaxed">
-                                            Not sure if the DS5.5 or DS6.0 is right for you? Try one, and if you decide you&apos;d prefer the other size, we&apos;ll exchange it for free — shipping included both ways.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-200 text-center border border-white/10 bg-white/[0.03] p-8">
-                            <p className="font-serif text-lg md:text-xl text-white/80 italic leading-relaxed">
-                                &ldquo;While we — and every small-handed pianist we know — love the narrower keyboard, we understand that trying something new takes a leap of faith. Our guarantee is designed to make that leap completely risk-free.&rdquo;
-                            </p>
-                            <p className="font-sans text-sm text-white/40 mt-4 uppercase tracking-wider">The DreamPlay Team</p>
-                        </div>
-                    </div>
-                </section>
 
                 {/* ═══ CTA — DARK ═══ */}
                 <section className="bg-[#050505] text-white py-32 border-t border-white/10 text-center">
