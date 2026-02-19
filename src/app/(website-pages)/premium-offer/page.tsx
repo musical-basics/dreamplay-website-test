@@ -7,6 +7,7 @@ import { SocialProofBar } from "@/components/premium-offer/social-proof-bar"
 import { VideoSection } from "@/components/premium-offer/video-section"
 import { FeaturesSection } from "@/components/premium-offer/features-section"
 import { SizeFinderSection } from "@/components/premium-offer/size-finder-section"
+import { SizeVisualSection } from "@/components/premium-offer/size-visual-section"
 import { SpecsSection } from "@/components/premium-offer/specs-section"
 import { CreatorSection } from "@/components/premium-offer/creator-section"
 import { TrustSection } from "@/components/premium-offer/trust-section"
@@ -44,6 +45,7 @@ export default function PremiumOfferPage() {
                 <FeaturesSection />
                 <HeroImageSection />
                 <SizeFinderSection />
+                <SizeVisualSection />
                 <SpecsSection />
                 <CreatorSection />
                 <TrustSection />
