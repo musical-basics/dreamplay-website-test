@@ -62,17 +62,10 @@ export default function Navbar() {
                         </Link>
                         <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
                         <Link
-                            href="/why-narrow"
-                            className={getLinkClass("/why-narrow")}
-                        >
-                            Why Narrow?
-                        </Link>
-                        <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
-                        <Link
                             href="/better-practice"
                             className={getLinkClass("/better-practice")}
                         >
-                            Practice Better
+                            The Benefits
                         </Link>
                         <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
                         <Link
@@ -296,18 +289,11 @@ export default function Navbar() {
                         DreamPlay One
                     </Link>
                     <Link
-                        href="/why-narrow"
-                        className="px-6 py-4 text-lg font-medium text-gray-800 hover:bg-gray-100"
-                        onClick={() => setMobileMenuOpen(false)}
-                    >
-                        Why Narrow?
-                    </Link>
-                    <Link
                         href="/better-practice"
                         className="px-6 py-4 text-lg font-medium text-gray-800 hover:bg-gray-100"
                         onClick={() => setMobileMenuOpen(false)}
                     >
-                        Practice Better
+                        The Benefits
                     </Link>
                     <Link
                         href="/how-it-works"

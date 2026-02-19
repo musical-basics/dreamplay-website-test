@@ -63,8 +63,7 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                     <nav className="hidden md:flex items-center gap-6">
                         {[
                             { label: "DreamPlay One", href: "/" },
-                            { label: "Why Narrow?", href: "/why-narrow" },
-                            { label: "Practice Better", href: "/better-practice" },
+                            { label: "The Benefits", href: "/better-practice" },
                             { label: "How It Works", href: "/how-it-works" },
                             { label: "Our Story", href: "/our-story" },
                             { label: "DS Standard", href: "/about-us/ds-standard" },
@@ -128,8 +127,7 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                     <nav className="flex flex-col p-4">
                         {[
                             { label: "DreamPlay One", href: "/" },
-                            { label: "Why Narrow?", href: "/why-narrow" },
-                            { label: "Practice Better", href: "/better-practice" },
+                            { label: "The Benefits", href: "/better-practice" },
                             { label: "How It Works", href: "/how-it-works" },
                             { label: "Our Story", href: "/our-story" },
                             { label: "DS Standard", href: "/about-us/ds-standard" },

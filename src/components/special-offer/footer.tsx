@@ -19,11 +19,8 @@ export function SpecialOfferFooter() {
                         <Link href="/how-it-works" className="text-neutral-400 text-sm hover:text-white transition-colors">
                             How It Works
                         </Link>
-                        <Link href="/why-narrow" className="text-neutral-400 text-sm hover:text-white transition-colors">
-                            Why Narrow?
-                        </Link>
                         <Link href="/better-practice" className="text-neutral-400 text-sm hover:text-white transition-colors">
-                            Practice Better
+                            The Benefits
                         </Link>
                         <Link href="/our-story" className="text-neutral-400 text-sm hover:text-white transition-colors">
                             Our Story
