@@ -66,6 +66,7 @@ function InlineShippingCTA() {
                             </button>
                         </form>
                         <p className="text-[10px] text-white/30 uppercase tracking-widest mt-4">No spam. Unsubscribe anytime.</p>
+                        <p className="text-[10px] text-white/30 tracking-wide mt-3">* Offer applies to Main &amp; Extended shipping countries.</p>
                     </>
                 ) : (
                     <div className="py-4">
@@ -115,7 +116,7 @@ export default function ShippingPage() {
                         <div className="flex flex-wrap justify-center gap-8 mb-16 reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-200">
                             <div className="flex items-center gap-3">
                                 <div className="w-3 h-3 rounded-full bg-[#2F80ED]"></div>
-                                <span className="text-sm font-medium text-neutral-500">Discounted Shipping</span>
+                                <span className="text-sm font-medium text-neutral-500">Main</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <div className="w-3 h-3 rounded-full bg-[#00C2CB]"></div>
@@ -173,7 +174,7 @@ export default function ShippingPage() {
                                 <div className="flex justify-between items-start mb-6">
                                     <div className="flex items-center gap-2">
                                         <div className="w-2 h-2 rounded-full bg-[#2F80ED]"></div>
-                                        <span className="text-xs uppercase tracking-wider text-white/50">Discounted</span>
+                                        <span className="text-xs uppercase tracking-wider text-white/50">Main</span>
                                     </div>
                                 </div>
                                 <div className="font-serif text-5xl font-bold mb-2 text-white">Under $40</div>
