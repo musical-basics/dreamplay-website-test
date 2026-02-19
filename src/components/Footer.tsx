@@ -10,8 +10,8 @@ export default function Footer() {
 
   // Links from the original HTML
   const links = [
-    { text: "The Benefits", href: "/better-practice" },
     { text: "How It Works", href: "https://www.dreamplaypianos.com/how-it-works" },
+    { text: "The Benefits", href: "/better-practice" },
     { text: "Our Story", href: "https://www.dreamplaypianos.com/our-story" },
     { text: "FAQ", href: "https://www.dreamplaypianos.com/faq" },
     { text: "Shipping", href: "/information-and-policies/shipping" }, // Corrected local link
