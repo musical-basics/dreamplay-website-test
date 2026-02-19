@@ -40,12 +40,14 @@ export function useABAnalytics(pageName: string, options: { trackTime: boolean }
             if (hasTrackedTime.current) return
             const duration = (Date.now() - startTime.current) / 1000 // seconds
             const bucket = getBucket()
+            const storedEmail = typeof window !== 'undefined' ? localStorage.getItem("dp_user_email") : null
 
             logEvent("time_on_page", {
                 path: pageName,
                 metadata: {
                     duration_seconds: duration,
                     ab_test_bucket: bucket,
+                    ...(storedEmail && { email: storedEmail })
                 }
             })
             hasTrackedTime.current = true
@@ -69,11 +71,13 @@ export function useABAnalytics(pageName: string, options: { trackTime: boolean }
     // Track Clicks
     const trackClick = (location: string, label: string) => {
         const bucket = getBucket()
+        const storedEmail = typeof window !== 'undefined' ? localStorage.getItem("dp_user_email") : null
         const payload = {
             page: pageName,
             location,
             label,
             ab_test_bucket: bucket,
+            ...(storedEmail && { email: storedEmail })
         }
 
         logEvent("cta_click", {

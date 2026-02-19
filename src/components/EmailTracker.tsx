@@ -13,11 +13,16 @@ function EmailTrackerContent() {
     useEffect(() => {
         const sid = searchParams.get("sid")
         const cid = searchParams.get("cid")
+        const em = searchParams.get("em")
 
         if (sid) {
             // Save to storage so we track them on future pages too
             localStorage.setItem("dp_subscriber_id", sid)
             if (cid) localStorage.setItem("dp_campaign_id", cid)
+        }
+
+        if (em) {
+            localStorage.setItem("dp_user_email", em)
         }
     }, [searchParams])
 

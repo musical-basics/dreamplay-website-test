@@ -15,8 +15,24 @@ function AnalyticsTrackerContent() {
                 url = url + `?${searchParams.toString()}`
             }
 
-            // Log the page view
-            logEvent('pageview', { path: url })
+            const metadata: any = {};
+
+            // Capture email from URL if present
+            const em = searchParams?.get('em');
+            if (em && typeof window !== 'undefined') {
+                localStorage.setItem('dp_user_email', em);
+            }
+
+            // Retrieve saved email to persist identity across organic clicks
+            if (typeof window !== 'undefined') {
+                const savedEmail = localStorage.getItem('dp_user_email');
+                if (savedEmail) {
+                    metadata.email = savedEmail;
+                }
+            }
+
+            // Log the page view with injected email
+            logEvent('pageview', { path: url, metadata })
         }
     }, [pathname, searchParams])
 
