@@ -207,8 +207,8 @@ export default function DSStandardContent() {
                             {/* Carnegie Hall Image */}
                             <div className="order-1 lg:order-2 relative aspect-[4/3] rounded-none overflow-hidden border border-neutral-200 group">
                                 <Image src="/images/carnegie-hall-performance.png" alt="Performance on stage" fill className="object-cover transition-all duration-700" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent"></div>
-                                <div className="absolute bottom-8 left-8 font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500">
+                                <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-white/40 to-transparent"></div>
+                                <div className="absolute bottom-8 left-8 font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-800 font-medium">
                                     The Goal: A DS Keyboard on Every Stage
                                 </div>
                             </div>

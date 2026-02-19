@@ -173,6 +173,15 @@ export default function BetterPracticePage() {
                             <p className="mx-auto mt-12 max-w-2xl font-sans text-base leading-relaxed text-white/60">
                                 The reality is the exact opposite of what most people fear. Because the narrower keys teach your hands to play without tension, your brain maps a healthier, more relaxed technique. When you return to a standard piano, that relaxed muscle memory translates with you.
                             </p>
+
+                            <div className="mx-auto mt-10 max-w-2xl border border-white/10 bg-white/5 p-8 md:p-10">
+                                <p className="font-sans text-base leading-relaxed text-white/60">
+                                    While we at DreamPlay — and every small-handed pianist we know — love the narrower keyboard, we can&apos;t guarantee every single person will. For this reason, we offer a <strong className="text-white">90-day full refund, no questions asked</strong> policy, including return shipping paid for. We also offer <strong className="text-white">free exchanges</strong> in case you try one size and decide you&apos;d like the other.
+                                </p>
+                                <Link href="/information-and-policies/shipping" className="mt-6 inline-flex items-center gap-2 font-sans text-sm font-medium text-white underline underline-offset-4 decoration-white/30 hover:decoration-white transition-colors">
+                                    See full policy details <ArrowRight className="w-4 h-4" />
+                                </Link>
+                            </div>
                         </AnimatedSection>
                     </div>
                 </section>
