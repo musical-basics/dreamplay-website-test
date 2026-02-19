@@ -72,7 +72,7 @@ export default function Navbar() {
                             href="/better-practice"
                             className={getLinkClass("/better-practice")}
                         >
-                            Better Practice
+                            Practice Better
                         </Link>
                         <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
                         <Link
@@ -307,7 +307,7 @@ export default function Navbar() {
                         className="px-6 py-4 text-lg font-medium text-gray-800 hover:bg-gray-100"
                         onClick={() => setMobileMenuOpen(false)}
                     >
-                        Better Practice
+                        Practice Better
                     </Link>
                     <Link
                         href="/how-it-works"

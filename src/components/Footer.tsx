@@ -11,7 +11,7 @@ export default function Footer() {
   // Links from the original HTML
   const links = [
     { text: "Why Narrow?", href: "https://www.dreamplaypianos.com/why-narrow" },
-    { text: "Better Practice", href: "/better-practice" },
+    { text: "Practice Better", href: "/better-practice" },
     { text: "How It Works", href: "https://www.dreamplaypianos.com/how-it-works" },
     { text: "Our Story", href: "https://www.dreamplaypianos.com/our-story" },
     { text: "FAQ", href: "https://www.dreamplaypianos.com/faq" },
