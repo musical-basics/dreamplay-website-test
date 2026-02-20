@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
-import { SpecialOfferFooter } from "@/components/special-offer/footer";
+import Footer from "@/components/Footer";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import TestimonialsSection from "@/components/checkout/TestimonialsSection";
@@ -346,7 +346,7 @@ export default function HowItWorksPage() {
 
 
                 {/* ═══ SECTION 2: UNLOCK YOUR POTENTIAL — LIGHT ═══ */}
-                <section className="w-full bg-white text-black py-12 md:py-24 px-4 flex justify-center">
+                <section className="w-full bg-[#f5f5f0] text-black py-12 md:py-24 px-4 flex justify-center">
                     <div className="w-full max-w-[80rem] p-6 md:p-16">
                         <div className="text-center mb-20">
                             <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-4">Performance</p>
@@ -563,7 +563,7 @@ export default function HowItWorksPage() {
                 </section>
 
             </main>
-            <SpecialOfferFooter />
+            <Footer />
         </div>
     );
 }

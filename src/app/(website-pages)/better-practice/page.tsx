@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
-import { SpecialOfferFooter } from "@/components/special-offer/footer";
+import Footer from "@/components/Footer";
 import { AnimatedSection } from "@/components/animated-section";
 import { ArrowRight, Quote, Brain, Crosshair } from "lucide-react";
 
@@ -204,7 +204,7 @@ export default function BetterPracticePage() {
                     </div>
                 </section>
             </main>
-            <SpecialOfferFooter />
+            <Footer />
         </div>
     );
 }

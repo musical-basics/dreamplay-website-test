@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
-import { SpecialOfferFooter } from "@/components/special-offer/footer";
+import Footer from "@/components/Footer";
 import VIPDashboardClient from "./VIPDashboardClient";
 
 export default async function VIPPage() {
@@ -138,7 +138,7 @@ export default async function VIPPage() {
                 </div>
             </main>
 
-            <SpecialOfferFooter />
+            <Footer />
         </div>
     );
 }

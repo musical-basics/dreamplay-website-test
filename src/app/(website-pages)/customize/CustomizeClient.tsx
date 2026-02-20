@@ -427,8 +427,8 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                 )}
 
                 {/* DESKTOP BUILD SUMMARY */}
-                {authUser && (appState.handSpan || appState.size || appState.color) && (
-                    <div className={`absolute right-4 md:right-8 ${showWidget && widgetTimeLeft > 0 ? 'top-[290px]' : 'top-[140px]'} z-[60] bg-[#050505] border border-white/10 p-5 shadow-2xl max-w-sm hidden md:block transition-all`}>
+                {(appState.handSpan || appState.size || appState.color) && (
+                    <div className={`absolute right-4 md:right-8 ${authUser && showWidget && widgetTimeLeft > 0 ? 'top-[290px]' : 'top-[140px]'} z-[60] bg-[#050505] border border-white/10 p-5 shadow-2xl max-w-sm hidden md:block transition-all`}>
                         <h4 className="font-sans text-[10px] uppercase tracking-[0.2em] text-white/40 mb-3">Your Build So Far</h4>
                         <div className="flex flex-col gap-2">
                             <div className="flex items-center justify-between">
@@ -513,7 +513,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             </section>
 
             {/* SECTION 1: HAND SIZE (LIGHT MODE) */}
-            <section ref={el => { if (sectionRefs.current) sectionRefs.current[1] = el }} id="section-1" className="relative flex min-h-screen flex-col justify-center border-t border-gray-200 bg-white py-24">
+            <section ref={el => { if (sectionRefs.current) sectionRefs.current[1] = el }} id="section-1" className="relative flex min-h-screen flex-col justify-center border-t border-neutral-200 bg-[#f5f5f0] py-24">
                 <div className="mx-auto w-full max-w-5xl px-6">
                     <div className="mb-6 text-center mt-12 md:mb-10">
                         <p className="mb-4 font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-400">Step One</p>
@@ -555,8 +555,8 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                     key={btn.id}
                                     onClick={() => handleSelectHandSize(btn.id as any)}
                                     className={`group relative flex flex-col border p-8 text-center transition-all duration-300 md:p-10 cursor-pointer ${isSelected
-                                        ? 'border-black bg-neutral-50 shadow-xl z-10'
-                                        : 'border-gray-200 bg-white shadow-lg hover:border-gray-400 hover:shadow-xl'
+                                        ? 'border-black bg-white shadow-xl z-10'
+                                        : 'border-neutral-200 bg-white/80 shadow-md hover:border-neutral-400 hover:shadow-xl hover:bg-white'
                                         }`}
                                 >
                                     {isSelected && (
@@ -676,7 +676,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             </section>
 
             {/* SECTION 3: FINISH (LIGHT GRAY MODE) */}
-            <section ref={el => { if (sectionRefs.current) sectionRefs.current[3] = el }} id="section-3" className="journey-section relative flex min-h-screen flex-col justify-center bg-[#f5f5f5] py-24 text-black">
+            <section ref={el => { if (sectionRefs.current) sectionRefs.current[3] = el }} id="section-3" className="journey-section relative flex min-h-screen flex-col justify-center bg-[#f5f5f0] py-24 text-black">
                 <div className="mx-auto w-full max-w-5xl px-6">
                     <button onClick={() => scrollToSection(2)} className="mb-12 flex items-center gap-2 font-sans text-xs uppercase tracking-widest text-black/50 transition-colors hover:text-black">
                         <ArrowLeft className="h-3 w-3" /> Back
@@ -724,17 +724,17 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                 </div>
             </section>
 
-            {/* SECTION 4: PRICING / RESERVE (WHITE MODE) */}
-            <section ref={el => { if (sectionRefs.current) sectionRefs.current[4] = el }} id="section-4" className="journey-section relative flex min-h-screen flex-col justify-center border-t border-black/5 bg-white py-24 text-black">
+            {/* SECTION 4: PRICING / RESERVE (DARK MODE) */}
+            <section ref={el => { if (sectionRefs.current) sectionRefs.current[4] = el }} id="section-4" className="journey-section relative flex min-h-screen flex-col justify-center bg-[#0a0a0f] py-24 text-white">
                 <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
-                    <button onClick={() => scrollToSection(3)} className="mb-12 flex items-center gap-2 font-sans text-xs uppercase tracking-widest text-black/50 transition-colors hover:text-black">
+                    <button onClick={() => scrollToSection(3)} className="mb-12 flex items-center gap-2 font-sans text-xs uppercase tracking-widest text-white/50 transition-colors hover:text-white">
                         <ArrowLeft className="h-3 w-3" /> Back
                     </button>
 
                     <div className="mb-16 max-w-2xl text-left">
-                        <p className="mb-4 font-sans text-[10px] uppercase tracking-[0.3em] text-black/50">Final Step</p>
-                        <h2 className="mb-4 font-serif text-4xl leading-tight text-black md:text-5xl lg:text-6xl text-balance">Reserve your DreamPlay One.</h2>
-                        <div className="flex items-center gap-2 font-sans text-sm text-black/60">
+                        <p className="mb-4 font-sans text-[10px] uppercase tracking-[0.3em] text-white/50">Final Step</p>
+                        <h2 className="mb-4 font-serif text-4xl leading-tight text-white md:text-5xl lg:text-6xl text-balance">Reserve your DreamPlay One.</h2>
+                        <div className="flex items-center gap-2 font-sans text-sm text-white/60">
                             <ShieldCheck className="h-4 w-4" /> Ships worldwide. Choose the size and color that suits you.
                         </div>
                     </div>
@@ -748,62 +748,62 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                 <button
                                     key={tier.id}
                                     onClick={() => handleSelectTier(tier.id)}
-                                    className={`relative flex flex-col border p-8 text-left transition-all md:p-10 ${isSelected
-                                        ? "z-10 scale-105 border-black bg-black text-white shadow-2xl"
+                                    className={`relative flex flex-col border p-8 text-left transition-all md:p-10 cursor-pointer ${isSelected
+                                        ? "z-10 scale-105 border-white bg-white text-black shadow-2xl"
                                         : isHighlight
-                                            ? "border-black/30 bg-black/5 shadow-lg hover:border-black/50 hover:shadow-xl"
-                                            : "border-black/10 bg-white shadow-lg hover:border-black/30 hover:bg-black/5 hover:shadow-xl"
+                                            ? "border-white/30 bg-white/10 shadow-lg hover:border-white/50 hover:shadow-xl"
+                                            : "border-white/10 bg-white/5 shadow-lg hover:border-white/30 hover:bg-white/10 hover:shadow-xl"
                                         }`}
                                 >
                                     {tier.badge && (
-                                        <span className={`mb-4 self-start font-sans text-[10px] uppercase tracking-[0.3em] ${isSelected ? 'text-white/50' : 'text-black/50'}`}>
+                                        <span className={`mb-4 self-start font-sans text-[10px] uppercase tracking-[0.3em] ${isSelected ? 'text-black/50' : 'text-white/50'}`}>
                                             {tier.badge}
                                         </span>
                                     )}
 
-                                    <h3 className={`w-full font-serif text-xl md:text-2xl ${isSelected ? 'text-white' : 'text-black'}`}>
+                                    <h3 className={`w-full font-serif text-xl md:text-2xl ${isSelected ? 'text-black' : 'text-white'}`}>
                                         {tier.title}
                                     </h3>
-                                    <p className={`mt-1 w-full font-sans text-[10px] uppercase tracking-wider ${isSelected ? 'text-white/50' : 'text-black/40'}`}>
+                                    <p className={`mt-1 w-full font-sans text-[10px] uppercase tracking-wider ${isSelected ? 'text-black/40' : 'text-white/50'}`}>
                                         {tier.subtitle}
                                     </p>
 
                                     <div className="mt-6 flex w-full flex-col">
                                         {tier.retailPrice && (
-                                            <p className={`font-sans text-sm uppercase tracking-widest line-through mb-1 ${isSelected ? 'text-white/40' : 'text-black/40'}`}>
+                                            <p className={`font-sans text-sm uppercase tracking-widest line-through mb-1 ${isSelected ? 'text-black/40' : 'text-white/40'}`}>
                                                 Official Retail MSRP: {tier.retailPrice}
                                             </p>
                                         )}
                                         <div className="flex items-baseline gap-3">
-                                            <span className={`font-serif text-4xl md:text-5xl ${isSelected ? 'text-white' : 'text-black'}`}>{tier.price}</span>
+                                            <span className={`font-serif text-4xl md:text-5xl ${isSelected ? 'text-black' : 'text-white'}`}>{tier.price}</span>
                                             {tier.originalPrice && (
-                                                <span className={`text-lg line-through ${isSelected ? 'text-white/40' : 'text-black/40'}`}>
+                                                <span className={`text-lg line-through ${isSelected ? 'text-black/40' : 'text-white/40'}`}>
                                                     {tier.originalPrice}
                                                 </span>
                                             )}
                                         </div>
                                         {tier.retailPrice && (
-                                            <p className={`font-sans text-[10px] uppercase tracking-[0.2em] mt-1 ${isSelected ? 'text-white/50' : 'text-black/50'}`}>
+                                            <p className={`font-sans text-[10px] uppercase tracking-[0.2em] mt-1 ${isSelected ? 'text-black/50' : 'text-white/50'}`}>
                                                 Founder&apos;s Allocation
                                             </p>
                                         )}
                                     </div>
 
-                                    <p className={`mt-6 min-h-[80px] w-full flex-grow font-sans text-sm leading-relaxed ${isSelected ? 'text-white/70' : 'text-black/60'}`}>
+                                    <p className={`mt-6 min-h-[80px] w-full flex-grow font-sans text-sm leading-relaxed ${isSelected ? 'text-black/60' : 'text-white/70'}`}>
                                         {tier.description}
                                     </p>
 
                                     {/* Includes */}
                                     {tier.includes && (
                                         <div className="mt-6 flex w-full flex-col gap-2 text-left">
-                                            <p className={`font-sans text-[10px] uppercase tracking-[0.2em] ${isSelected ? 'text-white/40' : 'text-black/40'}`}>
+                                            <p className={`font-sans text-[10px] uppercase tracking-[0.2em] ${isSelected ? 'text-black/40' : 'text-white/40'}`}>
                                                 Includes
                                             </p>
                                             <div className="flex flex-col gap-2">
                                                 {tier.includes.map((item, i) => (
                                                     <div key={i} className="flex items-center gap-3">
-                                                        <span className={`h-1 w-1 shrink-0 rounded-full ${isSelected ? 'bg-white/40' : 'bg-black/40'}`} />
-                                                        <span className={`font-sans text-sm ${isSelected ? 'text-white/80' : 'text-black/70'}`}>{item}</span>
+                                                        <span className={`h-1 w-1 shrink-0 rounded-full ${isSelected ? 'bg-black/40' : 'bg-white/40'}`} />
+                                                        <span className={`font-sans text-sm ${isSelected ? 'text-black/70' : 'text-white/80'}`}>{item}</span>
                                                     </div>
                                                 ))}
                                             </div>
@@ -813,31 +813,31 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                     {/* Meta */}
                                     <div className="mt-8 flex w-full items-center gap-4 md:gap-6">
                                         <div>
-                                            <p className={`font-sans text-[10px] uppercase tracking-widest ${isSelected ? 'text-white/40' : 'text-black/40'}`}>Delivery</p>
-                                            <p className={`mt-1 font-sans text-xs ${isSelected ? 'text-white/80' : 'text-black/70'}`}>{tier.delivery}</p>
+                                            <p className={`font-sans text-[10px] uppercase tracking-widest ${isSelected ? 'text-black/40' : 'text-white/40'}`}>Delivery</p>
+                                            <p className={`mt-1 font-sans text-xs ${isSelected ? 'text-black/70' : 'text-white/80'}`}>{tier.delivery}</p>
                                         </div>
-                                        <div className={`h-6 w-px ${isSelected ? 'bg-white/10' : 'bg-black/10'}`} />
+                                        <div className={`h-6 w-px ${isSelected ? 'bg-black/10' : 'bg-white/10'}`} />
                                         <div>
-                                            <p className={`font-sans text-[10px] uppercase tracking-widest ${isSelected ? 'text-white/40' : 'text-black/40'}`}>Backers</p>
-                                            <p className={`mt-1 font-sans text-xs ${isSelected ? 'text-white/80' : 'text-black/70'}`}>{tier.backers}</p>
+                                            <p className={`font-sans text-[10px] uppercase tracking-widest ${isSelected ? 'text-black/40' : 'text-white/40'}`}>Backers</p>
+                                            <p className={`mt-1 font-sans text-xs ${isSelected ? 'text-black/70' : 'text-white/80'}`}>{tier.backers}</p>
                                         </div>
-                                        <div className={`h-6 w-px ${isSelected ? 'bg-white/10' : 'bg-black/10'}`} />
+                                        <div className={`h-6 w-px ${isSelected ? 'bg-black/10' : 'bg-white/10'}`} />
                                         <div>
-                                            <p className={`font-sans text-[10px] uppercase tracking-widest ${isSelected ? 'text-white/40' : 'text-black/40'}`}>Left</p>
-                                            <p className={`mt-1 font-sans text-xs ${isSelected ? 'text-white/80' : 'text-black/70'}`}>{tier.remaining} of {tier.total}</p>
+                                            <p className={`font-sans text-[10px] uppercase tracking-widest ${isSelected ? 'text-black/40' : 'text-white/40'}`}>Left</p>
+                                            <p className={`mt-1 font-sans text-xs ${isSelected ? 'text-black/70' : 'text-white/80'}`}>{tier.remaining} of {tier.total}</p>
                                         </div>
                                     </div>
-                                    <div className={`mt-3 h-px w-full ${isSelected ? 'bg-white/10' : 'bg-black/10'}`}>
-                                        <div className={`h-full transition-all ${isSelected ? 'bg-white/40' : 'bg-black/40'}`} style={{ width: `${((tier.total - tier.remaining) / tier.total) * 100}%` }} />
+                                    <div className={`mt-3 h-px w-full ${isSelected ? 'bg-black/10' : 'bg-white/10'}`}>
+                                        <div className={`h-full transition-all ${isSelected ? 'bg-black/40' : 'bg-white/40'}`} style={{ width: `${((tier.total - tier.remaining) / tier.total) * 100}%` }} />
                                     </div>
 
                                     {/* CTA Button */}
                                     <div className="mt-8 w-full pt-4">
                                         <div className={`group flex w-full items-center justify-center gap-2 border px-6 py-4 text-center font-sans text-xs uppercase tracking-widest transition-colors ${isSelected
-                                            ? "border-white bg-white text-black hover:bg-white/90"
+                                            ? "border-black bg-black text-white hover:bg-black/90"
                                             : isHighlight
-                                                ? "border-black bg-black text-white hover:bg-black/90"
-                                                : "border-black/30 text-black group-hover:border-black group-hover:bg-black/10"
+                                                ? "border-white bg-white text-black hover:bg-white/90"
+                                                : "border-white/30 text-white group-hover:border-white group-hover:bg-white/10"
                                             }`}>
                                             {`Reserve for ${tier.price}`}
                                             <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
@@ -846,7 +846,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
 
                                         {/* Savings subtext */}
                                         {tier.retailPrice && (
-                                            <p className={`text-xs text-center mt-4 ${isSelected ? 'text-white/60' : 'text-black/50'}`}>
+                                            <p className={`text-xs text-center mt-4 ${isSelected ? 'text-black/50' : 'text-white/60'}`}>
                                                 Securing your build today saves {tier.savings} before public retail pricing takes effect.
                                             </p>
                                         )}
@@ -857,7 +857,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                     </div>
 
                     {/* Pricing footnote */}
-                    <p className="text-center text-xs text-black/40 mt-10 max-w-xl mx-auto leading-relaxed font-sans">
+                    <p className="text-center text-xs text-white/40 mt-10 max-w-xl mx-auto leading-relaxed font-sans">
                         * Founder&apos;s Batch pricing is a limited introductory offer. When this batch closes, prices will increase to the official retail MSRP. Reserve now to lock in the current rate.
                     </p>
                 </div>
@@ -884,7 +884,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             )}
 
             {/* MOBILE BUILD SUMMARY */}
-            {authUser && !showWidget && (appState.handSpan || appState.size || appState.color) && (
+            {!showWidget && (appState.handSpan || appState.size || appState.color) && (
                 <div className="fixed bottom-4 left-4 right-4 z-[90] bg-[#050505] border border-white/10 p-4 shadow-2xl md:hidden">
                     <h4 className="font-sans text-[10px] uppercase tracking-[0.2em] text-white/40 mb-2">Your Build So Far</h4>
                     <div className="flex items-center justify-between gap-4">

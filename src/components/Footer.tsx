@@ -193,19 +193,21 @@ export default function Footer() {
           -webkit-backdrop-filter: blur(12px);
           border: 1px solid rgba(255, 255, 255, 0.08);
           padding: 40px;
-          border-radius: 20px;
+          border-radius: 0;
           transition: transform 0.3s ease, border-color 0.3s ease;
         }
         .dp-glass-card:hover {
           border-color: rgba(255, 255, 255, 0.15);
-          transform: translateY(-5px);
         }
         .dp-glass-title {
           color: #fff;
-          font-size: 20px;
-          font-weight: 700;
+          font-size: 10px;
+          font-weight: 400;
+          text-transform: uppercase;
+          letter-spacing: 0.3em;
           margin-top: 0;
-          margin-bottom: 10px;
+          margin-bottom: 16px;
+          opacity: 0.5;
         }
         .dp-input-wrapper {
           position: relative;
@@ -213,13 +215,14 @@ export default function Footer() {
         }
         .dp-email-input {
           width: 100%;
-          padding: 16px 20px;
-          padding-right: 120px; // Space for button
-          background: rgba(0,0,0,0.3);
+          padding: 14px 16px;
+          padding-right: 110px;
+          background: rgba(255,255,255,0.05);
           border: 1px solid rgba(255,255,255,0.1);
-          border-radius: 50px;
+          border-radius: 0;
           color: #fff;
-          font-size: 14px;
+          font-size: 13px;
+          font-family: 'Manrope', sans-serif;
           outline: none;
           transition: border-color 0.3s;
         }
@@ -228,22 +231,24 @@ export default function Footer() {
         }
         .dp-subscribe-btn {
           position: absolute;
-          right: 5px;
-          top: 5px;
-          bottom: 5px;
-          padding: 0 24px;
-          border-radius: 40px;
+          right: 4px;
+          top: 4px;
+          bottom: 4px;
+          padding: 0 20px;
+          border-radius: 0;
           background: #ffffff;
           color: #000;
           border: none;
           font-weight: 700;
-          font-size: 13px;
+          font-size: 10px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
           cursor: pointer;
           transition: all 0.3s ease;
+          font-family: 'Manrope', sans-serif;
         }
         .dp-subscribe-btn:hover {
-          transform: scale(1.05);
-          box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+          background: rgba(255,255,255,0.9);
         }
         /* --- BOTTOM BAR --- */
         .dp-footer-bottom {
@@ -330,9 +335,9 @@ export default function Footer() {
             </div>
           </div>
           <div className="dp-glass-card">
-            <div className="dp-glass-title">Join the movement</div>
-            <p style={{ fontSize: "14px", lineHeight: "1.6", marginBottom: "0" }}>
-              Be the first to know when pre-orders open.
+            <div className="dp-glass-title">Stay Connected</div>
+            <p style={{ fontSize: "14px", lineHeight: "1.6", marginBottom: "0", color: "rgba(255,255,255,0.5)" }}>
+              Stay up to date about the latest developments in the narrow piano keys world.
             </p>
             <form onSubmit={handleSubscribe}>
               <div style={{ marginBottom: "12px" }}>

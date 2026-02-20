@@ -1,5 +1,5 @@
 import { SpecialOfferHeader } from "@/components/special-offer/header";
-import { SpecialOfferFooter } from "@/components/special-offer/footer";
+import Footer from "@/components/Footer";
 import { getFaqItems } from "@/actions/faq-actions";
 import FAQList from "@/components/faq-list";
 
@@ -35,7 +35,7 @@ export default async function FAQPage() {
                     </div>
                 </div>
             </main>
-            <SpecialOfferFooter />
+            <Footer />
         </div>
     );
 }

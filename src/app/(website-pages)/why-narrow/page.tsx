@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
-import { SpecialOfferFooter } from "@/components/special-offer/footer";
+import Footer from "@/components/Footer";
 
 /**
  * 3D Glassmorphic Donut Chart — SVG-based with gradient strokes, drop shadows, and glass inner ring
@@ -196,7 +196,7 @@ export default function WhyNarrowPage() {
         </section>
 
       </main>
-      <SpecialOfferFooter />
+      <Footer />
     </div>
   );
 }

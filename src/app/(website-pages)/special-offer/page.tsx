@@ -9,7 +9,7 @@ import { LessonsSection } from "@/components/special-offer/lessons-section"
 import { FindYourFitSection } from "@/components/special-offer/find-your-fit-section"
 import { GuaranteeSection } from "@/components/special-offer/guarantee-section"
 import { CTASection } from "@/components/special-offer/cta-section"
-import { SpecialOfferFooter } from "@/components/special-offer/footer"
+import Footer from "@/components/Footer"
 import { useABAnalytics } from "@/hooks/use-ab-analytics"
 import { VideoSection1 } from "@/components/special-offer/video-section-1"
 import { VideoSection2 } from "@/components/special-offer/video-section-2"
@@ -86,7 +86,7 @@ export default function SpecialOfferPage() {
 
                 {/* Footer - normal flow at the end */}
                 <div className="relative z-[80]">
-                    <SpecialOfferFooter />
+                    <Footer />
                 </div>
             </div>
         </main>

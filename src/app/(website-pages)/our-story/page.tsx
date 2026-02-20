@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
-import { SpecialOfferFooter } from "@/components/special-offer/footer";
+import Footer from "@/components/Footer";
 
 export default function OurStoryPage() {
     const [activeSection, setActiveSection] = useState("");
@@ -153,7 +153,7 @@ export default function OurStoryPage() {
                                 </div>
                                 <div className="order-2 flex items-start lg:-mt-[200px]">
                                     <div className="w-full aspect-video overflow-hidden rounded-none border border-white/10">
-                                        <img src="/images/vlcsnap-2025-11-25-19h10m12s384.png" alt="Workshop" className="w-full h-full object-cover transition-all duration-700" />
+                                        <img src="/images/vlcsnap-2025-11-25-19h10m12s384.png" alt="Workshop" className="w-full h-full object-cover transition-all duration-700 grayscale" />
                                     </div>
                                 </div>
                             </div>
@@ -285,7 +285,7 @@ export default function OurStoryPage() {
                 </section>
 
             </main>
-            <SpecialOfferFooter />
+            <Footer />
         </div>
     );
 }

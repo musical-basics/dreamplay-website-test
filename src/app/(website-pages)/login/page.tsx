@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Eye, EyeOff } from "lucide-react";
+import { RegisterModal } from "@/components/RegisterModal";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
+    const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
     useEffect(() => {
         const saved = localStorage.getItem("dp_user_email");
@@ -110,15 +112,16 @@ export default function LoginPage() {
                 <div className="mt-8 text-center space-y-3">
                     <p className="text-white/30 text-xs font-sans">
                         Don&apos;t have an account?{" "}
-                        <a href="/" className="text-white/60 hover:text-white underline underline-offset-4 transition-colors">
-                            Sign up on our homepage
-                        </a>
+                        <button onClick={() => setIsRegisterOpen(true)} className="text-white/60 hover:text-white underline underline-offset-4 transition-colors cursor-pointer">
+                            Register here
+                        </button>
                     </p>
                     <a href="/" className="block text-white/20 hover:text-white/40 text-xs font-sans uppercase tracking-widest transition-colors">
                         ← Back to DreamPlay
                     </a>
                 </div>
             </div>
+            <RegisterModal isOpen={isRegisterOpen} onClose={() => setIsRegisterOpen(false)} />
         </div>
     );
 }

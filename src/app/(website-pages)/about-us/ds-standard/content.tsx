@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
-import { SpecialOfferFooter } from "@/components/special-offer/footer";
+import Footer from "@/components/Footer";
 import { AnimatedSection } from "@/components/animated-section";
 import { ArrowRight, CheckCircle2, Globe, MapPin } from "lucide-react";
 
@@ -217,7 +217,7 @@ export default function DSStandardContent() {
                 </section>
 
             </main>
-            <SpecialOfferFooter />
+            <Footer />
         </div>
     );
 }

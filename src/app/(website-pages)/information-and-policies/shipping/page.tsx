@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
-import { SpecialOfferFooter } from "@/components/special-offer/footer";
+import Footer from "@/components/Footer";
 import { subscribeToNewsletter } from "@/actions/email-actions";
 import Link from "next/link";
 
@@ -421,7 +421,7 @@ export default function ShippingPage() {
                 </section>
 
             </main>
-            <SpecialOfferFooter />
+            <Footer />
         </div>
     );
 }

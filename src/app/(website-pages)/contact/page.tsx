@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
-import { SpecialOfferFooter } from "@/components/special-offer/footer";
+import Footer from "@/components/Footer";
 import { CheckCircle2, Loader2, Send } from "lucide-react";
 
 export default function ContactPage() {
@@ -87,7 +87,7 @@ export default function ContactPage() {
                 <section className="bg-neutral-50 text-black py-20">
                     <div className="max-w-2xl mx-auto px-6">
                         {isSubmitted ? (
-                            <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 text-center py-16">
+                            <div className="text-center py-16">
                                 <div className="mx-auto w-16 h-16 bg-green-50 border border-green-200 flex items-center justify-center mb-6">
                                     <CheckCircle2 className="w-8 h-8 text-green-600" />
                                 </div>
@@ -97,7 +97,7 @@ export default function ContactPage() {
                                 </p>
                             </div>
                         ) : (
-                            <form onSubmit={handleSubmit} className="reveal-el opacity-0 translate-y-8 transition-all duration-700">
+                            <form onSubmit={handleSubmit}>
                                 {error && (
                                     <div className="mb-6 p-4 border border-red-200 bg-red-50 text-red-700 text-sm font-sans">
                                         {error}
@@ -215,7 +215,7 @@ export default function ContactPage() {
                 </section>
             </main>
 
-            <SpecialOfferFooter />
+            <Footer />
         </div>
     );
 }
