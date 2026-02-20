@@ -47,6 +47,8 @@ export default function Footer() {
       }
 
       setSuccess(true);
+      localStorage.setItem("dp_user_email", email);
+      if (res.id) localStorage.setItem("dp_subscriber_id", res.id);
       alert('Thanks for subscribing!');
 
     } catch (error) {

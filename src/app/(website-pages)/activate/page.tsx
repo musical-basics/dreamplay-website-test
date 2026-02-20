@@ -70,6 +70,7 @@ function ActivateForm() {
             }
 
             // Redirect to VIP dashboard
+            localStorage.setItem("dp_user_email", email);
             window.location.href = "/vip";
         } catch (err: any) {
             setErrorMsg(err.message || "Something went wrong.");

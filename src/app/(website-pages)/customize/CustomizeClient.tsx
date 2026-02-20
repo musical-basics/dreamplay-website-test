@@ -191,6 +191,11 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
         return () => window.removeEventListener('mousemove', handleMouseMove);
     }, []);
 
+    useEffect(() => {
+        const saved = localStorage.getItem("dp_user_email");
+        if (saved) setSaveEmail(saved);
+    }, []);
+
     // --- HELPERS ---
     const scrollToSection = (index: number) => {
         const section = sectionRefs.current[index];
@@ -286,6 +291,8 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             }
 
             localStorage.setItem("dp_v2_subscribed", "true");
+            localStorage.setItem("dp_user_email", saveEmail);
+            if (res.id) localStorage.setItem("dp_subscriber_id", res.id);
             setSaveSuccess(true);
         } catch (error: any) {
             console.error(error);
@@ -304,6 +311,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
         const email = (form.elements.namedItem('email') as HTMLInputElement).value;
         const fullName = (form.elements.namedItem('full-name') as HTMLInputElement).value;
 
+        localStorage.setItem("dp_user_email", email);
         trackClick("form_submission", "join_waitlist");
 
         const ACTION_URL = 'https://dreamplaypianos.us12.list-manage.com/subscribe/post?u=90fbaa21ba86eecae78c767a8&id=cc37fd2637&f_id=00c46be9f0';

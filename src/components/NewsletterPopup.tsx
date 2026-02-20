@@ -30,6 +30,7 @@ export default function NewsletterPopup() {
         let shippingTimer: NodeJS.Timeout;
 
         const checkStatus = async () => {
+            if (localStorage.getItem("dp_user_email")) return;
             try {
                 const status = await getDiscountPopupStatus();
                 if (String(status) !== 'true') return;
@@ -78,7 +79,7 @@ export default function NewsletterPopup() {
             if (hasExitFired.current) return;
             if (e.clientY > 0) return; // only trigger when cursor exits top of viewport
 
-            const isSubscribed = localStorage.getItem("dp_v2_subscribed") === "true";
+            const isSubscribed = localStorage.getItem("dp_v2_subscribed") === "true" || !!localStorage.getItem("dp_user_email");
             const shippingSeen = localStorage.getItem("dp_v2_shipping_seen") === "true";
             if (isSubscribed || shippingSeen) return;
 
@@ -144,6 +145,8 @@ export default function NewsletterPopup() {
             localStorage.setItem("dp_v2_subscribed", "true");
             localStorage.setItem("dp_v2_shipping_seen", "true");
             localStorage.setItem("dp_v2_pdf_seen", "true");
+            localStorage.setItem("dp_user_email", email);
+            if (res.id) localStorage.setItem("dp_subscriber_id", res.id);
 
             setIsSubmitted(currentOffer);
             trackPopup('yes', currentOffer === 'shipping' ? 'free_shipping' : 'hand_size');

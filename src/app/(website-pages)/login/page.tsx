@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Eye, EyeOff } from "lucide-react";
 
@@ -10,6 +10,11 @@ export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
+
+    useEffect(() => {
+        const saved = localStorage.getItem("dp_user_email");
+        if (saved) setEmail(saved);
+    }, []);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -30,6 +35,7 @@ export default function LoginPage() {
             }
 
             // Redirect to VIP dashboard
+            localStorage.setItem("dp_user_email", email);
             window.location.href = "/vip";
         } catch (err: any) {
             setErrorMsg(err.message || "Something went wrong.");

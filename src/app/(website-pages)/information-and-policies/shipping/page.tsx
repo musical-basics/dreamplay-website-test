@@ -22,6 +22,8 @@ function InlineShippingCTA() {
                 tags: ["Free Shipping Lead"],
             });
             if (!res.success) throw new Error(res.error || "Failed");
+            localStorage.setItem("dp_user_email", email);
+            if (res.id) localStorage.setItem("dp_subscriber_id", res.id);
             setIsDone(true);
         } catch (err: any) {
             setError(err.message || "Something went wrong.");
