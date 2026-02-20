@@ -36,7 +36,7 @@ export function CrowdfundingSection() {
             Pre-Order Now
           </a>
           <a
-            href="#features"
+            href="/how-it-works"
             className="inline-block border border-white/30 px-8 py-3 text-center text-xs font-sans uppercase tracking-widest text-white transition-colors hover:bg-white/10 md:text-sm"
           >
             Learn More
