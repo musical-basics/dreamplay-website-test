@@ -426,6 +426,35 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                     </div>
                 )}
 
+                {/* DESKTOP BUILD SUMMARY */}
+                {authUser && (appState.handSpan || appState.size || appState.color) && (
+                    <div className={`absolute right-4 md:right-8 ${showWidget && widgetTimeLeft > 0 ? 'top-[290px]' : 'top-[140px]'} z-[60] bg-[#050505] border border-white/10 p-5 shadow-2xl max-w-sm hidden md:block transition-all`}>
+                        <h4 className="font-sans text-[10px] uppercase tracking-[0.2em] text-white/40 mb-3">Your Build So Far</h4>
+                        <div className="flex flex-col gap-2">
+                            <div className="flex items-center justify-between">
+                                <span className="font-sans text-xs text-white/50">Hand Size</span>
+                                <span className={`font-sans text-xs ${appState.handSpan ? 'text-white font-medium' : 'text-white/20'}`}>
+                                    {appState.handSpan === 'small' ? 'Zone A' : appState.handSpan === 'medium' ? 'Zone B' : appState.handSpan === 'large' ? 'Zone C' : '—'}
+                                </span>
+                            </div>
+                            <div className="h-px bg-white/5" />
+                            <div className="flex items-center justify-between">
+                                <span className="font-sans text-xs text-white/50">Keyboard</span>
+                                <span className={`font-sans text-xs ${appState.size ? 'text-white font-medium' : 'text-white/20'}`}>
+                                    {appState.size || '—'}
+                                </span>
+                            </div>
+                            <div className="h-px bg-white/5" />
+                            <div className="flex items-center justify-between">
+                                <span className="font-sans text-xs text-white/50">Finish</span>
+                                <span className={`font-sans text-xs ${appState.color ? 'text-white font-medium' : 'text-white/20'}`}>
+                                    {appState.color === 'Black' ? 'Midnight Black' : appState.color === 'White' ? 'Pearl White' : '—'}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 {/* Steps Sub-Navbar */}
                 <header id="sticky-nav" className="w-full mt-[100px] bg-[#050505]/95 backdrop-blur-md border-b border-white/5 shadow-sm">
                     <div className="mx-auto max-w-7xl px-4 md:px-6">
@@ -486,28 +515,48 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             {/* SECTION 1: HAND SIZE (LIGHT MODE) */}
             <section ref={el => { if (sectionRefs.current) sectionRefs.current[1] = el }} id="section-1" className="relative flex min-h-screen flex-col justify-center border-t border-gray-200 bg-white py-24">
                 <div className="mx-auto w-full max-w-5xl px-6">
-                    <div className="mb-16 text-center mt-12">
+                    <div className="mb-6 text-center mt-12 md:mb-10">
                         <p className="mb-4 font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-400">Step One</p>
-                        <h2 className="mb-6 font-serif text-3xl text-neutral-900 md:text-5xl">Select Your Hand Size.</h2>
-                        <button onClick={() => setIsSizingModalOpen(true)} className="inline-flex items-center gap-2 border-b border-gray-300 pb-1 font-sans text-xs uppercase tracking-widest text-neutral-500 transition-colors hover:border-black hover:text-black">
-                            Or measure using our tool <ArrowRight className="h-3 w-3" />
+                        <h2 className="mb-4 font-serif text-3xl text-neutral-900 md:text-5xl">Select Your Hand Size.</h2>
+                        <p className="mx-auto max-w-xl text-sm text-neutral-500 md:text-base">
+                            Choose the option that best describes your hand size.{" "}
+                            <a href="/about-us/ds-standard" target="_blank" className="inline-flex items-center gap-1 text-[#4a9eff] hover:text-[#4a9eff]/80 transition-colors">
+                                <span className="underline">Learn about sizes</span>
+                                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </a>
+                        </p>
+                    </div>
+
+                    {/* Recommended: Measure Hand Button */}
+                    <div className="mb-10 flex justify-center">
+                        <button onClick={() => setIsSizingModalOpen(true)} className="group relative flex w-full max-w-md items-center justify-between rounded-xl border border-[#4a9eff]/30 bg-[#4a9eff]/5 p-4 transition-all hover:border-[#4a9eff] hover:bg-[#4a9eff]/10 hover:shadow-lg cursor-pointer">
+                            <div className="flex items-center gap-3">
+                                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#4a9eff] text-white">
+                                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                                </span>
+                                <div className="text-left">
+                                    <div className="text-xs font-bold uppercase tracking-wider text-[#4a9eff]">Recommended</div>
+                                    <div className="text-sm font-medium text-neutral-900 md:text-base">Measure Your Hand Using Our Sizing Tool</div>
+                                </div>
+                            </div>
+                            <span className="text-sm font-semibold text-[#4a9eff] transition-transform group-hover:translate-x-1">→</span>
                         </button>
                     </div>
 
                     <div className="grid gap-6 lg:grid-cols-3">
                         {[
-                            { id: 'small', label: 'Smaller Hands', desc: 'Ideal for women and children', range: '< 7.6 inches', zone: 'DS5.5', fullZone: 'Zone A', zoneDesc: '7/8ths Size' },
-                            { id: 'medium', label: 'Average Hands', desc: 'Perfect for most men and women', range: '7.6–8.5 inches', zone: 'DS6.0', fullZone: 'Zone B', zoneDesc: '15/16ths Size' },
-                            { id: 'large', label: 'Larger Hands', desc: 'For the small percentage with larger hands', range: '8.5+ inches', zone: 'DS6.5', fullZone: 'Zone C', zoneDesc: 'Standard Size' }
+                            { id: 'small', label: 'Smaller Hands', desc: 'Ideal for women and children', range: '< 7.6 inches', fullZone: 'Zone A', zoneDesc: 'Narrowest Keys · 88 keys', emoji: '🤚' },
+                            { id: 'medium', label: 'Average Hands', desc: 'Perfect for most men and women', range: '7.6–8.5 inches', fullZone: 'Zone B', zoneDesc: 'Narrow Keys · 88 keys', emoji: '✋' },
+                            { id: 'large', label: 'Larger Hands', desc: 'For the small percentage with larger hands', range: '8.5+ inches', fullZone: 'Zone C', zoneDesc: 'Standard Keys · 88 keys', emoji: '🖐️' }
                         ].map((btn) => {
                             const isSelected = appState.handSpan === btn.id;
                             return (
                                 <button
                                     key={btn.id}
                                     onClick={() => handleSelectHandSize(btn.id as any)}
-                                    className={`group relative flex flex-col border p-8 text-left transition-all duration-300 md:p-10 ${isSelected
-                                        ? 'border-black bg-neutral-50 text-black shadow-xl z-10'
-                                        : 'border-gray-200 bg-white shadow-lg hover:border-gray-400 hover:bg-neutral-50 hover:shadow-xl'
+                                    className={`group relative flex flex-col border p-8 text-center transition-all duration-300 md:p-10 cursor-pointer ${isSelected
+                                        ? 'border-black bg-neutral-50 shadow-xl z-10'
+                                        : 'border-gray-200 bg-white shadow-lg hover:border-gray-400 hover:shadow-xl'
                                         }`}
                                 >
                                     {isSelected && (
@@ -516,22 +565,40 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                         </div>
                                     )}
 
-                                    <div className="mb-8">
-                                        <p className={`mb-3 font-sans text-[10px] uppercase tracking-[0.3em] ${isSelected ? 'text-black/60' : 'text-neutral-600'}`}>{btn.zoneDesc}</p>
-                                        <h3 className={`mb-3 font-serif text-3xl text-neutral-900`}>{btn.zone}</h3>
-                                        <p className={`font-sans text-sm leading-relaxed ${isSelected ? 'text-black/70' : 'text-neutral-700'}`}>{btn.desc}</p>
+                                    {/* Emoji */}
+                                    <div className="mb-4 flex justify-center">
+                                        <span className={`-scale-x-100 inline-block text-3xl transition-all duration-300 md:text-4xl ${isSelected ? 'grayscale-0 opacity-100' : 'opacity-50 grayscale group-hover:opacity-80 group-hover:grayscale-0'}`} role="img" aria-label={btn.label}>{btn.emoji}</span>
                                     </div>
 
-                                    <div className={`mt-auto w-full border-t pt-6 ${isSelected ? 'border-black/20' : 'border-gray-200'}`}>
-                                        <div className="mb-2 flex items-end justify-between">
-                                            <span className={`font-sans text-[10px] uppercase tracking-widest ${isSelected ? 'text-black/50' : 'text-neutral-600'}`}>Hand Span</span>
-                                            <span className={`font-sans text-sm font-bold text-neutral-900`}>{btn.range}</span>
-                                        </div>
+                                    {/* Label & Description */}
+                                    <h3 className="mb-2 font-serif text-xl text-neutral-900 md:text-2xl">{btn.label}</h3>
+                                    <p className={`min-h-[44px] mb-3 font-sans text-sm leading-relaxed ${isSelected ? 'text-black/60' : 'text-neutral-500'}`}>{btn.desc}</p>
+
+                                    {/* Hand Span */}
+                                    <p className="mb-6 font-sans text-sm text-neutral-400">{btn.range}</p>
+
+                                    {/* Zone Label — prominent */}
+                                    <div className={`w-full border-t pt-5 ${isSelected ? 'border-black/15' : 'border-gray-200'}`}>
+                                        <span className="font-serif text-2xl text-neutral-900">{btn.fullZone}</span>
+                                        <p className={`mt-1.5 font-sans text-xs ${isSelected ? 'text-black/40' : 'text-neutral-400'}`}>{btn.zoneDesc}</p>
+                                    </div>
+
+                                    {/* Select Button — elegant, sharp-edged like Step 2 */}
+                                    <div className={`mt-6 flex w-full items-center justify-center gap-2 border px-6 py-4 font-sans text-xs uppercase tracking-widest transition-colors ${isSelected
+                                        ? 'border-black bg-black text-white'
+                                        : 'border-black/20 text-neutral-900 group-hover:border-black group-hover:bg-black group-hover:text-white'
+                                        }`}>
+                                        {isSelected ? 'Selected' : 'Select'}
+                                        {!isSelected && <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />}
                                     </div>
                                 </button>
                             )
                         })}
                     </div>
+
+                    <p className="mt-6 text-center text-sm text-neutral-400">
+                        We recommend the {appState.size || '...'} for your hand size.
+                    </p>
                 </div>
             </section>
 
@@ -776,17 +843,6 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                             <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
                                         </div>
 
-                                        {/* Save My Build ghost button */}
-                                        <button
-                                            type="button"
-                                            onClick={(e) => { e.stopPropagation(); setIsSaveModalOpen(true); }}
-                                            className={`mt-4 w-full border border-dashed py-4 font-sans text-[11px] uppercase tracking-widest transition-all bg-transparent cursor-pointer underline underline-offset-4 decoration-1 ${isSelected
-                                                ? "border-white/30 text-white/80 hover:bg-white/10 hover:text-white hover:border-white/50"
-                                                : "border-black/25 text-black/70 hover:bg-black/5 hover:text-black hover:border-black/40"
-                                                }`}
-                                        >
-                                            ✉ Save This Build &amp; Unlock Free Shipping
-                                        </button>
 
                                         {/* Savings subtext */}
                                         {tier.retailPrice && (
@@ -822,6 +878,35 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                             <p className="font-sans text-xs text-white/70 leading-relaxed">
                                 Lock in your order within <strong className="text-green-400 font-mono tracking-tight">{formatWidgetTime(widgetTimeLeft)}</strong>.
                             </p>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* MOBILE BUILD SUMMARY */}
+            {authUser && !showWidget && (appState.handSpan || appState.size || appState.color) && (
+                <div className="fixed bottom-4 left-4 right-4 z-[90] bg-[#050505] border border-white/10 p-4 shadow-2xl md:hidden">
+                    <h4 className="font-sans text-[10px] uppercase tracking-[0.2em] text-white/40 mb-2">Your Build So Far</h4>
+                    <div className="flex items-center justify-between gap-4">
+                        <div className="text-center flex-1">
+                            <div className="font-sans text-[10px] text-white/40 mb-0.5">Zone</div>
+                            <div className={`font-sans text-xs ${appState.handSpan ? 'text-white font-medium' : 'text-white/20'}`}>
+                                {appState.handSpan === 'small' ? 'A' : appState.handSpan === 'medium' ? 'B' : appState.handSpan === 'large' ? 'C' : '—'}
+                            </div>
+                        </div>
+                        <div className="h-6 w-px bg-white/10" />
+                        <div className="text-center flex-1">
+                            <div className="font-sans text-[10px] text-white/40 mb-0.5">Size</div>
+                            <div className={`font-sans text-xs ${appState.size ? 'text-white font-medium' : 'text-white/20'}`}>
+                                {appState.size || '—'}
+                            </div>
+                        </div>
+                        <div className="h-6 w-px bg-white/10" />
+                        <div className="text-center flex-1">
+                            <div className="font-sans text-[10px] text-white/40 mb-0.5">Finish</div>
+                            <div className={`font-sans text-xs ${appState.color ? 'text-white font-medium' : 'text-white/20'}`}>
+                                {appState.color === 'Black' ? 'Black' : appState.color === 'White' ? 'White' : '—'}
+                            </div>
                         </div>
                     </div>
                 </div>
