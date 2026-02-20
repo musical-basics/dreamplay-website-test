@@ -349,10 +349,10 @@ export default function Footer() {
         </div>
         <div className="dp-footer-bottom">
           <div>© 2025 DreamPlay Pianos. All rights reserved.</div>
-          <div>
-            <Link href="/privacy" className="dp-legal-link">Privacy Policy</Link>
-            <Link href="#" className="dp-legal-link">Terms of Service</Link>
-            <Link href="#" className="dp-legal-link">Cookies</Link>
+          <div style={{ display: "flex", gap: "25px" }}>
+            <Link href="/privacy" className="dp-legal-link" style={{ marginLeft: 0 }}>Privacy Policy</Link>
+            <Link href="/terms" className="dp-legal-link" style={{ marginLeft: 0 }}>Terms of Service</Link>
+            <Link href="#" className="dp-legal-link" style={{ marginLeft: 0 }}>Cookies</Link>
           </div>
         </div>
       </footer>
