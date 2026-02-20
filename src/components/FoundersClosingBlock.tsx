@@ -10,7 +10,7 @@ export function FoundersClosingBlock() {
                 </p>
 
                 <h2 className="mt-4 mb-6 font-serif text-3xl text-white md:text-4xl">
-                    The transition to Retail.
+                    The Transition to Retail.
                 </h2>
 
                 <p className="mx-auto mb-8 max-w-2xl font-sans text-sm leading-relaxed text-white/70">
