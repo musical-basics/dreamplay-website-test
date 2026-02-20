@@ -146,23 +146,27 @@ export function SizeFinderSection() {
             <p className="font-sans text-sm leading-relaxed text-neutral-900 md:text-base">
               {selectedSize === "ds55" ? (
                 <>
+                  You are in {'"'}Zone A{'"'} of the pianists (under 7.6 inches
+                  handspan). Our{" "}
                   <strong className="font-serif text-base md:text-lg">
-                    DS5.5 is your match.
+                    DS5.5®
                   </strong>{" "}
-                  The active key width is 41.1{'"'} (1044 mm) &mdash;
-                  approximately 7/8ths of a standard keyboard. This places you
-                  in {'"'}Zone A{'"'}, where octaves, 9ths, and even 10ths
-                  become comfortable.
+                  model is your match. The active key width is 41.1{'"'} (1044
+                  mm) — approximately 7/8ths of a standard keyboard. With our
+                  DS5.5 keyboard, you will find that octaves, 9ths, and even
+                  10ths become comfortable.
                 </>
               ) : (
                 <>
+                  You are in {'"'}Zone B{'"'} of the pianists (7.6–8.5 inches
+                  handspan). Our{" "}
                   <strong className="font-serif text-base md:text-lg">
-                    DS6.0 is your match.
+                    DS6.0®
                   </strong>{" "}
-                  The active key width is 44.53{'"'} (1131 mm) &mdash;
-                  approximately 15/16ths of a standard keyboard. This places you
-                  in {'"'}Zone B{'"'}, where octaves and 9ths are effortless and
-                  10ths become reachable.
+                  model is your match. The active key width is 44.53{'"'} (1131
+                  mm) — approximately 15/16ths of a standard keyboard. With our
+                  DS6.0 keyboard, you will find that octaves and 9ths are
+                  effortless and 10ths become reachable.
                 </>
               )}
             </p>
