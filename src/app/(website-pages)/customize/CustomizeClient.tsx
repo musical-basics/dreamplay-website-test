@@ -68,12 +68,13 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             remaining: 8,
             total: 10,
             highlight: false,
+            hidden: true,
         },
         {
             id: 'solo',
             badge: null,
             title: "DreamPlay One",
-            subtitle: "Founder's Batch",
+            subtitle: "",
             price: "$549",
             retailPrice: "$1,099.00",
             originalPrice: null,
@@ -90,7 +91,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             id: 'full',
             badge: "Most Popular",
             title: "DreamPlay Bundle",
-            subtitle: "Founder's Batch",
+            subtitle: "",
             price: "$599",
             retailPrice: "$1,199.00",
             originalPrice: null,
@@ -740,7 +741,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                     </div>
 
                     <div className="grid gap-6 lg:grid-cols-3">
-                        {tiers.map(tier => {
+                        {tiers.filter(t => !t.hidden).map(tier => {
                             const isSelected = appState.selectedTier === tier.id;
                             const isHighlight = tier.highlight;
 
@@ -748,20 +749,21 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                 <button
                                     key={tier.id}
                                     onClick={() => handleSelectTier(tier.id)}
-                                    className={`relative flex flex-col border p-8 text-left transition-all md:p-10 cursor-pointer ${isSelected
+                                    className={`relative flex flex-col border p-8 text-left transition-all md:p-10 cursor-pointer overflow-visible ${isSelected
                                         ? "z-10 scale-105 border-white bg-white text-black shadow-2xl"
                                         : isHighlight
                                             ? "border-white/30 bg-white/10 shadow-lg hover:border-white/50 hover:shadow-xl"
                                             : "border-white/10 bg-white/5 shadow-lg hover:border-white/30 hover:bg-white/10 hover:shadow-xl"
                                         }`}
                                 >
+                                    {/* Badge — positioned as a top ribbon */}
                                     {tier.badge && (
-                                        <span className={`mb-4 self-start font-sans text-[10px] uppercase tracking-[0.3em] ${isSelected ? 'text-black/50' : 'text-white/50'}`}>
+                                        <span className={`absolute -top-3 left-6 px-4 py-1 font-sans text-[10px] uppercase tracking-[0.3em] font-bold ${isSelected ? 'bg-black text-white' : 'bg-white text-black'}`}>
                                             {tier.badge}
                                         </span>
                                     )}
 
-                                    <h3 className={`w-full font-serif text-xl md:text-2xl ${isSelected ? 'text-black' : 'text-white'}`}>
+                                    <h3 className={`w-full font-serif text-xl md:text-2xl ${isSelected ? 'text-black' : 'text-white'} ${tier.badge ? 'mt-2' : ''}`}>
                                         {tier.title}
                                     </h3>
                                     <p className={`mt-1 w-full font-sans text-[10px] uppercase tracking-wider ${isSelected ? 'text-black/40' : 'text-white/50'}`}>
@@ -770,8 +772,8 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
 
                                     <div className="mt-6 flex w-full flex-col">
                                         {tier.retailPrice && (
-                                            <p className={`font-sans text-sm uppercase tracking-widest line-through mb-1 ${isSelected ? 'text-black/40' : 'text-white/40'}`}>
-                                                Official Retail MSRP: {tier.retailPrice}
+                                            <p className={`font-sans text-[10px] uppercase tracking-[0.2em] mb-1 ${isSelected ? 'text-black/40' : 'text-white/40'}`}>
+                                                Founder&apos;s Price
                                             </p>
                                         )}
                                         <div className="flex items-baseline gap-3">
@@ -783,8 +785,8 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                             )}
                                         </div>
                                         {tier.retailPrice && (
-                                            <p className={`font-sans text-[10px] uppercase tracking-[0.2em] mt-1 ${isSelected ? 'text-black/50' : 'text-white/50'}`}>
-                                                Founder&apos;s Allocation
+                                            <p className={`font-sans text-xs mt-2 ${isSelected ? 'text-black/50' : 'text-white/50'}`}>
+                                                Retail MSRP: {tier.retailPrice}
                                             </p>
                                         )}
                                     </div>
@@ -793,10 +795,10 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                                         {tier.description}
                                     </p>
 
-                                    {/* Includes */}
+                                    {/* Includes — glassmorphism panel */}
                                     {tier.includes && (
-                                        <div className="mt-6 flex w-full flex-col gap-2 text-left">
-                                            <p className={`font-sans text-[10px] uppercase tracking-[0.2em] ${isSelected ? 'text-black/40' : 'text-white/40'}`}>
+                                        <div className={`mt-6 w-full p-5 backdrop-blur-md border ${isSelected ? 'bg-black/[0.03] border-black/10' : 'bg-white/[0.06] border-white/10'}`}>
+                                            <p className={`font-sans text-[10px] uppercase tracking-[0.2em] mb-3 ${isSelected ? 'text-black/40' : 'text-white/40'}`}>
                                                 Includes
                                             </p>
                                             <div className="flex flex-col gap-2">
