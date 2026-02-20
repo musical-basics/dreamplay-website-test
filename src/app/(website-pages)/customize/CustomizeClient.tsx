@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import { getCountdownDate } from "@/actions/admin-actions";
 import { subscribeToNewsletter } from "@/actions/email-actions";
+import { trackEmailConversion } from "@/components/EmailTracker";
 import { useABAnalytics } from "@/hooks/use-ab-analytics";
 import { ArrowRight, ArrowLeft, Check, ShieldCheck, X, CheckCircle2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
@@ -310,6 +311,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             if (baseUrl) {
                 const separator = baseUrl.includes('?') ? '&' : '?';
                 const finalParams = separator === '?' ? propertiesParams.substring(1) : propertiesParams;
+                trackEmailConversion('conversion_t2', window.location.pathname);
                 window.location.href = baseUrl + (baseUrl.includes('?') ? propertiesParams : `?${finalParams}`);
             }
         }

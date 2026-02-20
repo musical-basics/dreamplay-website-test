@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { subscribeToNewsletter } from "@/actions/email-actions";
+import { trackEmailConversion } from "@/components/EmailTracker";
 import { X, CheckCircle2, ChevronRight, Loader2 } from "lucide-react";
 
 interface RegisterModalProps {
@@ -83,6 +84,7 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
                 localStorage.setItem("dp_subscriber_id", res.id || authData.user?.id || "");
             }
 
+            trackEmailConversion('conversion_t1', window.location.pathname);
             setStep(5);
 
             setTimeout(() => {

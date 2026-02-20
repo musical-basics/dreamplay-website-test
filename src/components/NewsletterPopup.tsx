@@ -6,6 +6,7 @@ import { X, FileText, Package, CheckCircle2 } from "lucide-react";
 
 import { getDiscountPopupStatus } from "@/actions/admin-actions";
 import { subscribeToNewsletter } from "@/actions/email-actions";
+import { trackEmailConversion } from "@/components/EmailTracker";
 
 type PopupType = "none" | "shipping" | "pdf";
 
@@ -149,6 +150,7 @@ export default function NewsletterPopup() {
             if (res.id) localStorage.setItem("dp_subscriber_id", res.id);
 
             setIsSubmitted(currentOffer);
+            trackEmailConversion('conversion_t1', window.location.pathname);
             trackPopup('yes', currentOffer === 'shipping' ? 'free_shipping' : 'hand_size');
 
             // Auto-open PDF for pdf offer

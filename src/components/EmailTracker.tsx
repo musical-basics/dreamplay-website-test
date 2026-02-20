@@ -77,3 +77,24 @@ export function EmailTracker() {
         </Suspense>
     )
 }
+
+// Global conversion helper — importable from any component
+export function trackEmailConversion(type: 'conversion_t1' | 'conversion_t2' | 'conversion_t3', path: string) {
+    if (typeof window === 'undefined') return;
+    const sid = localStorage.getItem("dp_subscriber_id");
+    const cid = localStorage.getItem("dp_campaign_id");
+
+    if (!sid) return; // Only track conversions for known email subscribers
+
+    fetch("https://email.dreamplaypianos.com/api/track", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            subscriber_id: sid,
+            campaign_id: cid,
+            type: type,
+            url: window.location.origin + path,
+        }),
+        keepalive: true
+    }).catch(console.error);
+}
