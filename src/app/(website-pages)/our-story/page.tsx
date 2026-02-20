@@ -219,7 +219,7 @@ export default function OurStoryPage() {
                                 </div>
                                 <div className="relative mt-8 lg:mt-0">
                                     <div className="aspect-[4/3] overflow-hidden rounded-none border border-neutral-200">
-                                        <img src="/images/hands-playing-illuminated-piano-keys-learning.jpg" alt="Teaching Piano" className="w-full h-full object-cover transition-all duration-700" />
+                                        <img src="/images/LionelYuPlayingPiano.jpg" alt="Lionel Yu Playing Piano" className="w-full h-full object-cover transition-all duration-700" />
                                     </div>
                                 </div>
                             </div>
