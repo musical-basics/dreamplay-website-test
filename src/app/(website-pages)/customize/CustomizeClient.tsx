@@ -7,6 +7,7 @@ import { getCountdownDate } from "@/actions/admin-actions";
 import { subscribeToNewsletter } from "@/actions/email-actions";
 import { useABAnalytics } from "@/hooks/use-ab-analytics";
 import { ArrowRight, ArrowLeft, Check, ShieldCheck, X, CheckCircle2 } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 interface CustomizeClientProps {
     urls: {
@@ -42,6 +43,11 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
     const [customerCount, setCustomerCount] = useState(208); // Real backer count
     const [countdown, setCountdown] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
     const [countDownDate, setCountDownDate] = useState<number | null>(null);
+
+    // Auth & Urgency Widget State
+    const [authUser, setAuthUser] = useState<any>(null);
+    const [widgetTimeLeft, setWidgetTimeLeft] = useState(12 * 60);
+    const [showWidget, setShowWidget] = useState(true);
 
     const sectionRefs = useRef<(HTMLElement | null)[]>([]);
 
@@ -194,7 +200,42 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
     useEffect(() => {
         const saved = localStorage.getItem("dp_user_email");
         if (saved) setSaveEmail(saved);
+
+        const fetchUser = async () => {
+            const supabase = createClient();
+            const { data } = await supabase.auth.getUser();
+            if (data.user) setAuthUser(data.user);
+        };
+        fetchUser();
     }, []);
+
+    // 12-minute urgency timer
+    useEffect(() => {
+        if (!authUser) return;
+
+        const storedEnd = sessionStorage.getItem("dp_fs_timer_end");
+        let endTime: number;
+
+        if (storedEnd) {
+            endTime = parseInt(storedEnd, 10);
+        } else {
+            endTime = Date.now() + 12 * 60 * 1000;
+            sessionStorage.setItem("dp_fs_timer_end", endTime.toString());
+        }
+
+        const timer = setInterval(() => {
+            const remaining = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
+            setWidgetTimeLeft(remaining);
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [authUser]);
+
+    const formatWidgetTime = (seconds: number) => {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return `${m}:${s.toString().padStart(2, '0')}`;
+    };
 
     // --- HELPERS ---
     const scrollToSection = (index: number) => {
@@ -364,6 +405,26 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             {/* --- FIXED HEADERS WRAPPER --- */}
             <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
                 <SpecialOfferHeader forceOpaque={true} darkMode={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
+
+                {/* DESKTOP URGENCY WIDGET */}
+                {authUser && showWidget && widgetTimeLeft > 0 && (
+                    <div className="absolute right-4 md:right-8 top-[140px] z-[60] bg-[#050505] border border-green-500/30 p-5 shadow-2xl max-w-sm hidden md:block" style={{ animation: 'slideInRight 0.5s ease-out' }}>
+                        <button onClick={() => setShowWidget(false)} className="absolute top-2 right-2 text-white/40 hover:text-white cursor-pointer">
+                            <X size={14} />
+                        </button>
+                        <div className="flex items-start gap-3">
+                            <CheckCircle2 className="text-green-400 w-5 h-5 shrink-0 mt-0.5" />
+                            <div>
+                                <h4 className="font-serif text-white text-base font-bold mb-1">
+                                    Welcome back, {authUser.user_metadata?.full_name?.split(' ')[0] || authUser.email?.split('@')[0]}
+                                </h4>
+                                <p className="font-sans text-xs text-white/70 leading-relaxed mb-1">
+                                    Your free shipping offer has been activated for this purchase. Lock in your DreamPlay One within the next <strong className="text-green-400 font-mono tracking-tight">{formatWidgetTime(widgetTimeLeft)}</strong> to enjoy free shipping.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* Steps Sub-Navbar */}
                 <header id="sticky-nav" className="w-full mt-[100px] bg-[#050505]/95 backdrop-blur-md border-b border-white/5 shadow-sm">
@@ -745,6 +806,26 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                     </p>
                 </div>
             </section>
+
+            {/* MOBILE URGENCY WIDGET */}
+            {authUser && showWidget && widgetTimeLeft > 0 && (
+                <div className="fixed bottom-4 left-4 right-4 z-[90] bg-[#050505] border border-green-500/30 p-4 shadow-2xl md:hidden">
+                    <button onClick={() => setShowWidget(false)} className="absolute top-2 right-2 text-white/40 hover:text-white cursor-pointer">
+                        <X size={14} />
+                    </button>
+                    <div className="flex items-start gap-3">
+                        <CheckCircle2 className="text-green-400 w-5 h-5 shrink-0 mt-0.5" />
+                        <div>
+                            <h4 className="font-serif text-white text-sm font-bold mb-1">
+                                Free Shipping Activated
+                            </h4>
+                            <p className="font-sans text-xs text-white/70 leading-relaxed">
+                                Lock in your order within <strong className="text-green-400 font-mono tracking-tight">{formatWidgetTime(widgetTimeLeft)}</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* --- SIZING MODAL (DARK) --- */}
             {isSizingModalOpen && (

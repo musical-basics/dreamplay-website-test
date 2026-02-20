@@ -1,11 +1,13 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowRight, Menu, X } from "lucide-react"
+import { ArrowRight, Menu, X, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import { useABAnalytics } from "@/hooks/use-ab-analytics"
 import { cn } from "@/lib/utils"
+import { createClient } from "@/lib/supabase/client"
+import { RegisterModal } from "../RegisterModal"
 
 interface SpecialOfferHeaderProps {
     forceOpaque?: boolean;
@@ -17,6 +19,15 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
     const { trackClick } = useABAnalytics("special_offer_variant", { trackTime: false })
     const [scrolled, setScrolled] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const [user, setUser] = useState<any>(null)
+    const [isRegisterOpen, setIsRegisterOpen] = useState(false)
+
+    useEffect(() => {
+        const supabase = createClient()
+        supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => setUser(session?.user ?? null))
+        return () => subscription.unsubscribe()
+    }, [])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -90,6 +101,21 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
 
                     {/* CTA Button */}
                     <div className="flex items-center gap-4">
+                        {user ? (
+                            <Link href="/vip" className={`hidden md:flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] font-bold transition-colors ${useDarkText ? "text-neutral-600 hover:text-black" : "text-white/60 hover:text-white"}`}>
+                                <User className="w-4 h-4" /> My Account
+                            </Link>
+                        ) : (
+                            <div className="hidden md:flex items-center gap-4 mr-2">
+                                <Link href="/login" className={`text-[10px] uppercase tracking-[0.2em] font-bold transition-colors ${useDarkText ? "text-neutral-500 hover:text-black" : "text-white/60 hover:text-white"}`}>
+                                    Login
+                                </Link>
+                                <button onClick={() => setIsRegisterOpen(true)} className="bg-sky-500 hover:bg-sky-400 text-white px-4 py-2 rounded-full text-[10px] uppercase tracking-widest font-bold transition-colors shadow-sm cursor-pointer">
+                                    Register &amp; Access Free Shipping
+                                </button>
+                            </div>
+                        )}
+
                         <Link
                             onClick={() => trackClick("header", "start_customization")}
                             href="/customize"
@@ -144,6 +170,33 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                                 {item.label}
                             </Link>
                         ))}
+
+                        {!user && (
+                            <div className="py-2 flex flex-col">
+                                <button
+                                    onClick={() => { setIsRegisterOpen(true); setIsMobileMenuOpen(false); }}
+                                    className="w-full text-left py-3 text-sm font-bold text-sky-500 border-b border-gray-50 cursor-pointer"
+                                >
+                                    Register &amp; Access Free Shipping
+                                </button>
+                                <Link
+                                    href="/login"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="w-full text-left py-3 text-sm font-bold text-gray-700 hover:text-black"
+                                >
+                                    Login
+                                </Link>
+                            </div>
+                        )}
+                        {user && (
+                            <Link
+                                href="/vip"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="py-3 text-sm font-bold text-neutral-600 hover:text-black flex items-center gap-2"
+                            >
+                                <User className="w-4 h-4" /> My Account
+                            </Link>
+                        )}
                         <Link
                             href="/customize"
                             className="mt-4 flex items-center justify-center gap-2 w-full bg-black text-white rounded-none py-3 font-medium"
@@ -158,6 +211,8 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                     </nav>
                 </div>
             )}
+
+            <RegisterModal isOpen={isRegisterOpen} onClose={() => setIsRegisterOpen(false)} />
         </header>
     )
 }

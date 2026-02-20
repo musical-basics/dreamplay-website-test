@@ -22,9 +22,13 @@ export default async function VIPPage() {
                     {/* Header */}
                     <div className="mb-16">
                         <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">Founder&apos;s Club</p>
-                        <h1 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight text-white mb-3">
+                        <h1 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight text-white mb-4">
                             Welcome to the Founder&apos;s Club.
                         </h1>
+                        <p className="font-sans text-base text-green-400 font-medium mb-3 flex items-center gap-2">
+                            <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Your account officially qualifies for free shipping.
+                        </p>
                         <p className="font-sans text-sm text-white/40">{user.email}</p>
                     </div>
 
