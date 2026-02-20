@@ -50,7 +50,7 @@ export function CreatorSection() {
                 </AccordionTrigger>
                 <AccordionContent className="font-sans text-sm leading-relaxed text-background/60 md:text-base">
                   <p>
-                    My hands span just under 8.5 inches. That meant many
+                    My hands span at exactly 8.0 inches. That meant many
                     traditional pieces were difficult, sometimes impossible, for
                     me to play comfortably. No matter how much I practiced, I
                     felt like the instrument wasn{"'"}t built for me.
