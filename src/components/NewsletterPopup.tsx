@@ -255,7 +255,7 @@ export default function NewsletterPopup() {
                         </div>
                         <h3 className="text-2xl font-serif text-white mb-3">Check your inbox.</h3>
                         <p className="text-white/60 font-sans text-sm mb-8 max-w-xs mx-auto leading-relaxed">
-                            We just sent you an email with instructions to lock in your VIP Free Shipping pass. Create your account to claim it.
+                            We just sent you an email with instructions to unlock your VIP Free Shipping Pass. Create your account to claim it.
                         </p>
                         <button
                             onClick={handleClose}
