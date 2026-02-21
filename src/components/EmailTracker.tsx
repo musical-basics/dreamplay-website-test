@@ -9,8 +9,13 @@ function EmailTrackerContent() {
     // Track when the user lands on a specific page
     const startTime = useRef(Date.now())
 
-    // 1. IDENTIFY: Check for Subscriber ID in URL
+    // 1. IDENTIFY: Check for Subscriber ID in URL + generate temp session
     useEffect(() => {
+        // Generate a persistent temp session for anonymous identity stitching
+        if (!localStorage.getItem("dp_temp_session")) {
+            localStorage.setItem("dp_temp_session", crypto.randomUUID())
+        }
+
         const sid = searchParams.get("sid")
         const cid = searchParams.get("cid")
         const em = searchParams.get("em")
@@ -29,10 +34,11 @@ function EmailTrackerContent() {
     // 2. REPORT: Track Page Views & Duration
     useEffect(() => {
         const sid = localStorage.getItem("dp_subscriber_id")
-        if (!sid) return // If we don't know who this is, don't track
+        const tempSession = localStorage.getItem("dp_temp_session")
+        if (!sid && !tempSession) return // Track if we have either identifier
 
         // A. Send "Page View" immediately
-        sendEvent(sid, "page_view", pathname)
+        sendEvent(sid, "page_view", pathname, undefined, tempSession)
 
         // Reset timer for the new page
         startTime.current = Date.now()
@@ -41,19 +47,19 @@ function EmailTrackerContent() {
         return () => {
             const duration = Math.round((Date.now() - startTime.current) / 1000)
             if (duration > 1) { // Only track if they stayed > 1 second
-                sendEvent(sid, "session_end", pathname, duration)
+                sendEvent(sid, "session_end", pathname, duration, tempSession)
             }
         }
     }, [pathname])
 
-    const sendEvent = (sid: string, type: string, urlPath: string, duration?: number) => {
+    const sendEvent = (sid: string | null, type: string, urlPath: string, duration?: number, tempSession?: string | null) => {
         const payload = {
             subscriber_id: sid,
             campaign_id: localStorage.getItem("dp_campaign_id"),
             type: type,
             url: window.location.origin + urlPath,
             duration: duration,
-            // Grab IP on the receiver side, or pass client info here if needed
+            temp_session_id: tempSession || undefined,
         }
 
         // Send to your Email App API (The "Receiver")

@@ -7,6 +7,7 @@ interface SubscribePayload {
     email: string;
     first_name?: string;
     tags?: string[];
+    temp_session_id?: string;
 }
 
 interface SubscribeResponse {
@@ -27,7 +28,8 @@ export async function subscribeToNewsletter(payload: SubscribePayload): Promise<
             first_name: payload.first_name || "",
             city,
             country,
-            ip_address: ip
+            ip_address: ip,
+            temp_session_id: payload.temp_session_id
         };
 
         const response = await fetch("https://email.dreamplaypianos.com/api/webhooks/subscribe", {

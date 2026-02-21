@@ -132,11 +132,13 @@ export default function NewsletterPopup() {
 
         try {
             const tag = currentOffer === "shipping" ? "Free Shipping Lead" : "Hand Guide Download";
+            const tempSession = localStorage.getItem("dp_temp_session") || undefined;
 
             const res = await subscribeToNewsletter({
                 email,
                 first_name: "",
                 tags: [tag],
+                temp_session_id: tempSession,
             });
 
             if (!res.success) {
