@@ -30,7 +30,7 @@ export default function FAQList({ items }: { items: FAQItem[] }) {
                         </span>
                     </button>
                     <div
-                        className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === index ? 'max-h-[500px] opacity-100 pb-8' : 'max-h-0 opacity-0'}`}
+                        className={`overflow-hidden transition-all duration-500 ease-in-out ${openIndex === index ? 'max-h-[5000px] opacity-100 pb-8' : 'max-h-0 opacity-0'}`}
                     >
                         <div className="font-sans text-sm md:text-base text-neutral-600 leading-relaxed pr-12 [&_a]:text-blue-500 [&_a]:underline [&_a:hover]:text-blue-600 [&_a]:transition-colors [&_p]:mb-4 [&_p:last-child]:mb-0" dangerouslySetInnerHTML={{ __html: item.answer }} />
                     </div>
