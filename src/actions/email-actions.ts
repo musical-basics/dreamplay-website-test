@@ -126,7 +126,7 @@ export async function subscribeToNewsletter(payload: SubscribePayload): Promise<
                     `;
 
                 await resend.emails.send({
-                    from: 'DreamPlay <lionel@updates.dreamplaypianos.com>',
+                    from: 'DreamPlay <lionel@email.dreamplaypianos.com>',
                     to: payload.email,
                     subject: emailSubject,
                     html: emailHtml,

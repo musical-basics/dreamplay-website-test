@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
 
             try {
                 await resend.emails.send({
-                    from: "DreamPlay <noreply@updates.dreamplaypianos.com>",
+                    from: "DreamPlay <lionel@email.dreamplaypianos.com>",
                     to: "support@dreamplaypianos.com",
                     replyTo: email,
                     subject: `[Contact Form] ${subject} — from ${name}`,

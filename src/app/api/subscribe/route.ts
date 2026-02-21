@@ -78,7 +78,7 @@ export async function POST(request: Request) {
             console.log("DEBUG: Attempting to send email to:", email);
             try {
                 const emailResponse = await resend.emails.send({
-                    from: 'DreamPlay <noreply@updates.dreamplaypianos.com>',
+                    from: 'DreamPlay <lionel@email.dreamplaypianos.com>',
                     to: email,
                     subject: 'Here is your Hand-Measuring Guide 🎹',
                     html: `
