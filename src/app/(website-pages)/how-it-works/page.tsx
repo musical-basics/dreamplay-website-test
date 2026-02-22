@@ -193,6 +193,7 @@ const AnimatedBar = ({ targetWidth, color }: { targetWidth: number; color: strin
 export default function HowItWorksPage() {
     // --- CALCULATOR STATE ---
     const [sliderValue, setSliderValue] = useState(50);
+    const [bioLightbox, setBioLightbox] = useState(false);
     const [result, setResult] = useState({
         val: 8.0,
         cm: 20.3,
@@ -470,16 +471,30 @@ export default function HowItWorksPage() {
                     </div>
                 </section>
 
-                {/* ═══ BIOMECHANICAL IMAGE ═══ */}
+                {/* ═══ BIOMECHANICAL IMAGE WITH LIGHTBOX ═══ */}
                 <section className="w-full bg-[#050505] flex justify-center pb-12 md:pb-24">
-                    <div className="w-full max-w-4xl px-6">
-                        <Image
-                            src="/images/Biomechanical Impact.jpeg"
-                            alt="Biomechanical Impact of Key Width on Small Hands — comparing strain on standard vs. alternative sized keyboards"
-                            width={1200}
-                            height={900}
-                            className="w-full h-auto"
-                        />
+                    <div className="flex flex-col items-center gap-3 w-full max-w-3xl px-6">
+                        <p className="font-sans text-xs font-medium uppercase tracking-[0.2em] text-white/50 text-center">
+                            Impact of Key Width on Small Hands
+                        </p>
+                        <button
+                            onClick={() => setBioLightbox(true)}
+                            className="group relative border border-white/10 hover:border-white/25 transition-all duration-300 cursor-pointer overflow-hidden w-full"
+                        >
+                            <Image
+                                src="/images/Biomechanical Impact.jpeg"
+                                alt="Biomechanical Impact of Key Width on Small Hands"
+                                width={1200}
+                                height={900}
+                                className="w-full h-auto opacity-85 group-hover:opacity-100 transition-opacity duration-300"
+                            />
+                        </button>
+                        <button
+                            onClick={() => setBioLightbox(true)}
+                            className="font-sans text-[10px] uppercase tracking-[0.2em] text-white/35 hover:text-white/60 transition-colors cursor-pointer"
+                        >
+                            Click to enlarge
+                        </button>
                     </div>
                 </section>
 
@@ -576,6 +591,28 @@ export default function HowItWorksPage() {
                 </section>
 
             </main>
+
+            {/* Biomechanical Lightbox */}
+            {bioLightbox && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm cursor-pointer"
+                    onClick={() => setBioLightbox(false)}
+                >
+                    <div className="relative max-w-5xl w-full mx-4 md:mx-8">
+                        <Image
+                            src="/images/Biomechanical Impact.jpeg"
+                            alt="Biomechanical Impact of Key Width on Small Hands"
+                            width={1200}
+                            height={900}
+                            className="w-full h-auto"
+                        />
+                        <p className="text-center font-sans text-xs text-white/50 mt-4">
+                            Click anywhere to close
+                        </p>
+                    </div>
+                </div>
+            )}
+
             <Footer />
         </div>
     );
