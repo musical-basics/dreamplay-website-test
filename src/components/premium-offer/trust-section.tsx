@@ -42,7 +42,7 @@ export function TrustSection() {
                 </AccordionTrigger>
                 <AccordionContent className="font-sans text-sm leading-relaxed text-muted-foreground md:text-base">
                   <p>
-                    Our supplier, Ebulent, has been a cornerstone of precision
+                    Our Supplier, Ebulent Technologies Corporation, has been a cornerstone of precision
                     manufacturing in Shenzhen for over two decades. We chose them
                     not just for their factory size, but for their specific
                     expertise in building next-generation musical instruments.
