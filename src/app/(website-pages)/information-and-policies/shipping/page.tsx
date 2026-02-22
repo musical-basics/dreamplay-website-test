@@ -35,7 +35,7 @@ function InlineShippingCTA() {
     return (
         <section className="bg-[#0a0a0f] text-white py-20 border-y border-white/5">
             <div className="max-w-2xl mx-auto px-6 text-center reveal-el opacity-0 translate-y-8 transition-all duration-700">
-                <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/40 mb-4">VIP Offer</p>
+                <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/40 mb-4">Limited Time VIP Offer</p>
                 <h2 className="font-serif text-3xl md:text-4xl tracking-tight leading-tight text-white mb-4">
                     Waive your Global Shipping Fees.
                 </h2>
