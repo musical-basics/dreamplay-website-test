@@ -38,7 +38,7 @@ export function CreatorSection() {
 
             <p className="mt-8 font-sans text-sm leading-relaxed text-background/70 md:text-base">
               {'"'}I{"'"}ve been a concert pianist for years, performing at
-              Carnegie Hall, Lincoln Center, and venues around the world. But
+              Carnegie Hall, the Kennedy Center, Barbican Hall and venues around the world. But
               there{"'"}s something most people never saw: I was constantly
               fighting against the piano.{'"'}
             </p>
