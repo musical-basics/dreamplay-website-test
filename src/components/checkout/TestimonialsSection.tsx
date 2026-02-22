@@ -51,10 +51,10 @@ export default function TestimonialsSection() {
                             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                         >
                             {stories.map((story, i) => (
-                                <div key={i} className="min-w-full grid md:grid-cols-2 gap-6 md:gap-16 items-center px-1 md:px-4">
+                                <div key={i} className="min-w-full grid md:grid-cols-2 gap-4 md:gap-16 items-center px-3 md:px-4">
 
                                     {/* Image Column — sharp edges */}
-                                    <div className="relative aspect-[16/9] md:aspect-square w-full rounded-none overflow-hidden bg-neutral-100">
+                                    <div className="relative aspect-[2/1] md:aspect-square w-full rounded-none overflow-hidden bg-neutral-100">
                                         <Image
                                             src={story.image}
                                             alt="Pianist playing"
@@ -65,7 +65,7 @@ export default function TestimonialsSection() {
 
                                     {/* Content Column */}
                                     <div className="flex flex-col justify-center">
-                                        <blockquote className="font-serif text-base md:text-4xl leading-snug md:leading-tight mb-4 md:mb-12 text-neutral-800">
+                                        <blockquote className="font-serif text-sm md:text-4xl leading-relaxed md:leading-tight mb-4 md:mb-12 text-neutral-800">
                                             {story.quote}
                                         </blockquote>
 
