@@ -37,11 +37,11 @@ export default function TestimonialsSection() {
     const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
 
     return (
-        <section className="bg-white text-black py-12 md:py-20 px-4 md:px-6 overflow-hidden md:min-h-screen flex items-center">
+        <section className="bg-white text-black py-10 md:py-20 px-4 md:px-6 overflow-hidden md:min-h-screen flex items-center">
             <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-16">
-                    <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-4 block">Why We're Doing This</span>
-                    <h2 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight text-black">Playing the piano<br />doesn't have to hurt</h2>
+                <div className="text-center mb-8 md:mb-16">
+                    <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-3 md:mb-4 block">Why We're Doing This</span>
+                    <h2 className="font-serif text-3xl md:text-5xl tracking-tight leading-tight text-black">Playing the piano<br />doesn't have to hurt</h2>
                 </div>
 
                 <div className="relative">
@@ -54,7 +54,7 @@ export default function TestimonialsSection() {
                                 <div key={i} className="min-w-full grid md:grid-cols-2 gap-6 md:gap-16 items-center px-1 md:px-4">
 
                                     {/* Image Column — sharp edges */}
-                                    <div className="relative aspect-[4/3] md:aspect-square w-full rounded-none overflow-hidden bg-neutral-100">
+                                    <div className="relative aspect-[16/9] md:aspect-square w-full rounded-none overflow-hidden bg-neutral-100">
                                         <Image
                                             src={story.image}
                                             alt="Pianist playing"
@@ -65,13 +65,13 @@ export default function TestimonialsSection() {
 
                                     {/* Content Column */}
                                     <div className="flex flex-col justify-center">
-                                        <blockquote className="font-serif text-lg md:text-4xl leading-snug md:leading-tight mb-6 md:mb-12 text-neutral-800">
+                                        <blockquote className="font-serif text-base md:text-4xl leading-snug md:leading-tight mb-4 md:mb-12 text-neutral-800">
                                             {story.quote}
                                         </blockquote>
 
-                                        <div className="flex items-end justify-between border-t border-black/10 pt-8">
-                                            <div className="flex items-center gap-4">
-                                                <div className="relative w-12 h-12 rounded-none overflow-hidden bg-neutral-200 flex-shrink-0">
+                                        <div className="flex items-end justify-between border-t border-black/10 pt-4 md:pt-8">
+                                            <div className="flex items-center gap-3 md:gap-4">
+                                                <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-none overflow-hidden bg-neutral-200 flex-shrink-0">
                                                     <Image
                                                         src={story.avatar}
                                                         alt={story.name}
@@ -80,8 +80,8 @@ export default function TestimonialsSection() {
                                                     />
                                                 </div>
                                                 <div>
-                                                    <h4 className="font-sans text-lg font-bold text-black">{story.name}</h4>
-                                                    <p className="font-sans text-sm text-neutral-500 leading-tight mt-1">{story.role}<br />{story.school}</p>
+                                                    <h4 className="font-sans text-sm md:text-lg font-bold text-black">{story.name}</h4>
+                                                    <p className="font-sans text-xs md:text-sm text-neutral-500 leading-tight mt-0.5 md:mt-1">{story.role}<br />{story.school}</p>
                                                 </div>
                                             </div>
                                         </div>
