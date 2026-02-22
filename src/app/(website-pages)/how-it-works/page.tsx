@@ -309,6 +309,7 @@ export default function HowItWorksPage() {
                                     <div className="flex justify-between font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mt-4 px-1">
                                         <span>Small (6 in)</span><span>Average (8 in)</span><span>Large (10 in)</span>
                                     </div>
+                                    <p className="font-sans text-xs text-white/40 text-center mt-4 italic">Drag the slider to see which Zone your hand size belongs to.</p>
                                 </div>
 
                                 <div className="bg-[#0a0a0a] rounded-none p-6 flex items-center gap-6 mt-auto relative z-10 border border-white/10">
