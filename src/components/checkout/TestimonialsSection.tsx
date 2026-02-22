@@ -39,7 +39,7 @@ export default function TestimonialsSection() {
     const story = stories[currentSlide];
 
     return (
-        <section className="bg-white text-black py-16 md:py-24 px-6 md:min-h-screen flex items-center">
+        <section className="bg-white text-black pt-28 pb-16 md:py-24 px-6 md:min-h-screen flex items-center">
             <div className="max-w-7xl mx-auto w-full">
                 <div className="text-center mb-10 md:mb-16">
                     <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-3 block">Why We&apos;re Doing This</span>
