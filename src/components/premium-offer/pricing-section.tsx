@@ -63,6 +63,21 @@ export function PricingSection() {
           </p>
         </div>
 
+        {/* Price Increase Call-out */}
+        <div className="mb-12 border border-amber-500/30 bg-amber-500/5 px-6 py-5 max-w-2xl">
+          <div className="flex items-start gap-3">
+            <span className="mt-0.5 text-amber-400 text-lg leading-none">⚡</span>
+            <div>
+              <p className="font-sans text-sm font-semibold text-amber-300/90">
+                Prices increase in March 2026
+              </p>
+              <p className="mt-1 font-sans text-xs leading-relaxed text-background/50">
+                Founder&apos;s Batch pricing is ending soon. Lock in current rates before the retail MSRP of $1,199 takes effect.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="grid gap-6 lg:grid-cols-3">
           {tiers.map((tier) => (
             <div
