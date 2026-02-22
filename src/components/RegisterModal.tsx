@@ -4,7 +4,7 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { subscribeToNewsletter } from "@/actions/email-actions";
 import { trackEmailConversion } from "@/components/EmailTracker";
-import { X, CheckCircle2, ChevronRight, Loader2 } from "lucide-react";
+import { X, CheckCircle2, ChevronRight, Loader2, Mail } from "lucide-react";
 
 interface RegisterModalProps {
     isOpen: boolean;
@@ -86,10 +86,6 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
 
             trackEmailConversion('conversion_t1', window.location.pathname);
             setStep(5);
-
-            setTimeout(() => {
-                window.location.href = "/vip";
-            }, 2500);
 
         } catch (err: any) {
             setError(err.message || "Something went wrong.");
@@ -194,16 +190,21 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
                     </form>
                 )}
 
-                {/* Step 5: Success */}
+                {/* Step 5: Success — Check Email */}
                 {step === 5 && (
                     <div className="text-center py-6">
-                        <div className="mx-auto bg-green-500/20 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                            <CheckCircle2 className="text-green-500" size={32} strokeWidth={2} />
+                        <div className="mx-auto bg-sky-500/20 w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                            <Mail className="text-sky-400" size={28} strokeWidth={2} />
                         </div>
-                        <h3 className="font-serif text-3xl mb-4 text-white">Success!</h3>
-                        <p className="text-white/60 text-sm mb-8 leading-relaxed">Your VIP account has been created. Your free shipping access is now officially unlocked.</p>
-                        <p className="text-white/40 font-sans text-xs flex items-center justify-center gap-2">
-                            <Loader2 size={14} className="animate-spin" /> Redirecting to dashboard...
+                        <h3 className="font-serif text-3xl mb-4 text-white">Check your email</h3>
+                        <p className="text-white/60 text-sm mb-6 leading-relaxed">
+                            We&apos;ve sent a verification link to <span className="text-white/80">{email}</span>. Click the link to activate your account.
+                        </p>
+                        <p className="text-white/40 font-sans text-xs leading-relaxed">
+                            Didn&apos;t receive the email? Check your spam folder or{" "}
+                            <button onClick={() => { setStep(1); setPassword(''); }} className="text-white/60 hover:text-white underline underline-offset-4 transition-colors cursor-pointer">
+                                try again
+                            </button>.
                         </p>
                     </div>
                 )}
