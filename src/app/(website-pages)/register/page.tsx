@@ -209,9 +209,9 @@ export default function RegisterPage() {
                 {/* Footer Links */}
                 {step < 5 && (
                     <div className="mt-8 text-center space-y-3">
-                        <p className="text-white/30 text-xs font-sans">
+                        <p className="text-white/40 text-sm font-sans">
                             Already have an account?{" "}
-                            <a href="/login" className="text-white/60 hover:text-white underline underline-offset-4 transition-colors">
+                            <a href="/login" className="text-white/70 hover:text-white underline underline-offset-4 transition-colors font-medium">
                                 Log in
                             </a>
                         </p>
