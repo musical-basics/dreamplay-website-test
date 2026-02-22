@@ -4,12 +4,13 @@ import { ArrowRight } from "lucide-react"
 const tiers = [
   {
     badge: null,
-    title: "Reserve (50%)",
+    title: "Reserve Deposit",
     subtitle: "Late 2026 / Early 2027",
     price: "$299",
+    msrp: null,
     description:
-      "Pay 50% now, the rest (50% + shipping/taxes) when ready to ship. Secures your spot in Batch 2.",
-    includes: ["DreamPlay One Keyboard", "Keyboard Stand", "Sustain Pedal"],
+      "Pay a deposit now, and the rest + shipping/taxes once we are ready to ship.",
+    includes: ["DreamPlay One Keyboard"],
     delivery: "Dec 2026",
     backers: 2,
     remaining: 8,
@@ -21,6 +22,7 @@ const tiers = [
     title: "DreamPlay One",
     subtitle: "Founder's Batch",
     price: "$549",
+    msrp: "$1,099",
     description:
       "The DreamPlay One Keyboard. Available in DS5.5 or DS6.0. Choose Midnight Black or Pearl White.",
     includes: ["DreamPlay One Keyboard"],
@@ -35,6 +37,7 @@ const tiers = [
     title: "DreamPlay Bundle",
     subtitle: "Founder's Batch",
     price: "$599",
+    msrp: "$1,199",
     description:
       "The complete DreamPlay experience. Keyboard, adjustable stand, responsive sustain pedal, and comfortable padded bench.",
     includes: ["DreamPlay One Keyboard", "Keyboard Stand", "Sustain Pedal", "Padded Bench"],
@@ -100,9 +103,16 @@ export function PricingSection() {
                 {tier.subtitle}
               </p>
 
-              <p className="mt-6 font-serif text-4xl text-background md:text-5xl">
-                {tier.price}
-              </p>
+              <div className="mt-6 flex items-baseline gap-3">
+                <p className="font-serif text-4xl text-background md:text-5xl">
+                  {tier.price}
+                </p>
+                {tier.msrp && (
+                  <p className="font-sans text-lg text-background/30 line-through">
+                    {tier.msrp}
+                  </p>
+                )}
+              </div>
 
               <p className="mt-6 font-sans text-sm leading-relaxed text-background/60">
                 {tier.description}
