@@ -64,10 +64,10 @@ export function StatsSection() {
             See the Science of Strain
           </a>
           <a
-            href="/why-narrow"
+            href="/better-practice"
             className="inline-block border border-white px-6 py-3 text-xs font-sans uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-black md:px-8 md:text-sm"
           >
-            Why Narrow Keys Matter
+            The Benefits Of Narrow Keys
           </a>
         </div>
       </div>
