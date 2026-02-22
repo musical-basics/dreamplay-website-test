@@ -26,6 +26,7 @@
             "**/*.backup.*",
             "**/*backup*",
             "**/old-homepage/**",
+            "_old/**",
             "**/*.standalone.*",
             "src/app/(website-pages)/customize/CustomizeClient.backup.tsx"
         ]
