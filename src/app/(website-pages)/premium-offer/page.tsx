@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { Playfair_Display, Inter } from "next/font/google"
 import { SpecialOfferHeader } from "@/components/special-offer/header"
 import { CrowdfundingSection } from "@/components/premium-offer/crowdfunding-section"
@@ -46,6 +47,20 @@ export default function PremiumOfferPage() {
                 </section>
                 <FeaturesSection />
                 <StanfordQuoteSection />
+
+                {/* Biomechanical Impact Image */}
+                <section className="relative overflow-hidden bg-foreground">
+                    <div className="mx-auto max-w-4xl px-6 pb-16 md:pb-24">
+                        <Image
+                            src="/images/Biomechanical Impact.jpeg"
+                            alt="Biomechanical Impact of Key Width on Small Hands — comparing strain on standard vs. alternative sized keyboards"
+                            width={1200}
+                            height={900}
+                            className="w-full h-auto"
+                        />
+                    </div>
+                </section>
+
                 <HeroImageSection />
                 <SizeFinderSection />
                 <SizeVisualSection />

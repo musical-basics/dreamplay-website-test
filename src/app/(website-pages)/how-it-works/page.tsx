@@ -470,6 +470,19 @@ export default function HowItWorksPage() {
                     </div>
                 </section>
 
+                {/* ═══ BIOMECHANICAL IMAGE ═══ */}
+                <section className="w-full bg-[#050505] flex justify-center pb-12 md:pb-24">
+                    <div className="w-full max-w-4xl px-6">
+                        <Image
+                            src="/images/Biomechanical Impact.jpeg"
+                            alt="Biomechanical Impact of Key Width on Small Hands — comparing strain on standard vs. alternative sized keyboards"
+                            width={1200}
+                            height={900}
+                            className="w-full h-auto"
+                        />
+                    </div>
+                </section>
+
 
                 {/* ═══ SECTION 4: RESEARCH — DARK ═══ */}
                 <section className="w-full bg-[#050505] text-white flex flex-col items-center py-24 md:py-40">
