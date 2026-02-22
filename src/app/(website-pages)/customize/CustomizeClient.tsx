@@ -104,6 +104,23 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             total: 250,
             highlight: true,
             savings: "$600",
+        },
+        {
+            id: 'signature',
+            badge: "Founder's Circle",
+            title: "DreamPlay Signature",
+            subtitle: "",
+            price: "$999",
+            retailPrice: "$1,599.00",
+            originalPrice: null,
+            description: "Join the extremely limited Founder's Circle. Receive a keyboard with your personalized name engraved, plus Lifetime Access to Lionel Yu's entire Piano Masterclass ($700 value).",
+            includes: ["DreamPlay One Keyboard", "Keyboard Stand", "Sustain Pedal", "Padded Bench", "Personalized Name Engraving", "Lifetime Piano Masterclass Access"],
+            delivery: "Aug 2026",
+            backers: 3,
+            remaining: 7,
+            total: 10,
+            highlight: false,
+            savings: "$600",
         }
     ];
 
@@ -290,7 +307,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
     const handleSelectTier = (tierId: string) => {
         setAppState(prev => ({ ...prev, selectedTier: tierId }));
 
-        if (tierId === 'full' || tierId === 'deposit' || tierId === 'solo') {
+        if (tierId === 'full' || tierId === 'deposit' || tierId === 'solo' || tierId === 'signature') {
             const sizeParam = encodeURIComponent(appState.size || 'Not Selected');
             const colorParam = encodeURIComponent(appState.color || 'Not Selected');
             const propertiesParams = `&properties[Size]=${sizeParam}&properties[Finish]=${colorParam}`;
@@ -307,6 +324,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             if (tierId === 'full') baseUrl = getCheckoutUrl(urls.bundle, "52209394549050");
             else if (tierId === 'deposit') baseUrl = getCheckoutUrl(urls.deposit, "52213397291322");
             else if (tierId === 'solo') baseUrl = getCheckoutUrl(urls.solo, "");
+            else if (tierId === 'signature') baseUrl = getCheckoutUrl((urls as any).signature, "");
 
             if (baseUrl) {
                 const separator = baseUrl.includes('?') ? '&' : '?';
@@ -742,7 +760,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                         </div>
                     </div>
 
-                    <div className="grid gap-6 lg:grid-cols-3">
+                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                         {tiers.filter(t => !t.hidden).map(tier => {
                             const isSelected = appState.selectedTier === tier.id;
                             const isHighlight = tier.highlight;
