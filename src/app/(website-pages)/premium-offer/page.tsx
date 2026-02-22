@@ -12,6 +12,7 @@ import { SpecsSection } from "@/components/premium-offer/specs-section"
 import { CreatorSection } from "@/components/premium-offer/creator-section"
 import { TrustSection } from "@/components/premium-offer/trust-section"
 import { PricingSection } from "@/components/premium-offer/pricing-section"
+import { StanfordQuoteSection } from "@/components/premium-offer/stanford-quote-section"
 import { GuaranteeSection } from "@/components/premium-offer/guarantee-section"
 import { HeroImageSection } from "@/components/premium-offer/hero-image-section"
 import Footer from "@/components/Footer"
@@ -44,6 +45,7 @@ export default function PremiumOfferPage() {
                     <VideoSection />
                 </section>
                 <FeaturesSection />
+                <StanfordQuoteSection />
                 <HeroImageSection />
                 <SizeFinderSection />
                 <SizeVisualSection />
