@@ -51,27 +51,27 @@ export default function TestimonialsSection() {
                             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                         >
                             {stories.map((story, i) => (
-                                <div key={i} className="min-w-full grid md:grid-cols-2 gap-4 md:gap-16 items-center px-3 md:px-4">
+                                <div key={i} className="min-w-full px-4 md:px-4">
+                                    <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
 
-                                    {/* Image Column — sharp edges */}
-                                    <div className="relative aspect-[2/1] md:aspect-square w-full rounded-none overflow-hidden bg-neutral-100">
-                                        <Image
-                                            src={story.image}
-                                            alt="Pianist playing"
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
+                                        {/* Image Column — hidden on mobile, shown on md+ */}
+                                        <div className="relative hidden md:block aspect-square w-full rounded-none overflow-hidden bg-neutral-100">
+                                            <Image
+                                                src={story.image}
+                                                alt="Pianist playing"
+                                                fill
+                                                className="object-cover"
+                                            />
+                                        </div>
 
-                                    {/* Content Column */}
-                                    <div className="flex flex-col justify-center">
-                                        <blockquote className="font-serif text-sm md:text-4xl leading-relaxed md:leading-tight mb-4 md:mb-12 text-neutral-800">
-                                            {story.quote}
-                                        </blockquote>
+                                        {/* Content Column */}
+                                        <div className="flex flex-col justify-center">
+                                            <blockquote className="font-serif text-lg md:text-4xl leading-relaxed md:leading-tight mb-6 md:mb-12 text-neutral-800">
+                                                {story.quote}
+                                            </blockquote>
 
-                                        <div className="flex items-end justify-between border-t border-black/10 pt-4 md:pt-8">
-                                            <div className="flex items-center gap-3 md:gap-4">
-                                                <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-none overflow-hidden bg-neutral-200 flex-shrink-0">
+                                            <div className="flex items-center gap-4 border-t border-black/10 pt-6 md:pt-8">
+                                                <div className="relative w-12 h-12 rounded-none overflow-hidden bg-neutral-200 flex-shrink-0">
                                                     <Image
                                                         src={story.avatar}
                                                         alt={story.name}
@@ -80,8 +80,8 @@ export default function TestimonialsSection() {
                                                     />
                                                 </div>
                                                 <div>
-                                                    <h4 className="font-sans text-sm md:text-lg font-bold text-black">{story.name}</h4>
-                                                    <p className="font-sans text-xs md:text-sm text-neutral-500 leading-tight mt-0.5 md:mt-1">{story.role}<br />{story.school}</p>
+                                                    <h4 className="font-sans text-base md:text-lg font-bold text-black">{story.name}</h4>
+                                                    <p className="font-sans text-xs md:text-sm text-neutral-500 leading-tight mt-0.5">{story.role}<br />{story.school}</p>
                                                 </div>
                                             </div>
                                         </div>
