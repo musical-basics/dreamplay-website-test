@@ -87,7 +87,12 @@ export const DEFAULT_FAQ_ITEMS: FAQItem[] = [
         category: 'The Science & Research',
         question: "Do universities and conservatories recognize alternative sizes?",
         answer: `<p>Yes, leading institutions are spearheading this revolution. Southern Methodist University (SMU) in Dallas, under Dr. Carol Leone, was the first major US institution to formally integrate DS5.5 and DS6.0 keyboards in 2000.</p>
-        <p>Today, universities including the University of North Texas, Johns Hopkins Peabody Institute, Eastman School of Music, and the University of Colorado Boulder maintain alternatively sized keyboards to protect their students from injury and expand their repertoire potential.</p>`
+        <p>Today, universities including the University of North Texas, Johns Hopkins Peabody Institute, Eastman School of Music, and the University of Colorado Boulder maintain alternatively sized keyboards to protect their students from injury and expand their repertoire potential.</p>
+        <div class="my-6 border-l-4 border-neutral-300 bg-neutral-50 p-6 rounded-r-xl">
+            <p class="font-serif text-base md:text-lg italic leading-relaxed text-neutral-800 mb-4">"I cannot begin to describe the career-changing, and even life-changing, benefits our students have reaped from having these instruments to practice on daily. Their first response though was, 'Why did it take so long? Why did we have to suffer so unnecessarily?'"</p>
+            <p class="font-sans text-sm font-bold text-neutral-900">Barbara Lister-Sink, Ed.D.</p>
+            <p class="font-sans text-xs text-neutral-500">Salem College School of Music, Director, Graduate Music Program</p>
+        </div>`
     },
     {
         id: '109',

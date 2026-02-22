@@ -37,7 +37,7 @@ export default function TestimonialsSection() {
     const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
 
     return (
-        <section className="bg-white text-black py-20 px-6 overflow-hidden min-h-screen flex items-center">
+        <section className="bg-white text-black py-12 md:py-20 px-4 md:px-6 overflow-hidden md:min-h-screen flex items-center">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16">
                     <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-4 block">Why We're Doing This</span>
@@ -51,10 +51,10 @@ export default function TestimonialsSection() {
                             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                         >
                             {stories.map((story, i) => (
-                                <div key={i} className="min-w-full grid md:grid-cols-2 gap-8 md:gap-16 items-center px-4">
+                                <div key={i} className="min-w-full grid md:grid-cols-2 gap-6 md:gap-16 items-center px-1 md:px-4">
 
                                     {/* Image Column — sharp edges */}
-                                    <div className="relative aspect-square w-full rounded-none overflow-hidden bg-neutral-100">
+                                    <div className="relative aspect-[4/3] md:aspect-square w-full rounded-none overflow-hidden bg-neutral-100">
                                         <Image
                                             src={story.image}
                                             alt="Pianist playing"
@@ -65,7 +65,7 @@ export default function TestimonialsSection() {
 
                                     {/* Content Column */}
                                     <div className="flex flex-col justify-center">
-                                        <blockquote className="font-serif text-3xl md:text-4xl leading-tight mb-12 text-neutral-800">
+                                        <blockquote className="font-serif text-lg md:text-4xl leading-snug md:leading-tight mb-6 md:mb-12 text-neutral-800">
                                             {story.quote}
                                         </blockquote>
 

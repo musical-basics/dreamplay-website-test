@@ -13,16 +13,19 @@ export default function BetterPracticePage() {
             <main className="pt-[100px]">
                 {/* ═══ HERO — DARK ═══ */}
                 <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden bg-[#050505] py-20 text-center">
-                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0,transparent_50%)]"></div>
+                    <div className="absolute inset-0">
+                        <img src="/images/BW Piano (1).jpg" alt="" className="h-full w-full object-cover opacity-30" />
+                    </div>
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#050505]/60 via-transparent to-[#050505]"></div>
                     <AnimatedSection className="relative z-10 mx-auto max-w-4xl px-6">
                         <p className="mb-6 font-sans text-[10px] uppercase tracking-[0.3em] text-white/50">
                             Performance &amp; Virtuosity
                         </p>
-                        <h1 className="mb-8 font-serif text-5xl font-semibold leading-tight tracking-tight md:text-7xl">
+                        <h1 className="mb-8 font-serif text-5xl font-semibold leading-tight tracking-tight text-white md:text-7xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
                             Stop practicing the stretch.<br />
-                            <span className="italic text-white/70">Start playing the music.</span>
+                            <span className="italic text-white">Start playing the music.</span>
                         </h1>
-                        <p className="mx-auto max-w-2xl font-sans text-base leading-relaxed text-white/60 md:text-lg">
+                        <p className="mx-auto max-w-2xl font-sans text-base leading-relaxed text-white/80 md:text-lg drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)]">
                             When you spend 90% of your energy just trying to reach the notes, you have no mental capacity left to actually shape the music. It&apos;s time to unlock your true competence.
                         </p>
                     </AnimatedSection>
@@ -174,13 +177,37 @@ export default function BetterPracticePage() {
                                 The reality is the exact opposite of what most people fear. Because the narrower keys teach your hands to play without tension, your brain maps a healthier, more relaxed technique. When you return to a standard piano, that relaxed muscle memory translates with you.
                             </p>
 
-                            <div className="mx-auto mt-10 max-w-2xl border border-white/10 bg-white/5 p-8 md:p-10">
+                            <div className="mx-auto mt-10 max-w-2xl border border-white/10 bg-white/5 p-8 md:p-10 text-center">
+                                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+                                </div>
+                                <h3 className="mb-4 font-sans text-sm font-bold uppercase tracking-widest text-white">100% Satisfaction Guaranteed</h3>
                                 <p className="font-sans text-base leading-relaxed text-white/60">
                                     While we at DreamPlay — and every small-handed pianist we know — love the narrower keyboard, we can&apos;t guarantee every single person will. For this reason, we offer a <strong className="text-white">90-day full refund, no questions asked</strong> policy, including return shipping paid for. We also offer <strong className="text-white">free exchanges</strong> in case you try one size and decide you&apos;d like the other.
                                 </p>
                                 <Link href="/information-and-policies/shipping" className="mt-6 inline-flex items-center gap-2 font-sans text-sm font-medium text-white underline underline-offset-4 decoration-white/30 hover:decoration-white transition-colors">
                                     See full policy details <ArrowRight className="w-4 h-4" />
                                 </Link>
+                            </div>
+                        </AnimatedSection>
+                    </div>
+                </section>
+
+                {/* ═══ ACADEMIC TESTIMONIAL — Barbara Lister-Sink ═══ */}
+                <section className="border-t border-white/10 bg-[#050505] py-24 text-white md:py-32">
+                    <div className="container mx-auto max-w-4xl px-6 text-center">
+                        <AnimatedSection>
+                            <p className="mb-4 font-sans text-[10px] uppercase tracking-[0.3em] text-white/50">From the Academy</p>
+                            <div className="relative border border-white/10 bg-[#0a0a0f] p-10 text-left shadow-2xl md:p-16 md:text-center">
+                                <div className="absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                                <Quote className="mx-auto mb-6 h-10 w-10 text-white/15" />
+                                <blockquote className="mb-8 font-serif text-2xl leading-relaxed text-white/90 md:text-3xl">
+                                    &quot;I cannot begin to describe the career-changing, and even life-changing, benefits our students have reaped from having these instruments to practice on daily. Their first response though was, &apos;Why did it take so long? Why did we have to suffer so unnecessarily?&apos;&quot;
+                                </blockquote>
+                                <div className="font-sans">
+                                    <p className="text-sm font-bold uppercase tracking-wider text-white">Barbara Lister-Sink, Ed.D.</p>
+                                    <p className="mt-1 text-xs text-white/50">Salem College School of Music, Director, Graduate Music Program</p>
+                                </div>
                             </div>
                         </AnimatedSection>
                     </div>
