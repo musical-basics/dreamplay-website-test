@@ -206,8 +206,8 @@ export default function NewsletterPopup() {
 
                             <p className="text-white/60 font-sans text-sm leading-relaxed">
                                 {activePopup === "shipping"
-                                    ? "Join our VIP list and get a Free Global Shipping pass (saves $150+) applied to your next reservation. Limited availability."
-                                    : "Enter your email to instantly download our Printable 1:1 Hand-Measuring Guide to see exactly which piano size fits your biology."}
+                                    ? "Join our VIP list and get a Free Shipping Pass applied to your next reservation. Limited availability."
+                                    : "Enter your email to instantly download our Hand-Measuring Guide to see exactly which piano size will help you the most."}
                             </p>
                         </div>
 
