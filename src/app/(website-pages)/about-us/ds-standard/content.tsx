@@ -179,7 +179,7 @@ export default function DSStandardContent() {
                                     </blockquote>
                                     <div className="space-y-6 mb-12">
                                         <p className="font-sans text-base text-neutral-600 leading-relaxed">
-                                            Our vision, aligned with the DS Standard Foundation, is a world where <strong>DS5.5 and DS6.0 keyboards are standard equipment in every concert hall and university</strong>.
+                                            Our vision, aligned with the DS Standard Foundation and PASK Piano, is a world where <strong>DS5.5® and DS6.0® pianos and keyboards are standard equipment in every concert hall and university</strong>.
                                         </p>
                                     </div>
                                     <div className="flex flex-col sm:flex-row gap-6">
