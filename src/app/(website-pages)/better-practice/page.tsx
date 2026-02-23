@@ -44,13 +44,13 @@ export default function BetterPracticePage() {
                                 </h2>
                                 <div className="space-y-6 font-sans text-base leading-relaxed text-neutral-600">
                                     <p>
-                                        The greater the degree of technical difficulty for a pianist, the greater the amount of practice required. This means the pianist must spend more time on technical issues, with less time and mental capacity to focus on musical issues.
+                                        The greater the degree of technical difficulty for a pianist, <strong>the greater the amount of practice required</strong>. This means the pianist must spend more time on technical issues, with <span className="underline decoration-neutral-400 underline-offset-4">less time and mental capacity</span> to focus on musical issues.
                                     </p>
                                     <p>
-                                        When small-handed pianists play a piece on a smaller keyboard that they previously learnt on the conventional keyboard, it is often a revelation. They immediately become aware of how much physical and mental effort they previously had to invest just to &quot;get the notes&quot; in passages that were not &quot;under the hand&quot;.
+                                        When small-handed pianists play a piece on a smaller keyboard that they previously learnt on the conventional keyboard, <strong>it is often a revelation</strong>. They immediately become aware of how much <span className="underline decoration-neutral-400 underline-offset-4">physical and mental effort</span> they previously had to invest just to &quot;get the notes&quot; in passages that were not &quot;under the hand&quot;.
                                     </p>
                                     <p>
-                                        Suddenly, a pianist no longer has to focus on just reaching the octaves, but has the ability to relax the hand and think about shaping the musical line being played by both hands.
+                                        Suddenly, a pianist no longer has to focus on just reaching the octaves, but has the ability to <span className="underline decoration-neutral-400 underline-offset-4">relax the hand</span> and think about <strong>shaping the musical line</strong> being played by both hands.
                                     </p>
                                 </div>
                             </AnimatedSection>
