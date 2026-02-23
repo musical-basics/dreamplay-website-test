@@ -20,6 +20,22 @@ const specs = [
     label: "Active Key Width",
     value: 'DS 6.0: 44.53" (1131 mm) | DS 5.5: 41.1" (1044 mm)',
   },
+  {
+    label: "White Key Width (Center-to-Center)",
+    value: 'DS 6.0: 0.857" / 21.8 mm | DS 5.5: 0.791" / 20.1 mm',
+  },
+  {
+    label: "Black Key Width (Top)",
+    value: 'DS 6.0: 0.346" / 8.8 mm | DS 5.5: 0.320" / 8.1 mm',
+  },
+  {
+    label: "Gap Between Black Keys",
+    value: 'DS 6.0: 0.511" / 13.0 mm | DS 5.5: 0.471" / 12.0 mm',
+  },
+  {
+    label: "Key Pivot Length",
+    value: '7.5" – 8.5" (folded-action mechanism)',
+  },
   { label: "Action", value: "Graded Hammer Action (Weighted)" },
   { label: "Polyphony", value: "256 Notes (never cut off a sound)" },
   {
