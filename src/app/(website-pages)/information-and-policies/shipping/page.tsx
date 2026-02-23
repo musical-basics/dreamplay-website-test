@@ -187,7 +187,7 @@ export default function ShippingPage() {
                         </div>
 
                         <p className="font-sans text-lg text-neutral-500 max-w-xl mx-auto mb-12 reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-300">
-                            Free delivery to the US, Canada, and Europe. Extended shipping available worldwide.
+                            Subsidized delivery to the US, Canada, and Europe. Extended shipping available worldwide.
                         </p>
 
                         {/* Price Stats */}
