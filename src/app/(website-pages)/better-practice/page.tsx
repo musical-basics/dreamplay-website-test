@@ -22,11 +22,11 @@ export default function BetterPracticePage() {
                             Performance &amp; Virtuosity
                         </p>
                         <h1 className="mb-8 font-serif text-5xl font-semibold leading-tight tracking-tight text-white md:text-7xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
-                            Stop practicing the stretch.<br />
-                            <span className="italic text-white">Start playing the music.</span>
+                            The Benefits Of Practicing on Narrower Keys
                         </h1>
-                        <p className="mx-auto max-w-2xl font-sans text-base leading-relaxed text-white/80 md:text-lg drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)]">
-                            When you spend 90% of your energy just trying to reach the notes, you have no mental capacity left to actually shape the music. It&apos;s time to unlock your true competence.
+                        <p className="mx-auto max-w-2xl font-serif text-2xl leading-relaxed text-white/90 md:text-3xl drop-shadow-[0_1px_6px_rgba(0,0,0,0.8)]">
+                            Stop practicing the stretch.<br />
+                            <span className="italic">Start playing the music.</span>
                         </p>
                     </AnimatedSection>
                 </section>
