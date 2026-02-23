@@ -70,6 +70,22 @@ export default function BetterPracticePage() {
                     </div>
                 </section>
 
+                {/* ═══ CLAUDIA WANG QUOTE — WARM ═══ */}
+                <section className="border-y border-neutral-200 bg-[#f7f3ee] py-20 md:py-28">
+                    <div className="container mx-auto max-w-3xl px-6 text-center">
+                        <AnimatedSection>
+                            <Quote className="mx-auto mb-8 h-8 w-8 text-[#c9a85c]" />
+                            <blockquote className="mb-10 font-serif text-xl italic leading-relaxed text-neutral-800 md:text-2xl">
+                                &ldquo;Everything is easier on the 6.0 for me… I feel very comfortable playing scales, fast passages, or big chords&rdquo;
+                            </blockquote>
+                            <div className="mx-auto mb-4 h-px w-12 bg-neutral-300"></div>
+                            <p className="font-sans text-sm font-semibold tracking-wide text-[#c9a85c]">Claudia Wang</p>
+                            <p className="mt-1 font-sans text-xs text-neutral-500">Master&apos;s Student at Southern Methodist University (SMU), Dallas</p>
+                            <p className="font-sans text-xs text-neutral-500">Pianist With 7.2&quot; Handspan</p>
+                        </AnimatedSection>
+                    </div>
+                </section>
+
                 {/* ═══ VIDEO EVIDENCE — DARK ═══ */}
                 <section className="bg-[#050505] py-24 text-white md:py-32">
                     <div className="container mx-auto max-w-6xl px-6">
