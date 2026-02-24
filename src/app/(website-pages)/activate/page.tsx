@@ -11,12 +11,23 @@ function ActivateForm() {
     const searchParams = useSearchParams();
     const emailFromUrl = searchParams.get("email") || "";
 
+    // Grab the discount code from the email link
+    const discountFromUrl = searchParams.get("discount");
+
     const [email] = useState(emailFromUrl);
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
     const [isComplete, setIsComplete] = useState(false);
+
+    // Save it silently to the browser session so it survives until checkout
+    useEffect(() => {
+        if (discountFromUrl) {
+            sessionStorage.setItem("dp_vip_discount", discountFromUrl);
+            localStorage.setItem("dp_vip_discount", discountFromUrl);
+        }
+    }, [discountFromUrl]);
 
     const handleActivate = async (e: React.FormEvent) => {
         e.preventDefault();
