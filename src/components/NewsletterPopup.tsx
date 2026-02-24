@@ -29,6 +29,7 @@ export default function NewsletterPopup() {
 
     useEffect(() => {
         let shippingTimer: NodeJS.Timeout;
+        let fiveMinTimer: NodeJS.Timeout;
 
         const checkStatus = async () => {
             if (localStorage.getItem("dp_user_email")) return;
@@ -44,6 +45,7 @@ export default function NewsletterPopup() {
             const shippingSeen = localStorage.getItem("dp_v2_shipping_seen") === "true";
             const pdfSeen = localStorage.getItem("dp_v2_pdf_seen") === "true";
 
+            // 1. Initial 8-second timer
             if (!shippingSeen) {
                 shippingTimer = setTimeout(() => {
                     if (localStorage.getItem("dp_v2_subscribed") !== "true") {
@@ -52,6 +54,7 @@ export default function NewsletterPopup() {
                 }, 8000);
             }
 
+            // 2. Initial 30-second PDF timer
             if (!pdfSeen) {
                 pdfTimerRef.current = setTimeout(() => {
                     if (localStorage.getItem("dp_v2_subscribed") !== "true") {
@@ -62,6 +65,23 @@ export default function NewsletterPopup() {
                     }
                 }, 30000);
             }
+
+            // 3. NEW: The 5-Minute "Second Chance" Timer
+            const shipping5mSeen = localStorage.getItem("dp_v2_shipping_5m_seen") === "true";
+            if (!shipping5mSeen) {
+                fiveMinTimer = setTimeout(() => {
+                    if (localStorage.getItem("dp_v2_subscribed") !== "true") {
+                        setActivePopup((current) => {
+                            // Only trigger if they aren't currently looking at the PDF popup
+                            if (current === "none") {
+                                localStorage.setItem("dp_v2_shipping_5m_seen", "true");
+                                return "shipping";
+                            }
+                            return current;
+                        });
+                    }
+                }, 5 * 60 * 1000); // 5 minutes
+            }
         };
 
         checkStatus();
@@ -69,20 +89,25 @@ export default function NewsletterPopup() {
         return () => {
             if (shippingTimer) clearTimeout(shippingTimer);
             if (pdfTimerRef.current) clearTimeout(pdfTimerRef.current);
+            if (fiveMinTimer) clearTimeout(fiveMinTimer);
         };
     }, []);
 
-    // --- EXIT-INTENT: fire shipping popup instantly on /customize ---
+    // --- UBIQUITOUS EXIT-INTENT ---
     useEffect(() => {
-        if (pathname !== "/customize") return;
+        // Exclude auth/VIP pages so we don't annoy them while logging in
+        const excludedPaths = ["/vip", "/login", "/register", "/activate", "/forgot-password", "/reset-password"];
+        if (excludedPaths.includes(pathname)) return;
 
         const handleMouseLeave = (e: MouseEvent) => {
             if (hasExitFired.current) return;
             if (e.clientY > 0) return; // only trigger when cursor exits top of viewport
 
             const isSubscribed = localStorage.getItem("dp_v2_subscribed") === "true" || !!localStorage.getItem("dp_user_email");
-            const shippingSeen = localStorage.getItem("dp_v2_shipping_seen") === "true";
-            if (isSubscribed || shippingSeen) return;
+
+            // NOTE: We do NOT check `shippingSeen` here. 
+            // If they are leaving the site entirely, we want to try ONE last time.
+            if (isSubscribed) return;
 
             hasExitFired.current = true;
             setActivePopup("shipping");
