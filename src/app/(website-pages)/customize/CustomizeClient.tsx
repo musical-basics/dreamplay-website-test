@@ -347,9 +347,17 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
 
                 let redirectUrl = baseUrl + (baseUrl.includes('?') ? propertiesParams : `?${finalParams}`);
 
-                // --- NEW: Append the discount code to the Shopify Cart URL ---
+                // --- Route through Shopify's /discount/ endpoint to auto-apply the code ---
                 if (discountCode) {
-                    redirectUrl += `&discount=${discountCode}`;
+                    // Extract the path portion from the full Shopify URL
+                    try {
+                        const cartUrl = new URL(redirectUrl);
+                        const discountUrl = `${cartUrl.origin}/discount/${encodeURIComponent(discountCode)}?redirect=${encodeURIComponent(cartUrl.pathname + cartUrl.search)}`;
+                        redirectUrl = discountUrl;
+                    } catch {
+                        // If URL parsing fails, just append as query param as fallback
+                        redirectUrl += `&discount=${discountCode}`;
+                    }
                 }
 
                 trackEmailConversion('conversion_t2', window.location.pathname);
