@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
@@ -26,6 +27,20 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
         color: null as string | null,
         selectedTier: null as string | null,
     });
+
+    const searchParams = useSearchParams();
+    const [discountCode, setDiscountCode] = useState<string | null>(null);
+
+    useEffect(() => {
+        const promo = searchParams.get("discount");
+        if (promo) {
+            setDiscountCode(promo);
+            sessionStorage.setItem("dp_vip_discount", promo);
+        } else {
+            const saved = sessionStorage.getItem("dp_vip_discount");
+            if (saved) setDiscountCode(saved);
+        }
+    }, [searchParams]);
 
     const [currentSection, setCurrentSection] = useState(0);
     const [isSizingModalOpen, setIsSizingModalOpen] = useState(false);
@@ -329,8 +344,16 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             if (baseUrl) {
                 const separator = baseUrl.includes('?') ? '&' : '?';
                 const finalParams = separator === '?' ? propertiesParams.substring(1) : propertiesParams;
+
+                let redirectUrl = baseUrl + (baseUrl.includes('?') ? propertiesParams : `?${finalParams}`);
+
+                // --- NEW: Append the discount code to the Shopify Cart URL ---
+                if (discountCode) {
+                    redirectUrl += `&discount=${discountCode}`;
+                }
+
                 trackEmailConversion('conversion_t2', window.location.pathname);
-                window.location.href = baseUrl + (baseUrl.includes('?') ? propertiesParams : `?${finalParams}`);
+                window.location.href = redirectUrl;
             }
         }
     };
