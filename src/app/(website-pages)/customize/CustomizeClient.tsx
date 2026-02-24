@@ -322,37 +322,88 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
     const handleSelectTier = (tierId: string) => {
         setAppState(prev => ({ ...prev, selectedTier: tierId }));
 
-        if (tierId === 'full' || tierId === 'deposit' || tierId === 'solo' || tierId === 'signature') {
-            const sizeParam = encodeURIComponent(appState.size || 'Not Selected');
-            const colorParam = encodeURIComponent(appState.color || 'Not Selected');
-            const propertiesParams = `&properties[Size]=${sizeParam}&properties[Finish]=${colorParam}`;
+        if (['full', 'deposit', 'solo', 'signature'].includes(tierId)) {
+            const size = appState.size || 'DS6.0';
+            const color = appState.color || 'Black';
 
-            const getCheckoutUrl = (configValue: string | undefined, defaultId: string) => {
-                const val = configValue?.trim();
-                // If there's a discount code, embed it in the return_to checkout URL
-                const checkoutPath = discountCode
-                    ? `/checkout?discount=${encodeURIComponent(discountCode)}`
-                    : '/checkout';
-                if (val && /^\d+$/.test(val)) return `https://dreamplay-pianos.myshopify.com/cart/add?id=${val}&quantity=1&return_to=${encodeURIComponent(checkoutPath)}`;
-                if (val) return val;
-                if (defaultId) return `https://dreamplay-pianos.myshopify.com/cart/add?id=${defaultId}&quantity=1&return_to=${encodeURIComponent(checkoutPath)}`;
-                return "";
+            // 1. THE VARIANT MATRIX
+            // Replace these empty strings with the actual 14-digit variant IDs from Shopify
+            const VARIANT_MAP: Record<string, Record<string, Record<string, string>>> = {
+                full: { // DreamPlay Bundle
+                    'DS5.5': { 'Black': '', 'White': '' },
+                    'DS6.0': { 'Black': '', 'White': '' },
+                    'DS6.5': { 'Black': '', 'White': '' },
+                },
+                solo: { // Keyboard Only
+                    'DS5.5': { 'Black': '', 'White': '' },
+                    'DS6.0': { 'Black': '', 'White': '' },
+                    'DS6.5': { 'Black': '', 'White': '' },
+                },
+                deposit: { // Reserve Deposit
+                    'DS5.5': { 'Black': '', 'White': '' },
+                    'DS6.0': { 'Black': '', 'White': '' },
+                    'DS6.5': { 'Black': '', 'White': '' },
+                },
+                signature: { // Signature Edition
+                    'DS5.5': { 'Black': '', 'White': '' },
+                    'DS6.0': { 'Black': '', 'White': '' },
+                    'DS6.5': { 'Black': '', 'White': '' },
+                }
+            };
+
+            const exactVariantId = VARIANT_MAP[tierId]?.[size]?.[color];
+            let checkoutUrl = "";
+
+            if (exactVariantId && exactVariantId.trim() !== '') {
+                // SUCCESS: We have the exact variant ID! 
+                // We use a Shopify "Cart Permalink" format: /cart/{variant_id}:{quantity}
+                let permalink = `/cart/${exactVariantId}:1`;
+
+                // Append the VIP Discount Code if one was generated from the Emailer
+                if (discountCode) {
+                    permalink += `?discount=${discountCode}`;
+                }
+
+                // THE CART CLEAR HACK: 
+                // By hitting /cart/clear and returning to the permalink, Shopify instantly wipes 
+                // out their old cart before creating a brand new checkout with the correct item.
+                checkoutUrl = `https://dreamplay-pianos.myshopify.com/cart/clear?return_to=${encodeURIComponent(permalink)}`;
+
+            } else {
+                // FALLBACK: If you haven't filled out the map yet, it falls back to your old method 
+                // using the Admin Panel variables and appending custom properties so the site doesn't break.
+                const sizeParam = encodeURIComponent(size);
+                const colorParam = encodeURIComponent(color);
+                const propertiesParams = `&properties[Size]=${sizeParam}&properties[Finish]=${colorParam}`;
+
+                const getCheckoutUrl = (configValue: string | undefined, defaultId: string) => {
+                    const val = configValue?.trim();
+                    if (val && /^\d+$/.test(val)) return `https://dreamplay-pianos.myshopify.com/cart/add?id=${val}&quantity=1&return_to=/checkout`;
+                    if (val) return val;
+                    if (defaultId) return `https://dreamplay-pianos.myshopify.com/cart/add?id=${defaultId}&quantity=1&return_to=/checkout`;
+                    return "";
+                }
+
+                let baseUrl = "";
+                if (tierId === 'full') baseUrl = getCheckoutUrl(urls.bundle, "52209394549050");
+                else if (tierId === 'deposit') baseUrl = getCheckoutUrl(urls.deposit, "52213397291322");
+                else if (tierId === 'solo') baseUrl = getCheckoutUrl(urls.solo, "");
+                else if (tierId === 'signature') baseUrl = getCheckoutUrl((urls as any).signature, "");
+
+                if (baseUrl) {
+                    const separator = baseUrl.includes('?') ? '&' : '?';
+                    const finalParams = separator === '?' ? propertiesParams.substring(1) : propertiesParams;
+                    checkoutUrl = baseUrl + (baseUrl.includes('?') ? propertiesParams : `?${finalParams}`);
+
+                    if (discountCode) {
+                        checkoutUrl += `&discount=${discountCode}`;
+                    }
+                }
             }
 
-            let baseUrl = "";
-            if (tierId === 'full') baseUrl = getCheckoutUrl(urls.bundle, "52209394549050");
-            else if (tierId === 'deposit') baseUrl = getCheckoutUrl(urls.deposit, "52213397291322");
-            else if (tierId === 'solo') baseUrl = getCheckoutUrl(urls.solo, "");
-            else if (tierId === 'signature') baseUrl = getCheckoutUrl((urls as any).signature, "");
-
-            if (baseUrl) {
-                const separator = baseUrl.includes('?') ? '&' : '?';
-                const finalParams = separator === '?' ? propertiesParams.substring(1) : propertiesParams;
-
-                const redirectUrl = baseUrl + (baseUrl.includes('?') ? propertiesParams : `?${finalParams}`);
-
+            if (checkoutUrl) {
                 trackEmailConversion('conversion_t2', window.location.pathname);
-                window.location.href = redirectUrl;
+                window.location.href = checkoutUrl;
             }
         }
     };
