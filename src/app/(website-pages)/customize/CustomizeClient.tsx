@@ -329,9 +329,13 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
 
             const getCheckoutUrl = (configValue: string | undefined, defaultId: string) => {
                 const val = configValue?.trim();
-                if (val && /^\d+$/.test(val)) return `https://dreamplay-pianos.myshopify.com/cart/add?id=${val}&quantity=1&return_to=/checkout`;
+                // If there's a discount code, embed it in the return_to checkout URL
+                const checkoutPath = discountCode
+                    ? `/checkout?discount=${encodeURIComponent(discountCode)}`
+                    : '/checkout';
+                if (val && /^\d+$/.test(val)) return `https://dreamplay-pianos.myshopify.com/cart/add?id=${val}&quantity=1&return_to=${encodeURIComponent(checkoutPath)}`;
                 if (val) return val;
-                if (defaultId) return `https://dreamplay-pianos.myshopify.com/cart/add?id=${defaultId}&quantity=1&return_to=/checkout`;
+                if (defaultId) return `https://dreamplay-pianos.myshopify.com/cart/add?id=${defaultId}&quantity=1&return_to=${encodeURIComponent(checkoutPath)}`;
                 return "";
             }
 
@@ -345,20 +349,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                 const separator = baseUrl.includes('?') ? '&' : '?';
                 const finalParams = separator === '?' ? propertiesParams.substring(1) : propertiesParams;
 
-                let redirectUrl = baseUrl + (baseUrl.includes('?') ? propertiesParams : `?${finalParams}`);
-
-                // --- Route through Shopify's /discount/ endpoint to auto-apply the code ---
-                if (discountCode) {
-                    // Extract the path portion from the full Shopify URL
-                    try {
-                        const cartUrl = new URL(redirectUrl);
-                        const discountUrl = `${cartUrl.origin}/discount/${encodeURIComponent(discountCode)}?redirect=${encodeURIComponent(cartUrl.pathname + cartUrl.search)}`;
-                        redirectUrl = discountUrl;
-                    } catch {
-                        // If URL parsing fails, just append as query param as fallback
-                        redirectUrl += `&discount=${discountCode}`;
-                    }
-                }
+                const redirectUrl = baseUrl + (baseUrl.includes('?') ? propertiesParams : `?${finalParams}`);
 
                 trackEmailConversion('conversion_t2', window.location.pathname);
                 window.location.href = redirectUrl;
