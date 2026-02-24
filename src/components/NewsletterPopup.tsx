@@ -28,7 +28,7 @@ export default function NewsletterPopup() {
     const pathname = usePathname();
 
     useEffect(() => {
-        let shippingTimer: NodeJS.Timeout;
+        let shippingTimer: NodeJS.Timeout | undefined;
         let fiveMinTimer: NodeJS.Timeout;
 
         const checkStatus = async () => {
@@ -45,14 +45,14 @@ export default function NewsletterPopup() {
             const shippingSeen = localStorage.getItem("dp_v2_shipping_seen") === "true";
             const pdfSeen = localStorage.getItem("dp_v2_pdf_seen") === "true";
 
-            // 1. Initial 8-second timer
-            if (!shippingSeen) {
-                shippingTimer = setTimeout(() => {
-                    if (localStorage.getItem("dp_v2_subscribed") !== "true") {
-                        setActivePopup("shipping");
-                    }
-                }, 8000);
-            }
+            // 1. Initial 8-second timer (DISABLED)
+            // if (!shippingSeen) {
+            //     shippingTimer = setTimeout(() => {
+            //         if (localStorage.getItem("dp_v2_subscribed") !== "true") {
+            //             setActivePopup("shipping");
+            //         }
+            //     }, 8000);
+            // }
 
             // 2. Initial 30-second PDF timer
             if (!pdfSeen) {
