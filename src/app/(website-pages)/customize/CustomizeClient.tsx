@@ -10,6 +10,7 @@ import { trackEmailConversion } from "@/components/EmailTracker";
 import { useABAnalytics } from "@/hooks/use-ab-analytics";
 import { ArrowRight, ArrowLeft, Check, ShieldCheck, X, CheckCircle2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { VARIANT_MAP } from "./variant-map";
 
 interface CustomizeClientProps {
     urls: {
@@ -326,30 +327,6 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             const size = appState.size || 'DS6.0';
             const color = appState.color || 'Black';
 
-            // 1. THE VARIANT MATRIX
-            // Replace these empty strings with the actual 14-digit variant IDs from Shopify
-            const VARIANT_MAP: Record<string, Record<string, Record<string, string>>> = {
-                full: { // DreamPlay Bundle
-                    'DS5.5': { 'Black': '', 'White': '' },
-                    'DS6.0': { 'Black': '', 'White': '' },
-                    'DS6.5': { 'Black': '', 'White': '' },
-                },
-                solo: { // Keyboard Only
-                    'DS5.5': { 'Black': '', 'White': '' },
-                    'DS6.0': { 'Black': '', 'White': '' },
-                    'DS6.5': { 'Black': '', 'White': '' },
-                },
-                deposit: { // Reserve Deposit
-                    'DS5.5': { 'Black': '', 'White': '' },
-                    'DS6.0': { 'Black': '', 'White': '' },
-                    'DS6.5': { 'Black': '', 'White': '' },
-                },
-                signature: { // Signature Edition
-                    'DS5.5': { 'Black': '', 'White': '' },
-                    'DS6.0': { 'Black': '', 'White': '' },
-                    'DS6.5': { 'Black': '', 'White': '' },
-                }
-            };
 
             const exactVariantId = VARIANT_MAP[tierId]?.[size]?.[color];
             let checkoutUrl = "";
