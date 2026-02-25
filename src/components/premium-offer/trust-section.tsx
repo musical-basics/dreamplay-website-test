@@ -148,13 +148,13 @@ export function TrustSection() {
                   </p>
                   <div className="mt-4 border border-border/40 bg-background p-4">
                     <p className="text-xs font-medium uppercase tracking-wider text-foreground">
-                      Important for International Backers (EU/UK/Asia)
+                      Important for All Backers (US/EU/UK/Asia/Australia)
                     </p>
                     <p className="mt-2 text-sm text-muted-foreground">
                       Shipping estimates do not include local VAT (e.g., 19%
-                      MwSt), Import Duties, or Customs fees. These are collected
-                      by your local carrier upon delivery in accordance with your
-                      country{"'"}s regulations.
+                      MwSt), Tariffs, Import Duties, or Customs fees. When your keyboard
+                      is ready to ship, we will advise you of the final duties amount
+                      in accordance with your country{"'"}s regulations.
                     </p>
                   </div>
                 </AccordionContent>
