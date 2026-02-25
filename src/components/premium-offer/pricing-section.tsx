@@ -101,6 +101,21 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
           </div>
         </div>
 
+        {/* Import Duties Call-out */}
+        <div className="mb-12 border border-background/20 bg-background/5 px-6 py-5 max-w-2xl mt-4">
+          <div className="flex items-start gap-3">
+            <span className="mt-0.5 text-background/60 text-lg leading-none">⚖️</span>
+            <div>
+              <p className="font-sans text-sm font-semibold text-background/90">
+                A Note on Duties & Taxes
+              </p>
+              <p className="mt-1 font-sans text-xs leading-relaxed text-background/60">
+                To guarantee the most accurate rates, standard import duties and local taxes are not included in the reservation price today. We will calculate and invoice any applicable taxes right before shipping (DDP) to ensure a smooth, surprise-free delivery.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="grid gap-6 lg:grid-cols-3">
           {tiers.map((tier) => (
             <div

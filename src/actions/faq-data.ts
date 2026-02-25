@@ -260,5 +260,13 @@ export const DEFAULT_FAQ_ITEMS: FAQItem[] = [
             <li><strong>Extended Zones (Australia, Japan, etc.):</strong> Usually $50–$70.</li>
         </ul>
         <p class="mt-4"><em>Please note: International buyers are responsible for any local VAT, import duties, or customs fees collected by the carrier upon delivery.</em></p>`
+    },
+    {
+        id: '311',
+        category: 'DreamPlay & Ordering',
+        question: "Are import duties and taxes included in the price?",
+        answer: `<p>Because our pre-orders ship months in advance and global trade policies frequently update, standard import duties and local taxes (like VAT) are not included in your initial checkout price.</p>
+        <p>We want to ensure you are charged the most accurate and fair rate at the time of delivery. Therefore, we utilize a <strong>Delivered Duty Paid (DDP)</strong> shipping method for most regions.</p>
+        <p>Right before your instrument is ready to ship, we will calculate the active customs requirement and send you a secure invoice for any applicable taxes. We handle all the complex customs clearance on our end, ensuring your keyboard arrives straight to your door without any unexpected carrier brokerage fees or delays.</p>`
     }
 ];

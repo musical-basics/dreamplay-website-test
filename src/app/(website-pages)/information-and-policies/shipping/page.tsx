@@ -208,15 +208,14 @@ export default function ShippingPage() {
                             </div>
                         </div>
 
-                        {/* International Warning */}
+                        {/* Global Tax Notice */}
                         <div className="mt-8 max-w-2xl mx-auto text-center reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-300">
-                            <div className="bg-red-50/80 border border-red-200 rounded-none p-4 inline-block">
-                                <p className="text-sm text-red-700/80 font-medium">
-                                    ⚠️ <strong>International Backers (EU/UK/Asia):</strong>
+                            <div className="bg-neutral-100 border border-neutral-200 rounded-none p-5 inline-block text-left">
+                                <p className="text-sm text-neutral-800 font-bold mb-2">
+                                    ℹ️ Note on Import Duties & Taxes
                                 </p>
-                                <p className="text-xs text-red-600/70 mt-1">
-                                    Shipping estimates do not include local VAT, Import Duties, or Customs fees.
-                                    These are collected by your local carrier upon delivery.
+                                <p className="text-xs text-neutral-600 leading-relaxed max-w-lg">
+                                    Due to shifting global trade policies, standard government import duties and local taxes (like VAT) are calculated closer to the shipping date. For a seamless experience, we ship DDP (Delivered Duty Paid) to most regions. We will handle the customs clearance and invoice you for the exact tax amount before fulfillment, ensuring no surprise fees upon delivery.
                                 </p>
                             </div>
                         </div>
@@ -390,7 +389,7 @@ export default function ShippingPage() {
                         <div className="grid md:grid-cols-3 gap-8">
                             {[
                                 { title: 'Make Changes Anytime', desc: 'At any point before we ship out the keyboard, you may modify or cancel your reservation.', icon: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z' },
-                                { title: 'Duties & Taxes', desc: 'Buyer is responsible for all import duties, taxes, and customs fees. Not included in price.', icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' },
+                                { title: 'Duties & Taxes', desc: 'Standard import duties and local taxes are not included in the initial pre-order price. To provide the most accurate rates, these will be calculated and invoiced securely right before your order ships.', icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' },
                                 { title: '90-Day Returns', desc: 'No questions asked, full refund within 90 days of receiving your instrument.', icon: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15' }
                             ].map((item, i) => (
                                 <div key={i} className={`reveal-el opacity-0 translate-y-8 transition-all duration-700 border border-neutral-200 bg-white rounded-none p-8 hover:border-neutral-400 transition-all`} style={{ transitionDelay: `${(i + 1) * 100}ms` }}>
