@@ -9,7 +9,7 @@ import { Suspense } from "react";
 
 function ActivateForm() {
     const searchParams = useSearchParams();
-    const emailFromUrl = searchParams.get("email") || "";
+    const emailFromUrl = searchParams.get("em") || searchParams.get("email") || "";
 
     // Grab the discount code from the email link
     const discountFromUrl = searchParams.get("discount");

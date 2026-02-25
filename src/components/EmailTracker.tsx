@@ -6,6 +6,7 @@ import { useSearchParams, usePathname } from "next/navigation"
 function EmailTrackerContent() {
     const searchParams = useSearchParams()
     const pathname = usePathname()
+    const emailTrackUrl = process.env.NEXT_PUBLIC_EMAIL_TRACK_URL || "https://email.dreamplaypianos.com/api/track"
     // Track when the user lands on a specific page
     const startTime = useRef(Date.now())
 
@@ -64,7 +65,7 @@ function EmailTrackerContent() {
 
         // Send to your Email App API (The "Receiver")
         // Use keepalive: true to ensure the request finishes even if the tab is closing
-        fetch("https://email.dreamplaypianos.com/api/track", {
+        fetch(emailTrackUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
@@ -92,7 +93,8 @@ export function trackEmailConversion(type: 'conversion_t1' | 'conversion_t2' | '
 
     if (!sid) return; // Only track conversions for known email subscribers
 
-    fetch("https://email.dreamplaypianos.com/api/track", {
+    const emailTrackUrl = process.env.NEXT_PUBLIC_EMAIL_TRACK_URL || "https://email.dreamplaypianos.com/api/track";
+    fetch(emailTrackUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

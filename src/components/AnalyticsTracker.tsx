@@ -7,6 +7,7 @@ import { logEvent } from '@/lib/analytics'
 function AnalyticsTrackerContent() {
     const pathname = usePathname()
     const searchParams = useSearchParams()
+    const analyticsTrackUrl = process.env.NEXT_PUBLIC_ANALYTICS_TRACK_URL || 'https://data.dreamplaypianos.com/api/track'
 
     // Use Refs so we can track times and URLs without triggering infinite re-renders
     const startTime = useRef(Date.now())
@@ -35,7 +36,7 @@ function AnalyticsTrackerContent() {
         if (currentPath.current && currentPath.current !== url && !hasSentLeave.current) {
             const duration = Math.round((Date.now() - startTime.current) / 1000);
             if (duration > 1) {
-                fetch('https://data.dreamplaypianos.com/api/track', {
+                fetch(analyticsTrackUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -69,7 +70,7 @@ function AnalyticsTrackerContent() {
                     const metadata: any = { duration_seconds: duration };
                     if (savedEmail) metadata.email = savedEmail;
 
-                    fetch('https://data.dreamplaypianos.com/api/track', {
+                    fetch(analyticsTrackUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -94,7 +95,7 @@ function AnalyticsTrackerContent() {
             if (!hasSentLeave.current && currentPath.current) {
                 const duration = Math.round((Date.now() - startTime.current) / 1000);
                 if (duration > 1) {
-                    fetch('https://data.dreamplaypianos.com/api/track', {
+                    fetch(analyticsTrackUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
