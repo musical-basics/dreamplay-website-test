@@ -160,14 +160,14 @@ export async function getCustomizePageUrls() {
         const { data, error } = await supabase
             .from('admin_variables')
             .select('key, value')
-            .in('key', ['customize_url_bundle', 'customize_url_solo', 'customize_url_deposit'])
+            .in('key', ['customize_url_bundle', 'customize_url_solo', 'customize_url_reservation'])
 
         if (error) {
             console.error('Error fetching customize URLs:', error)
             return {
                 bundle: '',
                 solo: '',
-                deposit: ''
+                reservation: ''
             }
         }
 
@@ -175,7 +175,7 @@ export async function getCustomizePageUrls() {
         const urlMap: Record<string, string> = {
             'customize_url_bundle': '',
             'customize_url_solo': '',
-            'customize_url_deposit': ''
+            'customize_url_reservation': ''
         }
 
         data?.forEach((row: { key: string, value: string }) => {
@@ -185,24 +185,24 @@ export async function getCustomizePageUrls() {
         return {
             bundle: urlMap['customize_url_bundle'],
             solo: urlMap['customize_url_solo'],
-            deposit: urlMap['customize_url_deposit']
+            reservation: urlMap['customize_url_reservation']
         }
     } catch (error) {
         console.error('Failed to get customize URLs:', error)
         return {
             bundle: '',
             solo: '',
-            deposit: ''
+            reservation: ''
         }
     }
 }
 
-export async function updateCustomizePageUrls(urls: { bundle: string, solo: string, deposit: string }) {
+export async function updateCustomizePageUrls(urls: { bundle: string, solo: string, reservation: string }) {
     try {
         const updates = [
             { key: 'customize_url_bundle', value: urls.bundle, updated_at: new Date().toISOString() },
             { key: 'customize_url_solo', value: urls.solo, updated_at: new Date().toISOString() },
-            { key: 'customize_url_deposit', value: urls.deposit, updated_at: new Date().toISOString() }
+            { key: 'customize_url_reservation', value: urls.reservation, updated_at: new Date().toISOString() }
         ]
 
         const { error } = await supabase
@@ -230,15 +230,15 @@ export async function getHiddenProducts(): Promise<string[]> {
             .single()
 
         if (error) {
-            if (error.code === 'PGRST116') return ['deposit'] // default: deposit hidden
+            if (error.code === 'PGRST116') return ['reservation'] // default: reservation hidden
             console.error('Error fetching hidden products:', error)
-            return ['deposit']
+            return ['reservation']
         }
 
-        return JSON.parse(data?.value || '["deposit"]')
+        return JSON.parse(data?.value || '["reservation"]')
     } catch (error) {
         console.error('Failed to get hidden products:', error)
-        return ['deposit']
+        return ['reservation']
     }
 }
 

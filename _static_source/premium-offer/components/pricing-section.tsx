@@ -33,12 +33,12 @@ const tiers = [
   {
     badge: null,
     title: "Reserve (50%)",
-    subtitle: "Late 2026 / Early 2027",
-    price: "$299",
+    subtitle: "",
+    price: "$274",
     description:
-      "Pay 50% now, the rest (50% + shipping/taxes) when ready to ship. Secures your spot in Batch 2.",
-    includes: ["DreamPlay One Keyboard", "Keyboard Stand", "Sustain Pedal"],
-    delivery: "Dec 2026",
+      "Pay 50% now, the rest (50% + shipping/taxes) when ready to ship.",
+    includes: ["DreamPlay One Keyboard"],
+    delivery: "Aug 2026",
     backers: 2,
     remaining: 8,
     total: 10,
@@ -67,11 +67,10 @@ export function PricingSection() {
           {tiers.map((tier) => (
             <div
               key={tier.title}
-              className={`relative flex flex-col border p-8 transition-all md:p-10 ${
-                tier.highlight
-                  ? "border-background/30 bg-background/5"
-                  : "border-background/10 bg-transparent"
-              }`}
+              className={`relative flex flex-col border p-8 transition-all md:p-10 ${tier.highlight
+                ? "border-background/30 bg-background/5"
+                : "border-background/10 bg-transparent"
+                }`}
             >
               {tier.badge && (
                 <span className="mb-4 self-start font-sans text-[10px] uppercase tracking-[0.3em] text-background/50">
@@ -152,11 +151,10 @@ export function PricingSection() {
               {/* CTA */}
               <a
                 href="#"
-                className={`mt-8 group flex items-center justify-center gap-2 border px-6 py-4 text-center font-sans text-xs uppercase tracking-widest transition-colors ${
-                  tier.highlight
-                    ? "border-background bg-background text-foreground hover:bg-background/90"
-                    : "border-background/30 text-background hover:bg-background/10"
-                }`}
+                className={`mt-8 group flex items-center justify-center gap-2 border px-6 py-4 text-center font-sans text-xs uppercase tracking-widest transition-colors ${tier.highlight
+                  ? "border-background bg-background text-foreground hover:bg-background/90"
+                  : "border-background/30 text-background hover:bg-background/10"
+                  }`}
               >
                 Reserve for {tier.price}
                 <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />

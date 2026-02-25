@@ -14,7 +14,7 @@ export default function CustomizeUrlsPage() {
     const [urls, setUrls] = useState({
         bundle: '',
         solo: '',
-        deposit: ''
+        reservation: ''
     })
 
     useEffect(() => {
@@ -35,7 +35,7 @@ export default function CustomizeUrlsPage() {
         setUrls({
             bundle: data.bundle || '',
             solo: data.solo || '',
-            deposit: data.deposit || ''
+            reservation: data.reservation || ''
         })
         setLoading(false)
     }
@@ -110,13 +110,13 @@ export default function CustomizeUrlsPage() {
 
                         <div>
                             <label className="block text-sm font-medium text-neutral-300 mb-2">
-                                Reserve Yours (Variant ID or URL)
+                                Lock My Spot Reservation (Variant ID or URL)
                             </label>
                             <input
                                 type="text"
                                 className="w-full bg-black border border-neutral-700 rounded-lg p-3 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all text-sm"
-                                value={urls.deposit}
-                                onChange={(e) => setUrls({ ...urls, deposit: e.target.value })}
+                                value={urls.reservation}
+                                onChange={(e) => setUrls({ ...urls, reservation: e.target.value })}
                                 placeholder="e.g. 52213397291322 or https://..."
                             />
                         </div>

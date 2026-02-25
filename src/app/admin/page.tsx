@@ -15,7 +15,7 @@ export default function AdminPage() {
     // Feature Toggle State
     const [showDiscount, setShowDiscount] = useState(true)
     const [homepageVersion, setHomepageVersion] = useState<'old' | 'special-offer'>('special-offer')
-    const [hiddenProducts, setHiddenProducts] = useState<string[]>(['deposit'])
+    const [hiddenProducts, setHiddenProducts] = useState<string[]>(['reservation', 'reserve50'])
 
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
@@ -227,7 +227,8 @@ export default function AdminPage() {
                         <p className="text-sm text-neutral-500 mb-4">Show or hide pricing tiers on the /customize page.</p>
                         <div className="space-y-3">
                             {[
-                                { id: 'deposit', label: 'Reserve (50%)', price: '$299' },
+                                { id: 'reservation', label: 'Lock My Spot', price: '$99' },
+                                { id: 'reserve50', label: 'Reserve (50%)', price: '$274' },
                                 { id: 'solo', label: 'DreamPlay One', price: '$549' },
                                 { id: 'full', label: 'DreamPlay Bundle', price: '$599' },
                                 { id: 'signature', label: 'DreamPlay Signature', price: '$999' },

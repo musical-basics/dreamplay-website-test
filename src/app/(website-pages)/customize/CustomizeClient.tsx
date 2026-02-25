@@ -16,7 +16,7 @@ interface CustomizeClientProps {
     urls: {
         bundle?: string;
         solo?: string;
-        deposit?: string;
+        reservation?: string;
     }
     hiddenProducts: string[]
 }
@@ -72,16 +72,32 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
     // --- DATA ---
     const tiers = [
         {
-            id: 'deposit',
+            id: 'reservation',
             badge: null,
-            title: "Reserve (50%)",
-            subtitle: "Late 2026 / Early 2027",
-            price: "$299",
+            title: "Lock My Spot",
+            subtitle: "Batch 1 — August 2026",
+            price: "$99",
             retailPrice: null,
             originalPrice: null,
-            description: "Pay 50% now, the rest (50% + shipping/taxes) when ready to ship. Secures your spot in Batch 2.",
-            includes: ["DreamPlay One Keyboard", "Keyboard Stand", "Sustain Pedal"],
-            delivery: "Dec 2026",
+            description: "100% refundable reservation. Lock in Founder\u0027s pricing and secure your Batch 1 (August) delivery. Pay the remaining balance only when your piano is boxed and ready to ship.",
+            includes: ["Batch 1 Delivery Slot", "Founder\u0027s Price Lock", "Full Refund Anytime"],
+            delivery: "Aug 2026",
+            backers: 0,
+            remaining: 50,
+            total: 50,
+            highlight: false,
+        },
+        {
+            id: 'reserve50',
+            badge: null,
+            title: "Reserve (50%)",
+            subtitle: "",
+            price: "$274",
+            retailPrice: null,
+            originalPrice: null,
+            description: "Pay 50% now, the rest (50% + shipping/taxes) when ready to ship.",
+            includes: ["DreamPlay One Keyboard"],
+            delivery: "Aug 2026",
             backers: 2,
             remaining: 8,
             total: 10,
@@ -323,7 +339,7 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
     const handleSelectTier = (tierId: string) => {
         setAppState(prev => ({ ...prev, selectedTier: tierId }));
 
-        if (['full', 'deposit', 'solo', 'signature'].includes(tierId)) {
+        if (['full', 'reservation', 'reserve50', 'solo', 'signature'].includes(tierId)) {
             const size = appState.size || 'DS6.0';
             const color = appState.color || 'Black';
 
@@ -363,7 +379,8 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
 
                 let baseUrl = "";
                 if (tierId === 'full') baseUrl = getCheckoutUrl(urls.bundle, "52209394549050");
-                else if (tierId === 'deposit') baseUrl = getCheckoutUrl(urls.deposit, "52213397291322");
+                else if (tierId === 'reservation') baseUrl = getCheckoutUrl(urls.reservation, "52213397291322");
+                else if (tierId === 'reserve50') baseUrl = getCheckoutUrl(urls.reservation, "");
                 else if (tierId === 'solo') baseUrl = getCheckoutUrl(urls.solo, "");
                 else if (tierId === 'signature') baseUrl = getCheckoutUrl((urls as any).signature, "");
 
@@ -716,18 +733,18 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
                                     key={key}
                                     onClick={() => handleSelectSize(key)}
                                     className={`group relative flex flex-col items-start border text-left transition-all duration-300 ${isLight
-                                            ? isSelected
-                                                ? 'z-10 scale-105 border-black bg-white shadow-2xl shadow-black/30'
-                                                : 'border-black/15 bg-white shadow-lg shadow-black/10 hover:border-black/40 hover:shadow-xl'
-                                            : isSelected
-                                                ? 'z-10 scale-105 border-white bg-white/10 shadow-2xl shadow-black/60'
-                                                : 'border-white/30 bg-white/5 shadow-lg shadow-black/50 hover:border-white/50 hover:bg-white/10'
+                                        ? isSelected
+                                            ? 'z-10 scale-105 border-black bg-white shadow-2xl shadow-black/30'
+                                            : 'border-black/15 bg-white shadow-lg shadow-black/10 hover:border-black/40 hover:shadow-xl'
+                                        : isSelected
+                                            ? 'z-10 scale-105 border-white bg-white/10 shadow-2xl shadow-black/60'
+                                            : 'border-white/30 bg-white/5 shadow-lg shadow-black/50 hover:border-white/50 hover:bg-white/10'
                                         }`}
                                 >
                                     {isRecommended && (
                                         <div className={`absolute left-6 top-6 z-10 border px-3 py-1 font-sans text-[9px] uppercase tracking-[0.2em] backdrop-blur-md ${isLight
-                                                ? isSelected ? 'border-black/20 bg-black/80 text-white' : 'border-black/20 bg-black/70 text-white'
-                                                : isSelected ? 'border-white/20 bg-white/50 text-black' : 'border-white/20 bg-black/50 text-white'
+                                            ? isSelected ? 'border-black/20 bg-black/80 text-white' : 'border-black/20 bg-black/70 text-white'
+                                            : isSelected ? 'border-white/20 bg-white/50 text-black' : 'border-white/20 bg-black/50 text-white'
                                             }`}>
                                             Recommended
                                         </div>
@@ -735,8 +752,8 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
 
                                     {/* Image Container */}
                                     <div className={`relative flex h-64 w-full items-center justify-center border-b p-8 transition-colors md:h-72 ${isLight
-                                            ? isSelected ? 'border-black/15 bg-neutral-100' : 'border-black/10 bg-neutral-50'
-                                            : isSelected ? 'border-white/30 bg-black/30' : 'border-white/15 bg-black/15'
+                                        ? isSelected ? 'border-black/15 bg-neutral-100' : 'border-black/10 bg-neutral-50'
+                                        : isSelected ? 'border-white/30 bg-black/30' : 'border-white/15 bg-black/15'
                                         }`}>
                                         <img src={kb.imgSrc} alt={kb.name} className="w-auto max-w-[90%] max-h-[80%] object-contain transition-transform duration-700 group-hover:scale-105" />
                                     </div>
@@ -759,8 +776,8 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
                                         </div>
 
                                         <div className={`mt-auto flex w-full items-center justify-center gap-2 border px-6 py-4 text-center font-sans text-xs uppercase tracking-widest transition-colors ${isLight
-                                                ? isSelected ? 'border-black bg-black text-white hover:bg-black/90' : 'border-black/30 text-black group-hover:border-black group-hover:bg-black group-hover:text-white'
-                                                : isSelected ? 'border-white bg-white text-black hover:bg-white/90' : 'border-white/30 text-white group-hover:border-white group-hover:bg-white/10'
+                                            ? isSelected ? 'border-black bg-black text-white hover:bg-black/90' : 'border-black/30 text-black group-hover:border-black group-hover:bg-black group-hover:text-white'
+                                            : isSelected ? 'border-white bg-white text-black hover:bg-white/90' : 'border-white/30 text-white group-hover:border-white group-hover:bg-white/10'
                                             }`}>
                                             {isSelected ? 'Selected' : 'Select Size'}
                                             {!isSelected && <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />}
@@ -964,6 +981,36 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
                     <p className="text-center text-xs text-white/40 mt-10 max-w-xl mx-auto leading-relaxed font-sans">
                         * Founder&apos;s Batch pricing ends March 2nd, 2026. After this date, prices will increase to the official retail MSRP. Reserve now to lock in the current rate.
                     </p>
+
+                    {/* Pre-Order Logistics Box */}
+                    <div className="mt-12 mx-auto max-w-2xl border border-white/15 bg-white/[0.04] backdrop-blur-md p-8 md:p-10">
+                        <h4 className="font-serif text-xl text-white mb-6 text-center md:text-2xl">Pre-Order Logistics</h4>
+                        <div className="flex flex-col gap-5">
+                            <div className="flex items-start gap-4">
+                                <span className="text-xl shrink-0 mt-0.5">🚚</span>
+                                <div>
+                                    <p className="font-sans text-sm font-semibold text-white/90 mb-1">Update your address anytime</p>
+                                    <p className="font-sans text-sm text-white/55 leading-relaxed">We will email you 3 weeks before shipping to confirm your final address.</p>
+                                </div>
+                            </div>
+                            <div className="h-px bg-white/10" />
+                            <div className="flex items-start gap-4">
+                                <span className="text-xl shrink-0 mt-0.5">🛡️</span>
+                                <div>
+                                    <p className="font-sans text-sm font-semibold text-white/90 mb-1">Escrow Protection</p>
+                                    <p className="font-sans text-sm text-white/55 leading-relaxed">Your funds are held securely. 100% refundable at any time before it ships. No questions asked.</p>
+                                </div>
+                            </div>
+                            <div className="h-px bg-white/10" />
+                            <div className="flex items-start gap-4">
+                                <span className="text-xl shrink-0 mt-0.5">📦</span>
+                                <div>
+                                    <p className="font-sans text-sm font-semibold text-white/90 mb-1">Custom Foam Packaging</p>
+                                    <p className="font-sans text-sm text-white/55 leading-relaxed">Fully insured against damage in transit.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
