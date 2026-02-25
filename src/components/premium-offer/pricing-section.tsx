@@ -110,7 +110,7 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
                 A Note on Duties & Taxes
               </p>
               <p className="mt-1 font-sans text-xs leading-relaxed text-background/60">
-                To guarantee the most accurate rates, standard import duties and local taxes are not included in the reservation price today. We will calculate and invoice any applicable taxes right before shipping (DDP) to ensure a smooth, surprise-free delivery.
+                To guarantee the most accurate rates, standard import duties and local taxes are not included in the reservation price today. We ship Delivered Duty Paid (DDP) — meaning we prepay and handle all customs clearance on your behalf, so there are no surprise carrier fees at your door. This applies to all shipping regions including the US, UK, EU, Australia, and Japan. We will calculate and invoice any applicable duties/taxes right before shipping.
               </p>
             </div>
           </div>

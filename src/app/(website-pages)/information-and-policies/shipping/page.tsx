@@ -215,7 +215,7 @@ export default function ShippingPage() {
                                     ℹ️ Note on Import Duties & Taxes
                                 </p>
                                 <p className="text-xs text-neutral-600 leading-relaxed max-w-lg">
-                                    Due to shifting global trade policies, standard government import duties and local taxes (like VAT) are calculated closer to the shipping date. For a seamless experience, we ship DDP (Delivered Duty Paid) to most regions. We will handle the customs clearance and invoice you for the exact tax amount before fulfillment, ensuring no surprise fees upon delivery.
+                                    Due to shifting global trade policies, standard government import duties and local taxes (like VAT) are calculated closer to the shipping date. For a seamless experience, we ship DDP (Delivered Duty Paid) — meaning we prepay and handle all customs clearance on your behalf, so you never deal with a carrier demanding fees at your door. This applies to all shipping regions including the US, UK, EU, Australia, and Japan. We will invoice you for the exact duty/tax amount before fulfillment, ensuring a smooth, surprise-free delivery.
                                 </p>
                             </div>
                         </div>

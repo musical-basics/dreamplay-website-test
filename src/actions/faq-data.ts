@@ -266,7 +266,7 @@ export const DEFAULT_FAQ_ITEMS: FAQItem[] = [
         category: 'DreamPlay & Ordering',
         question: "Are import duties and taxes included in the price?",
         answer: `<p>Because our pre-orders ship months in advance and global trade policies frequently update, standard import duties and local taxes (like VAT) are not included in your initial checkout price.</p>
-        <p>We want to ensure you are charged the most accurate and fair rate at the time of delivery. Therefore, we utilize a <strong>Delivered Duty Paid (DDP)</strong> shipping method for most regions.</p>
+        <p>We want to ensure you are charged the most accurate and fair rate at the time of delivery. Therefore, we utilize a <strong>Delivered Duty Paid (DDP)</strong> shipping method — meaning we prepay and handle all customs clearance on your behalf, so you never deal with a carrier demanding fees at your door. This applies to all shipping regions including the US, UK, EU, Australia, and Japan.</p>
         <p>Right before your instrument is ready to ship, we will calculate the active customs requirement and send you a secure invoice for any applicable taxes. We handle all the complex customs clearance on our end, ensuring your keyboard arrives straight to your door without any unexpected carrier brokerage fees or delays.</p>`
     }
 ];
