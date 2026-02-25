@@ -25,6 +25,21 @@ function EmailTrackerContent() {
             // Save to storage so we track them on future pages too
             localStorage.setItem("dp_subscriber_id", sid)
             if (cid) localStorage.setItem("dp_campaign_id", cid)
+
+            // Safe click tracking: if both sid and cid are in URL, this is a direct email click
+            if (cid) {
+                fetch(emailTrackUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        subscriber_id: sid,
+                        campaign_id: cid,
+                        type: "click",
+                        url: window.location.origin + pathname,
+                    }),
+                    keepalive: true
+                }).catch(err => console.error("Click tracking error", err))
+            }
         }
 
         if (em) {
