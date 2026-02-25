@@ -223,11 +223,11 @@ export default function HowItWorksPage() {
         const realVal = getRealValue(sliderValue);
         const cm = realVal * 2.54;
         if (realVal < 7.6) {
-            setResult({ val: realVal, cm, zone: "A", model: "DS5.5", desc: "Standard keys are physically too wide for you. The DS5.5 solves this by shrinking the octave, instantly removing tension.", reach: "Finally play 10ths comfortably", activeColor: "#f43f5e", activeTwColor: "text-rose-500" });
+            setResult({ val: realVal, cm, zone: "A", model: "DS5.5", desc: "Standard keys are physically too wide for you. The DS5.5 solves this by shrinking the octave, instantly removing tension.", reach: "Finally play 9ths and 10ths comfortably. Octaves become way easier.", activeColor: "#f43f5e", activeTwColor: "text-rose-500" });
         } else if (realVal <= 8.5) {
-            setResult({ val: realVal, cm, zone: "B", model: "DS6.0", desc: "The 'Goldilocks' size. Slightly narrower than standard, giving you the power of a concert pianist without the stretching fatigue.", reach: "Play 10ths with new ease", activeColor: "#f59e0b", activeTwColor: "text-amber-500" });
+            setResult({ val: realVal, cm, zone: "B", model: "DS6.0", desc: "The 'Goldilocks' size. Slightly narrower than standard, giving you the power of a concert pianist without the stretching fatigue.", reach: "Experience the joy of playing octaves with ease, and 9ths and 10ths without stretching.", activeColor: "#f59e0b", activeTwColor: "text-amber-500" });
         } else {
-            setResult({ val: realVal, cm, zone: "C", model: "DS6.5", desc: "You fit the historical standard. Since your hands are naturally large, this model provides the traditional concert grand key width.", reach: "Master standard repertoire", activeColor: "#2dd4bf", activeTwColor: "text-teal-400" });
+            setResult({ val: realVal, cm, zone: "C", model: "DS6.5", desc: "You fit the historical standard. Since your hands are naturally large, this model provides the traditional concert grand key width.", reach: "Enjoy our premium feel keys, fun LEDs and guided music learning app.", activeColor: "#2dd4bf", activeTwColor: "text-teal-400" });
         }
     }, [sliderValue]);
 
