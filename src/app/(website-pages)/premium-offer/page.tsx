@@ -17,6 +17,7 @@ import { StanfordQuoteSection } from "@/components/premium-offer/stanford-quote-
 import { GuaranteeSection } from "@/components/premium-offer/guarantee-section"
 import { HeroImageSection } from "@/components/premium-offer/hero-image-section"
 import Footer from "@/components/Footer"
+import { getHiddenProducts } from "@/actions/admin-actions"
 
 const playfair = Playfair_Display({
     subsets: ["latin"],
@@ -33,7 +34,8 @@ export const metadata = {
         "DreamPlay One is designed with narrower keys so you can play freely, naturally, and without strain.",
 }
 
-export default function PremiumOfferPage() {
+export default async function PremiumOfferPage() {
+    const hiddenProducts = await getHiddenProducts()
     return (
         <div className={`${playfair.variable} ${inter.variable} font-sans antialiased`}>
             <SpecialOfferHeader />
@@ -53,7 +55,7 @@ export default function PremiumOfferPage() {
                 <SpecsSection />
                 <CreatorSection />
                 <TrustSection />
-                <PricingSection />
+                <PricingSection hiddenProducts={hiddenProducts} />
                 <GuaranteeSection />
             </main>
             <Footer />

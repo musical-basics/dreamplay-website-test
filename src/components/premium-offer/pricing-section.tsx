@@ -1,8 +1,9 @@
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 
-const tiers = [
+const allTiers = [
   {
+    id: 'deposit',
     badge: null,
     title: "Reserve Deposit",
     subtitle: "Late 2026 / Early 2027",
@@ -18,6 +19,7 @@ const tiers = [
     highlight: false,
   },
   {
+    id: 'solo',
     badge: null,
     title: "DreamPlay One",
     subtitle: "Founder's Batch",
@@ -33,6 +35,7 @@ const tiers = [
     highlight: false,
   },
   {
+    id: 'full',
     badge: "Most Popular",
     title: "DreamPlay Bundle",
     subtitle: "Founder's Batch",
@@ -49,7 +52,8 @@ const tiers = [
   },
 ]
 
-export function PricingSection() {
+export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: string[] }) {
+  const tiers = allTiers.filter(t => !hiddenProducts.includes(t.id))
   return (
     <section id="pricing" className="relative overflow-hidden bg-foreground">
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
