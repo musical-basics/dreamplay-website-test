@@ -53,7 +53,7 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                     href="/customize"
                     className="bg-[#050505] border-b border-white/10 py-2.5 text-center flex items-center justify-center w-full z-50 text-[10px] sm:text-xs text-white/80 uppercase tracking-[0.2em] font-sans font-medium hover:text-white transition-colors"
                 >
-                    Founder&apos;s Batch Closing. Retail MSRP ($1,199) Takes Effect Soon.
+                    Founder&apos;s Batch Closing March 2nd. Retail MSRP ($1,199) Takes Effect After.
                 </Link>
                 <div className={cn(
                     "w-full transition-all duration-300",

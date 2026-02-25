@@ -72,10 +72,10 @@ export function PricingSection() {
             <span className="mt-0.5 text-amber-400 text-lg leading-none">⚡</span>
             <div>
               <p className="font-sans text-sm font-semibold text-amber-300/90">
-                Prices increase in March 2026
+                Prices increase after March 2nd, 2026
               </p>
               <p className="mt-1 font-sans text-xs leading-relaxed text-background/50">
-                Founder&apos;s Batch pricing is ending soon. Lock in current rates before the retail MSRP of $1,199 takes effect.
+                Founder&apos;s Batch pricing ends March 2nd. After that, the retail MSRP of $1,199 takes effect.
               </p>
             </div>
           </div>

@@ -16,9 +16,9 @@ export function FoundersClosingBlock() {
                 <p className="mx-auto mb-8 max-w-2xl font-sans text-sm leading-relaxed text-white/70">
                     For the past year, our earliest supporters have enjoyed beta pricing while we
                     perfected the custom steel tooling and manufacturing of the DreamPlay One. As we
-                    prepare for global distribution, the Founder&apos;s Batch is officially closing.
+                    prepare for global distribution, the Founder&apos;s Batch is officially closing on March 2nd.
                     Secure your instrument at the original allocation rate before the public $1,199
-                    MSRP takes effect.
+                    MSRP takes effect on March 3rd.
                 </p>
 
                 <Link
