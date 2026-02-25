@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { getCountdownDate, updateCountdownDate, getDiscountPopupStatus, updateDiscountPopupStatus, loginAdmin, getHomepageVersion, updateHomepageVersion } from '@/actions/admin-actions'
+import { getCountdownDate, updateCountdownDate, getDiscountPopupStatus, updateDiscountPopupStatus, loginAdmin, getHomepageVersion, updateHomepageVersion, getHiddenProducts, updateHiddenProducts } from '@/actions/admin-actions'
 
 export default function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -15,6 +15,7 @@ export default function AdminPage() {
     // Feature Toggle State
     const [showDiscount, setShowDiscount] = useState(true)
     const [homepageVersion, setHomepageVersion] = useState<'old' | 'special-offer'>('special-offer')
+    const [hiddenProducts, setHiddenProducts] = useState<string[]>(['deposit'])
 
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
@@ -46,10 +47,11 @@ export default function AdminPage() {
 
     async function loadData() {
         setLoading(true)
-        const [dateVal, discountVal, versionVal] = await Promise.all([
+        const [dateVal, discountVal, versionVal, hiddenVal] = await Promise.all([
             getCountdownDate(),
             getDiscountPopupStatus(),
-            getHomepageVersion()
+            getHomepageVersion(),
+            getHiddenProducts()
         ])
 
         if (dateVal) setDate(dateVal)
@@ -57,6 +59,7 @@ export default function AdminPage() {
 
         setShowDiscount(discountVal === 'true')
         setHomepageVersion(versionVal as 'old' | 'special-offer')
+        setHiddenProducts(hiddenVal)
 
         setLoading(false)
     }
@@ -216,6 +219,46 @@ export default function AdminPage() {
                             <option value="special-offer">Special Offer</option>
                             <option value="old">Old Homepage</option>
                         </select>
+                    </div>
+
+                    {/* Product Visibility */}
+                    <div className="mt-6 p-4 bg-black/40 rounded-lg border border-neutral-800">
+                        <h3 className="font-medium text-white mb-1">Product Visibility</h3>
+                        <p className="text-sm text-neutral-500 mb-4">Show or hide pricing tiers on the /customize page.</p>
+                        <div className="space-y-3">
+                            {[
+                                { id: 'deposit', label: 'Reserve (50%)', price: '$299' },
+                                { id: 'solo', label: 'DreamPlay One', price: '$549' },
+                                { id: 'full', label: 'DreamPlay Bundle', price: '$599' },
+                                { id: 'signature', label: 'DreamPlay Signature', price: '$999' },
+                            ].map(product => {
+                                const isVisible = !hiddenProducts.includes(product.id)
+                                return (
+                                    <div key={product.id} className="flex items-center justify-between py-2 px-3 rounded-lg bg-neutral-900/50">
+                                        <div className="flex items-center gap-3">
+                                            <span className={`text-sm font-medium ${isVisible ? 'text-white' : 'text-neutral-500 line-through'}`}>{product.label}</span>
+                                            <span className="text-xs text-neutral-600 font-mono">{product.price}</span>
+                                        </div>
+                                        <button
+                                            onClick={async () => {
+                                                const next = isVisible
+                                                    ? [...hiddenProducts, product.id]
+                                                    : hiddenProducts.filter(id => id !== product.id)
+                                                setHiddenProducts(next)
+                                                const res = await updateHiddenProducts(next)
+                                                if (!res.success) {
+                                                    setHiddenProducts(hiddenProducts)
+                                                    alert('Failed to update product visibility')
+                                                }
+                                            }}
+                                            className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none ${isVisible ? 'bg-green-600' : 'bg-neutral-700'}`}
+                                        >
+                                            <span className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${isVisible ? 'translate-x-6' : 'translate-x-1'}`} />
+                                        </button>
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
 

@@ -1,11 +1,13 @@
 import CustomizeClient from './CustomizeClient'
-import { getCustomizePageUrls } from '@/actions/admin-actions'
+import { getCustomizePageUrls, getHiddenProducts } from '@/actions/admin-actions'
 
 export const dynamic = 'force-dynamic'
 
 export default async function CustomizePage() {
-    // Fetch dynamic URLs from admin settings
-    const urls = await getCustomizePageUrls()
+    const [urls, hiddenProducts] = await Promise.all([
+        getCustomizePageUrls(),
+        getHiddenProducts()
+    ])
 
-    return <CustomizeClient urls={urls} />
+    return <CustomizeClient urls={urls} hiddenProducts={hiddenProducts} />
 }

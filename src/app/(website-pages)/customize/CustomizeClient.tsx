@@ -18,9 +18,10 @@ interface CustomizeClientProps {
         solo?: string;
         deposit?: string;
     }
+    hiddenProducts: string[]
 }
 
-export default function CustomizeClient({ urls }: CustomizeClientProps) {
+export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClientProps) {
     // --- STATE ---
     const [appState, setAppState] = useState({
         handSpan: null as string | null,
@@ -85,7 +86,6 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
             remaining: 8,
             total: 10,
             highlight: false,
-            hidden: true,
         },
         {
             id: 'solo',
@@ -811,7 +811,7 @@ export default function CustomizeClient({ urls }: CustomizeClientProps) {
                     </div>
 
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        {tiers.filter(t => !t.hidden).map(tier => {
+                        {tiers.filter(t => !hiddenProducts.includes(t.id)).map(tier => {
                             const isSelected = appState.selectedTier === tier.id;
                             const isHighlight = tier.highlight;
 

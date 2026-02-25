@@ -221,3 +221,46 @@ export async function updateCustomizePageUrls(urls: { bundle: string, solo: stri
     }
 }
 
+export async function getHiddenProducts(): Promise<string[]> {
+    try {
+        const { data, error } = await supabase
+            .from('admin_variables')
+            .select('value')
+            .eq('key', 'hidden_products')
+            .single()
+
+        if (error) {
+            if (error.code === 'PGRST116') return ['deposit'] // default: deposit hidden
+            console.error('Error fetching hidden products:', error)
+            return ['deposit']
+        }
+
+        return JSON.parse(data?.value || '["deposit"]')
+    } catch (error) {
+        console.error('Failed to get hidden products:', error)
+        return ['deposit']
+    }
+}
+
+export async function updateHiddenProducts(hiddenIds: string[]) {
+    try {
+        const { error } = await supabase
+            .from('admin_variables')
+            .upsert({
+                key: 'hidden_products',
+                value: JSON.stringify(hiddenIds),
+                updated_at: new Date().toISOString()
+            })
+
+        if (error) {
+            console.error('Error updating hidden products:', error)
+            throw new Error(error.message)
+        }
+
+        revalidatePath('/customize')
+        return { success: true }
+    } catch (error: any) {
+        return { success: false, error: error.message }
+    }
+}
+
