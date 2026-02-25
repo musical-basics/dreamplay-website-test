@@ -616,22 +616,27 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
 
                     <div className="grid gap-6 lg:grid-cols-3">
                         {[
-                            { id: 'small', label: 'Smaller Hands', desc: 'Ideal for women and children', range: '< 7.6 inches', fullZone: 'Zone A', zoneDesc: 'Narrowest Keys · 88 keys', emoji: '🤚' },
+                            { id: 'small', label: 'Smaller Hands', desc: 'Ideal for women and children', range: '< 7.6 inches', fullZone: 'Zone A', zoneDesc: 'Narrowest Keys · 88 keys', emoji: '🤚', dark: true },
                             { id: 'medium', label: 'Average Hands', desc: 'Perfect for most men and women', range: '7.6–8.5 inches', fullZone: 'Zone B', zoneDesc: 'Narrow Keys · 88 keys', emoji: '✋' },
-                            { id: 'large', label: 'Larger Hands', desc: 'For the small percentage with larger hands', range: '8.5+ inches', fullZone: 'Zone C', zoneDesc: 'Standard Keys · 88 keys', emoji: '🖐️' }
+                            { id: 'large', label: 'Larger Hands', desc: 'For the small percentage with larger hands', range: '8.5+ inches', fullZone: 'Zone C', zoneDesc: 'Standard Keys · 88 keys', emoji: '🖐️', dark: true }
                         ].map((btn) => {
                             const isSelected = appState.handSpan === btn.id;
+                            const isDark = 'dark' in btn && btn.dark;
                             return (
                                 <button
                                     key={btn.id}
                                     onClick={() => handleSelectHandSize(btn.id as any)}
-                                    className={`group relative flex flex-col border p-8 text-center transition-all duration-300 md:p-10 cursor-pointer ${isSelected
-                                        ? 'border-black bg-white shadow-xl z-10'
-                                        : 'border-neutral-200 bg-white/80 shadow-md hover:border-neutral-400 hover:shadow-xl hover:bg-white'
+                                    className={`group relative flex flex-col border p-8 text-center transition-all duration-300 md:p-10 cursor-pointer ${isDark
+                                        ? isSelected
+                                            ? 'border-white/30 bg-[#050505] shadow-xl z-10'
+                                            : 'border-neutral-800 bg-[#050505] shadow-md hover:border-neutral-600 hover:shadow-xl'
+                                        : isSelected
+                                            ? 'border-black bg-white shadow-xl z-10'
+                                            : 'border-neutral-200 bg-white/80 shadow-md hover:border-neutral-400 hover:shadow-xl hover:bg-white'
                                         }`}
                                 >
                                     {isSelected && (
-                                        <div className="absolute right-4 top-4 flex h-6 w-6 items-center justify-center rounded-full bg-black text-white">
+                                        <div className={`absolute right-4 top-4 flex h-6 w-6 items-center justify-center rounded-full ${isDark ? 'bg-white text-black' : 'bg-black text-white'}`}>
                                             <Check className="h-3 w-3" />
                                         </div>
                                     )}
@@ -642,22 +647,35 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
                                     </div>
 
                                     {/* Label & Description */}
-                                    <h3 className="mb-2 font-serif text-xl text-neutral-900 md:text-2xl">{btn.label}</h3>
-                                    <p className={`min-h-[44px] mb-3 font-sans text-sm leading-relaxed ${isSelected ? 'text-black/60' : 'text-neutral-500'}`}>{btn.desc}</p>
+                                    <h3 className={`mb-2 font-serif text-xl md:text-2xl ${isDark ? 'text-white' : 'text-neutral-900'}`}>{btn.label}</h3>
+                                    <p className={`min-h-[44px] mb-3 font-sans text-sm leading-relaxed ${isDark
+                                        ? isSelected ? 'text-white/70' : 'text-white/50'
+                                        : isSelected ? 'text-black/60' : 'text-neutral-500'
+                                        }`}>{btn.desc}</p>
 
                                     {/* Hand Span */}
-                                    <p className="mb-6 font-sans text-sm text-neutral-400">{btn.range}</p>
+                                    <p className={`mb-6 font-sans text-sm ${isDark ? 'text-white/40' : 'text-neutral-400'}`}>{btn.range}</p>
 
                                     {/* Zone Label — prominent */}
-                                    <div className={`w-full border-t pt-5 ${isSelected ? 'border-black/15' : 'border-gray-200'}`}>
-                                        <span className="font-serif text-2xl text-neutral-900">{btn.fullZone}</span>
-                                        <p className={`mt-1.5 font-sans text-xs ${isSelected ? 'text-black/40' : 'text-neutral-400'}`}>{btn.zoneDesc}</p>
+                                    <div className={`w-full border-t pt-5 ${isDark
+                                        ? isSelected ? 'border-white/20' : 'border-white/10'
+                                        : isSelected ? 'border-black/15' : 'border-gray-200'
+                                        }`}>
+                                        <span className={`font-serif text-2xl ${isDark ? 'text-white' : 'text-neutral-900'}`}>{btn.fullZone}</span>
+                                        <p className={`mt-1.5 font-sans text-xs ${isDark
+                                            ? isSelected ? 'text-white/50' : 'text-white/40'
+                                            : isSelected ? 'text-black/40' : 'text-neutral-400'
+                                            }`}>{btn.zoneDesc}</p>
                                     </div>
 
-                                    {/* Select Button — elegant, sharp-edged like Step 2 */}
-                                    <div className={`mt-6 flex w-full items-center justify-center gap-2 border px-6 py-4 font-sans text-xs uppercase tracking-widest transition-colors ${isSelected
-                                        ? 'border-black bg-black text-white'
-                                        : 'border-black/20 text-neutral-900 group-hover:border-black group-hover:bg-black group-hover:text-white'
+                                    {/* Select Button */}
+                                    <div className={`mt-6 flex w-full items-center justify-center gap-2 border px-6 py-4 font-sans text-xs uppercase tracking-widest transition-colors ${isDark
+                                        ? isSelected
+                                            ? 'border-white bg-white text-black'
+                                            : 'border-white/20 text-white group-hover:border-white group-hover:bg-white group-hover:text-black'
+                                        : isSelected
+                                            ? 'border-black bg-black text-white'
+                                            : 'border-black/20 text-neutral-900 group-hover:border-black group-hover:bg-black group-hover:text-white'
                                         }`}>
                                         {isSelected ? 'Selected' : 'Select'}
                                         {!isSelected && <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />}
@@ -692,44 +710,58 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
                         {Object.entries(keyboards).map(([key, kb]) => {
                             const isSelected = key === appState.size;
                             const isRecommended = key === appState.size;
+                            const isLight = key === 'DS5.5' || key === 'DS6.5';
                             return (
                                 <button
                                     key={key}
                                     onClick={() => handleSelectSize(key)}
-                                    className={`group relative flex flex-col items-start border text-left transition-all duration-300 ${isSelected
-                                        ? 'z-10 scale-105 border-white bg-white/10 shadow-2xl shadow-black/60'
-                                        : 'border-white/30 bg-white/5 shadow-lg shadow-black/50 hover:border-white/50 hover:bg-white/10'
+                                    className={`group relative flex flex-col items-start border text-left transition-all duration-300 ${isLight
+                                            ? isSelected
+                                                ? 'z-10 scale-105 border-black bg-white shadow-2xl shadow-black/30'
+                                                : 'border-black/15 bg-white shadow-lg shadow-black/10 hover:border-black/40 hover:shadow-xl'
+                                            : isSelected
+                                                ? 'z-10 scale-105 border-white bg-white/10 shadow-2xl shadow-black/60'
+                                                : 'border-white/30 bg-white/5 shadow-lg shadow-black/50 hover:border-white/50 hover:bg-white/10'
                                         }`}
                                 >
                                     {isRecommended && (
-                                        <div className={`absolute left-6 top-6 z-10 border px-3 py-1 font-sans text-[9px] uppercase tracking-[0.2em] backdrop-blur-md ${isSelected ? 'border-white/20 bg-white/50 text-black' : 'border-white/20 bg-black/50 text-white'}`}>
+                                        <div className={`absolute left-6 top-6 z-10 border px-3 py-1 font-sans text-[9px] uppercase tracking-[0.2em] backdrop-blur-md ${isLight
+                                                ? isSelected ? 'border-black/20 bg-black/80 text-white' : 'border-black/20 bg-black/70 text-white'
+                                                : isSelected ? 'border-white/20 bg-white/50 text-black' : 'border-white/20 bg-black/50 text-white'
+                                            }`}>
                                             Recommended
                                         </div>
                                     )}
 
                                     {/* Image Container */}
-                                    <div className={`relative flex h-64 w-full items-center justify-center border-b p-8 transition-colors md:h-72 ${isSelected ? 'border-white/30 bg-black/30' : 'border-white/15 bg-black/15'}`}>
+                                    <div className={`relative flex h-64 w-full items-center justify-center border-b p-8 transition-colors md:h-72 ${isLight
+                                            ? isSelected ? 'border-black/15 bg-neutral-100' : 'border-black/10 bg-neutral-50'
+                                            : isSelected ? 'border-white/30 bg-black/30' : 'border-white/15 bg-black/15'
+                                        }`}>
                                         <img src={kb.imgSrc} alt={kb.name} className="w-auto max-w-[90%] max-h-[80%] object-contain transition-transform duration-700 group-hover:scale-105" />
                                     </div>
 
                                     <div className="flex w-full flex-1 flex-col p-8 md:p-10">
-                                        <h3 className="mb-2 font-serif text-2xl text-white md:text-3xl">{key}</h3>
-                                        <p className="mb-6 font-sans text-[10px] uppercase tracking-widest text-white/50">{kb.tagline}</p>
+                                        <h3 className={`mb-2 font-serif text-2xl md:text-3xl ${isLight ? 'text-black' : 'text-white'}`}>{key}</h3>
+                                        <p className={`mb-6 font-sans text-[10px] uppercase tracking-widest ${isLight ? 'text-black/50' : 'text-white/50'}`}>{kb.tagline}</p>
 
-                                        <p className="mb-8 flex-1 font-sans text-sm leading-relaxed text-white/60">{kb.description}</p>
+                                        <p className={`mb-8 flex-1 font-sans text-sm leading-relaxed ${isLight ? 'text-black/60' : 'text-white/60'}`}>{kb.description}</p>
 
-                                        <div className="mb-8 flex w-full justify-between border-t border-white/10 pt-6">
+                                        <div className={`mb-8 flex w-full justify-between border-t pt-6 ${isLight ? 'border-black/10' : 'border-white/10'}`}>
                                             <div>
-                                                <div className="font-serif text-xl text-white">88</div>
-                                                <div className="mt-1 font-sans text-[10px] uppercase tracking-widest text-white/40">Keys</div>
+                                                <div className={`font-serif text-xl ${isLight ? 'text-black' : 'text-white'}`}>88</div>
+                                                <div className={`mt-1 font-sans text-[10px] uppercase tracking-widest ${isLight ? 'text-black/40' : 'text-white/40'}`}>Keys</div>
                                             </div>
                                             <div className="text-right">
-                                                <div className="font-serif text-xl text-white">{key === 'DS5.5' ? 'Narrowest' : key === 'DS6.0' ? 'Narrow' : 'Standard'}</div>
-                                                <div className="mt-1 font-sans text-[10px] uppercase tracking-widest text-white/40">Key Width</div>
+                                                <div className={`font-serif text-xl ${isLight ? 'text-black' : 'text-white'}`}>{key === 'DS5.5' ? 'Narrowest' : key === 'DS6.0' ? 'Narrow' : 'Standard'}</div>
+                                                <div className={`mt-1 font-sans text-[10px] uppercase tracking-widest ${isLight ? 'text-black/40' : 'text-white/40'}`}>Key Width</div>
                                             </div>
                                         </div>
 
-                                        <div className={`mt-auto flex w-full items-center justify-center gap-2 border px-6 py-4 text-center font-sans text-xs uppercase tracking-widest transition-colors ${isSelected ? 'border-white bg-white text-black hover:bg-white/90' : 'border-white/30 text-white group-hover:border-white group-hover:bg-white/10'}`}>
+                                        <div className={`mt-auto flex w-full items-center justify-center gap-2 border px-6 py-4 text-center font-sans text-xs uppercase tracking-widest transition-colors ${isLight
+                                                ? isSelected ? 'border-black bg-black text-white hover:bg-black/90' : 'border-black/30 text-black group-hover:border-black group-hover:bg-black group-hover:text-white'
+                                                : isSelected ? 'border-white bg-white text-black hover:bg-white/90' : 'border-white/30 text-white group-hover:border-white group-hover:bg-white/10'
+                                            }`}>
                                             {isSelected ? 'Selected' : 'Select Size'}
                                             {!isSelected && <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />}
                                         </div>
