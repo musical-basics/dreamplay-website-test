@@ -1015,7 +1015,10 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
                                 <div>
                                     <p className="font-sans text-sm font-semibold text-white/90 mb-1">Duties & Taxes (Billed Later)</p>
                                     <p className="font-sans text-sm text-white/55 leading-relaxed">
-                                        To ensure you get the most accurate rate based on active trade policies, standard import duties/taxes are not included today. We ship Delivered Duty Paid (DDP) — meaning we prepay and handle all customs clearance on your behalf so there are no surprise carrier fees at your door. This applies to all shipping regions including the US, UK, EU, Australia, and Japan. You will be invoiced for any applicable duties/taxes right before your unit ships.
+                                        To ensure you get the most accurate rate based on active trade policies, standard import duties/taxes are not included today. We ship Delivered Duty Paid (DDP) — meaning we prepay and handle all customs clearance on your behalf so there are no surprise carrier fees at your door. This applies to all shipping regions including the US, UK, EU, Australia, and Japan.
+                                    </p>
+                                    <p className="font-sans text-sm text-white/55 leading-relaxed mt-2">
+                                        You will be invoiced for the exact duties/taxes at cost (with zero markup) right before your unit ships. If the final government tariff rate is higher than you expect, you can cancel your reservation at that time for a 100% full refund.
                                     </p>
                                 </div>
                             </div>
