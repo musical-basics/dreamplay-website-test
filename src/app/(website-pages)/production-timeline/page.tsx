@@ -24,7 +24,6 @@ const Lightbox = ({ images, startIndex, onClose }: { images: { src: string; capt
         touchStartX.current = null;
     };
 
-    // Close on Escape
     React.useEffect(() => {
         const handler = (e: KeyboardEvent) => {
             if (e.key === "Escape") onClose();
@@ -38,62 +37,48 @@ const Lightbox = ({ images, startIndex, onClose }: { images: { src: string; capt
 
     return (
         <div
-            className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center cursor-zoom-out"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm cursor-pointer"
             onClick={onClose}
         >
-            {/* Close button */}
-            <button
-                onClick={onClose}
-                className="absolute top-5 right-5 z-20 w-10 h-10 flex items-center justify-center bg-white/10 border border-white/20 text-white rounded-full hover:bg-white/20 transition-colors cursor-pointer"
-            >
-                <X className="w-5 h-5" />
-            </button>
-
-            {/* Main carousel container — ~65% of viewport */}
             <div
-                className="relative w-[95vw] md:w-[85vw] lg:w-[75vw] max-h-[85vh] flex flex-col"
+                className="relative max-w-5xl w-full mx-4 md:mx-8"
                 onClick={(e) => e.stopPropagation()}
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
             >
-                {/* Image area */}
-                <div className="relative w-full flex-1 flex items-center justify-center bg-black/40 rounded-xl overflow-hidden border border-white/10">
-                    <div className="relative w-full aspect-[16/10]">
-                        <img
-                            src={images[current].src}
-                            alt={images[current].caption}
-                            className="absolute inset-0 w-full h-full object-contain"
-                        />
-                    </div>
+                <Image
+                    src={images[current].src}
+                    alt={images[current].caption}
+                    width={1200}
+                    height={900}
+                    className="w-full h-auto"
+                />
 
-                    {/* Chevrons */}
-                    {images.length > 1 && (
-                        <>
-                            <button
-                                onClick={prev}
-                                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center bg-black/60 border border-white/20 text-white rounded-full hover:bg-black/80 transition-colors cursor-pointer"
-                            >
-                                <ChevronLeft className="w-5 h-5" />
-                            </button>
-                            <button
-                                onClick={next}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center bg-black/60 border border-white/20 text-white rounded-full hover:bg-black/80 transition-colors cursor-pointer"
-                            >
-                                <ChevronRight className="w-5 h-5" />
-                            </button>
-                        </>
-                    )}
-                </div>
+                {/* Chevrons */}
+                {images.length > 1 && (
+                    <>
+                        <button
+                            onClick={prev}
+                            className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center bg-black/60 border border-white/20 text-white rounded-full hover:bg-black/80 transition-colors cursor-pointer"
+                        >
+                            <ChevronLeft className="w-5 h-5" />
+                        </button>
+                        <button
+                            onClick={next}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center bg-black/60 border border-white/20 text-white rounded-full hover:bg-black/80 transition-colors cursor-pointer"
+                        >
+                            <ChevronRight className="w-5 h-5" />
+                        </button>
+                    </>
+                )}
 
                 {/* Caption + dots */}
-                <div className="mt-4 text-center px-4">
-                    <p className="text-sm text-white/80 font-sans leading-relaxed mb-3">
-                        <span className="text-white font-medium">Image {current + 1} of {images.length}</span>
-                        <span className="text-white/40 mx-2">—</span>
-                        {images[current].caption}
+                <div className="mt-4 text-center">
+                    <p className="font-sans text-sm text-white/70 leading-relaxed mb-3">
+                        <span className="text-white font-medium">Image {current + 1} of {images.length}:</span> {images[current].caption}
                     </p>
                     {images.length > 1 && (
-                        <div className="flex justify-center gap-2">
+                        <div className="flex justify-center gap-2 mb-3">
                             {images.map((_, idx) => (
                                 <button
                                     key={idx}
@@ -103,7 +88,7 @@ const Lightbox = ({ images, startIndex, onClose }: { images: { src: string; capt
                             ))}
                         </div>
                     )}
-                    <p className="text-[10px] text-white/25 uppercase tracking-widest mt-3">Click anywhere outside to close · Use arrow keys to navigate</p>
+                    <p className="font-sans text-xs text-white/50">Click anywhere to close</p>
                 </div>
             </div>
         </div>
