@@ -137,6 +137,15 @@ export default function Navbar() {
                                         Our Story
                                     </Link>
                                     <Link
+                                        href="/production-timeline"
+                                        className={`block px-4 py-3 text-sm transition-colors ${isCustomizePage
+                                            ? 'text-gray-400 hover:text-white hover:bg-white/5'
+                                            : 'text-gray-600 hover:text-black hover:bg-black/5'
+                                            }`}
+                                    >
+                                        Production Timeline
+                                    </Link>
+                                    <Link
                                         href="/about-us/ds-standard"
                                         className={`block px-4 py-3 text-sm transition-colors ${isCustomizePage
                                             ? 'text-gray-400 hover:text-white hover:bg-white/5'
@@ -353,6 +362,13 @@ export default function Navbar() {
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             Our Story
+                        </Link>
+                        <Link
+                            href="/production-timeline"
+                            className="px-6 py-3 text-base text-gray-700 hover:bg-gray-100"
+                            onClick={() => setMobileMenuOpen(false)}
+                        >
+                            Production Timeline
                         </Link>
                         <Link
                             href="/about-us/ds-standard"

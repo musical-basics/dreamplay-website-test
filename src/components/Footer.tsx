@@ -11,6 +11,7 @@ export default function Footer() {
     { text: "How It Works", href: "/how-it-works" },
     { text: "The Benefits", href: "/better-practice" },
     { text: "Our Story", href: "/our-story" },
+    { text: "Production Timeline", href: "/production-timeline" },
     { text: "FAQ", href: "/information-and-policies/faq" },
     { text: "Shipping", href: "/information-and-policies/shipping" },
     { text: "Refund Policy", href: "https://www.dreamplaypianos.com/reserve" },
