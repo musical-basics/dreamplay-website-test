@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
@@ -126,12 +127,13 @@ const MiniCarousel = ({ images }: { images: { src: string; caption: string }[] }
 
     return (
         <>
-            {lightboxOpen && (
+            {lightboxOpen && createPortal(
                 <Lightbox
                     images={images}
                     startIndex={current}
                     onClose={() => setLightboxOpen(false)}
-                />
+                />,
+                document.body
             )}
             <div
                 className="relative w-full rounded-xl overflow-hidden border border-white/10 bg-[#050505] shadow-xl group"
