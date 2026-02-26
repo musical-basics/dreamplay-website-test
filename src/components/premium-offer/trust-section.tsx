@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import {
   Accordion,
   AccordionContent,
@@ -73,6 +74,13 @@ export function TrustSection() {
                     history ensures your DreamPlay One is built with mature,
                     time-tested reliability.
                   </p>
+                  <Link
+                    href="/production-timeline"
+                    className="mt-6 inline-flex items-center gap-2 border border-white/20 bg-white/5 px-5 py-2.5 font-sans text-xs uppercase tracking-[0.15em] text-foreground transition-all hover:bg-white/10 hover:border-white/30"
+                  >
+                    Learn more about our manufacturing timeline
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+                  </Link>
                 </AccordionContent>
               </AccordionItem>
 
