@@ -13,8 +13,7 @@ export default function Footer() {
     { text: "Our Story", href: "/our-story" },
     { text: "Production Timeline", href: "/production-timeline" },
     { text: "FAQ", href: "/information-and-policies/faq" },
-    { text: "Shipping", href: "/information-and-policies/shipping" },
-    { text: "Refund Policy", href: "https://www.dreamplaypianos.com/reserve" },
+    { text: "Shipping & Refunds", href: "/information-and-policies/shipping" },
     { text: "Contact Us", href: "/contact" },
     { text: "Blog", href: "https://blog.dreamplaypianos.com/blog" },
   ];

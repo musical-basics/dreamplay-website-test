@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         destination: '/customize',
         permanent: true,
       },
+      {
+        source: '/shipping',
+        destination: '/information-and-policies/shipping',
+        permanent: true,
+      },
     ];
   },
 };
