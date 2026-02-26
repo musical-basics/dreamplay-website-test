@@ -143,7 +143,7 @@ export default function Navbar() {
                                             : 'text-gray-600 hover:text-black hover:bg-black/5'
                                             }`}
                                     >
-                                        Production Timeline
+                                        Manufacturing
                                     </Link>
                                     <Link
                                         href="/about-us/ds-standard"
@@ -368,7 +368,7 @@ export default function Navbar() {
                             className="px-6 py-3 text-base text-gray-700 hover:bg-gray-100"
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            Production Timeline
+                            Manufacturing
                         </Link>
                         <Link
                             href="/about-us/ds-standard"

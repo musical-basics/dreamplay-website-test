@@ -6,11 +6,35 @@ import Link from "next/link";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import Footer from "@/components/Footer";
 import { AnimatedSection } from "@/components/animated-section";
-import { ChevronLeft, ChevronRight, ArrowRight, Factory } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight, Factory, Maximize2, X } from "lucide-react";
+
+// --- Fullscreen Lightbox ---
+const Lightbox = ({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) => {
+    return (
+        <div
+            className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out"
+            onClick={onClose}
+        >
+            <button
+                onClick={onClose}
+                className="absolute top-6 right-6 z-10 w-10 h-10 flex items-center justify-center bg-white/10 border border-white/20 text-white rounded-full hover:bg-white/20 transition-colors cursor-pointer"
+            >
+                <X className="w-5 h-5" />
+            </button>
+            <img
+                src={src}
+                alt={alt}
+                className="max-w-full max-h-full object-contain rounded-lg"
+                onClick={(e) => e.stopPropagation()}
+            />
+        </div>
+    );
+};
 
 // --- Mini Carousel Component ---
 const MiniCarousel = ({ images }: { images: { src: string; caption: string }[] }) => {
     const [current, setCurrent] = useState(0);
+    const [lightboxOpen, setLightboxOpen] = useState(false);
     const touchStartX = useRef<number | null>(null);
     const touchStartY = useRef<number | null>(null);
 
@@ -37,62 +61,86 @@ const MiniCarousel = ({ images }: { images: { src: string; caption: string }[] }
     if (!images || images.length === 0) return null;
 
     return (
-        <div
-            className="relative w-full rounded-xl overflow-hidden border border-white/10 bg-[#050505] shadow-xl group"
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-        >
-            <div className="aspect-[4/3] w-full relative">
-                {/* Background Blur for mixed aspect ratios */}
-                <div
-                    className="absolute inset-0 bg-cover bg-center opacity-30 blur-2xl transform scale-110 transition-all duration-500"
-                    style={{ backgroundImage: `url(${images[current].src})` }}
-                />
-
-                {/* Main Image */}
-                <Image
+        <>
+            {lightboxOpen && (
+                <Lightbox
                     src={images[current].src}
-                    alt="Production progress"
-                    fill
-                    className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-10"
+                    alt={images[current].caption}
+                    onClose={() => setLightboxOpen(false)}
                 />
+            )}
+            <div
+                className="relative w-full rounded-xl overflow-hidden border border-white/10 bg-[#050505] shadow-xl group"
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+            >
+                <div
+                    className="aspect-[4/3] w-full relative cursor-zoom-in"
+                    onClick={() => setLightboxOpen(true)}
+                >
+                    {/* Background Blur for mixed aspect ratios */}
+                    <div
+                        className="absolute inset-0 bg-cover bg-center opacity-30 blur-2xl transform scale-110 transition-all duration-500"
+                        style={{ backgroundImage: `url(${images[current].src})` }}
+                    />
 
-                {/* Controls (visible on hover) */}
-                {images.length > 1 && (
-                    <>
-                        <button
-                            onClick={prevSlide}
-                            className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center bg-black/50 border border-white/20 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 cursor-pointer"
-                        >
-                            <ChevronLeft className="w-4 h-4" />
-                        </button>
-                        <button
-                            onClick={nextSlide}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center bg-black/50 border border-white/20 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 cursor-pointer"
-                        >
-                            <ChevronRight className="w-4 h-4" />
-                        </button>
+                    {/* Main Image */}
+                    <Image
+                        src={images[current].src}
+                        alt="Production progress"
+                        fill
+                        className="absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-10"
+                    />
 
-                        {/* Dots */}
-                        <div className="absolute bottom-3 left-0 right-0 z-20 flex justify-center gap-1.5">
-                            {images.map((_, idx) => (
-                                <button
-                                    key={idx}
-                                    onClick={() => setCurrent(idx)}
-                                    className={`h-1.5 transition-all duration-300 cursor-pointer ${current === idx ? 'w-4 bg-blue-500 rounded-full' : 'w-1.5 bg-white/50 hover:bg-white rounded-full'}`}
-                                />
-                            ))}
-                        </div>
-                    </>
-                )}
+                    {/* Enlarge icon hint */}
+                    <div className="absolute top-3 right-3 z-20 w-7 h-7 flex items-center justify-center bg-black/50 border border-white/20 text-white/60 rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Maximize2 className="w-3.5 h-3.5" />
+                    </div>
+
+                    {/* Controls (visible on hover) */}
+                    {images.length > 1 && (
+                        <>
+                            <button
+                                onClick={(e) => { e.stopPropagation(); prevSlide(); }}
+                                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center bg-black/50 border border-white/20 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 cursor-pointer"
+                            >
+                                <ChevronLeft className="w-4 h-4" />
+                            </button>
+                            <button
+                                onClick={(e) => { e.stopPropagation(); nextSlide(); }}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center bg-black/50 border border-white/20 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 cursor-pointer"
+                            >
+                                <ChevronRight className="w-4 h-4" />
+                            </button>
+
+                            {/* Dots */}
+                            <div className="absolute bottom-3 left-0 right-0 z-20 flex justify-center gap-1.5">
+                                {images.map((_, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={(e) => { e.stopPropagation(); setCurrent(idx); }}
+                                        className={`h-1.5 transition-all duration-300 cursor-pointer ${current === idx ? 'w-4 bg-blue-500 rounded-full' : 'w-1.5 bg-white/50 hover:bg-white rounded-full'}`}
+                                    />
+                                ))}
+                            </div>
+                        </>
+                    )}
+                </div>
+                {/* Caption + Click to enlarge */}
+                <div className="p-4 bg-[#0a0a0f] border-t border-white/5 min-h-[75px]">
+                    <p className="text-xs text-white/70 font-sans leading-relaxed mb-2">
+                        <strong className="text-white/90">Image {current + 1} of {images.length}:</strong> {images[current].caption}
+                    </p>
+                    <p
+                        className="text-[10px] text-white/30 font-sans uppercase tracking-widest flex items-center gap-1.5 cursor-pointer hover:text-white/50 transition-colors"
+                        onClick={() => setLightboxOpen(true)}
+                    >
+                        <Maximize2 className="w-3 h-3" />
+                        Click to enlarge
+                    </p>
+                </div>
             </div>
-            {/* Caption */}
-            <div className="p-4 bg-[#0a0a0f] border-t border-white/5 min-h-[75px] flex items-center">
-                <p className="text-xs text-white/70 font-sans leading-relaxed">
-                    <strong className="text-white/90">Image {current + 1} of {images.length}:</strong> {images[current].caption}
-                </p>
-            </div>
-        </div>
+        </>
     );
 };
 
