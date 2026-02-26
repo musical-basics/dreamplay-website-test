@@ -8,25 +8,104 @@ import Footer from "@/components/Footer";
 import { AnimatedSection } from "@/components/animated-section";
 import { ChevronLeft, ChevronRight, ArrowRight, Factory, Maximize2, X } from "lucide-react";
 
-// --- Fullscreen Lightbox ---
-const Lightbox = ({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) => {
+// --- Fullscreen Carousel Lightbox ---
+const Lightbox = ({ images, startIndex, onClose }: { images: { src: string; caption: string }[]; startIndex: number; onClose: () => void }) => {
+    const [current, setCurrent] = useState(startIndex);
+    const touchStartX = useRef<number | null>(null);
+
+    const next = () => setCurrent((p) => (p + 1) % images.length);
+    const prev = () => setCurrent((p) => (p - 1 + images.length) % images.length);
+
+    const handleTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        if (touchStartX.current === null) return;
+        const dx = e.changedTouches[0].clientX - touchStartX.current;
+        if (Math.abs(dx) > 50) { dx < 0 ? next() : prev(); }
+        touchStartX.current = null;
+    };
+
+    // Close on Escape
+    React.useEffect(() => {
+        const handler = (e: KeyboardEvent) => {
+            if (e.key === "Escape") onClose();
+            if (e.key === "ArrowRight") next();
+            if (e.key === "ArrowLeft") prev();
+        };
+        window.addEventListener("keydown", handler);
+        return () => window.removeEventListener("keydown", handler);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <div
-            className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-zoom-out"
+            className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center cursor-zoom-out"
             onClick={onClose}
         >
+            {/* Close button */}
             <button
                 onClick={onClose}
-                className="absolute top-6 right-6 z-10 w-10 h-10 flex items-center justify-center bg-white/10 border border-white/20 text-white rounded-full hover:bg-white/20 transition-colors cursor-pointer"
+                className="absolute top-5 right-5 z-20 w-10 h-10 flex items-center justify-center bg-white/10 border border-white/20 text-white rounded-full hover:bg-white/20 transition-colors cursor-pointer"
             >
                 <X className="w-5 h-5" />
             </button>
-            <img
-                src={src}
-                alt={alt}
-                className="max-w-full max-h-full object-contain rounded-lg"
+
+            {/* Main carousel container — ~65% of viewport */}
+            <div
+                className="relative w-[90vw] md:w-[65vw] max-h-[80vh] flex flex-col"
                 onClick={(e) => e.stopPropagation()}
-            />
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+            >
+                {/* Image area */}
+                <div className="relative w-full flex-1 flex items-center justify-center bg-black/40 rounded-xl overflow-hidden border border-white/10">
+                    <div className="relative w-full aspect-[16/10]">
+                        <img
+                            src={images[current].src}
+                            alt={images[current].caption}
+                            className="absolute inset-0 w-full h-full object-contain"
+                        />
+                    </div>
+
+                    {/* Chevrons */}
+                    {images.length > 1 && (
+                        <>
+                            <button
+                                onClick={prev}
+                                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center bg-black/60 border border-white/20 text-white rounded-full hover:bg-black/80 transition-colors cursor-pointer"
+                            >
+                                <ChevronLeft className="w-5 h-5" />
+                            </button>
+                            <button
+                                onClick={next}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center bg-black/60 border border-white/20 text-white rounded-full hover:bg-black/80 transition-colors cursor-pointer"
+                            >
+                                <ChevronRight className="w-5 h-5" />
+                            </button>
+                        </>
+                    )}
+                </div>
+
+                {/* Caption + dots */}
+                <div className="mt-4 text-center px-4">
+                    <p className="text-sm text-white/80 font-sans leading-relaxed mb-3">
+                        <span className="text-white font-medium">Image {current + 1} of {images.length}</span>
+                        <span className="text-white/40 mx-2">—</span>
+                        {images[current].caption}
+                    </p>
+                    {images.length > 1 && (
+                        <div className="flex justify-center gap-2">
+                            {images.map((_, idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => setCurrent(idx)}
+                                    className={`h-2 transition-all duration-300 cursor-pointer rounded-full ${current === idx ? 'w-6 bg-blue-500' : 'w-2 bg-white/30 hover:bg-white/60'}`}
+                                />
+                            ))}
+                        </div>
+                    )}
+                    <p className="text-[10px] text-white/25 uppercase tracking-widest mt-3">Click anywhere outside to close · Use arrow keys to navigate</p>
+                </div>
+            </div>
         </div>
     );
 };
@@ -64,8 +143,8 @@ const MiniCarousel = ({ images }: { images: { src: string; caption: string }[] }
         <>
             {lightboxOpen && (
                 <Lightbox
-                    src={images[current].src}
-                    alt={images[current].caption}
+                    images={images}
+                    startIndex={current}
                     onClose={() => setLightboxOpen(false)}
                 />
             )}
