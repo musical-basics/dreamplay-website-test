@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import script from "next/script";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/old-navbar";
 import { getCountdownDate } from "@/actions/admin-actions";
 import { useABAnalytics } from "@/hooks/use-ab-analytics";
 

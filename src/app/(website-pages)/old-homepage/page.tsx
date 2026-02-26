@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/old-navbar";
 import Footer from "@/components/Footer";
 import { useABAnalytics } from "@/hooks/use-ab-analytics";
 import WebflowBackgroundVideo from "@/components/WebflowBackgroundVideo";

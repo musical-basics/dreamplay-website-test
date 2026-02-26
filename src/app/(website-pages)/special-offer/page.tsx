@@ -1,6 +1,6 @@
 "use client"
 
-import Navbar from "@/components/Navbar"
+import Navbar from "@/components/old-navbar"
 import { HeroSection } from "@/components/special-offer/hero-section"
 import { CountdownTimer } from "@/components/special-offer/countdown-timer"
 import { FeaturesPianoSection } from "@/components/special-offer/features-piano-section"

@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/old-navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import ProductSelectionForm from "@/components/checkout/ProductSelectionForm";
