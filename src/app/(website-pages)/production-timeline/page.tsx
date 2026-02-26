@@ -104,6 +104,7 @@ export default function ProductionTimelinePage() {
             description: "The DreamPlay project officially begins. Finding a manufacturer willing to take on a highly customized, low-volume (under 200 units) first batch was our biggest hurdle. Founder Lionel Yu traveled to Shenzhen to meet the engineering team at Ebulent Technologies. As a specialized \u2018custom order\u2019 facility, they had the exact precision capabilities we needed and believed in our mission.",
             images: [
                 { src: "/images/factory-pictures/exterior.jpeg", caption: "The Ebulent Technologies manufacturing facility in Shenzhen, equipped for high-precision micro-engineering." },
+                { src: "/images/factory-pictures/hq.jpg", caption: "Lionel arriving at the Ebulent Technologies headquarters in Shenzhen." },
                 { src: "/images/factory-pictures/dinner.jpg", caption: "Celebrating the partnership and project kickoff with the lead engineering team." }
             ]
         },
