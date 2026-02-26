@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowRight, Menu, X, User } from "lucide-react"
+import { ArrowRight, Menu, X, User, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import { useABAnalytics } from "@/hooks/use-ab-analytics"
@@ -13,6 +13,48 @@ interface SpecialOfferHeaderProps {
     forceOpaque?: boolean;
     darkMode?: boolean;
     className?: string;
+}
+
+// --- Desktop Dropdown ---
+function NavDropdown({ label, items, useDarkText }: { label: string; items: { label: string; href: string }[]; useDarkText: boolean }) {
+    const [open, setOpen] = useState(false);
+    return (
+        <div
+            className="relative h-full flex items-center"
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
+        >
+            <button
+                className={`flex items-center gap-1 text-sm transition-colors cursor-pointer ${useDarkText ? "text-neutral-700 hover:text-neutral-900" : "text-white/70 hover:text-white"}`}
+            >
+                {label}
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+            </button>
+            <div
+                className={cn(
+                    "absolute top-full right-0 mt-1 min-w-[180px] rounded-lg shadow-xl overflow-hidden transition-all duration-200 border",
+                    useDarkText
+                        ? "bg-white border-black/5 ring-1 ring-black/5"
+                        : "bg-[#0a0a0f] border-white/10",
+                    open ? "opacity-100 translate-y-0 visible" : "opacity-0 translate-y-2 invisible"
+                )}
+                style={{ zIndex: 100 }}
+            >
+                {items.map((item) => (
+                    <Link
+                        key={item.label}
+                        href={item.href}
+                        className={`block px-4 py-3 text-sm transition-colors ${useDarkText
+                            ? "text-gray-600 hover:text-black hover:bg-black/5"
+                            : "text-gray-400 hover:text-white hover:bg-white/5"
+                            }`}
+                    >
+                        {item.label}
+                    </Link>
+                ))}
+            </div>
+        </div>
+    );
 }
 
 export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, className = "" }: SpecialOfferHeaderProps) {
@@ -39,6 +81,9 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
 
     const isScrolled = forceOpaque || scrolled || isMobileMenuOpen;
     const useDarkText = isScrolled && !darkMode;
+
+    const linkClass = (useDarkText: boolean) =>
+        `text-sm transition-colors ${useDarkText ? "text-neutral-700 hover:text-neutral-900" : "text-white/70 hover:text-white"}`;
 
     return (
         <>
@@ -72,33 +117,30 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                         </Link>
 
                         {/* Main navigation */}
-                        <nav className="hidden md:flex items-center gap-6">
-                            {[
-                                { label: "DreamPlay One", href: "/" },
-                                { label: "How It Works", href: "/how-it-works" },
-                                { label: "The Benefits", href: "/better-practice" },
-                                { label: "Our Story", href: "/our-story" },
-                                { label: "Manufacturing", href: "/production-timeline" },
-                                { label: "DS Standard", href: "/about-us/ds-standard" },
-                                { label: "FAQ", href: "/information-and-policies/faq" },
-                                { label: "Shipping", href: "/information-and-policies/shipping" },
-                                { label: "Blog", href: "https://blog.dreamplaypianos.com/blog" },
-                            ].map((item, i) => (
-                                <Link
-                                    key={item.label}
-                                    href={item.href}
-                                    className={`text-sm transition-colors ${useDarkText
-                                        ? i === 0
-                                            ? "text-neutral-900 font-medium"
-                                            : "text-neutral-700 hover:text-neutral-900"
-                                        : i === 0
-                                            ? "text-white font-medium"
-                                            : "text-white/70 hover:text-white"
-                                        }`}
-                                >
-                                    {item.label}
-                                </Link>
-                            ))}
+                        <nav className="hidden md:flex items-center gap-6 h-full">
+                            <Link href="/how-it-works" className={linkClass(useDarkText)}>How It Works</Link>
+                            <Link href="/better-practice" className={linkClass(useDarkText)}>The Benefits</Link>
+
+                            <NavDropdown
+                                label="About Us"
+                                useDarkText={useDarkText}
+                                items={[
+                                    { label: "Our Story", href: "/our-story" },
+                                    { label: "The DS Standard", href: "/about-us/ds-standard" },
+                                ]}
+                            />
+
+                            <NavDropdown
+                                label="Manufacturing & Shipping"
+                                useDarkText={useDarkText}
+                                items={[
+                                    { label: "Manufacturing", href: "/production-timeline" },
+                                    { label: "Shipping", href: "/information-and-policies/shipping" },
+                                ]}
+                            />
+
+                            <Link href="/information-and-policies/faq" className={linkClass(useDarkText)}>FAQ</Link>
+                            <Link href="https://blog.dreamplaypianos.com/blog" className={linkClass(useDarkText)}>Blog</Link>
                         </nav>
 
                         {/* CTA + Auth */}
@@ -154,26 +196,22 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                     isMobileMenuOpen && (
                         <div className="md:hidden absolute top-[100px] left-0 right-0 bg-white border-b border-gray-100 shadow-xl animate-in slide-in-from-top-2 duration-200">
                             <nav className="flex flex-col p-4">
-                                {[
-                                    { label: "DreamPlay One", href: "/" },
-                                    { label: "How It Works", href: "/how-it-works" },
-                                    { label: "The Benefits", href: "/better-practice" },
-                                    { label: "Our Story", href: "/our-story" },
-                                    { label: "Manufacturing", href: "/production-timeline" },
-                                    { label: "DS Standard", href: "/about-us/ds-standard" },
-                                    { label: "FAQ", href: "/information-and-policies/faq" },
-                                    { label: "Shipping", href: "/information-and-policies/shipping" },
-                                    { label: "Blog", href: "https://blog.dreamplaypianos.com/blog" },
-                                ].map((item) => (
-                                    <Link
-                                        key={item.label}
-                                        href={item.href}
-                                        className="py-3 text-neutral-600 hover:text-black font-medium border-b border-gray-50 last:border-0"
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                    >
-                                        {item.label}
-                                    </Link>
-                                ))}
+                                <Link href="/how-it-works" className="py-3 text-neutral-600 hover:text-black font-medium border-b border-gray-50" onClick={() => setIsMobileMenuOpen(false)}>How It Works</Link>
+                                <Link href="/better-practice" className="py-3 text-neutral-600 hover:text-black font-medium border-b border-gray-50" onClick={() => setIsMobileMenuOpen(false)}>The Benefits</Link>
+
+                                <div className="border-t border-gray-200 my-2" />
+                                <div className="px-1 py-1 text-xs font-semibold text-gray-400 uppercase tracking-wider">About Us</div>
+                                <Link href="/our-story" className="py-3 pl-3 text-neutral-600 hover:text-black font-medium border-b border-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Our Story</Link>
+                                <Link href="/about-us/ds-standard" className="py-3 pl-3 text-neutral-600 hover:text-black font-medium border-b border-gray-50" onClick={() => setIsMobileMenuOpen(false)}>The DS Standard</Link>
+
+                                <div className="border-t border-gray-200 my-2" />
+                                <div className="px-1 py-1 text-xs font-semibold text-gray-400 uppercase tracking-wider">Manufacturing & Shipping</div>
+                                <Link href="/production-timeline" className="py-3 pl-3 text-neutral-600 hover:text-black font-medium border-b border-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Manufacturing</Link>
+                                <Link href="/information-and-policies/shipping" className="py-3 pl-3 text-neutral-600 hover:text-black font-medium border-b border-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Shipping</Link>
+
+                                <div className="border-t border-gray-200 my-2" />
+                                <Link href="/information-and-policies/faq" className="py-3 text-neutral-600 hover:text-black font-medium border-b border-gray-50" onClick={() => setIsMobileMenuOpen(false)}>FAQ</Link>
+                                <Link href="https://blog.dreamplaypianos.com/blog" className="py-3 text-neutral-600 hover:text-black font-medium" onClick={() => setIsMobileMenuOpen(false)}>Blog</Link>
 
                                 {!user && (
                                     <div className="py-2 flex items-center gap-3 border-t border-gray-100">
