@@ -51,7 +51,7 @@ const Lightbox = ({ images, startIndex, onClose }: { images: { src: string; capt
 
             {/* Main carousel container — ~65% of viewport */}
             <div
-                className="relative w-[90vw] md:w-[65vw] max-h-[80vh] flex flex-col"
+                className="relative w-[95vw] md:w-[85vw] lg:w-[75vw] max-h-[85vh] flex flex-col"
                 onClick={(e) => e.stopPropagation()}
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
