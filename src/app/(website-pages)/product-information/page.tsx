@@ -84,8 +84,8 @@ function SpecTable({ specs, note, light }: { specs: { label: string; value: stri
                 <div
                     key={spec.label}
                     className={`flex flex-col gap-1 py-5 md:flex-row md:items-baseline md:gap-8 ${light
-                            ? `border-b border-neutral-200 ${i === 0 ? "border-t" : ""}`
-                            : `border-b border-neutral-800 ${i === 0 ? "border-t" : ""}`
+                        ? `border-b border-neutral-200 ${i === 0 ? "border-t" : ""}`
+                        : `border-b border-neutral-800 ${i === 0 ? "border-t" : ""}`
                         }`}
                 >
                     <span className={`font-sans text-xs uppercase tracking-[0.2em] md:w-72 md:shrink-0 md:text-sm ${light ? "text-neutral-500" : "text-neutral-400"
@@ -128,21 +128,21 @@ export default function ProductInformationPage() {
                 </section>
 
                 {/* Features Overview — LIGHT */}
-                <section className="bg-background">
+                <section className="bg-white">
                     <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
                         <div className="mb-16">
-                            <p className="font-sans text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">
+                            <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-500 mb-4">
                                 What&apos;s Included
                             </p>
-                            <h2 className="font-serif text-3xl md:text-4xl leading-tight text-foreground">
+                            <h2 className="font-serif text-3xl md:text-4xl leading-tight text-neutral-900">
                                 Key Features
                             </h2>
                         </div>
                         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                             {features.map((f) => (
                                 <div key={f.title} className="border border-neutral-200 bg-neutral-50 p-6 md:p-8 hover:border-neutral-400 transition-colors">
-                                    <h3 className="font-serif text-lg text-foreground mb-3">{f.title}</h3>
-                                    <p className="font-sans text-sm text-muted-foreground leading-relaxed">{f.description}</p>
+                                    <h3 className="font-serif text-lg text-neutral-900 mb-3">{f.title}</h3>
+                                    <p className="font-sans text-sm text-neutral-500 leading-relaxed">{f.description}</p>
                                 </div>
                             ))}
                         </div>
@@ -171,13 +171,13 @@ export default function ProductInformationPage() {
                 </section>
 
                 {/* Speaker Specifications — LIGHT */}
-                <section className="bg-background">
+                <section className="bg-white">
                     <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
                         <div className="mb-12">
-                            <p className="font-sans text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">
+                            <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-500 mb-4">
                                 Audio
                             </p>
-                            <h2 className="font-serif text-3xl md:text-4xl leading-tight text-foreground">
+                            <h2 className="font-serif text-3xl md:text-4xl leading-tight text-neutral-900">
                                 Speaker System
                             </h2>
                         </div>
