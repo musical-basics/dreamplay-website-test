@@ -120,6 +120,7 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                         <nav className="hidden md:flex items-center gap-6 h-full">
                             <Link href="/how-it-works" className={linkClass(useDarkText)}>How It Works</Link>
                             <Link href="/better-practice" className={linkClass(useDarkText)}>The Benefits</Link>
+                            <Link href="/product-information" className={linkClass(useDarkText)}>Product Info</Link>
 
                             <NavDropdown
                                 label="About Us"
@@ -198,6 +199,7 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                             <nav className="flex flex-col p-4">
                                 <Link href="/how-it-works" className="py-3 text-neutral-600 hover:text-black font-medium border-b border-gray-50" onClick={() => setIsMobileMenuOpen(false)}>How It Works</Link>
                                 <Link href="/better-practice" className="py-3 text-neutral-600 hover:text-black font-medium border-b border-gray-50" onClick={() => setIsMobileMenuOpen(false)}>The Benefits</Link>
+                                <Link href="/product-information" className="py-3 text-neutral-600 hover:text-black font-medium border-b border-gray-50" onClick={() => setIsMobileMenuOpen(false)}>Product Info</Link>
 
                                 <div className="border-t border-gray-200 my-2" />
                                 <div className="px-1 py-1 text-xs font-semibold text-gray-400 uppercase tracking-wider">About Us</div>
