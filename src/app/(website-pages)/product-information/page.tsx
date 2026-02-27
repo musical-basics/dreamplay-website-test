@@ -2,6 +2,7 @@ import { Playfair_Display, Inter } from "next/font/google"
 import { SpecialOfferHeader } from "@/components/special-offer/header"
 import { FeaturesGridSection } from "@/components/special-offer/features-grid-section"
 import { FeaturesPianoSection } from "@/components/special-offer/features-piano-section"
+import { ComparisonTableSection } from "@/components/special-offer/comparison-table-section"
 import Footer from "@/components/Footer"
 import Link from "next/link"
 import Image from "next/image"
@@ -196,6 +197,9 @@ export default function ProductInformationPage() {
                         <SpecTable specs={connectivitySpecs} />
                     </div>
                 </section>
+
+                {/* Why Pay Double for Less? — Comparison Table */}
+                <ComparisonTableSection />
 
                 {/* CTA */}
                 <section className="bg-neutral-950 border-t border-neutral-800 py-24 md:py-32 text-center">
