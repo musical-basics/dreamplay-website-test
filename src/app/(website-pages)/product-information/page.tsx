@@ -35,7 +35,7 @@ const speakerSpecs = [
 ]
 
 const connectivitySpecs = [
-    { label: "Headphone Jacks", one: "1× 3.5 mm output", pro: "2× 3.5 mm outputs" },
+    { label: "Headphone Jacks", one: "1× 3.5 mm output", pro: '1× 3.5 mm + 1× 6.35 mm (¼") output' },
     { label: "MIDI", one: "USB-MIDI (Type-C)", pro: "USB-MIDI (Type-C)" },
     { label: "Bluetooth", one: "Audio Streaming", pro: "Audio Streaming" },
     { label: "Aux In/Out", one: "3.5 mm stereo", pro: "3.5 mm stereo" },
