@@ -393,3 +393,130 @@ export async function updateChatSuggestions(suggestions: string[]) {
         return { success: false, error: error.message }
     }
 }
+
+// ─── Popup A/B Testing Types ───
+
+export type PopupSetting = {
+    popups: string[]        // e.g. ['shipping', 'pdf']
+    firstDelaySec: number   // Time to show 1st popup after page load
+    secondDelaySec: number | null // Time to show 2nd popup, null if disabled
+}
+
+export type PopupABConfig = {
+    enabled: boolean
+    mode: 'random' | 'deterministic'
+    control: PopupSetting
+    variant: PopupSetting
+}
+
+const DEFAULT_AB_CONFIG: PopupABConfig = {
+    enabled: false,
+    mode: 'random',
+    control: { popups: ['pdf'], firstDelaySec: 30, secondDelaySec: 300 },
+    variant: { popups: ['shipping'], firstDelaySec: 30, secondDelaySec: 300 },
+}
+
+export async function getPopupABConfig(): Promise<PopupABConfig> {
+    try {
+        const { data, error } = await supabase
+            .from('admin_variables')
+            .select('value')
+            .eq('key', 'popup_ab_config')
+            .single()
+
+        if (error) {
+            if (error.code === 'PGRST116') return DEFAULT_AB_CONFIG
+            console.error('Error fetching popup AB config:', error)
+            return DEFAULT_AB_CONFIG
+        }
+
+        return JSON.parse(data?.value || JSON.stringify(DEFAULT_AB_CONFIG))
+    } catch (error) {
+        console.error('Failed to get popup AB config:', error)
+        return DEFAULT_AB_CONFIG
+    }
+}
+
+export async function updatePopupABConfig(config: PopupABConfig) {
+    try {
+        const { error } = await supabase
+            .from('admin_variables')
+            .upsert({
+                key: 'popup_ab_config',
+                value: JSON.stringify(config),
+                updated_at: new Date().toISOString()
+            })
+
+        if (error) {
+            console.error('Error updating popup AB config:', error)
+            throw new Error(error.message)
+        }
+
+        return { success: true }
+    } catch (error: any) {
+        return { success: false, error: error.message }
+    }
+}
+
+export async function getPopupABResults() {
+    try {
+        // Fetch qualify events
+        let qualifyLogs: any[] = []
+        let qFrom = 0
+        const qLimit = 1000
+        while (true) {
+            const { data, error } = await supabase
+                .from('analytics_logs')
+                .select('ip_address, metadata, created_at')
+                .eq('event_name', 'popup_ab_qualify')
+                .range(qFrom, qFrom + qLimit - 1)
+
+            if (error) throw error
+            if (!data || data.length === 0) break
+            qualifyLogs = [...qualifyLogs, ...data]
+            if (data.length < qLimit) break
+            qFrom += qLimit
+        }
+
+        // Fetch convert events
+        let convertLogs: any[] = []
+        let cFrom = 0
+        const cLimit = 1000
+        while (true) {
+            const { data, error } = await supabase
+                .from('analytics_logs')
+                .select('ip_address, metadata, created_at')
+                .eq('event_name', 'popup_ab_convert')
+                .range(cFrom, cFrom + cLimit - 1)
+
+            if (error) throw error
+            if (!data || data.length === 0) break
+            convertLogs = [...convertLogs, ...data]
+            if (data.length < cLimit) break
+            cFrom += cLimit
+        }
+
+        // Group by bucket
+        const buckets = ['control', 'variant']
+        return buckets.map(bucket => {
+            const bucketQualify = qualifyLogs.filter((l: any) => l.metadata?.bucket === bucket)
+            const uniqueQualifiedIps = new Set(bucketQualify.map((l: any) => l.ip_address))
+
+            const bucketConvert = convertLogs.filter((l: any) => l.metadata?.bucket === bucket)
+            const uniqueConvertedIps = new Set(bucketConvert.map((l: any) => l.ip_address))
+
+            const qualified = uniqueQualifiedIps.size
+            const conversions = uniqueConvertedIps.size
+
+            return {
+                variant: bucket,
+                qualified,
+                conversions,
+                conversionRate: qualified > 0 ? (conversions / qualified) * 100 : 0,
+            }
+        })
+    } catch (error) {
+        console.error('Failed to get popup AB results:', error)
+        return []
+    }
+}

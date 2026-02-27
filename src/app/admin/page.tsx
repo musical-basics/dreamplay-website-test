@@ -2,9 +2,10 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { getCountdownDate, updateCountdownDate, getDiscountPopupStatus, updateDiscountPopupStatus, loginAdmin, getHomepageVersion, updateHomepageVersion, getHiddenProducts, updateHiddenProducts, getChatModel, updateChatModel, getChatKnowledge, updateChatKnowledge, getChatSuggestions, updateChatSuggestions } from '@/actions/admin-actions'
+import { getCountdownDate, updateCountdownDate, getDiscountPopupStatus, updateDiscountPopupStatus, loginAdmin, getHomepageVersion, updateHomepageVersion, getHiddenProducts, updateHiddenProducts, getChatModel, updateChatModel, getChatKnowledge, updateChatKnowledge, getChatSuggestions, updateChatSuggestions, getPopupABConfig, updatePopupABConfig, getPopupABResults } from '@/actions/admin-actions'
+import type { PopupABConfig } from '@/actions/admin-actions'
 
-type AdminTab = 'chatbot' | 'marketing' | 'other'
+type AdminTab = 'chatbot' | 'marketing' | 'other' | 'ab-config' | 'ab-results'
 
 export default function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -33,6 +34,18 @@ export default function AdminPage() {
     const [dragOverIndex, setDragOverIndex] = useState<number | null>(null)
     const [editingIndex, setEditingIndex] = useState<number | null>(null)
     const [editingText, setEditingText] = useState('')
+
+    // A/B Testing State
+    const [abConfig, setAbConfig] = useState<PopupABConfig>({
+        enabled: false,
+        mode: 'random',
+        control: { popups: ['pdf'], firstDelaySec: 30, secondDelaySec: 300 },
+        variant: { popups: ['shipping'], firstDelaySec: 30, secondDelaySec: 300 },
+    })
+    const [abSaving, setAbSaving] = useState(false)
+    const [abMessage, setAbMessage] = useState('')
+    const [abResults, setAbResults] = useState<{ variant: string; qualified: number; conversions: number; conversionRate: number }[]>([])
+    const [abResultsLoading, setAbResultsLoading] = useState(false)
 
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
@@ -64,14 +77,15 @@ export default function AdminPage() {
 
     async function loadData() {
         setLoading(true)
-        const [dateVal, discountVal, versionVal, hiddenVal, chatModelVal, chatKnowledgeVal, chatSuggestionsVal] = await Promise.all([
+        const [dateVal, discountVal, versionVal, hiddenVal, chatModelVal, chatKnowledgeVal, chatSuggestionsVal, abConfigVal] = await Promise.all([
             getCountdownDate(),
             getDiscountPopupStatus(),
             getHomepageVersion(),
             getHiddenProducts(),
             getChatModel(),
             getChatKnowledge(),
-            getChatSuggestions()
+            getChatSuggestions(),
+            getPopupABConfig()
         ])
 
         if (dateVal) setDate(dateVal)
@@ -83,6 +97,7 @@ export default function AdminPage() {
         setChatModel(chatModelVal)
         setChatKnowledge(chatKnowledgeVal)
         setChatSuggestions(chatSuggestionsVal)
+        setAbConfig(abConfigVal)
 
         // Fetch available models in background
         setModelsLoading(true)
@@ -275,8 +290,10 @@ export default function AdminPage() {
                 {/* TAB NAVIGATION */}
                 <div className="flex border-b border-neutral-800 mb-8">
                     {([
-                        { key: 'chatbot' as AdminTab, label: '💬 Chatbot Settings' },
-                        { key: 'marketing' as AdminTab, label: '📢 Marketing Features' },
+                        { key: 'chatbot' as AdminTab, label: '💬 Chatbot' },
+                        { key: 'marketing' as AdminTab, label: '📢 Marketing' },
+                        { key: 'ab-config' as AdminTab, label: '🧪 A/B Config' },
+                        { key: 'ab-results' as AdminTab, label: '📊 A/B Results' },
                         { key: 'other' as AdminTab, label: '⚙️ Other' },
                     ]).map(tab => (
                         <button
@@ -368,10 +385,10 @@ export default function AdminPage() {
                                         }}
                                         onDragEnd={() => { setDragIndex(null); setDragOverIndex(null); }}
                                         className={`flex items-center gap-2 p-2 bg-neutral-800 rounded-lg border transition-all ${dragOverIndex === i && dragIndex !== i
-                                                ? 'border-blue-500 bg-blue-500/10'
-                                                : dragIndex === i
-                                                    ? 'border-neutral-600 opacity-50'
-                                                    : 'border-neutral-700'
+                                            ? 'border-blue-500 bg-blue-500/10'
+                                            : dragIndex === i
+                                                ? 'border-neutral-600 opacity-50'
+                                                : 'border-neutral-700'
                                             }`}
                                     >
                                         {/* Drag handle */}
@@ -615,6 +632,219 @@ export default function AdminPage() {
                         </div>
                     </div>
                 )}
+                {/* ─── TAB 4: A/B CONFIG ─── */}
+                {activeTab === 'ab-config' && (
+                    <div className="space-y-6">
+                        <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl">
+                            <div className="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 className="font-medium text-white">Popup A/B Test</h3>
+                                    <p className="text-sm text-neutral-500">Enable to split visitors between two popup strategies.</p>
+                                </div>
+                                <button
+                                    onClick={() => setAbConfig(prev => ({ ...prev, enabled: !prev.enabled }))}
+                                    className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none ${abConfig.enabled ? 'bg-green-600' : 'bg-neutral-700'}`}
+                                >
+                                    <span className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${abConfig.enabled ? 'translate-x-6' : 'translate-x-1'}`} />
+                                </button>
+                            </div>
+
+                            <div className="mb-4">
+                                <label className="block text-sm text-neutral-400 mb-1">Mode</label>
+                                <select
+                                    value={abConfig.mode}
+                                    onChange={(e) => setAbConfig(prev => ({ ...prev, mode: e.target.value as 'random' | 'deterministic' }))}
+                                    className="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
+                                >
+                                    <option value="random">Random (50/50)</option>
+                                    <option value="deterministic">Deterministic (Alternating)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {/* Control Card */}
+                        {(['control', 'variant'] as const).map((bucket) => {
+                            const setting = abConfig[bucket]
+                            const firstMin = Math.floor(setting.firstDelaySec / 60)
+                            const firstSec = setting.firstDelaySec % 60
+                            const secondMin = setting.secondDelaySec != null ? Math.floor(setting.secondDelaySec / 60) : 0
+                            const secondSec = setting.secondDelaySec != null ? setting.secondDelaySec % 60 : 0
+                            return (
+                                <div key={bucket} className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl">
+                                    <h3 className="font-medium text-white mb-1 capitalize">{bucket === 'control' ? 'Control (Setting 1)' : 'Variant (Setting 2)'}</h3>
+                                    <p className="text-xs text-neutral-500 mb-4">Popup strategy for this group.</p>
+
+                                    {/* Popup checkboxes */}
+                                    <div className="mb-4">
+                                        <label className="block text-sm text-neutral-400 mb-2">Popups to Include</label>
+                                        <div className="flex gap-4">
+                                            {[{ id: 'shipping', label: 'Free Shipping' }, { id: 'pdf', label: 'PDF Guide' }].map(p => (
+                                                <label key={p.id} className="flex items-center gap-2 text-sm text-white cursor-pointer">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={setting.popups.includes(p.id)}
+                                                        onChange={(e) => {
+                                                            const newPopups = e.target.checked
+                                                                ? [...setting.popups, p.id]
+                                                                : setting.popups.filter(x => x !== p.id)
+                                                            setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], popups: newPopups } }))
+                                                        }}
+                                                        className="accent-blue-500"
+                                                    />
+                                                    {p.label}
+                                                </label>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* First Show Time */}
+                                    <div className="mb-4">
+                                        <label className="block text-sm text-neutral-400 mb-2">First Popup Delay</label>
+                                        <div className="flex gap-2 items-center">
+                                            <input
+                                                type="number" min={0}
+                                                value={firstMin}
+                                                onChange={(e) => {
+                                                    const newSec = (parseInt(e.target.value) || 0) * 60 + firstSec
+                                                    setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], firstDelaySec: newSec } }))
+                                                }}
+                                                className="w-20 bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
+                                            />
+                                            <span className="text-xs text-neutral-500">min</span>
+                                            <input
+                                                type="number" min={0} max={59}
+                                                value={firstSec}
+                                                onChange={(e) => {
+                                                    const newSec = firstMin * 60 + (parseInt(e.target.value) || 0)
+                                                    setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], firstDelaySec: newSec } }))
+                                                }}
+                                                className="w-20 bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
+                                            />
+                                            <span className="text-xs text-neutral-500">sec</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Second Show Time */}
+                                    <div>
+                                        <label className="block text-sm text-neutral-400 mb-2">Second Popup Delay <span className="text-neutral-600">(leave blank to disable)</span></label>
+                                        <div className="flex gap-2 items-center">
+                                            <input
+                                                type="number" min={0}
+                                                value={setting.secondDelaySec != null ? secondMin : ''}
+                                                placeholder="-"
+                                                onChange={(e) => {
+                                                    const val = e.target.value
+                                                    if (val === '') {
+                                                        setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], secondDelaySec: null } }))
+                                                    } else {
+                                                        const newSec = (parseInt(val) || 0) * 60 + secondSec
+                                                        setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], secondDelaySec: newSec } }))
+                                                    }
+                                                }}
+                                                className="w-20 bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
+                                            />
+                                            <span className="text-xs text-neutral-500">min</span>
+                                            <input
+                                                type="number" min={0} max={59}
+                                                value={setting.secondDelaySec != null ? secondSec : ''}
+                                                placeholder="-"
+                                                onChange={(e) => {
+                                                    const val = e.target.value
+                                                    if (val === '' && (setting.secondDelaySec == null || secondMin === 0)) {
+                                                        setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], secondDelaySec: null } }))
+                                                    } else {
+                                                        const newSec = secondMin * 60 + (parseInt(val) || 0)
+                                                        setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], secondDelaySec: newSec } }))
+                                                    }
+                                                }}
+                                                className="w-20 bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
+                                            />
+                                            <span className="text-xs text-neutral-500">sec</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })}
+
+                        {/* Save */}
+                        <button
+                            onClick={async () => {
+                                setAbSaving(true)
+                                setAbMessage('')
+                                const res = await updatePopupABConfig(abConfig)
+                                if (res.success) {
+                                    setAbMessage('A/B config saved!')
+                                } else {
+                                    setAbMessage('Failed to save config')
+                                }
+                                setAbSaving(false)
+                                setTimeout(() => setAbMessage(''), 3000)
+                            }}
+                            disabled={abSaving}
+                            className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white font-semibold py-3 rounded-lg transition-colors"
+                        >
+                            {abSaving ? 'Saving...' : 'Save A/B Config'}
+                        </button>
+                        {abMessage && (
+                            <div className={`p-3 rounded-lg text-sm text-center font-medium ${abMessage.includes('saved') ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'}`}>
+                                {abMessage}
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* ─── TAB 5: A/B RESULTS ─── */}
+                {activeTab === 'ab-results' && (
+                    <div className="space-y-6">
+                        <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl">
+                            <div className="flex items-center justify-between mb-4">
+                                <h3 className="font-medium text-white">Popup A/B Test Results</h3>
+                                <button
+                                    onClick={async () => {
+                                        setAbResultsLoading(true)
+                                        const data = await getPopupABResults()
+                                        setAbResults(data)
+                                        setAbResultsLoading(false)
+                                    }}
+                                    disabled={abResultsLoading}
+                                    className="bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors"
+                                >
+                                    {abResultsLoading ? 'Loading...' : 'Refresh'}
+                                </button>
+                            </div>
+
+                            {abResults.length === 0 && !abResultsLoading && (
+                                <p className="text-neutral-500 text-sm">No data yet. Click Refresh to load results.</p>
+                            )}
+
+                            {abResults.length > 0 && (
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-sm">
+                                        <thead>
+                                            <tr className="border-b border-neutral-700 text-neutral-400">
+                                                <th className="text-left py-3 px-2 font-medium">Variant</th>
+                                                <th className="text-right py-3 px-2 font-medium">Qualified (10s+)</th>
+                                                <th className="text-right py-3 px-2 font-medium">Conversions</th>
+                                                <th className="text-right py-3 px-2 font-medium">Conv. Rate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {abResults.map(row => (
+                                                <tr key={row.variant} className="border-b border-neutral-800">
+                                                    <td className="py-3 px-2 text-white capitalize font-medium">{row.variant}</td>
+                                                    <td className="py-3 px-2 text-right text-white">{row.qualified}</td>
+                                                    <td className="py-3 px-2 text-right text-white">{row.conversions}</td>
+                                                    <td className="py-3 px-2 text-right font-mono text-green-400">{row.conversionRate.toFixed(1)}%</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+
             </div>
         </div>
     )

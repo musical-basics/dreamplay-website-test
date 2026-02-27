@@ -17,6 +17,12 @@ const trackPopup = (action: 'yes' | 'no', popupName: string) => {
     }
 };
 
+interface ABSettings {
+    popups: string[];
+    firstDelaySec: number;
+    secondDelaySec: number | null;
+}
+
 export default function NewsletterPopup() {
     const [activePopup, setActivePopup] = useState<PopupType>("none");
     const [email, setEmail] = useState("");
@@ -27,12 +33,21 @@ export default function NewsletterPopup() {
     const hasExitFired = useRef(false);
     const pathname = usePathname();
 
+    // A/B test refs
+    const abBucketRef = useRef<string | null>(null);
+    const abSettingsRef = useRef<ABSettings | null>(null);
+
     useEffect(() => {
-        let shippingTimer: NodeJS.Timeout | undefined;
-        let fiveMinTimer: NodeJS.Timeout;
+        let firstTimer: NodeJS.Timeout | undefined;
+        let secondTimer: NodeJS.Timeout | undefined;
+        let qualifyTimer: NodeJS.Timeout | undefined;
+        let cancelled = false;
 
         const checkStatus = async () => {
+            // If user is already mapped, skip A/B entirely
             if (localStorage.getItem("dp_user_email")) return;
+            if (localStorage.getItem("dp_v2_subscribed") === "true") return;
+
             try {
                 const status = await getDiscountPopupStatus();
                 if (String(status) !== 'true') return;
@@ -40,73 +55,88 @@ export default function NewsletterPopup() {
                 // proceed if admin check fails
             }
 
-            if (localStorage.getItem("dp_v2_subscribed") === "true") return;
-
-            const shippingSeen = localStorage.getItem("dp_v2_shipping_seen") === "true";
-            const pdfSeen = localStorage.getItem("dp_v2_pdf_seen") === "true";
-
-            // 1. Initial 8-second timer (DISABLED)
-            // if (!shippingSeen) {
-            //     shippingTimer = setTimeout(() => {
-            //         if (localStorage.getItem("dp_v2_subscribed") !== "true") {
-            //             setActivePopup("shipping");
-            //         }
-            //     }, 8000);
-            // }
-
-            // 2. Initial 30-second PDF timer
-            if (!pdfSeen) {
-                pdfTimerRef.current = setTimeout(() => {
-                    if (localStorage.getItem("dp_v2_subscribed") !== "true") {
-                        setActivePopup((current) => {
-                            if (current === "none") return "pdf";
-                            return current;
-                        });
-                    }
-                }, 30000);
+            // ── A/B Assignment ──
+            try {
+                const res = await fetch('/api/popup-ab', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'assign' }),
+                });
+                const data = await res.json();
+                if (cancelled) return;
+                abBucketRef.current = data.bucket;
+                abSettingsRef.current = data.settings;
+            } catch (e) {
+                console.error('A/B assign failed, using defaults:', e);
+                abBucketRef.current = 'control';
+                abSettingsRef.current = { popups: ['pdf'], firstDelaySec: 30, secondDelaySec: 300 };
             }
 
-            // 3. NEW: The 5-Minute "Second Chance" Timer
-            const shipping5mSeen = localStorage.getItem("dp_v2_shipping_5m_seen") === "true";
-            if (!shipping5mSeen) {
-                fiveMinTimer = setTimeout(() => {
-                    if (localStorage.getItem("dp_v2_subscribed") !== "true") {
-                        setActivePopup((current) => {
-                            // Only trigger if they aren't currently looking at the PDF popup
-                            if (current === "none") {
-                                localStorage.setItem("dp_v2_shipping_5m_seen", "true");
-                                return "shipping";
-                            }
-                            return current;
-                        });
-                    }
-                }, 5 * 60 * 1000); // 5 minutes
+            const settings = abSettingsRef.current!;
+            const bucket = abBucketRef.current!;
+
+            // ── 10-Second Qualification ──
+            if (!sessionStorage.getItem('dp_ab_qualified')) {
+                qualifyTimer = setTimeout(() => {
+                    if (sessionStorage.getItem('dp_ab_qualified')) return;
+                    sessionStorage.setItem('dp_ab_qualified', 'true');
+                    fetch('/api/popup-ab', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action: 'qualify', bucket }),
+                    }).catch(() => { });
+                }, 10000);
+            }
+
+            // ── Popup Timers ──
+            const popupsToShow = settings.popups; // e.g. ['shipping', 'pdf'] or ['pdf']
+            const firstPopup = popupsToShow[0] as PopupType | undefined;
+            const secondPopup = popupsToShow[1] as PopupType | undefined;
+
+            if (firstPopup) {
+                const seen = localStorage.getItem(`dp_v2_${firstPopup}_seen`) === "true";
+                if (!seen) {
+                    firstTimer = setTimeout(() => {
+                        if (localStorage.getItem("dp_v2_subscribed") !== "true") {
+                            setActivePopup(current => current === "none" ? firstPopup : current);
+                        }
+                    }, settings.firstDelaySec * 1000);
+                }
+            }
+
+            if (secondPopup && settings.secondDelaySec != null) {
+                const seen = localStorage.getItem(`dp_v2_${secondPopup}_seen`) === "true";
+                if (!seen) {
+                    secondTimer = setTimeout(() => {
+                        if (localStorage.getItem("dp_v2_subscribed") !== "true") {
+                            setActivePopup(current => current === "none" ? secondPopup : current);
+                        }
+                    }, settings.secondDelaySec * 1000);
+                }
             }
         };
 
         checkStatus();
 
         return () => {
-            if (shippingTimer) clearTimeout(shippingTimer);
+            cancelled = true;
+            if (firstTimer) clearTimeout(firstTimer);
+            if (secondTimer) clearTimeout(secondTimer);
+            if (qualifyTimer) clearTimeout(qualifyTimer);
             if (pdfTimerRef.current) clearTimeout(pdfTimerRef.current);
-            if (fiveMinTimer) clearTimeout(fiveMinTimer);
         };
     }, []);
 
     // --- UBIQUITOUS EXIT-INTENT ---
     useEffect(() => {
-        // Exclude auth/VIP pages so we don't annoy them while logging in
         const excludedPaths = ["/vip", "/login", "/register", "/activate", "/forgot-password", "/reset-password"];
         if (excludedPaths.includes(pathname)) return;
 
         const handleMouseLeave = (e: MouseEvent) => {
             if (hasExitFired.current) return;
-            if (e.clientY > 0) return; // only trigger when cursor exits top of viewport
+            if (e.clientY > 0) return;
 
             const isSubscribed = localStorage.getItem("dp_v2_subscribed") === "true" || !!localStorage.getItem("dp_user_email");
-
-            // NOTE: We do NOT check `shippingSeen` here. 
-            // If they are leaving the site entirely, we want to try ONE last time.
             if (isSubscribed) return;
 
             hasExitFired.current = true;
@@ -129,7 +159,6 @@ export default function NewsletterPopup() {
 
             const pdfSeen = localStorage.getItem("dp_v2_pdf_seen") === "true";
             if (!pdfSeen) {
-                // Cancel the original 30s timer so it doesn't double-fire
                 if (pdfTimerRef.current) clearTimeout(pdfTimerRef.current);
                 pdfTimerRef.current = setTimeout(() => {
                     if (localStorage.getItem("dp_v2_subscribed") !== "true") {
@@ -168,6 +197,19 @@ export default function NewsletterPopup() {
 
             if (!res.success) {
                 throw new Error(res.error || "Failed to subscribe");
+            }
+
+            // ── A/B Conversion Tracking ──
+            if (abBucketRef.current) {
+                fetch('/api/popup-ab', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'convert',
+                        bucket: abBucketRef.current,
+                        offer_type: currentOffer,
+                    }),
+                }).catch(() => { });
             }
 
             localStorage.setItem("dp_v2_subscribed", "true");
