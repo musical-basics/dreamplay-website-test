@@ -2,106 +2,103 @@ import { Playfair_Display, Inter } from "next/font/google"
 import { SpecialOfferHeader } from "@/components/special-offer/header"
 import { FeaturesGridSection } from "@/components/special-offer/features-grid-section"
 import { FeaturesPianoSection } from "@/components/special-offer/features-piano-section"
-import { ComparisonTableSection } from "@/components/special-offer/comparison-table-section"
 import Footer from "@/components/Footer"
 import Link from "next/link"
-import Image from "next/image"
 
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" })
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 
 export const metadata = {
     title: "Product Information — DreamPlay One",
-    description: "Complete technical specifications, speaker system details, connectivity options, and features of the DreamPlay One ergonomic piano keyboard.",
+    description: "Complete technical specifications and comparison between the DreamPlay One and DreamPlay One Pro ergonomic piano keyboards.",
 }
 
-/* ── Spec data ────────────────────────────────────────── */
+/* ── Spec data (Side-by-Side Matrix) ────────────────────────────────────────── */
 
 const keySpecs = [
-    { label: "Keyboard Versions", value: "DS5.5 (7/8ths size) or DS6.0 (15/16ths size)" },
-    { label: "Overall Dimensions (L × W × H)", value: '48.27" × 11.65" × 5.9" (1226 mm × 296 mm × 150 mm)' },
-    { label: "Active Key Width", value: 'DS 6.0: 44.53" (1131 mm) | DS 5.5: 41.1" (1044 mm)' },
-    { label: "White Key Width (Center-to-Center)", value: 'DS 6.0: 0.857" / 21.8 mm | DS 5.5: 0.791" / 20.1 mm' },
-    { label: "Black Key Width (Top)", value: 'DS 6.0: 0.346" / 8.8 mm | DS 5.5: 0.320" / 8.1 mm' },
-    { label: "Gap Between Black Keys", value: 'DS 6.0: 0.511" / 13.0 mm | DS 5.5: 0.471" / 12.0 mm' },
-    { label: "Key Pivot Length", value: '7.5" – 8.5" (folded-action mechanism)' },
-    { label: "Action", value: "Graded Hammer Action (Weighted)" },
-    { label: "Polyphony", value: "256 Notes (never cut off a sound)" },
-    { label: "Key Count", value: "88 Keys (full range)" },
+    { label: "Starting Price", one: "$749", pro: "$1,249" },
+    { label: "Keyboard Versions", one: "DS5.5 or DS6.0", pro: "DS5.5 or DS6.0" },
+    { label: "Key Sensor Technology", one: "Dual-Sensor", pro: "Triple-Sensor (Pro Action)" },
+    { label: "Polyphony", one: "192 Notes", pro: "256 Notes" },
+    { label: "Onboard Sounds", one: "18 Presets", pro: "230 Presets" },
+    { label: "LED Learning System", one: "Above every key", pro: "Above AND within every key" },
+    { label: "Competitor Equivalent", one: "Yamaha P125", pro: "Yamaha P525" },
+    { label: "Action Style", one: "Weighted Hammer Action", pro: "Graded Hammer Action" },
+    { label: "Overall Dimensions", one: '48.27" × 11.65" × 5.9"', pro: '48.27" × 11.65" × 5.9"' },
+    { label: "Gap Between Black Keys", one: 'DS 6.0: 13.0 mm | DS 5.5: 12.0 mm', pro: 'DS 6.0: 13.0 mm | DS 5.5: 12.0 mm' },
 ]
 
 const speakerSpecs = [
-    { label: "Configuration", value: "2.0 Channel Stereo" },
-    { label: "Total Output Power", value: "40W" },
-    { label: "Power Allocation", value: "(15W + 5W) × 2 channels" },
-    { label: "Woofer Power (per channel)", value: "15W" },
-    { label: "Tweeter Power (per channel)", value: "5W" },
-    { label: "Woofer Dimensions", value: "53 mm (W) × 93 mm (L) × 51.4 mm (H)" },
-    { label: "Tweeter Dimensions", value: "Φ31 mm × 11.1 mm" },
+    { label: "Total Output Power", one: "30W", pro: "40W" },
+    { label: "Power Allocation", one: "15W × 2 channels", pro: "20W × 2 channels" },
+    { label: "Configuration", one: "Stereo Output", pro: "2.0 Channel Stereo Hi-Fi" },
 ]
 
 const connectivitySpecs = [
-    { label: "MIDI", value: "USB-MIDI (Type-C)" },
-    { label: "Bluetooth", value: "Bluetooth Audio Streaming" },
-    { label: "Headphone Jacks", value: "2× 3.5 mm stereo headphone outputs" },
-    { label: "Aux In/Out", value: "3.5 mm stereo auxiliary input & output" },
-    { label: "Sustain Pedal", value: "6.35 mm (¼\") pedal jack" },
+    { label: "Headphone Jacks", one: "1× 3.5 mm output", pro: "2× 3.5 mm outputs" },
+    { label: "MIDI", one: "USB-MIDI (Type-C)", pro: "USB-MIDI (Type-C)" },
+    { label: "Bluetooth", one: "Audio Streaming", pro: "Audio Streaming" },
+    { label: "Aux In/Out", one: "3.5 mm stereo", pro: "3.5 mm stereo" },
+    { label: "Sustain Pedal", one: '6.35 mm (¼") jack', pro: '6.35 mm (¼") jack + Triple Pedal Support' },
 ]
 
 const features = [
-    {
-        title: "Graded Hammer-Feel Weighted Keys",
-        description: "Every note responds to your touch with the same dynamic range you'd expect from an acoustic grand piano. The key weight is heavier in the bass and lighter in the treble, mirroring the real instrument.",
-    },
-    {
-        title: "256-Voice Polyphony",
-        description: "No notes are ever cut off — even the most complex passages with heavy sustain pedal use ring out completely, exactly as intended.",
-    },
     {
         title: "Ergonomic DS Standard Sizing",
         description: "Available in DS5.5 (7/8ths) and DS6.0 (15/16ths) sizes, matching the keyboard to your hand span and reducing stretching-related strain.",
     },
     {
-        title: "Powerful 40W Stereo Speaker System",
-        description: "A dedicated 2.0 channel system with separate woofer and tweeter per channel delivers room-filling, balanced sound without an external amplifier.",
-    },
-    {
-        title: "Seamless Connectivity",
-        description: "Connect to your DAW via USB-MIDI, stream music via Bluetooth, and practice silently with dual headphone jacks. The Aux In/Out lets you connect to external speakers or sound sources.",
+        title: "Authentic Weighted Keys",
+        description: "Every note responds to your touch with the dynamic range you'd expect from an acoustic piano, mapping perfectly to your muscle memory.",
     },
     {
         title: "Interactive LED Learning System",
-        description: "Built-in key lights guide your fingers as you learn, seamlessly connecting with learning apps to accelerate your progress.",
+        description: "Built-in key lights guide your fingers as you learn, seamlessly connecting with learning apps to accelerate your progress. Toggle them off for a classic look.",
     },
 ]
 
-/* ── Spec table renderer ──────────────────────────────── */
+/* ── Side-by-Side Spec table renderer ──────────────────────────────── */
 
-function SpecTable({ specs, note, light }: { specs: { label: string; value: string }[]; note?: string; light?: boolean }) {
+function SpecTable({ specs, note, light }: { specs: { label: string; one: string; pro: string }[]; note?: string; light?: boolean }) {
     return (
-        <>
-            {specs.map((spec, i) => (
+        <div className="w-full">
+            {/* Table Header */}
+            <div className={`hidden md:grid grid-cols-12 gap-4 pb-4 border-b ${light ? 'border-neutral-300' : 'border-neutral-800'}`}>
+                <div className="col-span-4 font-sans text-xs uppercase tracking-[0.2em] text-transparent">Feature</div>
+                <div className={`col-span-4 font-sans text-sm font-bold uppercase tracking-wider ${light ? 'text-neutral-900' : 'text-white'}`}>DreamPlay One</div>
+                <div className="col-span-4 font-sans text-sm font-bold uppercase tracking-wider text-[#4a9eff]">DreamPlay One Pro</div>
+            </div>
+
+            {/* Table Rows */}
+            {specs.map((spec) => (
                 <div
                     key={spec.label}
-                    className={`flex flex-col gap-1 py-5 md:flex-row md:items-baseline md:gap-8 ${light
-                        ? `border-b border-neutral-200 ${i === 0 ? "border-t" : ""}`
-                        : `border-b border-neutral-800 ${i === 0 ? "border-t" : ""}`
+                    className={`flex flex-col gap-2 py-5 md:grid md:grid-cols-12 md:gap-4 md:items-center ${light
+                        ? `border-b border-neutral-200`
+                        : `border-b border-neutral-800`
                         }`}
                 >
-                    <span className={`font-sans text-xs uppercase tracking-[0.2em] md:w-72 md:shrink-0 md:text-sm ${light ? "text-neutral-500" : "text-neutral-400"
-                        }`}>
+                    <div className={`col-span-4 font-sans text-xs uppercase tracking-[0.2em] md:text-sm ${light ? "text-neutral-500" : "text-neutral-400"}`}>
                         {spec.label}
-                    </span>
-                    <span className={`font-sans text-sm md:text-base ${light ? "text-neutral-900" : "text-white"
-                        }`}>
-                        {spec.value}
-                    </span>
+                    </div>
+
+                    {/* Mobile Label for One */}
+                    <div className="md:hidden font-sans text-[10px] uppercase tracking-wider font-bold mt-2 text-neutral-500">DreamPlay One</div>
+                    <div className={`col-span-4 font-sans text-sm md:text-base ${light ? "text-neutral-900" : "text-white"}`}>
+                        {spec.one}
+                    </div>
+
+                    {/* Mobile Label for Pro */}
+                    <div className="md:hidden font-sans text-[10px] uppercase tracking-wider font-bold mt-2 text-[#4a9eff]">DreamPlay One Pro</div>
+                    <div className={`col-span-4 font-sans text-sm font-medium md:text-base text-[#4a9eff]`}>
+                        {spec.pro}
+                    </div>
                 </div>
             ))}
             {note && (
-                <p className={`mt-4 text-xs italic ${light ? "text-neutral-400" : "text-neutral-500"}`}>{note}</p>
+                <p className={`mt-6 text-xs italic ${light ? "text-neutral-500" : "text-neutral-400"}`}>{note}</p>
             )}
-        </>
+        </div>
     )
 }
 
@@ -119,10 +116,10 @@ export default function ProductInformationPage() {
                             Product Information
                         </p>
                         <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl leading-tight text-white mb-6 text-balance">
-                            DreamPlay One
+                            Tech Specs & Comparisons
                         </h1>
                         <p className="font-sans text-base md:text-lg text-neutral-400 max-w-2xl mx-auto leading-relaxed">
-                            The world&apos;s first ergonomic digital piano — designed with narrower keys so every hand can play freely, naturally, and without strain.
+                            Compare the models. The world&apos;s first ergonomic digital piano line — designed with narrower keys so every hand can play freely.
                         </p>
                     </div>
                 </section>
@@ -130,15 +127,15 @@ export default function ProductInformationPage() {
                 {/* Features Overview — LIGHT */}
                 <section className="bg-white">
                     <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-                        <div className="mb-16">
+                        <div className="mb-16 text-center md:text-left">
                             <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-500 mb-4">
-                                What&apos;s Included
+                                Standard Across All Models
                             </p>
                             <h2 className="font-serif text-3xl md:text-4xl leading-tight text-neutral-900">
-                                Key Features
+                                The DreamPlay Foundation
                             </h2>
                         </div>
-                        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        <div className="grid gap-8 md:grid-cols-3">
                             {features.map((f) => (
                                 <div key={f.title} className="border border-neutral-200 bg-neutral-50 p-6 md:p-8 hover:border-neutral-400 transition-colors">
                                     <h3 className="font-serif text-lg text-neutral-900 mb-3">{f.title}</h3>
@@ -155,22 +152,25 @@ export default function ProductInformationPage() {
                 {/* Everything You Need, Built In */}
                 <FeaturesPianoSection />
 
-                {/* Keys Specifications */}
+                {/* Keys Specifications (Side by Side) */}
                 <section className="bg-neutral-950 border-t border-neutral-800">
                     <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
                         <div className="mb-12">
                             <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400 mb-4">
-                                Keyboard
+                                Head to Head
                             </p>
                             <h2 className="font-serif text-3xl md:text-4xl leading-tight text-white">
                                 Key Specifications
                             </h2>
                         </div>
-                        <SpecTable specs={keySpecs} />
+                        <SpecTable
+                            specs={keySpecs}
+                            note="* The DreamPlay One Pro is currently in active development. Pricing and specifications are subject to slight changes before mass production."
+                        />
                     </div>
                 </section>
 
-                {/* Speaker Specifications — LIGHT */}
+                {/* Speaker Specifications — LIGHT (Side by Side) */}
                 <section className="bg-white">
                     <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
                         <div className="mb-12">
@@ -183,13 +183,12 @@ export default function ProductInformationPage() {
                         </div>
                         <SpecTable
                             specs={speakerSpecs}
-                            note="Specifications apply to the current prototype/demo version and may be further optimized for mass production."
                             light
                         />
                     </div>
                 </section>
 
-                {/* Connectivity Specifications */}
+                {/* Connectivity Specifications (Side by Side) */}
                 <section className="bg-neutral-950 border-t border-neutral-800">
                     <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
                         <div className="mb-12">
@@ -203,9 +202,6 @@ export default function ProductInformationPage() {
                         <SpecTable specs={connectivitySpecs} />
                     </div>
                 </section>
-
-                {/* Why Pay Double for Less? — Comparison Table */}
-                <ComparisonTableSection />
 
                 {/* CTA */}
                 <section className="bg-neutral-950 border-t border-neutral-800 py-24 md:py-32 text-center">
@@ -224,10 +220,10 @@ export default function ProductInformationPage() {
                                 Configure Yours
                             </Link>
                             <Link
-                                href="/premium-offer"
+                                href="/how-it-works"
                                 className="inline-flex items-center justify-center gap-2 border border-neutral-600 px-8 py-4 font-sans text-xs uppercase tracking-widest text-white transition-colors hover:border-white"
                             >
-                                Back to Overview
+                                How It Works
                             </Link>
                         </div>
                     </div>

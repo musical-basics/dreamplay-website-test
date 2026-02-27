@@ -31,8 +31,8 @@ const featureData = {
     },
     headphones: {
         icon: <Headphones className="w-4 h-4" />,
-        label: "Dual Headphone Jack",
-        description: "Two headphone outputs for private practice sessions or teacher-student learning.",
+        label: "Headphone Output",
+        description: "Dedicated headphone output for silent, private practice sessions.",
         position: { left: "14%", top: "38%" },
     },
     keys: {

@@ -23,11 +23,11 @@ type ComparisonRow = {
 
 const comparisonRows: ComparisonRow[] = [
     { feature: "Build Design", dreamplay: "Custom-Designed for Narrow Keys", competitor: "Generic OEM Adapted" },
-    { feature: "Key Sensor Technology", dreamplay: "Triple Sensor", competitor: "Double Sensor" },
-    { feature: "Velocity Accuracy", dreamplay: "High Precision", competitor: "Basic (Not Sensitive)" },
+    { feature: "Key Sensor Technology", dreamplay: "Dual Sensor", competitor: "Dual Sensor" },
+    { feature: "Polyphony", dreamplay: "192 Notes", competitor: "192 Notes" },
     { feature: "LED Key Indicators", dreamplay: "check", competitor: "cross" },
     { feature: "App Integration", dreamplay: "check", competitor: "cross" },
-    { feature: "Price", dreamplay: "$1,199", competitor: "$2,499" },
+    { feature: "MSRP Price", dreamplay: "$749", competitor: "$699 (Yamaha P125)" },
     { feature: "Bench & Stand", dreamplay: "Included", competitor: "Not Included" },
 ]
 

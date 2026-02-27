@@ -168,7 +168,7 @@ const LedLightIcon = ({ className }: { className?: string }) => (
 const featuresGrid = [
     { icon: <MetronomeIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "Built-in Metronome" },
     { icon: <RecordIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "Recording & Playback" },
-    { icon: <PolyphonyIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "256-note Polyphony" },
+    { icon: <PolyphonyIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "192-note Polyphony" },
     { icon: <DualSensorIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "Dual-Sensor Velocity Keys" },
     { icon: <MidiIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "MIDI Sequencing" },
     { icon: <PresetsIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "18 Essential Presets" },

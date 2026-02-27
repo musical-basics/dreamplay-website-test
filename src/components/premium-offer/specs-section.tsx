@@ -39,29 +39,19 @@ const keySpecs = [
     value: '7.5" – 8.5" (folded-action mechanism)',
   },
   { label: "Action", value: "Graded Hammer Action (Weighted)" },
-  { label: "Polyphony", value: "256 Notes (never cut off a sound)" },
+  { label: "Polyphony", value: "192 Notes (never cut off a sound)" },
 ]
 
 const speakerSpecs = [
-  { label: "Configuration", value: "2.0 Channel Stereo" },
-  { label: "Total Output Power", value: "40W" },
-  { label: "Power Allocation", value: "(15W + 5W) × 2 channels" },
-  { label: "Woofer Power (per channel)", value: "15W" },
-  { label: "Tweeter Power (per channel)", value: "5W" },
-  {
-    label: "Woofer Dimensions",
-    value: "53 mm (W) × 93 mm (L) × 51.4 mm (H)",
-  },
-  {
-    label: "Tweeter Dimensions",
-    value: "Φ31 mm × 11.1 mm",
-  },
+  { label: "Configuration", value: "Stereo Output" },
+  { label: "Total Output Power", value: "30W" },
+  { label: "Power Allocation", value: "15W × 2 channels" },
 ]
 
 const connectivitySpecs = [
   { label: "MIDI", value: "USB-MIDI (Type-C)" },
   { label: "Bluetooth", value: "Bluetooth Audio Streaming" },
-  { label: "Headphone Jacks", value: "2× 3.5 mm stereo headphone outputs" },
+  { label: "Headphone Jacks", value: "1× 3.5 mm stereo headphone output" },
   { label: "Aux In/Out", value: "3.5 mm stereo auxiliary input & output" },
   { label: "Sustain Pedal", value: "6.35 mm (¼\") pedal jack" },
 ]
@@ -165,8 +155,8 @@ export function SpecsSection() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`relative px-5 py-3 font-sans text-sm uppercase tracking-[0.15em] transition-colors ${activeTab === tab.id
-                  ? "text-white"
-                  : "text-neutral-500 hover:text-neutral-300"
+                ? "text-white"
+                : "text-neutral-500 hover:text-neutral-300"
                 }`}
             >
               {tab.label}
