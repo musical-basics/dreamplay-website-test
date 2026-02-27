@@ -4,6 +4,7 @@ import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { ABTracker } from "@/components/features/analytics/ABTracker";
 import { EmailTracker } from "@/components/EmailTracker";
 import NewsletterPopup from "@/components/NewsletterPopup";
+import Chatbot from "@/components/chatbot/Chatbot";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -49,6 +50,7 @@ export default function RootLayout({
         <EmailTracker />
         {children}
         <NewsletterPopup />
+        <Chatbot />
 
         {/* Scripts */}
         <Script

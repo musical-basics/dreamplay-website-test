@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { getCountdownDate, updateCountdownDate, getDiscountPopupStatus, updateDiscountPopupStatus, loginAdmin, getHomepageVersion, updateHomepageVersion, getHiddenProducts, updateHiddenProducts } from '@/actions/admin-actions'
+import { getCountdownDate, updateCountdownDate, getDiscountPopupStatus, updateDiscountPopupStatus, loginAdmin, getHomepageVersion, updateHomepageVersion, getHiddenProducts, updateHiddenProducts, getChatModel, updateChatModel, getChatKnowledge, updateChatKnowledge } from '@/actions/admin-actions'
 
 export default function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -16,6 +16,12 @@ export default function AdminPage() {
     const [showDiscount, setShowDiscount] = useState(true)
     const [homepageVersion, setHomepageVersion] = useState<'old' | 'special-offer'>('special-offer')
     const [hiddenProducts, setHiddenProducts] = useState<string[]>(['reservation', 'reserve50'])
+    const [chatModel, setChatModel] = useState('google:gemini-2.5-flash')
+    const [availableModels, setAvailableModels] = useState<{ id: string; provider: string; name: string }[]>([])
+    const [modelsLoading, setModelsLoading] = useState(false)
+    const [chatKnowledge, setChatKnowledge] = useState('')
+    const [knowledgeSaving, setKnowledgeSaving] = useState(false)
+    const [knowledgeMessage, setKnowledgeMessage] = useState('')
 
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
@@ -47,11 +53,13 @@ export default function AdminPage() {
 
     async function loadData() {
         setLoading(true)
-        const [dateVal, discountVal, versionVal, hiddenVal] = await Promise.all([
+        const [dateVal, discountVal, versionVal, hiddenVal, chatModelVal, chatKnowledgeVal] = await Promise.all([
             getCountdownDate(),
             getDiscountPopupStatus(),
             getHomepageVersion(),
-            getHiddenProducts()
+            getHiddenProducts(),
+            getChatModel(),
+            getChatKnowledge()
         ])
 
         if (dateVal) setDate(dateVal)
@@ -60,6 +68,16 @@ export default function AdminPage() {
         setShowDiscount(discountVal === 'true')
         setHomepageVersion(versionVal as 'old' | 'special-offer')
         setHiddenProducts(hiddenVal)
+        setChatModel(chatModelVal)
+        setChatKnowledge(chatKnowledgeVal)
+
+        // Fetch available models in background
+        setModelsLoading(true)
+        fetch('/api/chatbot-models')
+            .then(r => r.json())
+            .then(d => setAvailableModels(d.models || []))
+            .catch(() => { })
+            .finally(() => setModelsLoading(false))
 
         setLoading(false)
     }
@@ -101,6 +119,29 @@ export default function AdminPage() {
             // Revert on failure
             loadData()
         }
+    }
+
+    async function handleChatModelChange(e: React.ChangeEvent<HTMLSelectElement>) {
+        const newModel = e.target.value
+        setChatModel(newModel)
+        const res = await updateChatModel(newModel)
+        if (!res.success) {
+            alert('Failed to update chatbot model')
+            loadData()
+        }
+    }
+
+    async function handleSaveKnowledge() {
+        setKnowledgeSaving(true)
+        setKnowledgeMessage('')
+        const res = await updateChatKnowledge(chatKnowledge)
+        if (res.success) {
+            setKnowledgeMessage('Knowledge base updated!')
+        } else {
+            setKnowledgeMessage('Failed to save knowledge base')
+        }
+        setKnowledgeSaving(false)
+        setTimeout(() => setKnowledgeMessage(''), 3000)
     }
 
     if (!isAuthenticated && !loading) {
@@ -259,6 +300,60 @@ export default function AdminPage() {
                                     </div>
                                 )
                             })}
+                        </div>
+                    </div>
+
+                    {/* Chatbot Model */}
+                    <div className="mt-6 p-4 bg-black/40 rounded-lg border border-neutral-800">
+                        <h3 className="font-medium text-white mb-1">Chatbot AI Model</h3>
+                        <p className="text-sm text-neutral-500 mb-4">Choose which AI model powers the support chatbot.</p>
+                        <select
+                            value={chatModel}
+                            onChange={handleChatModelChange}
+                            disabled={modelsLoading}
+                            className="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500 disabled:opacity-50"
+                        >
+                            {modelsLoading && <option>Loading models...</option>}
+                            {!modelsLoading && availableModels.length === 0 && (
+                                <option value={chatModel}>{chatModel}</option>
+                            )}
+                            {['Google', 'Anthropic'].map(provider => {
+                                const group = availableModels.filter(m => m.provider === provider)
+                                if (group.length === 0) return null
+                                return (
+                                    <optgroup key={provider} label={provider}>
+                                        {group.map(m => (
+                                            <option key={m.id} value={m.id}>{m.name}</option>
+                                        ))}
+                                    </optgroup>
+                                )
+                            })}
+                        </select>
+                        <p className="text-xs text-neutral-600 mt-2 font-mono">{chatModel}</p>
+                    </div>
+
+                    {/* Chatbot Knowledge Base */}
+                    <div className="mt-6 p-4 bg-black/40 rounded-lg border border-neutral-800">
+                        <h3 className="font-medium text-white mb-1">Knowledge Base</h3>
+                        <p className="text-sm text-neutral-500 mb-3">Product info, pricing, shipping details — the chatbot will use this to answer questions accurately.</p>
+                        <textarea
+                            value={chatKnowledge}
+                            onChange={(e) => setChatKnowledge(e.target.value)}
+                            rows={10}
+                            className="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-3 text-white text-sm outline-none focus:border-blue-500 font-mono leading-relaxed resize-y"
+                            placeholder={`Example:\n- DS5.5: 5.5-inch keys, designed for hand spans under 8.5 inches\n- DS6.0: 6.0-inch keys, suits most adult hand sizes\n- Pricing: Starts at $549 for the DreamPlay One\n- Shipping: Batch 1 ships August 2026`}
+                        />
+                        <div className="flex items-center justify-between mt-3">
+                            <span className={`text-sm ${knowledgeMessage.includes('updated') ? 'text-green-400' : knowledgeMessage ? 'text-red-400' : 'text-transparent'}`}>
+                                {knowledgeMessage || '.'}
+                            </span>
+                            <button
+                                onClick={handleSaveKnowledge}
+                                disabled={knowledgeSaving}
+                                className="bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors"
+                            >
+                                {knowledgeSaving ? 'Saving...' : 'Save Knowledge'}
+                            </button>
                         </div>
                     </div>
                 </div>

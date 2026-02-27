@@ -264,3 +264,86 @@ export async function updateHiddenProducts(hiddenIds: string[]) {
     }
 }
 
+export async function getChatModel(): Promise<string> {
+    try {
+        const { data, error } = await supabase
+            .from('admin_variables')
+            .select('value')
+            .eq('key', 'chatbot_model')
+            .single()
+
+        if (error) {
+            if (error.code === 'PGRST116') return 'google:gemini-2.5-flash'
+            console.error('Error fetching chat model:', error)
+            return 'google:gemini-2.5-flash'
+        }
+
+        return data?.value || 'google:gemini-2.5-flash'
+    } catch (error) {
+        console.error('Failed to get chat model:', error)
+        return 'google:gemini-2.5-flash'
+    }
+}
+
+export async function updateChatModel(model: string) {
+    try {
+        const { error } = await supabase
+            .from('admin_variables')
+            .upsert({
+                key: 'chatbot_model',
+                value: model,
+                updated_at: new Date().toISOString()
+            })
+
+        if (error) {
+            console.error('Error updating chat model:', error)
+            throw new Error(error.message)
+        }
+
+        return { success: true }
+    } catch (error: any) {
+        return { success: false, error: error.message }
+    }
+}
+
+export async function getChatKnowledge(): Promise<string> {
+    try {
+        const { data, error } = await supabase
+            .from('admin_variables')
+            .select('value')
+            .eq('key', 'chatbot_knowledge')
+            .single()
+
+        if (error) {
+            if (error.code === 'PGRST116') return ''
+            console.error('Error fetching chat knowledge:', error)
+            return ''
+        }
+
+        return data?.value || ''
+    } catch (error) {
+        console.error('Failed to get chat knowledge:', error)
+        return ''
+    }
+}
+
+export async function updateChatKnowledge(knowledge: string) {
+    try {
+        const { error } = await supabase
+            .from('admin_variables')
+            .upsert({
+                key: 'chatbot_knowledge',
+                value: knowledge,
+                updated_at: new Date().toISOString()
+            })
+
+        if (error) {
+            console.error('Error updating chat knowledge:', error)
+            throw new Error(error.message)
+        }
+
+        return { success: true }
+    } catch (error: any) {
+        return { success: false, error: error.message }
+    }
+}

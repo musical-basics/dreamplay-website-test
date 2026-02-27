@@ -10,7 +10,9 @@ import Image from "next/image"
 import { useState } from "react"
 import { ZoomIn } from "lucide-react"
 
-const specs = [
+/* ── Tab Data ──────────────────────────────────────────── */
+
+const keySpecs = [
   { label: "Keyboard Versions", value: "DS5.5 (7/8ths size) or DS6.0 (15/16ths size)" },
   {
     label: "Overall Dimensions (L x W x H)",
@@ -38,12 +40,50 @@ const specs = [
   },
   { label: "Action", value: "Graded Hammer Action (Weighted)" },
   { label: "Polyphony", value: "256 Notes (never cut off a sound)" },
+]
+
+const speakerSpecs = [
+  { label: "Configuration", value: "2.0 Channel Stereo" },
+  { label: "Total Output Power", value: "40W" },
+  { label: "Power Allocation", value: "(15W + 5W) × 2 channels" },
+  { label: "Woofer Power (per channel)", value: "15W" },
+  { label: "Tweeter Power (per channel)", value: "5W" },
   {
-    label: "Connectivity",
-    value:
-      "USB-MIDI, Bluetooth Audio, 2x Headphone Jacks, Aux In/Out, Sustain Pedal",
+    label: "Woofer Dimensions",
+    value: "53 mm (W) × 93 mm (L) × 51.4 mm (H)",
+  },
+  {
+    label: "Tweeter Dimensions",
+    value: "Φ31 mm × 11.1 mm",
   },
 ]
+
+const connectivitySpecs = [
+  { label: "MIDI", value: "USB-MIDI (Type-C)" },
+  { label: "Bluetooth", value: "Bluetooth Audio Streaming" },
+  { label: "Headphone Jacks", value: "2× 3.5 mm stereo headphone outputs" },
+  { label: "Aux In/Out", value: "3.5 mm stereo auxiliary input & output" },
+  { label: "Sustain Pedal", value: "6.35 mm (¼\") pedal jack" },
+]
+
+const tabs = [
+  { id: "keys", label: "Keys" },
+  { id: "speakers", label: "Speakers" },
+  { id: "connectivity", label: "Connectivity" },
+] as const
+
+type TabId = (typeof tabs)[number]["id"]
+
+const tabData: Record<TabId, { specs: { label: string; value: string }[]; note?: string }> = {
+  keys: { specs: keySpecs },
+  speakers: {
+    specs: speakerSpecs,
+    note: "Specifications apply to the current prototype/demo version and may be further optimized for mass production.",
+  },
+  connectivity: { specs: connectivitySpecs },
+}
+
+/* ── Accordion details ─────────────────────────────────── */
 
 const soundDetails = [
   {
@@ -58,8 +98,13 @@ const soundDetails = [
   },
 ]
 
+/* ── Component ─────────────────────────────────────────── */
+
 export function SpecsSection() {
   const [showLightbox, setShowLightbox] = useState(false)
+  const [activeTab, setActiveTab] = useState<TabId>("keys")
+
+  const currentTab = tabData[activeTab]
 
   return (
     <section id="specs" className="relative overflow-hidden bg-neutral-950">
@@ -113,9 +158,28 @@ export function SpecsSection() {
           </div>
         )}
 
+        {/* Tabs */}
+        <div className="mb-8 flex gap-1 border-b border-neutral-800">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`relative px-5 py-3 font-sans text-sm uppercase tracking-[0.15em] transition-colors ${activeTab === tab.id
+                  ? "text-white"
+                  : "text-neutral-500 hover:text-neutral-300"
+                }`}
+            >
+              {tab.label}
+              {activeTab === tab.id && (
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-white" />
+              )}
+            </button>
+          ))}
+        </div>
+
         {/* Spec Table */}
         <div className="mb-16">
-          {specs.map((spec, i) => (
+          {currentTab.specs.map((spec, i) => (
             <div
               key={spec.label}
               className={`flex flex-col gap-1 border-b border-neutral-800 py-5 md:flex-row md:items-baseline md:gap-8 ${i === 0 ? "border-t" : ""
@@ -129,6 +193,11 @@ export function SpecsSection() {
               </span>
             </div>
           ))}
+          {currentTab.note && (
+            <p className="mt-4 text-xs text-neutral-500 italic">
+              {currentTab.note}
+            </p>
+          )}
         </div>
 
         {/* Sound & connectivity details with accordion for longer text */}
