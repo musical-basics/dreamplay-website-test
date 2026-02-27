@@ -347,3 +347,49 @@ export async function updateChatKnowledge(knowledge: string) {
         return { success: false, error: error.message }
     }
 }
+
+export async function getChatSuggestions(): Promise<string[]> {
+    try {
+        const { data, error } = await supabase
+            .from('admin_variables')
+            .select('value')
+            .eq('key', 'chatbot_suggestions')
+            .single()
+
+        if (error) {
+            if (error.code === 'PGRST116') return []
+            console.error('Error fetching chat suggestions:', error)
+            return []
+        }
+
+        try {
+            return JSON.parse(data?.value || '[]')
+        } catch {
+            return []
+        }
+    } catch (error) {
+        console.error('Failed to get chat suggestions:', error)
+        return []
+    }
+}
+
+export async function updateChatSuggestions(suggestions: string[]) {
+    try {
+        const { error } = await supabase
+            .from('admin_variables')
+            .upsert({
+                key: 'chatbot_suggestions',
+                value: JSON.stringify(suggestions),
+                updated_at: new Date().toISOString()
+            })
+
+        if (error) {
+            console.error('Error updating chat suggestions:', error)
+            throw new Error(error.message)
+        }
+
+        return { success: true }
+    } catch (error: any) {
+        return { success: false, error: error.message }
+    }
+}

@@ -13,6 +13,7 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
     const [email, setEmail] = useState('');
     const [emailSubmitted, setEmailSubmitted] = useState(false);
     const [assistantMessageCount, setAssistantMessageCount] = useState(0);
+    const [suggestions, setSuggestions] = useState<string[]>([]);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const sessionCreatedRef = useRef(false);
 
@@ -45,6 +46,14 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
             createSession();
         }
     }, [isOpen, createSession]);
+
+    // Fetch suggested questions on mount
+    useEffect(() => {
+        fetch('/api/chat-suggestions')
+            .then(r => r.json())
+            .then(d => setSuggestions(d.suggestions || []))
+            .catch(() => { });
+    }, []);
 
     // 10-Second Auto-Popup Logic
     useEffect(() => {
@@ -221,9 +230,24 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
                     {/* Messages Area */}
                     <div className="flex-1 overflow-y-auto p-4 space-y-4">
                         {messages.length === 0 && (
-                            <p className="text-white/50 text-sm text-center mt-4 font-sans leading-relaxed">
-                                👋 Hi! Any questions about hand sizes, pricing, or shipping?
-                            </p>
+                            <div className="mt-4 space-y-4">
+                                <p className="text-white/50 text-sm text-center font-sans leading-relaxed">
+                                    👋 Hi! Any questions about hand sizes, pricing, or shipping?
+                                </p>
+                                {suggestions.length > 0 && (
+                                    <div className="space-y-2 px-2">
+                                        {suggestions.map((q, i) => (
+                                            <button
+                                                key={i}
+                                                onClick={() => sendMessage({ text: q })}
+                                                className="w-full text-left px-3 py-2 text-sm text-white/70 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl transition-all cursor-pointer"
+                                            >
+                                                {q}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
                         )}
                         {messages.map((m) => (
                             <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
