@@ -27,8 +27,8 @@ export async function POST(req: NextRequest) {
                 : {
                     enabled: false,
                     mode: 'random',
-                    control: { popups: ['pdf'], firstDelaySec: 30, secondDelaySec: 300 },
-                    variant: { popups: ['shipping'], firstDelaySec: 30, secondDelaySec: 300 },
+                    control: { entries: [{ type: 'pdf', delaySec: 30 }, { type: 'shipping', delaySec: 300 }] },
+                    variant: { entries: [{ type: 'shipping', delaySec: 30 }, { type: 'pdf', delaySec: 300 }] },
                 }
 
             if (!config.enabled) {

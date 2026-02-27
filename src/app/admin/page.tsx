@@ -39,8 +39,8 @@ export default function AdminPage() {
     const [abConfig, setAbConfig] = useState<PopupABConfig>({
         enabled: false,
         mode: 'random',
-        control: { popups: ['pdf'], firstDelaySec: 30, secondDelaySec: 300 },
-        variant: { popups: ['shipping'], firstDelaySec: 30, secondDelaySec: 300 },
+        control: { entries: [{ type: 'pdf', delaySec: 30 }, { type: 'shipping', delaySec: 300 }] },
+        variant: { entries: [{ type: 'shipping', delaySec: 30 }, { type: 'pdf', delaySec: 300 }] },
     })
     const [abSaving, setAbSaving] = useState(false)
     const [abMessage, setAbMessage] = useState('')
@@ -662,114 +662,93 @@ export default function AdminPage() {
                             </div>
                         </div>
 
-                        {/* Control Card */}
+                        {/* Control / Variant Cards */}
                         {(['control', 'variant'] as const).map((bucket) => {
                             const setting = abConfig[bucket]
-                            const firstMin = Math.floor(setting.firstDelaySec / 60)
-                            const firstSec = setting.firstDelaySec % 60
-                            const secondMin = setting.secondDelaySec != null ? Math.floor(setting.secondDelaySec / 60) : 0
-                            const secondSec = setting.secondDelaySec != null ? setting.secondDelaySec % 60 : 0
                             return (
                                 <div key={bucket} className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl">
                                     <h3 className="font-medium text-white mb-1 capitalize">{bucket === 'control' ? 'Control (Setting 1)' : 'Variant (Setting 2)'}</h3>
                                     <p className="text-xs text-neutral-500 mb-4">Popup strategy for this group.</p>
 
-                                    {/* 1st Popup */}
-                                    <div className="mb-4">
-                                        <label className="block text-sm text-neutral-400 mb-2">1st Popup</label>
-                                        <select
-                                            value={setting.popups[0] || ''}
-                                            onChange={(e) => {
-                                                const newPopups = [...setting.popups]
-                                                newPopups[0] = e.target.value
-                                                setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], popups: newPopups } }))
-                                            }}
-                                            className="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
-                                        >
-                                            <option value="shipping">Free Shipping</option>
-                                            <option value="pdf">PDF Guide</option>
-                                        </select>
-                                    </div>
-
-                                    {/* 1st Popup Delay */}
-                                    <div className="mb-4">
-                                        <label className="block text-sm text-neutral-400 mb-2">1st Popup Delay</label>
-                                        <div className="flex gap-2 items-center">
-                                            <input
-                                                type="number" min={0}
-                                                value={firstMin}
-                                                onChange={(e) => {
-                                                    const newSec = (parseInt(e.target.value) || 0) * 60 + firstSec
-                                                    setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], firstDelaySec: newSec } }))
-                                                }}
-                                                className="w-20 bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
-                                            />
-                                            <span className="text-xs text-neutral-500">min</span>
-                                            <input
-                                                type="number" min={0} max={59}
-                                                value={firstSec}
-                                                onChange={(e) => {
-                                                    const newSec = firstMin * 60 + (parseInt(e.target.value) || 0)
-                                                    setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], firstDelaySec: newSec } }))
-                                                }}
-                                                className="w-20 bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
-                                            />
-                                            <span className="text-xs text-neutral-500">sec</span>
-                                        </div>
-                                    </div>
-
-                                    <hr className="border-neutral-800 my-4" />
-
-                                    {/* 2nd Popup */}
-                                    <div className="mb-4">
-                                        <label className="block text-sm text-neutral-400 mb-2">2nd Popup</label>
-                                        <select
-                                            value={setting.popups[1] || 'none'}
-                                            onChange={(e) => {
-                                                const val = e.target.value
-                                                if (val === 'none') {
-                                                    setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], popups: [setting.popups[0]], secondDelaySec: null } }))
-                                                } else {
-                                                    const newPopups = [setting.popups[0], val]
-                                                    const newSecond = setting.secondDelaySec ?? 300
-                                                    setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], popups: newPopups, secondDelaySec: newSecond } }))
-                                                }
-                                            }}
-                                            className="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
-                                        >
-                                            <option value="none">None (disabled)</option>
-                                            <option value="shipping">Free Shipping</option>
-                                            <option value="pdf">PDF Guide</option>
-                                        </select>
-                                    </div>
-
-                                    {/* 2nd Popup Delay */}
-                                    {setting.popups[1] && setting.secondDelaySec != null && (
-                                        <div>
-                                            <label className="block text-sm text-neutral-400 mb-2">2nd Popup Delay</label>
-                                            <div className="flex gap-2 items-center">
-                                                <input
-                                                    type="number" min={0}
-                                                    value={secondMin}
+                                    {setting.entries.map((entry, i) => {
+                                        const delayMin = Math.floor(entry.delaySec / 60)
+                                        const delaySec = entry.delaySec % 60
+                                        const ordinal = i + 1
+                                        const suffix = ordinal === 1 ? 'st' : ordinal === 2 ? 'nd' : ordinal === 3 ? 'rd' : 'th'
+                                        return (
+                                            <div key={i}>
+                                                {i > 0 && <hr className="border-neutral-800 my-4" />}
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <label className="block text-sm text-neutral-400">{ordinal}{suffix} Popup</label>
+                                                    {i > 0 && (
+                                                        <button
+                                                            onClick={() => {
+                                                                const newEntries = setting.entries.filter((_, idx) => idx !== i)
+                                                                setAbConfig(prev => ({ ...prev, [bucket]: { entries: newEntries } }))
+                                                            }}
+                                                            className="text-red-400 hover:text-red-300 text-xs font-medium transition-colors"
+                                                        >
+                                                            ✕ Remove
+                                                        </button>
+                                                    )}
+                                                </div>
+                                                <select
+                                                    value={entry.type}
                                                     onChange={(e) => {
-                                                        const newSec = (parseInt(e.target.value) || 0) * 60 + secondSec
-                                                        setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], secondDelaySec: newSec } }))
+                                                        const newEntries = [...setting.entries]
+                                                        newEntries[i] = { ...newEntries[i], type: e.target.value }
+                                                        setAbConfig(prev => ({ ...prev, [bucket]: { entries: newEntries } }))
                                                     }}
-                                                    className="w-20 bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
-                                                />
-                                                <span className="text-xs text-neutral-500">min</span>
-                                                <input
-                                                    type="number" min={0} max={59}
-                                                    value={secondSec}
-                                                    onChange={(e) => {
-                                                        const newSec = secondMin * 60 + (parseInt(e.target.value) || 0)
-                                                        setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], secondDelaySec: newSec } }))
-                                                    }}
-                                                    className="w-20 bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
-                                                />
-                                                <span className="text-xs text-neutral-500">sec</span>
+                                                    className="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500 mb-3"
+                                                >
+                                                    <option value="shipping">Free Shipping</option>
+                                                    <option value="pdf">PDF Guide</option>
+                                                </select>
+
+                                                <label className="block text-sm text-neutral-400 mb-2">{ordinal}{suffix} Popup Delay</label>
+                                                <div className="flex gap-2 items-center">
+                                                    <input
+                                                        type="number" min={0}
+                                                        value={delayMin}
+                                                        onChange={(e) => {
+                                                            const newSec = (parseInt(e.target.value) || 0) * 60 + delaySec
+                                                            const newEntries = [...setting.entries]
+                                                            newEntries[i] = { ...newEntries[i], delaySec: newSec }
+                                                            setAbConfig(prev => ({ ...prev, [bucket]: { entries: newEntries } }))
+                                                        }}
+                                                        className="w-20 bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
+                                                    />
+                                                    <span className="text-xs text-neutral-500">min</span>
+                                                    <input
+                                                        type="number" min={0} max={59}
+                                                        value={delaySec}
+                                                        onChange={(e) => {
+                                                            const newSec = delayMin * 60 + (parseInt(e.target.value) || 0)
+                                                            const newEntries = [...setting.entries]
+                                                            newEntries[i] = { ...newEntries[i], delaySec: newSec }
+                                                            setAbConfig(prev => ({ ...prev, [bucket]: { entries: newEntries } }))
+                                                        }}
+                                                        className="w-20 bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
+                                                    />
+                                                    <span className="text-xs text-neutral-500">sec</span>
+                                                </div>
                                             </div>
-                                        </div>
+                                        )
+                                    })}
+
+                                    {setting.entries.length < 10 && (
+                                        <>
+                                            <hr className="border-neutral-800 my-4" />
+                                            <button
+                                                onClick={() => {
+                                                    const newEntries = [...setting.entries, { type: 'pdf', delaySec: 300 }]
+                                                    setAbConfig(prev => ({ ...prev, [bucket]: { entries: newEntries } }))
+                                                }}
+                                                className="w-full border border-dashed border-neutral-700 hover:border-neutral-500 text-neutral-500 hover:text-neutral-300 text-sm font-medium py-2.5 rounded-lg transition-colors"
+                                            >
+                                                + Add New Popup
+                                            </button>
+                                        </>
                                     )}
                                 </div>
                             )

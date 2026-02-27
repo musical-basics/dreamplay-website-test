@@ -396,10 +396,13 @@ export async function updateChatSuggestions(suggestions: string[]) {
 
 // ─── Popup A/B Testing Types ───
 
+export type PopupEntry = {
+    type: string      // 'shipping' | 'pdf'
+    delaySec: number  // Delay in seconds from page load
+}
+
 export type PopupSetting = {
-    popups: string[]        // e.g. ['shipping', 'pdf']
-    firstDelaySec: number   // Time to show 1st popup after page load
-    secondDelaySec: number | null // Time to show 2nd popup, null if disabled
+    entries: PopupEntry[]
 }
 
 export type PopupABConfig = {
@@ -412,8 +415,25 @@ export type PopupABConfig = {
 const DEFAULT_AB_CONFIG: PopupABConfig = {
     enabled: false,
     mode: 'random',
-    control: { popups: ['pdf'], firstDelaySec: 30, secondDelaySec: 300 },
-    variant: { popups: ['shipping'], firstDelaySec: 30, secondDelaySec: 300 },
+    control: { entries: [{ type: 'pdf', delaySec: 30 }, { type: 'shipping', delaySec: 300 }] },
+    variant: { entries: [{ type: 'shipping', delaySec: 30 }, { type: 'pdf', delaySec: 300 }] },
+}
+
+// Migrate old config format (popups[] + firstDelaySec/secondDelaySec) to new entries[]
+function migrateConfig(raw: any): PopupABConfig {
+    const migrate = (setting: any): PopupSetting => {
+        if (setting.entries) return setting // already new format
+        const entries: PopupEntry[] = []
+        if (setting.popups?.[0]) entries.push({ type: setting.popups[0], delaySec: setting.firstDelaySec ?? 30 })
+        if (setting.popups?.[1] && setting.secondDelaySec != null) entries.push({ type: setting.popups[1], delaySec: setting.secondDelaySec })
+        return { entries: entries.length > 0 ? entries : [{ type: 'pdf', delaySec: 30 }] }
+    }
+    return {
+        enabled: raw.enabled ?? false,
+        mode: raw.mode ?? 'random',
+        control: migrate(raw.control),
+        variant: migrate(raw.variant),
+    }
 }
 
 export async function getPopupABConfig(): Promise<PopupABConfig> {
@@ -430,7 +450,8 @@ export async function getPopupABConfig(): Promise<PopupABConfig> {
             return DEFAULT_AB_CONFIG
         }
 
-        return JSON.parse(data?.value || JSON.stringify(DEFAULT_AB_CONFIG))
+        const raw = JSON.parse(data?.value || JSON.stringify(DEFAULT_AB_CONFIG))
+        return migrateConfig(raw)
     } catch (error) {
         console.error('Failed to get popup AB config:', error)
         return DEFAULT_AB_CONFIG

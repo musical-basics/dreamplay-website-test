@@ -17,10 +17,13 @@ const trackPopup = (action: 'yes' | 'no', popupName: string) => {
     }
 };
 
+interface ABEntry {
+    type: string;
+    delaySec: number;
+}
+
 interface ABSettings {
-    popups: string[];
-    firstDelaySec: number;
-    secondDelaySec: number | null;
+    entries: ABEntry[];
 }
 
 export default function NewsletterPopup() {
@@ -38,8 +41,7 @@ export default function NewsletterPopup() {
     const abSettingsRef = useRef<ABSettings | null>(null);
 
     useEffect(() => {
-        let firstTimer: NodeJS.Timeout | undefined;
-        let secondTimer: NodeJS.Timeout | undefined;
+        const popupTimers: NodeJS.Timeout[] = [];
         let qualifyTimer: NodeJS.Timeout | undefined;
         let cancelled = false;
 
@@ -69,7 +71,7 @@ export default function NewsletterPopup() {
             } catch (e) {
                 console.error('A/B assign failed, using defaults:', e);
                 abBucketRef.current = 'control';
-                abSettingsRef.current = { popups: ['pdf'], firstDelaySec: 30, secondDelaySec: 300 };
+                abSettingsRef.current = { entries: [{ type: 'pdf', delaySec: 30 }, { type: 'shipping', delaySec: 300 }] };
             }
 
             const settings = abSettingsRef.current!;
@@ -88,30 +90,17 @@ export default function NewsletterPopup() {
                 }, 10000);
             }
 
-            // ── Popup Timers ──
-            const popupsToShow = settings.popups; // e.g. ['shipping', 'pdf'] or ['pdf']
-            const firstPopup = popupsToShow[0] as PopupType | undefined;
-            const secondPopup = popupsToShow[1] as PopupType | undefined;
-
-            if (firstPopup) {
-                const seen = localStorage.getItem(`dp_v2_${firstPopup}_seen`) === "true";
+            // ── Popup Timers (dynamic from entries) ──
+            for (const entry of settings.entries) {
+                const popupType = entry.type as PopupType;
+                const seen = localStorage.getItem(`dp_v2_${popupType}_seen`) === "true";
                 if (!seen) {
-                    firstTimer = setTimeout(() => {
+                    const timer = setTimeout(() => {
                         if (localStorage.getItem("dp_v2_subscribed") !== "true") {
-                            setActivePopup(current => current === "none" ? firstPopup : current);
+                            setActivePopup(current => current === "none" ? popupType : current);
                         }
-                    }, settings.firstDelaySec * 1000);
-                }
-            }
-
-            if (secondPopup && settings.secondDelaySec != null) {
-                const seen = localStorage.getItem(`dp_v2_${secondPopup}_seen`) === "true";
-                if (!seen) {
-                    secondTimer = setTimeout(() => {
-                        if (localStorage.getItem("dp_v2_subscribed") !== "true") {
-                            setActivePopup(current => current === "none" ? secondPopup : current);
-                        }
-                    }, settings.secondDelaySec * 1000);
+                    }, entry.delaySec * 1000);
+                    popupTimers.push(timer);
                 }
             }
         };
@@ -120,8 +109,7 @@ export default function NewsletterPopup() {
 
         return () => {
             cancelled = true;
-            if (firstTimer) clearTimeout(firstTimer);
-            if (secondTimer) clearTimeout(secondTimer);
+            popupTimers.forEach(t => clearTimeout(t));
             if (qualifyTimer) clearTimeout(qualifyTimer);
             if (pdfTimerRef.current) clearTimeout(pdfTimerRef.current);
         };
