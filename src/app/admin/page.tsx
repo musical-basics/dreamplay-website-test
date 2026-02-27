@@ -29,6 +29,10 @@ export default function AdminPage() {
     const [newSuggestion, setNewSuggestion] = useState('')
     const [suggestionsSaving, setSuggestionsSaving] = useState(false)
     const [suggestionsMessage, setSuggestionsMessage] = useState('')
+    const [dragIndex, setDragIndex] = useState<number | null>(null)
+    const [dragOverIndex, setDragOverIndex] = useState<number | null>(null)
+    const [editingIndex, setEditingIndex] = useState<number | null>(null)
+    const [editingText, setEditingText] = useState('')
 
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
@@ -176,6 +180,42 @@ export default function AdminPage() {
         setSuggestionsSaving(false)
     }
 
+    async function handleReorderSuggestions(fromIndex: number, toIndex: number) {
+        if (fromIndex === toIndex) return
+        const updated = [...chatSuggestions]
+        const [moved] = updated.splice(fromIndex, 1)
+        updated.splice(toIndex, 0, moved)
+        setChatSuggestions(updated)
+        setSuggestionsSaving(true)
+        const res = await updateChatSuggestions(updated)
+        if (!res.success) {
+            alert('Failed to reorder suggestions')
+            setChatSuggestions(chatSuggestions)
+        }
+        setSuggestionsSaving(false)
+    }
+
+    function startEditing(index: number) {
+        setEditingIndex(index)
+        setEditingText(chatSuggestions[index])
+    }
+
+    async function handleSaveEdit() {
+        if (editingIndex === null || !editingText.trim()) return
+        const updated = [...chatSuggestions]
+        updated[editingIndex] = editingText.trim()
+        setChatSuggestions(updated)
+        setEditingIndex(null)
+        setEditingText('')
+        setSuggestionsSaving(true)
+        const res = await updateChatSuggestions(updated)
+        if (!res.success) {
+            alert('Failed to save edit')
+            setChatSuggestions(chatSuggestions)
+        }
+        setSuggestionsSaving(false)
+    }
+
     if (!isAuthenticated && !loading) {
         return (
             <div className="min-h-screen bg-neutral-950 flex items-center justify-center text-white p-4">
@@ -243,8 +283,8 @@ export default function AdminPage() {
                             key={tab.key}
                             onClick={() => setActiveTab(tab.key)}
                             className={`px-5 py-3 text-sm font-medium transition-colors border-b-2 ${activeTab === tab.key
-                                    ? 'border-blue-500 text-blue-400'
-                                    : 'border-transparent text-neutral-400 hover:text-white hover:bg-neutral-900'
+                                ? 'border-blue-500 text-blue-400'
+                                : 'border-transparent text-neutral-400 hover:text-white hover:bg-neutral-900'
                                 }`}
                         >
                             {tab.label}
@@ -312,17 +352,80 @@ export default function AdminPage() {
                         {/* Suggested Questions */}
                         <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl">
                             <h3 className="font-medium text-white mb-1">Suggested Questions</h3>
-                            <p className="text-sm text-neutral-500 mb-4">These appear on the chatbot&apos;s blank screen. Users can tap to send instantly.</p>
+                            <p className="text-sm text-neutral-500 mb-4">These appear on the chatbot&apos;s blank screen. Users can tap to send instantly. Drag to reorder.</p>
                             <div className="space-y-2 mb-4">
                                 {chatSuggestions.map((q, i) => (
-                                    <div key={i} className="flex items-center gap-2 p-2 bg-neutral-800 rounded-lg border border-neutral-700">
-                                        <span className="flex-1 text-sm text-white">{q}</span>
-                                        <button
-                                            onClick={() => handleRemoveSuggestion(i)}
-                                            className="text-red-400 hover:text-red-300 text-xs px-2 py-1 rounded hover:bg-red-500/10 transition-colors"
-                                        >
-                                            ✕
-                                        </button>
+                                    <div
+                                        key={`${i}-${q}`}
+                                        draggable
+                                        onDragStart={() => setDragIndex(i)}
+                                        onDragOver={(e) => { e.preventDefault(); setDragOverIndex(i); }}
+                                        onDragLeave={() => setDragOverIndex(null)}
+                                        onDrop={() => {
+                                            if (dragIndex !== null) handleReorderSuggestions(dragIndex, i);
+                                            setDragIndex(null);
+                                            setDragOverIndex(null);
+                                        }}
+                                        onDragEnd={() => { setDragIndex(null); setDragOverIndex(null); }}
+                                        className={`flex items-center gap-2 p-2 bg-neutral-800 rounded-lg border transition-all ${dragOverIndex === i && dragIndex !== i
+                                                ? 'border-blue-500 bg-blue-500/10'
+                                                : dragIndex === i
+                                                    ? 'border-neutral-600 opacity-50'
+                                                    : 'border-neutral-700'
+                                            }`}
+                                    >
+                                        {/* Drag handle */}
+                                        <span className="cursor-grab active:cursor-grabbing text-neutral-500 hover:text-neutral-300 px-1 select-none" title="Drag to reorder">
+                                            ⠿
+                                        </span>
+                                        {editingIndex === i ? (
+                                            <input
+                                                value={editingText}
+                                                onChange={(e) => setEditingText(e.target.value)}
+                                                onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleSaveEdit(); } if (e.key === 'Escape') { setEditingIndex(null); } }}
+                                                autoFocus
+                                                className="flex-1 bg-neutral-900 border border-neutral-600 rounded px-2 py-1 text-sm text-white outline-none focus:border-blue-500"
+                                            />
+                                        ) : (
+                                            <span className="flex-1 text-sm text-white">{q}</span>
+                                        )}
+                                        <div className="flex items-center gap-1">
+                                            {editingIndex === i ? (
+                                                <>
+                                                    <button
+                                                        onClick={handleSaveEdit}
+                                                        className="text-green-400 hover:text-green-300 text-xs px-2 py-1 rounded hover:bg-green-500/10 transition-colors"
+                                                        title="Save"
+                                                    >
+                                                        ✓
+                                                    </button>
+                                                    <button
+                                                        onClick={() => setEditingIndex(null)}
+                                                        className="text-neutral-400 hover:text-neutral-300 text-xs px-2 py-1 rounded hover:bg-neutral-700 transition-colors"
+                                                        title="Cancel"
+                                                    >
+                                                        ✕
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <button
+                                                        onClick={() => startEditing(i)}
+                                                        className="text-blue-400 hover:text-blue-300 text-xs px-2 py-1 rounded hover:bg-blue-500/10 transition-colors"
+                                                        title="Edit"
+                                                    >
+                                                        ✎
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleRemoveSuggestion(i)}
+                                                        className="text-red-400 hover:text-red-300 text-xs px-2 py-1 rounded hover:bg-red-500/10 transition-colors"
+                                                        title="Remove"
+                                                    >
+                                                        ✕
+                                                    </button>
+                                                </>
+                                            )}
+                                        </div>
                                     </div>
                                 ))}
                                 {chatSuggestions.length === 0 && (
