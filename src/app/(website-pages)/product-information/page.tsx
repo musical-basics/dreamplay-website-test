@@ -22,7 +22,6 @@ const keySpecs = [
     { label: "Polyphony", one: "192 Notes", pro: "256 Notes" },
     { label: "Onboard Sounds", one: "18 Presets", pro: "230 Presets" },
     { label: "LED Learning System", one: "Above every key", pro: "Above AND within every key" },
-    { label: "Competitor Equivalent", one: "Yamaha P125", pro: "Yamaha P525" },
     { label: "Action Style", one: "Weighted Hammer Action", pro: "Graded Hammer Action" },
     { label: "Overall Dimensions", one: '48.27" × 11.65" × 5.9"', pro: '48.27" × 11.65" × 5.9"' },
     { label: "Gap Between Black Keys", one: 'DS 6.0: 13.0 mm | DS 5.5: 12.0 mm', pro: 'DS 6.0: 13.0 mm | DS 5.5: 12.0 mm' },
@@ -57,7 +56,40 @@ const features = [
     },
 ]
 
-/* ── Side-by-Side Spec table renderer ──────────────────────────────── */
+/* ── Competitor Comparison Data ────────────────────────────────────────── */
+
+const check = <span className="text-emerald-500 font-bold">✓ Yes</span>
+const cross = <span className="text-neutral-400 font-medium">✕ No</span>
+
+const p125Comparison = [
+    { feature: "Market Price", dreamplay: "$749", competitor: "$649" },
+    { feature: "Key Width", dreamplay: "Ergonomic (DS5.5 / DS6.0)", competitor: "Standard Wide Only (DS6.5)" },
+    { feature: "Speaker Power", dreamplay: "30W (2x15W)", competitor: "14W (2x7W)" },
+    { feature: "LED Learning Lights", dreamplay: check, competitor: cross },
+    { feature: "Key Sensors", dreamplay: "Dual-Sensor", competitor: "Dual-Sensor" },
+    { feature: "Polyphony", dreamplay: "192 Notes", competitor: "192 Notes" },
+]
+
+const p525Comparison = [
+    { feature: "Market Price", dreamplay: "$1,249", competitor: "$1,599" },
+    { feature: "Key Width", dreamplay: "Ergonomic (DS5.5 / DS6.0)", competitor: "Standard Wide Only (DS6.5)" },
+    { feature: "LED Learning Lights", dreamplay: "✓ Yes (Above & Within Keys)", competitor: cross },
+    { feature: "Key Sensors", dreamplay: "Triple-Sensor", competitor: "Triple-Sensor" },
+    { feature: "Polyphony", dreamplay: "256 Notes", competitor: "256 Notes" },
+    { feature: "Headphone Outputs", dreamplay: "2", competitor: "2" },
+]
+
+const genericComparison = [
+    { feature: "Market Price", one: "$749", pro: "$1,249", competitor: "$2,499+" },
+    { feature: "Build Design", one: "Custom Narrow Tooling", pro: "Custom Narrow Tooling", competitor: "Retrofitted OEM Parts" },
+    { feature: "Key Sensors", one: "Dual-Sensor", pro: "Triple-Sensor", competitor: "Dual-Sensor" },
+    { feature: "Interactive LEDs", one: "✓ Above Keys", pro: "✓ Above & Within Keys", competitor: "✕ None" },
+    { feature: "Smart App Integration", one: check, pro: check, competitor: cross },
+    { feature: "Bench & Stand", one: "Included in Bundle", pro: "Included in Bundle", competitor: "Not Included" },
+]
+
+
+/* ── Components ──────────────────────────────────────────────── */
 
 function SpecTable({ specs, note, light }: { specs: { label: string; one: string; pro: string }[]; note?: string; light?: boolean }) {
     return (
@@ -82,13 +114,11 @@ function SpecTable({ specs, note, light }: { specs: { label: string; one: string
                         {spec.label}
                     </div>
 
-                    {/* Mobile Label for One */}
                     <div className="md:hidden font-sans text-[10px] uppercase tracking-wider font-bold mt-2 text-neutral-500">DreamPlay One</div>
                     <div className={`col-span-4 font-sans text-sm md:text-base ${light ? "text-neutral-900" : "text-white"}`}>
                         {spec.one}
                     </div>
 
-                    {/* Mobile Label for Pro */}
                     <div className="md:hidden font-sans text-[10px] uppercase tracking-wider font-bold mt-2 text-[#4a9eff]">DreamPlay One Pro</div>
                     <div className={`col-span-4 font-sans text-sm font-medium md:text-base text-[#4a9eff]`}>
                         {spec.pro}
@@ -98,6 +128,78 @@ function SpecTable({ specs, note, light }: { specs: { label: string; one: string
             {note && (
                 <p className={`mt-6 text-xs italic ${light ? "text-neutral-500" : "text-neutral-400"}`}>{note}</p>
             )}
+        </div>
+    )
+}
+
+function ComparisonTable2Col({ title, subtitle, dreamplayName, competitorName, data }: { title: string, subtitle: string, dreamplayName: string, competitorName: string, data: any[] }) {
+    return (
+        <div className="bg-white border border-neutral-200 p-6 md:p-10 mb-12">
+            <div className="mb-8">
+                <h3 className="font-serif text-2xl md:text-3xl text-neutral-900">{title}</h3>
+                <p className="font-sans text-sm text-neutral-500 mt-2">{subtitle}</p>
+            </div>
+
+            <div className="grid grid-cols-12 gap-4 pb-4 border-b border-neutral-300">
+                <div className="col-span-4 font-sans text-[10px] uppercase tracking-[0.2em] text-neutral-500 hidden md:block">Feature</div>
+                <div className="col-span-6 md:col-span-4 font-sans text-sm font-bold uppercase tracking-wider text-black">{dreamplayName}</div>
+                <div className="col-span-6 md:col-span-4 font-sans text-sm font-bold uppercase tracking-wider text-neutral-400">{competitorName}</div>
+            </div>
+
+            {data.map((row: any, i: number) => (
+                <div key={i} className="flex flex-col gap-2 py-5 md:grid md:grid-cols-12 md:gap-4 md:items-center border-b border-neutral-100 last:border-0">
+                    <div className="col-span-12 md:col-span-4 font-sans text-xs uppercase tracking-[0.2em] md:text-sm text-neutral-500 mb-2 md:mb-0">
+                        {row.feature}
+                    </div>
+                    <div className="col-span-12 grid grid-cols-2 md:col-span-8 md:grid-cols-2 gap-4">
+                        <div className="font-sans text-sm md:text-base text-neutral-900 font-medium">{row.dreamplay}</div>
+                        <div className="font-sans text-sm md:text-base text-neutral-500">{row.competitor}</div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    )
+}
+
+function ComparisonTable3Col({ title, subtitle, data }: { title: string, subtitle: string, data: any[] }) {
+    return (
+        <div className="bg-neutral-50 border border-neutral-200 p-6 md:p-10">
+            <div className="mb-8">
+                <h3 className="font-serif text-2xl md:text-3xl text-neutral-900">{title}</h3>
+                <p className="font-sans text-sm text-neutral-500 mt-2">{subtitle}</p>
+            </div>
+
+            {/* Desktop Header */}
+            <div className="hidden md:grid grid-cols-12 gap-4 pb-4 border-b border-neutral-300">
+                <div className="col-span-3 font-sans text-[10px] uppercase tracking-[0.2em] text-neutral-500">Feature</div>
+                <div className="col-span-3 font-sans text-xs font-bold uppercase tracking-wider text-black">DP One</div>
+                <div className="col-span-3 font-sans text-xs font-bold uppercase tracking-wider text-[#4a9eff]">DP One Pro</div>
+                <div className="col-span-3 font-sans text-xs font-bold uppercase tracking-wider text-neutral-400">Generic Competitor</div>
+            </div>
+
+            {data.map((row: any, i: number) => (
+                <div key={i} className="flex flex-col gap-2 py-5 md:grid md:grid-cols-12 md:gap-4 md:items-center border-b border-neutral-200 last:border-0">
+                    <div className="col-span-12 md:col-span-3 font-sans text-xs uppercase tracking-[0.2em] md:text-sm text-neutral-500 mb-2 md:mb-0">
+                        {row.feature}
+                    </div>
+
+                    {/* Mobile Labels + Values */}
+                    <div className="col-span-12 grid grid-cols-1 sm:grid-cols-3 gap-4 md:col-span-9 md:grid-cols-3">
+                        <div>
+                            <div className="md:hidden font-sans text-[10px] uppercase tracking-wider font-bold mb-1 text-black">DP One</div>
+                            <div className="font-sans text-sm md:text-base text-neutral-900">{row.one}</div>
+                        </div>
+                        <div>
+                            <div className="md:hidden font-sans text-[10px] uppercase tracking-wider font-bold mb-1 text-[#4a9eff]">DP One Pro</div>
+                            <div className="font-sans text-sm md:text-base text-[#4a9eff] font-medium">{row.pro}</div>
+                        </div>
+                        <div>
+                            <div className="md:hidden font-sans text-[10px] uppercase tracking-wider font-bold mb-1 text-neutral-400">Generic Competitor</div>
+                            <div className="font-sans text-sm md:text-base text-neutral-500">{row.competitor}</div>
+                        </div>
+                    </div>
+                </div>
+            ))}
         </div>
     )
 }
@@ -200,6 +302,45 @@ export default function ProductInformationPage() {
                             </h2>
                         </div>
                         <SpecTable specs={connectivitySpecs} />
+                    </div>
+                </section>
+
+                {/* COMPETITIVE ANALYSIS */}
+                <section className="bg-white py-24 md:py-32">
+                    <div className="mx-auto max-w-6xl px-6">
+                        <div className="mb-16 text-center">
+                            <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-500 mb-4">
+                                Market Comparison
+                            </p>
+                            <h2 className="font-serif text-4xl md:text-5xl leading-tight text-neutral-900">
+                                How We Stack Up
+                            </h2>
+                            <p className="font-sans text-base md:text-lg text-neutral-500 max-w-2xl mx-auto leading-relaxed mt-4">
+                                We engineered the DreamPlay series to go toe-to-toe with the world&apos;s leading standard-sized digital pianos, while destroying the narrow-key competition on price.
+                            </p>
+                        </div>
+
+                        <ComparisonTable2Col
+                            title="The Entry-Level Clash"
+                            subtitle="Comparing the standard base models."
+                            dreamplayName="DreamPlay One"
+                            competitorName="Yamaha P125"
+                            data={p125Comparison}
+                        />
+
+                        <ComparisonTable2Col
+                            title="The Pro-Level Clash"
+                            subtitle="Comparing the premium upgraded models."
+                            dreamplayName="DreamPlay One Pro"
+                            competitorName="Yamaha P525"
+                            data={p525Comparison}
+                        />
+
+                        <ComparisonTable3Col
+                            title="The Narrow-Key Industry"
+                            subtitle="Why pay double for retrofitted parts when you can get custom tooling?"
+                            data={genericComparison}
+                        />
                     </div>
                 </section>
 
