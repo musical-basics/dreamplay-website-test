@@ -29,8 +29,12 @@ const keySpecs = [
 
 const speakerSpecs = [
     { label: "Total Output Power", one: "30W", pro: "40W" },
-    { label: "Power Allocation", one: "15W × 2 channels", pro: "20W × 2 channels" },
-    { label: "Configuration", one: "Stereo Output", pro: "2.0 Channel Stereo Hi-Fi" },
+    { label: "Configuration", one: "2.0 Channel Stereo", pro: "2.0 Channel Stereo" },
+    { label: "Power Allocation", one: "(10W + 5W) × 2 channels", pro: "(15W + 5W) × 2 channels" },
+    { label: "Woofer Power", one: "10W per channel", pro: "15W per channel" },
+    { label: "Tweeter Power", one: "5W per channel", pro: "5W per channel" },
+    { label: "Woofer Dimensions", one: "53 mm (W) × 93 mm (L) × 51.4 mm (H)", pro: "53 mm (W) × 93 mm (L) × 51.4 mm (H)" },
+    { label: "Tweeter Dimensions", one: "Φ31 mm × 11.1 mm", pro: "Φ31 mm × 11.1 mm" },
 ]
 
 const connectivitySpecs = [
