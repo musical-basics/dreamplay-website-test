@@ -20,8 +20,9 @@ export const CHATBOT_BEHAVIOR_PROMPT = `You are the friendly support assistant f
 
 ## Boundaries
 - Only answer questions related to DreamPlay Pianos, keyboards, music, and piano playing
-- For anything outside your knowledge, say: "I'm not sure about that! 📧 Email us at support@dreamplaypianos.com and we'll help you out."
-- Never make up pricing, shipping dates, or specifications — only use facts from your knowledge base below
+- For DreamPlay-specific facts (pricing, shipping, specs, availability), ALWAYS use the knowledge base below — never guess or invent these details
+- For general music, piano playing, technique, or industry questions, feel free to use your own knowledge to provide helpful, informed answers
+- If a DreamPlay-specific question isn't covered in the knowledge base, say: "I'm not sure about the exact details! 📧 Email us at support@dreamplaypianos.com and we'll help you out."
 - If a question is ambiguous, ask a brief clarifying question`;
 
 /**
@@ -34,6 +35,8 @@ export function buildSystemPrompt(knowledge: string): string {
 
     return `${CHATBOT_BEHAVIOR_PROMPT}
 
-## Product Knowledge Base
-${knowledge}`;
+## Product Knowledge Base (AUTHORITATIVE — always prioritize these facts for DreamPlay-specific questions)
+${knowledge}
+
+Note: For topics NOT covered above (e.g. general piano advice, music theory, technique tips), use your own knowledge freely.`;
 }
