@@ -345,12 +345,20 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
 
             {/* Floating Toggle Button */}
             {!isOpen && (
-                <button
-                    onClick={() => { setIsOpen(true); sessionStorage.setItem('dp_chat_popped', 'true'); }}
-                    className="bg-white text-black p-4 rounded-full shadow-xl hover:bg-white/90 transition-transform hover:scale-105 cursor-pointer"
-                >
-                    <MessageCircle size={24} />
-                </button>
+                <div className="flex flex-col items-end gap-2">
+                    {/* Floating prompt label */}
+                    <div className="relative bg-white text-black text-xs font-medium px-3 py-2 rounded-lg shadow-lg animate-[fadeInUp_0.5s_ease-out] whitespace-nowrap">
+                        Have a question? Ask us anything!
+                        {/* Small triangle pointer */}
+                        <div className="absolute -bottom-1.5 right-5 w-3 h-3 bg-white rotate-45 shadow-lg" />
+                    </div>
+                    <button
+                        onClick={() => { setIsOpen(true); sessionStorage.setItem('dp_chat_popped', 'true'); }}
+                        className="bg-white text-black p-4 rounded-full shadow-xl hover:bg-white/90 transition-transform hover:scale-105 cursor-pointer"
+                    >
+                        <MessageCircle size={24} />
+                    </button>
+                </div>
             )}
         </div>
     );
