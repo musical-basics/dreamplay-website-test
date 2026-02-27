@@ -137,6 +137,70 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
             .join('');
     };
 
+    // Lightweight inline markdown renderer
+    const renderMarkdown = (text: string): React.ReactNode => {
+        // Split by line breaks first, then parse inline formatting
+        const lines = text.split('\n');
+        return lines.map((line, lineIdx) => {
+            // Bullet points: lines starting with - or *
+            const bulletMatch = line.match(/^\s*[-*]\s+(.+)/);
+            const isBullet = !!bulletMatch;
+            const lineContent = isBullet ? bulletMatch![1] : line;
+
+            const parts: React.ReactNode[] = [];
+            // Regex: bold **text**, italic *text*, underline __text__, inline code `text`, links [text](url)
+            const regex = /(\*\*(.+?)\*\*|__(.+?)__|_(.+?)_|\*(.+?)\*|`(.+?)`|\[([^\]]+)\]\(([^)]+)\))/g;
+            let lastIndex = 0;
+            let match;
+
+            while ((match = regex.exec(lineContent)) !== null) {
+                // Push text before the match
+                if (match.index > lastIndex) {
+                    parts.push(lineContent.slice(lastIndex, match.index));
+                }
+
+                if (match[2]) {
+                    // **bold**
+                    parts.push(<strong key={`${lineIdx}-${match.index}`} className="font-semibold">{match[2]}</strong>);
+                } else if (match[3]) {
+                    // __underline__
+                    parts.push(<u key={`${lineIdx}-${match.index}`}>{match[3]}</u>);
+                } else if (match[4]) {
+                    // _italic_
+                    parts.push(<em key={`${lineIdx}-${match.index}`}>{match[4]}</em>);
+                } else if (match[5]) {
+                    // *italic*
+                    parts.push(<em key={`${lineIdx}-${match.index}`}>{match[5]}</em>);
+                } else if (match[6]) {
+                    // `code`
+                    parts.push(<code key={`${lineIdx}-${match.index}`} className="bg-white/10 px-1 py-0.5 rounded text-[13px]">{match[6]}</code>);
+                } else if (match[7] && match[8]) {
+                    // [text](url)
+                    parts.push(
+                        <a key={`${lineIdx}-${match.index}`} href={match[8]} target="_blank" rel="noopener noreferrer" className="underline text-[#4a9eff] hover:text-[#6bb3ff]">
+                            {match[7]}
+                        </a>
+                    );
+                }
+
+                lastIndex = match.index + match[0].length;
+            }
+
+            // Push remaining text
+            if (lastIndex < lineContent.length) {
+                parts.push(lineContent.slice(lastIndex));
+            }
+
+            return (
+                <span key={lineIdx}>
+                    {lineIdx > 0 && <br />}
+                    {isBullet && <span className="mr-1">•</span>}
+                    {parts.length > 0 ? parts : lineContent}
+                </span>
+            );
+        });
+    };
+
     return (
         <div className="fixed bottom-6 right-6 z-[9999] flex flex-col items-end">
             {/* Chat Window */}
@@ -163,9 +227,9 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
                         )}
                         {messages.map((m) => (
                             <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                <div className={`px-4 py-2.5 rounded-2xl max-w-[85%] text-sm font-sans leading-relaxed whitespace-pre-wrap ${m.role === 'user' ? 'bg-[#4a9eff] text-white rounded-tr-sm' : 'bg-white/10 text-white/90 rounded-tl-sm'
+                                <div className={`px-4 py-2.5 rounded-2xl max-w-[85%] text-sm font-sans leading-relaxed ${m.role === 'user' ? 'bg-[#4a9eff] text-white rounded-tr-sm' : 'bg-white/10 text-white/90 rounded-tl-sm'
                                     }`}>
-                                    {getMessageText(m.parts)}
+                                    {renderMarkdown(getMessageText(m.parts))}
                                 </div>
                             </div>
                         ))}
