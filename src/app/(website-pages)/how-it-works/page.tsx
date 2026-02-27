@@ -511,7 +511,7 @@ export default function HowItWorksPage() {
                                         alt="Biomechanical Impact of Key Width on Small Hands"
                                         width={1200}
                                         height={900}
-                                        className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity duration-300 scale-[1.15] object-cover"
+                                        className="w-full h-auto opacity-90 group-hover:opacity-100 transition-opacity duration-300 scale-[1.3] object-cover"
                                     />
                                 </button>
                                 <button
@@ -695,7 +695,7 @@ export default function HowItWorksPage() {
                             alt="Biomechanical Impact of Key Width on Small Hands"
                             width={1200}
                             height={900}
-                            className="w-full h-auto scale-[1.15] object-cover"
+                            className="w-full h-auto scale-[1.3] object-cover"
                         />
                         <p className="text-center font-sans text-xs text-white/50 mt-4">
                             Click anywhere to close
