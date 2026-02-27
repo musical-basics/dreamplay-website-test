@@ -14,6 +14,7 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
     const [emailSubmitted, setEmailSubmitted] = useState(false);
     const [assistantMessageCount, setAssistantMessageCount] = useState(0);
     const [suggestions, setSuggestions] = useState<string[]>([]);
+    const [askedSuggestions, setAskedSuggestions] = useState<Set<string>>(new Set());
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const sessionCreatedRef = useRef(false);
 
@@ -121,6 +122,16 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
         sendMessage({ text: input });
         setInput('');
     };
+
+    const handleSuggestionClick = (q: string) => {
+        setAskedSuggestions(prev => new Set(prev).add(q));
+        sendMessage({ text: q });
+    };
+
+    // Get the next 3 un-asked suggestions
+    const remainingSuggestions = suggestions
+        .filter(q => !askedSuggestions.has(q))
+        .slice(0, 3);
 
     const handleEmailSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -234,12 +245,12 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
                                 <p className="text-white/50 text-sm text-center font-sans leading-relaxed">
                                     👋 Hi! Any questions about hand sizes, pricing, or shipping?
                                 </p>
-                                {suggestions.length > 0 && (
+                                {remainingSuggestions.length > 0 && (
                                     <div className="space-y-2 px-2">
-                                        {suggestions.map((q, i) => (
+                                        {remainingSuggestions.map((q, i) => (
                                             <button
                                                 key={i}
-                                                onClick={() => sendMessage({ text: q })}
+                                                onClick={() => handleSuggestionClick(q)}
                                                 className="w-full text-left px-3 py-2 text-sm text-white/70 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl transition-all cursor-pointer"
                                             >
                                                 {q}
@@ -262,6 +273,21 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
                                 <div className="px-4 py-2.5 rounded-2xl bg-white/10 text-white/50 text-sm rounded-tl-sm animate-pulse">
                                     Typing...
                                 </div>
+                            </div>
+                        )}
+
+                        {/* Suggested questions after assistant response */}
+                        {!isLoading && messages.length > 0 && messages[messages.length - 1].role === 'assistant' && remainingSuggestions.length > 0 && (
+                            <div className="space-y-2 px-1 pt-1">
+                                {remainingSuggestions.map((q, i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => handleSuggestionClick(q)}
+                                        className="w-full text-left px-3 py-2 text-sm text-white/70 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl transition-all cursor-pointer"
+                                    >
+                                        {q}
+                                    </button>
+                                ))}
                             </div>
                         )}
 
