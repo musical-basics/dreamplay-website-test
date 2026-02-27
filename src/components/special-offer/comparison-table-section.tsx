@@ -22,6 +22,7 @@ type ComparisonRow = {
 }
 
 const comparisonRows: ComparisonRow[] = [
+    { feature: "Build Design", dreamplay: "Custom-Designed for Narrow Keys", competitor: "Generic OEM Adapted" },
     { feature: "Key Sensor Technology", dreamplay: "Triple Sensor", competitor: "Double Sensor" },
     { feature: "Velocity Accuracy", dreamplay: "High Precision", competitor: "Basic (Not Sensitive)" },
     { feature: "LED Key Indicators", dreamplay: "check", competitor: "cross" },
