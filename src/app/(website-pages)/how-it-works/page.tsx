@@ -507,7 +507,7 @@ export default function HowItWorksPage() {
                                     className="group relative border border-white/10 hover:border-white/25 transition-all duration-300 cursor-pointer overflow-hidden w-full mb-3"
                                 >
                                     <Image
-                                        src="/images/Biomechanical Impact on Small Hands.png"
+                                        src="/images/Biomechanical Impact on Small Hands copy.png"
                                         alt="Biomechanical Impact of Key Width on Small Hands"
                                         width={1200}
                                         height={900}
@@ -691,7 +691,7 @@ export default function HowItWorksPage() {
                 >
                     <div className="relative max-w-5xl w-full mx-4 md:mx-8">
                         <Image
-                            src="/images/Biomechanical Impact on Small Hands.png"
+                            src="/images/Biomechanical Impact on Small Hands copy.png"
                             alt="Biomechanical Impact of Key Width on Small Hands"
                             width={1200}
                             height={900}
