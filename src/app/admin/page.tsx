@@ -674,32 +674,26 @@ export default function AdminPage() {
                                     <h3 className="font-medium text-white mb-1 capitalize">{bucket === 'control' ? 'Control (Setting 1)' : 'Variant (Setting 2)'}</h3>
                                     <p className="text-xs text-neutral-500 mb-4">Popup strategy for this group.</p>
 
-                                    {/* Popup checkboxes */}
+                                    {/* 1st Popup */}
                                     <div className="mb-4">
-                                        <label className="block text-sm text-neutral-400 mb-2">Popups to Include</label>
-                                        <div className="flex gap-4">
-                                            {[{ id: 'shipping', label: 'Free Shipping' }, { id: 'pdf', label: 'PDF Guide' }].map(p => (
-                                                <label key={p.id} className="flex items-center gap-2 text-sm text-white cursor-pointer">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={setting.popups.includes(p.id)}
-                                                        onChange={(e) => {
-                                                            const newPopups = e.target.checked
-                                                                ? [...setting.popups, p.id]
-                                                                : setting.popups.filter(x => x !== p.id)
-                                                            setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], popups: newPopups } }))
-                                                        }}
-                                                        className="accent-blue-500"
-                                                    />
-                                                    {p.label}
-                                                </label>
-                                            ))}
-                                        </div>
+                                        <label className="block text-sm text-neutral-400 mb-2">1st Popup</label>
+                                        <select
+                                            value={setting.popups[0] || ''}
+                                            onChange={(e) => {
+                                                const newPopups = [...setting.popups]
+                                                newPopups[0] = e.target.value
+                                                setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], popups: newPopups } }))
+                                            }}
+                                            className="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
+                                        >
+                                            <option value="shipping">Free Shipping</option>
+                                            <option value="pdf">PDF Guide</option>
+                                        </select>
                                     </div>
 
-                                    {/* First Show Time */}
+                                    {/* 1st Popup Delay */}
                                     <div className="mb-4">
-                                        <label className="block text-sm text-neutral-400 mb-2">First Popup Delay</label>
+                                        <label className="block text-sm text-neutral-400 mb-2">1st Popup Delay</label>
                                         <div className="flex gap-2 items-center">
                                             <input
                                                 type="number" min={0}
@@ -724,44 +718,59 @@ export default function AdminPage() {
                                         </div>
                                     </div>
 
-                                    {/* Second Show Time */}
-                                    <div>
-                                        <label className="block text-sm text-neutral-400 mb-2">Second Popup Delay <span className="text-neutral-600">(leave blank to disable)</span></label>
-                                        <div className="flex gap-2 items-center">
-                                            <input
-                                                type="number" min={0}
-                                                value={setting.secondDelaySec != null ? secondMin : ''}
-                                                placeholder="-"
-                                                onChange={(e) => {
-                                                    const val = e.target.value
-                                                    if (val === '') {
-                                                        setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], secondDelaySec: null } }))
-                                                    } else {
-                                                        const newSec = (parseInt(val) || 0) * 60 + secondSec
-                                                        setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], secondDelaySec: newSec } }))
-                                                    }
-                                                }}
-                                                className="w-20 bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
-                                            />
-                                            <span className="text-xs text-neutral-500">min</span>
-                                            <input
-                                                type="number" min={0} max={59}
-                                                value={setting.secondDelaySec != null ? secondSec : ''}
-                                                placeholder="-"
-                                                onChange={(e) => {
-                                                    const val = e.target.value
-                                                    if (val === '' && (setting.secondDelaySec == null || secondMin === 0)) {
-                                                        setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], secondDelaySec: null } }))
-                                                    } else {
-                                                        const newSec = secondMin * 60 + (parseInt(val) || 0)
-                                                        setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], secondDelaySec: newSec } }))
-                                                    }
-                                                }}
-                                                className="w-20 bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
-                                            />
-                                            <span className="text-xs text-neutral-500">sec</span>
-                                        </div>
+                                    <hr className="border-neutral-800 my-4" />
+
+                                    {/* 2nd Popup */}
+                                    <div className="mb-4">
+                                        <label className="block text-sm text-neutral-400 mb-2">2nd Popup</label>
+                                        <select
+                                            value={setting.popups[1] || 'none'}
+                                            onChange={(e) => {
+                                                const val = e.target.value
+                                                if (val === 'none') {
+                                                    setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], popups: [setting.popups[0]], secondDelaySec: null } }))
+                                                } else {
+                                                    const newPopups = [setting.popups[0], val]
+                                                    const newSecond = setting.secondDelaySec ?? 300
+                                                    setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], popups: newPopups, secondDelaySec: newSecond } }))
+                                                }
+                                            }}
+                                            className="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
+                                        >
+                                            <option value="none">None (disabled)</option>
+                                            <option value="shipping">Free Shipping</option>
+                                            <option value="pdf">PDF Guide</option>
+                                        </select>
                                     </div>
+
+                                    {/* 2nd Popup Delay */}
+                                    {setting.popups[1] && setting.secondDelaySec != null && (
+                                        <div>
+                                            <label className="block text-sm text-neutral-400 mb-2">2nd Popup Delay</label>
+                                            <div className="flex gap-2 items-center">
+                                                <input
+                                                    type="number" min={0}
+                                                    value={secondMin}
+                                                    onChange={(e) => {
+                                                        const newSec = (parseInt(e.target.value) || 0) * 60 + secondSec
+                                                        setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], secondDelaySec: newSec } }))
+                                                    }}
+                                                    className="w-20 bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
+                                                />
+                                                <span className="text-xs text-neutral-500">min</span>
+                                                <input
+                                                    type="number" min={0} max={59}
+                                                    value={secondSec}
+                                                    onChange={(e) => {
+                                                        const newSec = secondMin * 60 + (parseInt(e.target.value) || 0)
+                                                        setAbConfig(prev => ({ ...prev, [bucket]: { ...prev[bucket], secondDelaySec: newSec } }))
+                                                    }}
+                                                    className="w-20 bg-neutral-800 border border-neutral-700 rounded-lg p-2 text-white text-sm outline-none focus:border-blue-500"
+                                                />
+                                                <span className="text-xs text-neutral-500">sec</span>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             )
                         })}
@@ -791,61 +800,64 @@ export default function AdminPage() {
                             </div>
                         )}
                     </div>
-                )}
+                )
+                }
 
                 {/* ─── TAB 5: A/B RESULTS ─── */}
-                {activeTab === 'ab-results' && (
-                    <div className="space-y-6">
-                        <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl">
-                            <div className="flex items-center justify-between mb-4">
-                                <h3 className="font-medium text-white">Popup A/B Test Results</h3>
-                                <button
-                                    onClick={async () => {
-                                        setAbResultsLoading(true)
-                                        const data = await getPopupABResults()
-                                        setAbResults(data)
-                                        setAbResultsLoading(false)
-                                    }}
-                                    disabled={abResultsLoading}
-                                    className="bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors"
-                                >
-                                    {abResultsLoading ? 'Loading...' : 'Refresh'}
-                                </button>
-                            </div>
-
-                            {abResults.length === 0 && !abResultsLoading && (
-                                <p className="text-neutral-500 text-sm">No data yet. Click Refresh to load results.</p>
-                            )}
-
-                            {abResults.length > 0 && (
-                                <div className="overflow-x-auto">
-                                    <table className="w-full text-sm">
-                                        <thead>
-                                            <tr className="border-b border-neutral-700 text-neutral-400">
-                                                <th className="text-left py-3 px-2 font-medium">Variant</th>
-                                                <th className="text-right py-3 px-2 font-medium">Qualified (10s+)</th>
-                                                <th className="text-right py-3 px-2 font-medium">Conversions</th>
-                                                <th className="text-right py-3 px-2 font-medium">Conv. Rate</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {abResults.map(row => (
-                                                <tr key={row.variant} className="border-b border-neutral-800">
-                                                    <td className="py-3 px-2 text-white capitalize font-medium">{row.variant}</td>
-                                                    <td className="py-3 px-2 text-right text-white">{row.qualified}</td>
-                                                    <td className="py-3 px-2 text-right text-white">{row.conversions}</td>
-                                                    <td className="py-3 px-2 text-right font-mono text-green-400">{row.conversionRate.toFixed(1)}%</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
+                {
+                    activeTab === 'ab-results' && (
+                        <div className="space-y-6">
+                            <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="font-medium text-white">Popup A/B Test Results</h3>
+                                    <button
+                                        onClick={async () => {
+                                            setAbResultsLoading(true)
+                                            const data = await getPopupABResults()
+                                            setAbResults(data)
+                                            setAbResultsLoading(false)
+                                        }}
+                                        disabled={abResultsLoading}
+                                        className="bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors"
+                                    >
+                                        {abResultsLoading ? 'Loading...' : 'Refresh'}
+                                    </button>
                                 </div>
-                            )}
-                        </div>
-                    </div>
-                )}
 
-            </div>
-        </div>
+                                {abResults.length === 0 && !abResultsLoading && (
+                                    <p className="text-neutral-500 text-sm">No data yet. Click Refresh to load results.</p>
+                                )}
+
+                                {abResults.length > 0 && (
+                                    <div className="overflow-x-auto">
+                                        <table className="w-full text-sm">
+                                            <thead>
+                                                <tr className="border-b border-neutral-700 text-neutral-400">
+                                                    <th className="text-left py-3 px-2 font-medium">Variant</th>
+                                                    <th className="text-right py-3 px-2 font-medium">Qualified (10s+)</th>
+                                                    <th className="text-right py-3 px-2 font-medium">Conversions</th>
+                                                    <th className="text-right py-3 px-2 font-medium">Conv. Rate</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {abResults.map(row => (
+                                                    <tr key={row.variant} className="border-b border-neutral-800">
+                                                        <td className="py-3 px-2 text-white capitalize font-medium">{row.variant}</td>
+                                                        <td className="py-3 px-2 text-right text-white">{row.qualified}</td>
+                                                        <td className="py-3 px-2 text-right text-white">{row.conversions}</td>
+                                                        <td className="py-3 px-2 text-right font-mono text-green-400">{row.conversionRate.toFixed(1)}%</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )
+                }
+
+            </div >
+        </div >
     )
 }
