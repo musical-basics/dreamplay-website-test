@@ -22,12 +22,12 @@ type ComparisonRow = {
 }
 
 const comparisonRows: ComparisonRow[] = [
-    { feature: "Key Sensor Technology", dreamplay: "Triple Sensor", competitor: "Dual Sensor" },
-    { feature: "Velocity Accuracy", dreamplay: "High Precision", competitor: "Standard" },
+    { feature: "Key Sensor Technology", dreamplay: "Triple Sensor", competitor: "Double Sensor" },
+    { feature: "Velocity Accuracy", dreamplay: "High Precision", competitor: "Basic (Not Sensitive)" },
     { feature: "LED Key Indicators", dreamplay: "check", competitor: "cross" },
     { feature: "App Integration", dreamplay: "check", competitor: "cross" },
-    { feature: "Price", dreamplay: "~$350", competitor: "$700" },
-    { feature: "Bench & Stand", dreamplay: "check", competitor: "cross" },
+    { feature: "Price", dreamplay: "$1,199", competitor: "$2,499" },
+    { feature: "Bench & Stand", dreamplay: "Included", competitor: "Not Included" },
 ]
 
 export function ComparisonTableSection() {
@@ -42,7 +42,7 @@ export function ComparisonTableSection() {
                         Why Pay Double for Less?
                     </h2>
                     <p className="mt-4 font-sans text-sm leading-relaxed text-neutral-500 md:text-base">
-                        Compare our keyboard to the Yamaha P-125 and see why musicians are making the switch.
+                        Compare our keyboard to our narrow-key competitors and see why musicians are making the switch.
                     </p>
                 </div>
 
@@ -57,7 +57,7 @@ export function ComparisonTableSection() {
                             DreamPlay
                         </div>
                         <div className="py-4 md:py-5 text-center font-sans text-xs uppercase tracking-[0.2em] text-neutral-400 md:text-sm">
-                            Yamaha P-125
+                            Competitors
                         </div>
                     </div>
 
