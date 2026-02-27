@@ -1,5 +1,7 @@
 import { Playfair_Display, Inter } from "next/font/google"
 import { SpecialOfferHeader } from "@/components/special-offer/header"
+import { FeaturesGridSection } from "@/components/special-offer/features-grid-section"
+import { FeaturesPianoSection } from "@/components/special-offer/features-piano-section"
 import Footer from "@/components/Footer"
 import Link from "next/link"
 import Image from "next/image"
@@ -140,6 +142,12 @@ export default function ProductInformationPage() {
                         </div>
                     </div>
                 </section>
+
+                {/* All the Features You Need */}
+                <FeaturesGridSection />
+
+                {/* Everything You Need, Built In */}
+                <FeaturesPianoSection />
 
                 {/* Keys Specifications */}
                 <section className="bg-neutral-950 border-t border-neutral-800">
