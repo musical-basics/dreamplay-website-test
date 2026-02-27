@@ -77,24 +77,29 @@ const features = [
 
 /* ── Spec table renderer ──────────────────────────────── */
 
-function SpecTable({ specs, note }: { specs: { label: string; value: string }[]; note?: string }) {
+function SpecTable({ specs, note, light }: { specs: { label: string; value: string }[]; note?: string; light?: boolean }) {
     return (
         <>
             {specs.map((spec, i) => (
                 <div
                     key={spec.label}
-                    className={`flex flex-col gap-1 border-b border-neutral-800 py-5 md:flex-row md:items-baseline md:gap-8 ${i === 0 ? "border-t" : ""}`}
+                    className={`flex flex-col gap-1 py-5 md:flex-row md:items-baseline md:gap-8 ${light
+                            ? `border-b border-neutral-200 ${i === 0 ? "border-t" : ""}`
+                            : `border-b border-neutral-800 ${i === 0 ? "border-t" : ""}`
+                        }`}
                 >
-                    <span className="font-sans text-xs uppercase tracking-[0.2em] text-neutral-400 md:w-72 md:shrink-0 md:text-sm">
+                    <span className={`font-sans text-xs uppercase tracking-[0.2em] md:w-72 md:shrink-0 md:text-sm ${light ? "text-neutral-500" : "text-neutral-400"
+                        }`}>
                         {spec.label}
                     </span>
-                    <span className="font-sans text-sm text-white md:text-base">
+                    <span className={`font-sans text-sm md:text-base ${light ? "text-neutral-900" : "text-white"
+                        }`}>
                         {spec.value}
                     </span>
                 </div>
             ))}
             {note && (
-                <p className="mt-4 text-xs text-neutral-500 italic">{note}</p>
+                <p className={`mt-4 text-xs italic ${light ? "text-neutral-400" : "text-neutral-500"}`}>{note}</p>
             )}
         </>
     )
@@ -122,22 +127,22 @@ export default function ProductInformationPage() {
                     </div>
                 </section>
 
-                {/* Features Overview */}
-                <section className="bg-neutral-950 border-t border-neutral-800">
+                {/* Features Overview — LIGHT */}
+                <section className="bg-background">
                     <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
                         <div className="mb-16">
-                            <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400 mb-4">
+                            <p className="font-sans text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">
                                 What&apos;s Included
                             </p>
-                            <h2 className="font-serif text-3xl md:text-4xl leading-tight text-white">
+                            <h2 className="font-serif text-3xl md:text-4xl leading-tight text-foreground">
                                 Key Features
                             </h2>
                         </div>
                         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                             {features.map((f) => (
-                                <div key={f.title} className="border border-neutral-800 bg-white/[0.02] p-6 md:p-8 hover:border-neutral-600 transition-colors">
-                                    <h3 className="font-serif text-lg text-white mb-3">{f.title}</h3>
-                                    <p className="font-sans text-sm text-neutral-400 leading-relaxed">{f.description}</p>
+                                <div key={f.title} className="border border-neutral-200 bg-neutral-50 p-6 md:p-8 hover:border-neutral-400 transition-colors">
+                                    <h3 className="font-serif text-lg text-foreground mb-3">{f.title}</h3>
+                                    <p className="font-sans text-sm text-muted-foreground leading-relaxed">{f.description}</p>
                                 </div>
                             ))}
                         </div>
@@ -165,20 +170,21 @@ export default function ProductInformationPage() {
                     </div>
                 </section>
 
-                {/* Speaker Specifications */}
-                <section className="bg-neutral-950 border-t border-neutral-800">
+                {/* Speaker Specifications — LIGHT */}
+                <section className="bg-background">
                     <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
                         <div className="mb-12">
-                            <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400 mb-4">
+                            <p className="font-sans text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4">
                                 Audio
                             </p>
-                            <h2 className="font-serif text-3xl md:text-4xl leading-tight text-white">
+                            <h2 className="font-serif text-3xl md:text-4xl leading-tight text-foreground">
                                 Speaker System
                             </h2>
                         </div>
                         <SpecTable
                             specs={speakerSpecs}
                             note="Specifications apply to the current prototype/demo version and may be further optimized for mass production."
+                            light
                         />
                     </div>
                 </section>
