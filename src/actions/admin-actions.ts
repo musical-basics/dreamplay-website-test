@@ -517,17 +517,75 @@ export async function getPopupABResults() {
             cFrom += cLimit
         }
 
-        // Group by bucket
+        // Collect unique qualifying IPs to compute time-on-site
+        const allQualifiedIps = new Set(qualifyLogs.map((l: any) => l.ip_address))
+        const ipTimeBounds: Record<string, { first: string; last: string }> = {}
+
+        // Fetch all events for qualifying IPs (batch by IP)
+        const ipArray = Array.from(allQualifiedIps)
+        if (ipArray.length > 0) {
+            // Fetch in batches of 50 IPs
+            for (let b = 0; b < ipArray.length; b += 50) {
+                const batch = ipArray.slice(b, b + 50)
+                const { data: events } = await supabase
+                    .from('analytics_logs')
+                    .select('ip_address, created_at')
+                    .in('ip_address', batch)
+                    .order('created_at', { ascending: true })
+
+                if (events) {
+                    for (const ev of events) {
+                        if (!ipTimeBounds[ev.ip_address]) {
+                            ipTimeBounds[ev.ip_address] = { first: ev.created_at, last: ev.created_at }
+                        } else {
+                            ipTimeBounds[ev.ip_address].last = ev.created_at
+                        }
+                    }
+                }
+            }
+        }
+
+        // Convert IPs to a set for O(1) lookups
+        const convertedIpsByBucket: Record<string, Set<string>> = { control: new Set(), variant: new Set() }
+        for (const l of convertLogs) {
+            const b = l.metadata?.bucket
+            if (b && convertedIpsByBucket[b]) convertedIpsByBucket[b].add(l.ip_address)
+        }
+
+        // Build sessions list (dedupe by IP+bucket, keep earliest qualify event)
+        const sessionMap = new Map<string, any>()
+        for (const l of qualifyLogs) {
+            const bucket = l.metadata?.bucket || 'control'
+            const key = `${l.ip_address}__${bucket}`
+            if (!sessionMap.has(key) || new Date(l.created_at) < new Date(sessionMap.get(key).created_at)) {
+                sessionMap.set(key, { ...l, bucket })
+            }
+        }
+
+        const sessions = Array.from(sessionMap.values()).map((l: any) => {
+            const bucket = l.bucket
+            const bounds = ipTimeBounds[l.ip_address]
+            let timeOnSiteSec = 10 // minimum since they qualified
+            if (bounds) {
+                const diff = (new Date(bounds.last).getTime() - new Date(bounds.first).getTime()) / 1000
+                if (diff > timeOnSiteSec) timeOnSiteSec = Math.round(diff)
+            }
+            return {
+                date: l.created_at,
+                ip: l.ip_address,
+                bucket,
+                timeOnSiteSec,
+                converted: convertedIpsByBucket[bucket]?.has(l.ip_address) || false,
+            }
+        }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+        // Build aggregate summary
         const buckets = ['control', 'variant']
-        return buckets.map(bucket => {
+        const summary = buckets.map(bucket => {
             const bucketQualify = qualifyLogs.filter((l: any) => l.metadata?.bucket === bucket)
             const uniqueQualifiedIps = new Set(bucketQualify.map((l: any) => l.ip_address))
-
-            const bucketConvert = convertLogs.filter((l: any) => l.metadata?.bucket === bucket)
-            const uniqueConvertedIps = new Set(bucketConvert.map((l: any) => l.ip_address))
-
             const qualified = uniqueQualifiedIps.size
-            const conversions = uniqueConvertedIps.size
+            const conversions = convertedIpsByBucket[bucket].size
 
             return {
                 variant: bucket,
@@ -536,8 +594,10 @@ export async function getPopupABResults() {
                 conversionRate: qualified > 0 ? (conversions / qualified) * 100 : 0,
             }
         })
+
+        return { summary, sessions }
     } catch (error) {
         console.error('Failed to get popup AB results:', error)
-        return []
+        return { summary: [], sessions: [] }
     }
 }

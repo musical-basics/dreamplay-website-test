@@ -44,7 +44,7 @@ export default function AdminPage() {
     })
     const [abSaving, setAbSaving] = useState(false)
     const [abMessage, setAbMessage] = useState('')
-    const [abResults, setAbResults] = useState<{ variant: string; qualified: number; conversions: number; conversionRate: number }[]>([])
+    const [abResults, setAbResults] = useState<{ summary: { variant: string; qualified: number; conversions: number; conversionRate: number }[]; sessions: { date: string; ip: string; bucket: string; timeOnSiteSec: number; converted: boolean }[] }>({ summary: [], sessions: [] })
     const [abResultsLoading, setAbResultsLoading] = useState(false)
 
     const [loading, setLoading] = useState(true)
@@ -783,58 +783,100 @@ export default function AdminPage() {
                 }
 
                 {/* ─── TAB 5: A/B RESULTS ─── */}
-                {
-                    activeTab === 'ab-results' && (
-                        <div className="space-y-6">
-                            <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl">
-                                <div className="flex items-center justify-between mb-4">
-                                    <h3 className="font-medium text-white">Popup A/B Test Results</h3>
-                                    <button
-                                        onClick={async () => {
-                                            setAbResultsLoading(true)
-                                            const data = await getPopupABResults()
-                                            setAbResults(data)
-                                            setAbResultsLoading(false)
-                                        }}
-                                        disabled={abResultsLoading}
-                                        className="bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors"
-                                    >
-                                        {abResultsLoading ? 'Loading...' : 'Refresh'}
-                                    </button>
+                {activeTab === 'ab-results' && (
+                    <div className="space-y-6">
+                        <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl">
+                            <div className="flex items-center justify-between mb-4">
+                                <h3 className="font-medium text-white">Popup A/B Test Results</h3>
+                                <button
+                                    onClick={async () => {
+                                        setAbResultsLoading(true)
+                                        const data = await getPopupABResults()
+                                        setAbResults(data)
+                                        setAbResultsLoading(false)
+                                    }}
+                                    disabled={abResultsLoading}
+                                    className="bg-blue-600 hover:bg-blue-500 disabled:bg-blue-800 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors"
+                                >
+                                    {abResultsLoading ? 'Loading...' : 'Refresh'}
+                                </button>
+                            </div>
+
+                            {abResults.summary.length === 0 && !abResultsLoading && (
+                                <p className="text-neutral-500 text-sm">No data yet. Click Refresh to load results.</p>
+                            )}
+
+                            {/* Summary Table */}
+                            {abResults.summary.length > 0 && (
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-sm">
+                                        <thead>
+                                            <tr className="border-b border-neutral-700 text-neutral-400">
+                                                <th className="text-left py-3 px-2 font-medium">Variant</th>
+                                                <th className="text-right py-3 px-2 font-medium">Qualified (10s+)</th>
+                                                <th className="text-right py-3 px-2 font-medium">Conversions</th>
+                                                <th className="text-right py-3 px-2 font-medium">Conv. Rate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {abResults.summary.map(row => (
+                                                <tr key={row.variant} className="border-b border-neutral-800">
+                                                    <td className="py-3 px-2 text-white capitalize font-medium">{row.variant}</td>
+                                                    <td className="py-3 px-2 text-right text-white">{row.qualified}</td>
+                                                    <td className="py-3 px-2 text-right text-white">{row.conversions}</td>
+                                                    <td className="py-3 px-2 text-right font-mono text-green-400">{row.conversionRate.toFixed(1)}%</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
                                 </div>
+                            )}
+                        </div>
 
-                                {abResults.length === 0 && !abResultsLoading && (
-                                    <p className="text-neutral-500 text-sm">No data yet. Click Refresh to load results.</p>
-                                )}
-
-                                {abResults.length > 0 && (
+                        {/* Per-Variant Session Breakdown */}
+                        {abResults.sessions.length > 0 && (['control', 'variant'] as const).map(bucket => {
+                            const bucketSessions = abResults.sessions.filter(s => s.bucket === bucket)
+                            if (bucketSessions.length === 0) return null
+                            return (
+                                <div key={bucket} className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl">
+                                    <h3 className="font-medium text-white mb-4 capitalize">{bucket} Sessions <span className="text-neutral-500 font-normal text-sm">({bucketSessions.length})</span></h3>
                                     <div className="overflow-x-auto">
                                         <table className="w-full text-sm">
                                             <thead>
                                                 <tr className="border-b border-neutral-700 text-neutral-400">
-                                                    <th className="text-left py-3 px-2 font-medium">Variant</th>
-                                                    <th className="text-right py-3 px-2 font-medium">Qualified (10s+)</th>
-                                                    <th className="text-right py-3 px-2 font-medium">Conversions</th>
-                                                    <th className="text-right py-3 px-2 font-medium">Conv. Rate</th>
+                                                    <th className="text-left py-3 px-2 font-medium">Date</th>
+                                                    <th className="text-left py-3 px-2 font-medium">IP Address</th>
+                                                    <th className="text-right py-3 px-2 font-medium">Time on Site</th>
+                                                    <th className="text-right py-3 px-2 font-medium">Converted</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {abResults.map(row => (
-                                                    <tr key={row.variant} className="border-b border-neutral-800">
-                                                        <td className="py-3 px-2 text-white capitalize font-medium">{row.variant}</td>
-                                                        <td className="py-3 px-2 text-right text-white">{row.qualified}</td>
-                                                        <td className="py-3 px-2 text-right text-white">{row.conversions}</td>
-                                                        <td className="py-3 px-2 text-right font-mono text-green-400">{row.conversionRate.toFixed(1)}%</td>
-                                                    </tr>
-                                                ))}
+                                                {bucketSessions.map((s, i) => {
+                                                    const mins = Math.floor(s.timeOnSiteSec / 60)
+                                                    const secs = s.timeOnSiteSec % 60
+                                                    const timeStr = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`
+                                                    return (
+                                                        <tr key={i} className="border-b border-neutral-800">
+                                                            <td className="py-3 px-2 text-white text-xs">{new Date(s.date).toLocaleString()}</td>
+                                                            <td className="py-3 px-2 text-white font-mono text-xs">{s.ip}</td>
+                                                            <td className="py-3 px-2 text-right text-white">{timeStr}</td>
+                                                            <td className="py-3 px-2 text-right">
+                                                                {s.converted
+                                                                    ? <span className="bg-green-500/20 text-green-400 text-xs font-medium px-2 py-0.5 rounded">Yes</span>
+                                                                    : <span className="bg-neutral-800 text-neutral-500 text-xs font-medium px-2 py-0.5 rounded">No</span>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })}
                                             </tbody>
                                         </table>
                                     </div>
-                                )}
-                            </div>
-                        </div>
-                    )
-                }
+                                </div>
+                            )
+                        })}
+                    </div>
+                )}
 
             </div >
         </div >
