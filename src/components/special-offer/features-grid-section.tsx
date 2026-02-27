@@ -1,6 +1,3 @@
-"use client"
-import { useEffect, useRef, useState } from "react"
-
 const MetronomeIcon = ({ className }: { className?: string }) => (
     <svg
         className={className}
@@ -169,72 +166,45 @@ const LedLightIcon = ({ className }: { className?: string }) => (
 )
 
 const featuresGrid = [
-    { icon: <MetronomeIcon className="w-5 h-5 md:w-7 md:h-7" />, label: "Built-in Metronome" },
-    { icon: <RecordIcon className="w-5 h-5 md:w-7 md:h-7" />, label: "Recording & Playback" },
-    { icon: <PolyphonyIcon className="w-5 h-5 md:w-7 md:h-7" />, label: "256-note Polyphony" },
-    { icon: <DualSensorIcon className="w-5 h-5 md:w-7 md:h-7" />, label: "Dual-Sensor Velocity Keys" },
-    { icon: <MidiIcon className="w-5 h-5 md:w-7 md:h-7" />, label: "MIDI Sequencing" },
-    { icon: <PresetsIcon className="w-5 h-5 md:w-7 md:h-7" />, label: "18 Essential Presets" },
-    { icon: <LcdIcon className="w-5 h-5 md:w-7 md:h-7" />, label: "Backlit LCD Screen" },
-    { icon: <GrandPianoIcon className="w-5 h-5 md:w-7 md:h-7" />, label: "Grand Piano Sound" },
-    { icon: <HeadphoneAudioIcon className="w-5 h-5 md:w-7 md:h-7" />, label: "Hi-Fi Speakers & Audio" },
-    { icon: <WeightedKeysIcon className="w-5 h-5 md:w-7 md:h-7" />, label: "88 Weighted Keys" },
-    { icon: <BluetoothIcon className="w-5 h-5 md:w-7 md:h-7" />, label: "Bluetooth Connectivity" },
-    { icon: <LedLightIcon className="w-5 h-5 md:w-7 md:h-7" />, label: "LED Lighting For Every Key" },
+    { icon: <MetronomeIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "Built-in Metronome" },
+    { icon: <RecordIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "Recording & Playback" },
+    { icon: <PolyphonyIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "256-note Polyphony" },
+    { icon: <DualSensorIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "Dual-Sensor Velocity Keys" },
+    { icon: <MidiIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "MIDI Sequencing" },
+    { icon: <PresetsIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "18 Essential Presets" },
+    { icon: <LcdIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "Backlit LCD Screen" },
+    { icon: <GrandPianoIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "Grand Piano Sound" },
+    { icon: <HeadphoneAudioIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "Hi-Fi Speakers & Audio" },
+    { icon: <WeightedKeysIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "88 Weighted Keys" },
+    { icon: <BluetoothIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "Bluetooth Connectivity" },
+    { icon: <LedLightIcon className="w-5 h-5 md:w-6 md:h-6" />, label: "LED Lighting For Every Key" },
 ]
 
 export function FeaturesGridSection() {
-    const [isVisible, setIsVisible] = useState(false)
-    const sectionRef = useRef<HTMLElement>(null)
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true)
-                }
-            },
-            { threshold: 0.2 },
-        )
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current)
-        }
-
-        return () => observer.disconnect()
-    }, [])
-
     return (
-        <section
-            ref={sectionRef}
-            className="py-20 md:py-28 lg:py-36 bg-neutral-50 min-h-screen flex flex-col justify-center"
-        >
-            <div className="container mx-auto px-4">
-                <div
-                    className={`text-center mb-12 md:mb-16 lg:mb-20 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                >
-                    <p className="text-neutral-500 text-sm md:text-base uppercase tracking-widest mb-3 md:mb-4">
+        <section className="relative overflow-hidden bg-neutral-950 border-t border-neutral-800">
+            <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
+                <div className="mb-16 max-w-2xl">
+                    <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400">
                         Professional Grade
                     </p>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-neutral-900 leading-tight">
+                    <h2 className="mt-4 font-serif text-3xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
                         All the Features You Need
                     </h2>
                 </div>
 
-                <div className="max-w-5xl mx-auto">
-                    <div className="grid grid-cols-3 md:grid-cols-4 gap-8 md:gap-12 lg:gap-16">
-                        {featuresGrid.map((feature, index) => (
-                            <div
-                                key={index}
-                                className={`flex flex-col items-center text-center transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                                    }`}
-                                style={{ transitionDelay: `${100 + index * 40}ms` }}
-                            >
-                                <div className="text-neutral-700 mb-3 md:mb-4 [&>svg]:w-8 [&>svg]:h-8 md:[&>svg]:w-10 md:[&>svg]:h-10">{feature.icon}</div>
-                                <p className="text-neutral-600 text-xs md:text-base lg:text-lg leading-tight px-1">{feature.label}</p>
-                            </div>
-                        ))}
-                    </div>
+                <div className="grid grid-cols-3 gap-px bg-neutral-800 md:grid-cols-4">
+                    {featuresGrid.map((feature, index) => (
+                        <div
+                            key={index}
+                            className="flex flex-col items-center gap-3 bg-neutral-950 p-6 md:p-8 lg:p-10 text-center"
+                        >
+                            <div className="text-white/70 [&>svg]:w-6 [&>svg]:h-6 md:[&>svg]:w-7 md:[&>svg]:h-7">{feature.icon}</div>
+                            <p className="font-sans text-xs text-neutral-400 leading-tight md:text-sm">
+                                {feature.label}
+                            </p>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>

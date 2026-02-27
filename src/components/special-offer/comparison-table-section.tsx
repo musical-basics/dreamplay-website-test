@@ -1,17 +1,16 @@
-"use client"
-import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 
 const Check = () => (
-    <div className="w-8 h-8 rounded-full bg-neutral-900 flex items-center justify-center text-white">
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center">
+        <svg className="w-4 h-4 text-neutral-950" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
         </svg>
     </div>
 )
 
 const Cross = () => (
-    <svg className="w-6 h-6 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className="w-5 h-5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
     </svg>
 )
@@ -32,75 +31,57 @@ const comparisonRows: ComparisonRow[] = [
 ]
 
 export function ComparisonTableSection() {
-    const [isVisible, setIsVisible] = useState(false)
-    const sectionRef = useRef<HTMLElement>(null)
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true)
-                }
-            },
-            { threshold: 0.2 },
-        )
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current)
-        }
-
-        return () => observer.disconnect()
-    }, [])
-
     return (
-        <section ref={sectionRef} className="py-20 md:py-28 bg-neutral-50">
-            <div className="container mx-auto px-4 md:px-6">
-                <div
-                    className={`text-center max-w-3xl mx-auto mb-12 md:mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                >
-                    <p className="text-sm font-semibold text-neutral-500 uppercase tracking-widest mb-3 md:mb-4">
-                        Did you know?
+        <section className="relative overflow-hidden bg-neutral-950 border-t border-neutral-800">
+            <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
+                <div className="mb-16 max-w-2xl">
+                    <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400">
+                        Did You Know?
                     </p>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-neutral-900 leading-tight mb-4 md:mb-6">
+                    <h2 className="mt-4 font-serif text-3xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
                         Why Pay Double for Less?
                     </h2>
-                    <p className="text-base md:text-lg text-neutral-500 leading-relaxed">
+                    <p className="mt-4 font-sans text-sm leading-relaxed text-neutral-400 md:text-base">
                         Compare our keyboard to the Yamaha P-125 and see why musicians are making the switch.
                     </p>
                 </div>
 
-                <div
-                    className={`max-w-4xl mx-auto bg-white rounded-2xl md:rounded-3xl shadow-xl overflow-hidden transition-all duration-700 delay-200 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
-                >
+                {/* Comparison table */}
+                <div className="max-w-4xl">
                     {/* Header */}
-                    <div className="grid grid-cols-3 bg-neutral-900 text-white text-sm md:text-lg">
-                        <div className="p-4 md:p-6 lg:p-8 font-medium">Feature</div>
-                        <div className="p-4 md:p-6 lg:p-8 text-center font-bold">DreamPlay</div>
-                        <div className="p-4 md:p-6 lg:p-8 text-center text-neutral-400">Yamaha P-125</div>
+                    <div className="grid grid-cols-3 border-b border-neutral-800 border-t">
+                        <div className="py-4 md:py-5 font-sans text-xs uppercase tracking-[0.2em] text-neutral-400 md:text-sm">
+                            Feature
+                        </div>
+                        <div className="py-4 md:py-5 text-center font-sans text-xs uppercase tracking-[0.2em] text-white font-medium md:text-sm">
+                            DreamPlay
+                        </div>
+                        <div className="py-4 md:py-5 text-center font-sans text-xs uppercase tracking-[0.2em] text-neutral-600 md:text-sm">
+                            Yamaha P-125
+                        </div>
                     </div>
 
                     {/* Rows */}
-                    {comparisonRows.map((row, index) => (
+                    {comparisonRows.map((row) => (
                         <div
                             key={row.feature}
-                            className={`grid grid-cols-3 hover:bg-neutral-50 transition-colors ${index < comparisonRows.length - 1 ? "border-b border-neutral-100" : ""
-                                }`}
+                            className="grid grid-cols-3 border-b border-neutral-800"
                         >
-                            <div className="p-4 md:p-6 lg:p-8 font-medium text-sm md:text-base text-neutral-800">
+                            <div className="py-5 md:py-6 font-sans text-sm text-neutral-300 md:text-base">
                                 {row.feature}
                             </div>
-                            <div className="p-4 md:p-6 lg:p-8 text-center flex justify-center items-center">
+                            <div className="py-5 md:py-6 text-center flex justify-center items-center">
                                 {row.dreamplay === "check" ? (
                                     <Check />
                                 ) : (
-                                    <span className="font-bold text-sm md:text-base lg:text-xl">{row.dreamplay}</span>
+                                    <span className="font-sans text-sm font-medium text-white md:text-base">{row.dreamplay}</span>
                                 )}
                             </div>
-                            <div className="p-4 md:p-6 lg:p-8 text-center flex justify-center items-center">
+                            <div className="py-5 md:py-6 text-center flex justify-center items-center">
                                 {row.competitor === "cross" ? (
                                     <Cross />
                                 ) : (
-                                    <span className="text-neutral-400 text-sm md:text-base">{row.competitor}</span>
+                                    <span className="font-sans text-sm text-neutral-600 md:text-base">{row.competitor}</span>
                                 )}
                             </div>
                         </div>
@@ -108,17 +89,13 @@ export function ComparisonTableSection() {
                 </div>
 
                 {/* CTA */}
-                <div
-                    className={`text-center mt-10 md:mt-12 transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                >
+                <div className="mt-12 md:mt-16">
                     <Link
                         href="/customize"
-                        className="inline-flex items-center gap-2 bg-neutral-900 text-white px-8 py-4 rounded-full font-semibold text-sm md:text-base hover:scale-105 hover:bg-neutral-800 transition-all shadow-xl"
+                        className="group inline-flex items-center justify-center gap-2 border border-white bg-white px-8 py-4 font-sans text-xs uppercase tracking-widest text-neutral-950 transition-colors hover:bg-white/90"
                     >
                         Get Premium Quality for Less
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
+                        <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
                     </Link>
                 </div>
             </div>

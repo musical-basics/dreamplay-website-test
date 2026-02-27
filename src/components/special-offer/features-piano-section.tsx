@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect, useRef } from "react"
+import { useState } from "react"
 import { Bluetooth, Usb, Volume2, Music, Headphones, Piano } from "lucide-react"
 
 type FeatureKey = "bluetooth" | "usb" | "presets" | "speakers" | "headphones" | "keys" | null
@@ -45,65 +45,45 @@ const featureData = {
 
 export function FeaturesPianoSection() {
     const [activeFeature, setActiveFeature] = useState<FeatureKey>(null)
-    const [isVisible, setIsVisible] = useState(false)
-    const sectionRef = useRef<HTMLElement>(null)
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true)
-                }
-            },
-            { threshold: 0.2 },
-        )
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current)
-        }
-
-        return () => observer.disconnect()
-    }, [])
 
     const handleFeatureInteraction = (key: FeatureKey) => {
         setActiveFeature((prev) => (prev === key ? null : key))
     }
 
     return (
-        <section ref={sectionRef} className="py-16 md:py-24 lg:py-32 bg-white min-h-screen flex flex-col justify-center">
-            <div className="container mx-auto px-4 md:px-6">
-                <div
-                    className={`text-center mb-6 md:mb-10 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                >
-                    <p className="text-neutral-500 text-xs md:text-sm uppercase tracking-widest mb-2 md:mb-3">Our Features</p>
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-neutral-900 leading-tight">
+        <section className="relative overflow-hidden bg-neutral-950 border-t border-neutral-800">
+            <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
+                <div className="mb-12 md:mb-16 max-w-2xl">
+                    <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400">
+                        Our Features
+                    </p>
+                    <h2 className="mt-4 font-serif text-3xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
                         Everything You Need, Built In
                     </h2>
-                    <p className="text-neutral-400 text-xs md:text-sm mt-2 md:mt-3">
+                    <p className="mt-4 font-sans text-sm text-neutral-500 md:text-base">
                         <span className="hidden md:inline">Hover over</span>
                         <span className="md:hidden">Tap</span> a feature to learn more
                     </p>
                 </div>
 
-                <div
-                    className={`relative max-w-4xl mx-auto transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                >
-                    <div className="grid grid-cols-3 gap-2 sm:gap-2 md:flex md:justify-center md:gap-3 mb-4 md:mb-6">
+                <div className="relative max-w-4xl">
+                    {/* Feature buttons */}
+                    <div className="grid grid-cols-3 gap-2 sm:gap-2 md:flex md:flex-wrap md:gap-3 mb-6 md:mb-8">
                         {(Object.keys(featureData) as FeatureKey[]).filter(Boolean).map((key) => {
                             const feature = featureData[key!]
                             return (
                                 <button
                                     key={key}
-                                    className={`flex items-center justify-center gap-1 md:gap-2 rounded-full px-2.5 py-1.5 md:px-4 md:py-2 transition-shadow duration-300 ease-out ${activeFeature === key
-                                        ? "bg-gradient-to-r from-sky-400 to-blue-500 text-white shadow-lg"
-                                        : "bg-white text-neutral-600 shadow-md hover:shadow-lg hover:text-sky-500"
-                                        } border border-neutral-200/60`}
+                                    className={`flex items-center justify-center gap-1.5 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 transition-all duration-200 font-sans text-[9px] sm:text-[10px] md:text-xs uppercase tracking-[0.1em] ${activeFeature === key
+                                        ? "bg-white text-neutral-950 border border-white"
+                                        : "bg-transparent text-neutral-400 border border-neutral-700 hover:border-neutral-400 hover:text-white"
+                                        }`}
                                     onClick={() => handleFeatureInteraction(key)}
                                     onMouseEnter={() => setActiveFeature(key)}
                                     onMouseLeave={() => setActiveFeature(null)}
                                 >
-                                    <span className="flex-shrink-0 [&>svg]:w-4 [&>svg]:h-4 md:[&>svg]:w-5 md:[&>svg]:h-5">{feature.icon}</span>
-                                    <span className="text-[9px] sm:text-[10px] md:text-sm font-medium whitespace-nowrap">
+                                    <span className="flex-shrink-0 [&>svg]:w-3.5 [&>svg]:h-3.5 md:[&>svg]:w-4 md:[&>svg]:h-4">{feature.icon}</span>
+                                    <span className="whitespace-nowrap font-medium">
                                         {feature.label}
                                     </span>
                                 </button>
@@ -111,7 +91,8 @@ export function FeaturesPianoSection() {
                         })}
                     </div>
 
-                    <div className="relative rounded-md md:rounded-xl overflow-hidden bg-neutral-100">
+                    {/* Piano image with overlay */}
+                    <div className="relative overflow-hidden border border-neutral-800">
                         <img
                             src="/images/Main%20Product%20Grey%20Background.JPG"
                             alt="DreamPlay One Features"
@@ -129,15 +110,16 @@ export function FeaturesPianoSection() {
                                     y1="0"
                                     x2={Number.parseFloat(featureData[activeFeature].position.left)}
                                     y2={Number.parseFloat(featureData[activeFeature].position.top)}
-                                    stroke="#171717"
-                                    strokeWidth="1.5"
+                                    stroke="#ffffff"
+                                    strokeWidth="1"
                                     vectorEffect="non-scaling-stroke"
+                                    opacity="0.4"
                                 />
                                 <circle
                                     cx={Number.parseFloat(featureData[activeFeature].position.left)}
                                     cy={Number.parseFloat(featureData[activeFeature].position.top)}
                                     r="0.8"
-                                    fill="#171717"
+                                    fill="#ffffff"
                                 />
                             </svg>
                         )}
@@ -150,24 +132,25 @@ export function FeaturesPianoSection() {
                                     top: featureData[activeFeature].position.top,
                                 }}
                             >
-                                <div className="absolute inset-0 bg-sky-400 rounded-full animate-ping opacity-50" />
-                                <div className="absolute inset-0 bg-gradient-to-r from-sky-400 to-blue-500 rounded-full" />
+                                <div className="absolute inset-0 bg-white rounded-full animate-ping opacity-30" />
+                                <div className="absolute inset-0 bg-white rounded-full" />
                             </div>
                         )}
                     </div>
 
-                    <div className="h-[80px] md:h-[100px] mt-3 md:mt-6 flex items-start justify-center">
+                    {/* Description area */}
+                    <div className="h-[80px] md:h-[100px] mt-4 md:mt-6 flex items-start justify-start">
                         {activeFeature ? (
-                            <div className="text-center max-w-lg px-4 md:px-6">
-                                <h3 className="font-medium bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent text-sm md:text-base mb-1">
+                            <div className="max-w-lg">
+                                <h3 className="font-serif text-base text-white md:text-lg mb-1">
                                     {featureData[activeFeature].label}
                                 </h3>
-                                <p className="text-neutral-500 text-xs md:text-sm leading-relaxed">
+                                <p className="font-sans text-sm text-neutral-400 leading-relaxed">
                                     {featureData[activeFeature].description}
                                 </p>
                             </div>
                         ) : (
-                            <p className="text-neutral-300 text-xs md:text-sm">Select a feature above</p>
+                            <p className="font-sans text-xs text-neutral-500 md:text-sm">Select a feature above</p>
                         )}
                     </div>
                 </div>
