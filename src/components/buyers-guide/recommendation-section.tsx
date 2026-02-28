@@ -164,24 +164,24 @@ export function RecommendationSection({ profile }: RecommendationSectionProps) {
     const isChild = profile.demographic === "child"
 
     return (
-        <section id="recommendation" className="py-20 px-6 bg-foreground text-background">
+        <section id="recommendation" className="py-20 px-6 bg-black text-white">
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-background/10 text-background/80 text-sm font-medium">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-white/10 text-white/80 text-sm font-medium">
                         <Sparkles className="w-4 h-4" />
                         Your Personalized Recommendation
                     </div>
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mb-4">
                         We Recommend the {recommendation.primary}
                     </h2>
-                    <p className="text-lg text-background/70 max-w-2xl mx-auto">
+                    <p className="text-lg text-white/70 max-w-2xl mx-auto">
                         {recommendation.primaryDescription}
                     </p>
                 </div>
 
                 {/* Primary Recommendation Card */}
-                <div className="bg-background text-foreground rounded-3xl p-8 md:p-12 mb-8">
+                <div className="bg-white text-gray-900 rounded-3xl p-8 md:p-12 mb-8">
                     <div className="relative w-full aspect-[16/7] mb-8 rounded-2xl overflow-hidden bg-muted">
                         <Image
                             src={getProductImage(recommendation.primary)}
@@ -197,7 +197,7 @@ export function RecommendationSection({ profile }: RecommendationSectionProps) {
                                 <Check className="w-4 h-4" />
                                 Best Match
                             </div>
-                            <h3 className="text-3xl font-bold text-foreground mb-2">
+                            <h3 className="text-3xl font-bold text-gray-900 mb-2">
                                 DreamPlay {recommendation.primary}
                             </h3>
                             <p className="text-muted-foreground mb-6">{recommendation.primaryName}</p>
@@ -208,7 +208,7 @@ export function RecommendationSection({ profile }: RecommendationSectionProps) {
                                         <div className="w-5 h-5 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
                                             <Check className="w-3 h-3 text-accent" />
                                         </div>
-                                        <span className="text-foreground">{feature}</span>
+                                        <span className="text-gray-900">{feature}</span>
                                     </li>
                                 ))}
                             </ul>
@@ -232,7 +232,7 @@ export function RecommendationSection({ profile }: RecommendationSectionProps) {
                         <div className="w-full lg:w-auto lg:min-w-[280px] p-6 rounded-2xl bg-muted">
                             <p className="text-sm text-muted-foreground mb-1">Founder&apos;s Price</p>
                             <div className="flex items-baseline gap-2 mb-2">
-                                <span className="text-4xl font-bold text-foreground">$549</span>
+                                <span className="text-4xl font-bold text-gray-900">$549</span>
                                 <span className="text-muted-foreground line-through">$1,099</span>
                             </div>
                             <p className="text-sm text-accent font-medium mb-4">Save $550 today</p>
@@ -257,14 +257,14 @@ export function RecommendationSection({ profile }: RecommendationSectionProps) {
 
                 {/* Child Upgrade Path Banner */}
                 {isChild && (
-                    <div className="bg-background/10 rounded-2xl p-6 mb-8 border border-background/20">
+                    <div className="bg-white/10 rounded-2xl p-6 mb-8 border border-white/20">
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-background/20 flex items-center justify-center flex-shrink-0">
-                                <RefreshCw className="w-6 h-6 text-background" />
+                            <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+                                <RefreshCw className="w-6 h-6 text-white" />
                             </div>
                             <div>
-                                <h4 className="text-lg font-semibold text-background mb-1">Growth-Friendly Upgrade Path</h4>
-                                <p className="text-background/70 text-sm">
+                                <h4 className="text-lg font-semibold text-white mb-1">Growth-Friendly Upgrade Path</h4>
+                                <p className="text-white/70 text-sm">
                                     When your child outgrows the DS5.5, exchange it for a DS6.0 and only pay shipping costs.
                                     We want their keyboard to grow with them.
                                 </p>
@@ -275,8 +275,8 @@ export function RecommendationSection({ profile }: RecommendationSectionProps) {
 
                 {/* Alternative Recommendations */}
                 <div className="grid md:grid-cols-2 gap-6">
-                    <div className="bg-background/10 rounded-2xl p-6 border border-background/20">
-                        <div className="relative w-full aspect-[16/9] mb-4 rounded-xl overflow-hidden bg-background/5">
+                    <div className="bg-white/10 rounded-2xl p-6 border border-white/20">
+                        <div className="relative w-full aspect-[16/9] mb-4 rounded-xl overflow-hidden bg-white/5">
                             <Image
                                 src={getProductImage(recommendation.alternative1.model)}
                                 alt={recommendation.alternative1.model}
@@ -284,12 +284,12 @@ export function RecommendationSection({ profile }: RecommendationSectionProps) {
                                 className="object-contain p-3"
                             />
                         </div>
-                        <p className="text-sm text-background/60 mb-2">Also Consider</p>
-                        <h4 className="text-xl font-semibold text-background mb-1">
+                        <p className="text-sm text-white/60 mb-2">Also Consider</p>
+                        <h4 className="text-xl font-semibold text-white mb-1">
                             {recommendation.alternative1.model}
                         </h4>
-                        <p className="text-sm text-background/60 mb-3">{recommendation.alternative1.name}</p>
-                        <p className="text-background/80 text-sm mb-4">{recommendation.alternative1.reason}</p>
+                        <p className="text-sm text-white/60 mb-3">{recommendation.alternative1.name}</p>
+                        <p className="text-white/80 text-sm mb-4">{recommendation.alternative1.reason}</p>
                         <Button variant="secondary" size="sm" className="rounded-full" asChild>
                             <Link href="/product-information">
                                 Learn More
@@ -299,7 +299,7 @@ export function RecommendationSection({ profile }: RecommendationSectionProps) {
 
                     <div className={cn(
                         "rounded-2xl p-6 border",
-                        "bg-background text-foreground border-background"
+                        "bg-white text-black border-white"
                     )}>
                         <div className="relative w-full aspect-[16/9] mb-4 rounded-xl overflow-hidden bg-muted">
                             <Image
@@ -330,8 +330,8 @@ export function RecommendationSection({ profile }: RecommendationSectionProps) {
                 </div>
 
                 {/* Confidence Message */}
-                <div className="text-center mt-16 pt-8 border-t border-background/20">
-                    <p className="text-background/60 text-sm max-w-xl mx-auto">
+                <div className="text-center mt-16 pt-8 border-t border-white/20">
+                    <p className="text-white/60 text-sm max-w-xl mx-auto">
                         Not 100% sure? No problem. We offer hassle-free exchanges and a flexible return policy.
                         Your funds are held in escrow and fully refundable until your keyboard ships.
                     </p>
