@@ -67,7 +67,19 @@ export default function BuyersGuidePage() {
     const completedStep = getCompletedStep()
 
     return (
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-background buyers-guide-light" style={{
+            '--background': '0 0% 100%',
+            '--foreground': '0 0% 9%',
+            '--card': '0 0% 100%',
+            '--card-foreground': '0 0% 9%',
+            '--muted': '220 10% 93%',
+            '--muted-foreground': '0 0% 45%',
+            '--border': '0 0% 90%',
+            '--accent': '220 50% 50%',
+            '--accent-foreground': '0 0% 98%',
+            '--primary': '0 0% 9%',
+            '--primary-foreground': '0 0% 98%',
+        } as React.CSSProperties}>
             <SpecialOfferHeader forceOpaque />
 
             {/* Fixed Journey Timeline - far right (desktop only) */}

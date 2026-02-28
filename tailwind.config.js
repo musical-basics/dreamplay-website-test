@@ -7,8 +7,40 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                background: "#000000",
-                foreground: "#ffffff",
+                background: "hsl(var(--background))",
+                foreground: "hsl(var(--foreground))",
+                card: {
+                    DEFAULT: "hsl(var(--card))",
+                    foreground: "hsl(var(--card-foreground))",
+                },
+                popover: {
+                    DEFAULT: "hsl(var(--popover))",
+                    foreground: "hsl(var(--popover-foreground))",
+                },
+                primary: {
+                    DEFAULT: "hsl(var(--primary))",
+                    foreground: "hsl(var(--primary-foreground))",
+                },
+                secondary: {
+                    DEFAULT: "hsl(var(--secondary))",
+                    foreground: "hsl(var(--secondary-foreground))",
+                },
+                muted: {
+                    DEFAULT: "hsl(var(--muted))",
+                    foreground: "hsl(var(--muted-foreground))",
+                },
+                accent: {
+                    DEFAULT: "hsl(var(--accent))",
+                    dim: "#2563eb33",
+                    foreground: "hsl(var(--accent-foreground))",
+                },
+                destructive: {
+                    DEFAULT: "hsl(var(--destructive))",
+                    foreground: "hsl(var(--destructive-foreground))",
+                },
+                border: "hsl(var(--border))",
+                input: "hsl(var(--input))",
+                ring: "hsl(var(--ring))",
 
                 // -- Brand Colors (Used in Home/Holiday Sale) --
                 brand: {
@@ -16,26 +48,16 @@ module.exports = {
                     foreground: "#ffffff",
                 },
 
-                // -- Our Story Specific Colors (Restored) --
-                accent: {
-                    DEFAULT: "#2563eb", // Blue accent
-                    dim: "#2563eb33",
-                    foreground: "#ffffff",
-                },
-                "dark-section": "#0c0a09", // The dark background for "The Struggle"
+                // -- Our Story Specific Colors --
+                "dark-section": "#0c0a09",
                 "dark-text": "#f5f5f4",
-                muted: {
-                    DEFAULT: "#f5f5f4",
-                    foreground: "#78716c",
-                },
-                secondary: "#f5f5f4",
 
                 // -- How It Works Specific Colors --
                 "midnight-box": "#080a0f",
                 "glass-card": "rgba(30, 41, 59, 0.4)",
-                "zone-a": "#f43f5e", // Rose
-                "zone-b": "#f59e0b", // Amber
-                "zone-c": "#2dd4bf", // Teal
+                "zone-a": "#f43f5e",
+                "zone-b": "#f59e0b",
+                "zone-c": "#2dd4bf",
             },
             fontFamily: {
                 sans: ["Manrope", "Inter", "sans-serif"],
