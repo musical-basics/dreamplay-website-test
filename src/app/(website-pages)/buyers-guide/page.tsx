@@ -68,7 +68,7 @@ export default function BuyersGuidePage() {
 
     return (
         <div className="min-h-screen bg-background">
-            <SpecialOfferHeader />
+            <SpecialOfferHeader forceOpaque />
 
             {/* Fixed Journey Timeline - far right (desktop only) */}
             {currentStep >= 1 && (
@@ -98,7 +98,7 @@ export default function BuyersGuidePage() {
                                             className={cn(
                                                 "w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-semibold transition-all",
                                                 isCompleted
-                                                    ? "bg-foreground text-background"
+                                                    ? "bg-black text-white"
                                                     : isCurrent
                                                         ? "bg-accent text-accent-foreground"
                                                         : "bg-muted-foreground/20 text-muted-foreground"
@@ -124,7 +124,7 @@ export default function BuyersGuidePage() {
                             </div>
                             <div className="h-1 bg-muted rounded-full overflow-hidden">
                                 <div
-                                    className="h-full bg-foreground rounded-full transition-all duration-500"
+                                    className="h-full bg-black rounded-full transition-all duration-500"
                                     style={{ width: `${(completedStep / 4) * 100}%` }}
                                 />
                             </div>
@@ -154,7 +154,7 @@ export default function BuyersGuidePage() {
                         </span>
                         <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
                             <div
-                                className="h-full bg-foreground rounded-full transition-all duration-500"
+                                className="h-full bg-black rounded-full transition-all duration-500"
                                 style={{ width: `${(completedStep / 4) * 100}%` }}
                             />
                         </div>
