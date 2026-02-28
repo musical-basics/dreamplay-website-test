@@ -35,6 +35,8 @@ const chassisData = [
     { c1: "Total Chassis Length", c2: 'TBD', c3: '48.27" (1226 mm)', c4: '48.27" (1226 mm)' },
     { c1: "Total Chassis Width", c2: 'TBD', c3: '11.65" (296 mm)', c4: '11.65" (296 mm)' },
     { c1: "Chassis Height", c2: 'TBD', c3: '5.9" (150 mm)', c4: '5.9" (150 mm)' },
+    { c1: "Shipping Box (est.)", c2: '—', c3: '57–59" × 15–17" × 9–11"', c4: '57–59" × 15–17" × 9–11"' },
+    { c1: "Total Shipping Weight (est.)", c2: '—', c3: '31–39 lbs (14–18 kg)', c4: '31–39 lbs (14–18 kg)' },
 ]
 
 /* ── Hardware Spec Data (DreamPlay One vs Pro) ────────────────────────── */

@@ -324,6 +324,102 @@ export default function ShippingPage() {
                     </div>
                 </section>
 
+                {/* ═══ SHIPPING BOX SPECIFICATIONS — DARK ═══ */}
+                <section className="bg-[#050505] text-white py-24 border-t border-white/10">
+                    <div className="max-w-6xl mx-auto px-6">
+                        <div className="text-center mb-16 reveal-el opacity-0 translate-y-8 transition-all duration-700">
+                            <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-[#0066cc] mb-4 font-semibold">Shipping Logistics</p>
+                            <h2 className="font-serif text-4xl md:text-5xl tracking-tight leading-tight text-white mb-6">Shipping Box Specifications</h2>
+                            <p className="font-sans text-base text-white/50 max-w-2xl mx-auto leading-relaxed">
+                                Based on the DreamPlay One&apos;s chassis dimensions (48.27&quot; × 11.65&quot; × 5.9&quot;), here are the estimated shipping box dimensions and weights.
+                            </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-8 mb-16">
+                            {/* Box Dimensions Card */}
+                            <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-100 border border-white/10 bg-white/5 p-8 md:p-10">
+                                <h3 className="font-serif text-2xl text-white mb-6">Estimated Box Dimensions</h3>
+                                <div className="space-y-5">
+                                    {[
+                                        { label: 'Length', value: '57" – 59"', metric: '(145 – 150 cm)' },
+                                        { label: 'Width (Depth)', value: '15" – 17"', metric: '(38 – 43 cm)' },
+                                        { label: 'Height', value: '9" – 11"', metric: '(23 – 28 cm)' },
+                                    ].map((d) => (
+                                        <div key={d.label} className="flex justify-between items-center border-b border-white/10 pb-4">
+                                            <span className="font-sans text-sm text-white/60">{d.label}</span>
+                                            <div className="text-right">
+                                                <span className="font-mono text-base text-white font-medium">{d.value}</span>
+                                                <span className="font-sans text-xs text-white/40 ml-2">{d.metric}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Shipping Weight Card */}
+                            <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-200 border border-white/10 bg-white/5 p-8 md:p-10">
+                                <h3 className="font-serif text-2xl text-white mb-6">Estimated Shipping Weight</h3>
+                                <div className="space-y-5">
+                                    {[
+                                        { label: 'Keyboard', value: '25 – 30 lbs', metric: '(11 – 14 kg)' },
+                                        { label: 'Accessories', value: '2 – 3 lbs', metric: '(1 – 1.4 kg)' },
+                                        { label: 'Packaging Materials', value: '4 – 6 lbs', metric: '(1.8 – 2.7 kg)' },
+                                    ].map((d) => (
+                                        <div key={d.label} className="flex justify-between items-center border-b border-white/10 pb-4">
+                                            <span className="font-sans text-sm text-white/60">{d.label}</span>
+                                            <div className="text-right">
+                                                <span className="font-mono text-base text-white font-medium">{d.value}</span>
+                                                <span className="font-sans text-xs text-white/40 ml-2">{d.metric}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <div className="flex justify-between items-center pt-2">
+                                        <span className="font-sans text-sm text-[#0066cc] font-bold">Total Shipping Weight</span>
+                                        <div className="text-right">
+                                            <span className="font-mono text-lg text-[#0066cc] font-bold">31 – 39 lbs</span>
+                                            <span className="font-sans text-xs text-white/40 ml-2">(14 – 18 kg)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Why So Large? */}
+                        <div className="reveal-el opacity-0 translate-y-8 transition-all duration-700 delay-300 border border-white/10 bg-white/[0.03] p-8 md:p-12">
+                            <h3 className="font-serif text-2xl text-white mb-8">Why the box needs to be this large</h3>
+                            <div className="grid md:grid-cols-3 gap-8">
+                                <div>
+                                    <div className="w-10 h-10 bg-white/10 flex items-center justify-center mb-4 border border-white/10">
+                                        <svg className="w-5 h-5 text-[#0066cc]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                                    </div>
+                                    <h4 className="font-sans font-bold text-white text-sm uppercase tracking-wider mb-3">Edge &amp; Corner Protection</h4>
+                                    <p className="font-sans text-sm text-white/50 leading-relaxed">
+                                        2–3 inches of dense EPS foam or custom cardboard inserts surround every side, especially the corners. Without this crush space, a drop during transit could crack the chassis.
+                                    </p>
+                                </div>
+                                <div>
+                                    <div className="w-10 h-10 bg-white/10 flex items-center justify-center mb-4 border border-white/10">
+                                        <svg className="w-5 h-5 text-[#0066cc]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                                    </div>
+                                    <h4 className="font-sans font-bold text-white text-sm uppercase tracking-wider mb-3">Accessory Space</h4>
+                                    <p className="font-sans text-sm text-white/50 leading-relaxed">
+                                        The power supply, sustain pedal, music rest, and manual are packed alongside the keyboard. The music rest lays flat on top, while pedals and cables nestle into hollowed foam sections at each end.
+                                    </p>
+                                </div>
+                                <div>
+                                    <div className="w-10 h-10 bg-white/10 flex items-center justify-center mb-4 border border-white/10">
+                                        <svg className="w-5 h-5 text-[#0066cc]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                                    </div>
+                                    <h4 className="font-sans font-bold text-white text-sm uppercase tracking-wider mb-3">Double-Wall Cardboard</h4>
+                                    <p className="font-sans text-sm text-white/50 leading-relaxed">
+                                        For a 30 lb item of this length, single-wall cardboard would buckle during transit. Double-wall corrugated board adds about half an inch to exterior dimensions but ensures the box survives the journey.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 {/* ═══ PRODUCT AVAILABILITY — DARK ═══ */}
                 <section className="bg-[#050505] text-white py-24">
                     <div className="max-w-7xl mx-auto px-6">
