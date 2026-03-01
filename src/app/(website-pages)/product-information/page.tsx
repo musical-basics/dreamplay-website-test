@@ -247,7 +247,7 @@ function ComparisonTable3Col({ title, subtitle, data }: { title: string, subtitl
                 <div className="col-span-3 font-sans text-[10px] uppercase tracking-[0.2em] text-neutral-500">Feature</div>
                 <div className="col-span-3 font-sans text-xs font-bold uppercase tracking-wider text-black">DP One</div>
                 <div className="col-span-3 font-sans text-xs font-bold uppercase tracking-wider text-[#4a9eff]">DP One Pro</div>
-                <div className="col-span-3 font-sans text-xs font-bold uppercase tracking-wider text-neutral-400">Generic Competitor</div>
+                <div className="col-span-3 font-sans text-xs font-bold uppercase tracking-wider text-neutral-400">Our Competitors</div>
             </div>
 
             {data.map((row: any, i: number) => (
@@ -267,7 +267,7 @@ function ComparisonTable3Col({ title, subtitle, data }: { title: string, subtitl
                             <div className="font-sans text-sm md:text-base text-[#4a9eff] font-medium">{row.pro}</div>
                         </div>
                         <div>
-                            <div className="md:hidden font-sans text-[10px] uppercase tracking-wider font-bold mb-1 text-neutral-400">Generic Competitor</div>
+                            <div className="md:hidden font-sans text-[10px] uppercase tracking-wider font-bold mb-1 text-neutral-400">Our Competitors</div>
                             <div className="font-sans text-sm md:text-base text-neutral-500">{row.competitor}</div>
                         </div>
                     </div>
