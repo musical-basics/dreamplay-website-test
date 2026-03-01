@@ -3,20 +3,22 @@
 import { useChat } from '@ai-sdk/react';
 import { TextStreamChatTransport } from 'ai';
 import { useState, useEffect, useRef, useCallback, type FormEvent } from 'react';
-import { MessageCircle, Send, MinusCircle, Mail } from 'lucide-react';
+import { MessageCircle, Send, MinusCircle, Mail, ArrowRight } from 'lucide-react';
 
 export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
     const [isOpen, setIsOpen] = useState(false);
     const [input, setInput] = useState('');
     const [sessionId, setSessionId] = useState<string | null>(null);
-    const [showEmailPrompt, setShowEmailPrompt] = useState(false);
     const [email, setEmail] = useState('');
     const [emailSubmitted, setEmailSubmitted] = useState(false);
-    const [assistantMessageCount, setAssistantMessageCount] = useState(0);
     const [suggestions, setSuggestions] = useState<string[]>([]);
     const [askedSuggestions, setAskedSuggestions] = useState<Set<string>>(new Set());
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const sessionCreatedRef = useRef(false);
+
+    // ─── Email Gate State ───
+    const [showEmailGate, setShowEmailGate] = useState(false);
+    const [pendingQuestion, setPendingQuestion] = useState<string | null>(null);
 
     const { messages, sendMessage, status } = useChat({
         transport: new TextStreamChatTransport({ api: apiUrl }),
@@ -71,7 +73,7 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
     // Auto-scroll to bottom of chat
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages, showEmailPrompt]);
+    }, [messages, showEmailGate]);
 
     // Persist messages to the session
     const persistMessage = useCallback(async (role: string, content: string) => {
@@ -91,10 +93,9 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
     const lastPersistedCountRef = useRef(0);
     useEffect(() => {
         if (!sessionId || messages.length === 0) return;
-        // Only persist new messages
         const newMessages = messages.slice(lastPersistedCountRef.current);
         for (const msg of newMessages) {
-            if (status === 'streaming' && msg.role === 'assistant') continue; // wait for complete
+            if (status === 'streaming' && msg.role === 'assistant') continue;
             const text = msg.parts
                 .filter((p): p is { type: 'text'; text: string } => p.type === 'text')
                 .map(p => p.text)
@@ -102,52 +103,76 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
             if (text) {
                 persistMessage(msg.role, text);
                 lastPersistedCountRef.current++;
-                if (msg.role === 'assistant') {
-                    setAssistantMessageCount(prev => prev + 1);
-                }
             }
         }
     }, [messages, status, sessionId, persistMessage]);
 
-    // Show email prompt after first complete assistant response
-    useEffect(() => {
-        if (assistantMessageCount === 1 && !emailSubmitted) {
-            setShowEmailPrompt(true);
+    // ─── Email Gate Handlers ───
+
+    // When user clicks the text input (and hasn't submitted email yet)
+    const handleInputFocus = () => {
+        if (!emailSubmitted) {
+            setShowEmailGate(true);
         }
-    }, [assistantMessageCount, emailSubmitted]);
+    };
+
+    // When user clicks a preset suggestion
+    const handleSuggestionClick = (q: string) => {
+        if (!emailSubmitted) {
+            // Store the question, show email gate first
+            setPendingQuestion(q);
+            setShowEmailGate(true);
+            return;
+        }
+        // Email already submitted — send normally
+        setAskedSuggestions(prev => new Set(prev).add(q));
+        sendMessage({ text: q });
+    };
+
+    // Submit email and then proceed
+    const handleEmailSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+        if (!email.trim()) return;
+
+        // Save email to session
+        if (sessionId) {
+            try {
+                await fetch('/api/chat-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ session_id: sessionId, email }),
+                });
+            } catch (e) {
+                console.error('Failed to save email:', e);
+            }
+        }
+
+        setEmailSubmitted(true);
+        setShowEmailGate(false);
+
+        // If there was a pending preset question, send it now
+        if (pendingQuestion) {
+            setAskedSuggestions(prev => new Set(prev).add(pendingQuestion!));
+            sendMessage({ text: pendingQuestion });
+            setPendingQuestion(null);
+        }
+    };
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         if (!input.trim() || isLoading) return;
+        if (!emailSubmitted) {
+            setShowEmailGate(true);
+            return;
+        }
         sendMessage({ text: input });
         setInput('');
-    };
-
-    const handleSuggestionClick = (q: string) => {
-        setAskedSuggestions(prev => new Set(prev).add(q));
-        sendMessage({ text: q });
     };
 
     // Get the next 3 un-asked suggestions
     const remainingSuggestions = suggestions
         .filter(q => !askedSuggestions.has(q))
         .slice(0, 3);
-
-    const handleEmailSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-        if (!email.trim() || !sessionId) return;
-        try {
-            await fetch('/api/chat-session', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ session_id: sessionId, email }),
-            });
-            setEmailSubmitted(true);
-            setShowEmailPrompt(false);
-        } catch (e) {
-            console.error('Failed to save email:', e);
-        }
-    };
 
     // Extract text content from a UIMessage's parts array
     const getMessageText = (parts: typeof messages[0]['parts']): string => {
@@ -159,43 +184,33 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
 
     // Lightweight inline markdown renderer
     const renderMarkdown = (text: string): React.ReactNode => {
-        // Split by line breaks first, then parse inline formatting
         const lines = text.split('\n');
         return lines.map((line, lineIdx) => {
-            // Bullet points: lines starting with - or *
             const bulletMatch = line.match(/^\s*[-*]\s+(.+)/);
             const isBullet = !!bulletMatch;
             const lineContent = isBullet ? bulletMatch![1] : line;
 
             const parts: React.ReactNode[] = [];
-            // Regex: bold **text**, italic *text*, underline __text__, inline code `text`, links [text](url)
             const regex = /(\*\*(.+?)\*\*|__(.+?)__|_(.+?)_|\*(.+?)\*|`(.+?)`|\[([^\]]+)\]\(([^)]+)\))/g;
             let lastIndex = 0;
             let match;
 
             while ((match = regex.exec(lineContent)) !== null) {
-                // Push text before the match
                 if (match.index > lastIndex) {
                     parts.push(lineContent.slice(lastIndex, match.index));
                 }
 
                 if (match[2]) {
-                    // **bold**
                     parts.push(<strong key={`${lineIdx}-${match.index}`} className="font-semibold">{match[2]}</strong>);
                 } else if (match[3]) {
-                    // __underline__
                     parts.push(<u key={`${lineIdx}-${match.index}`}>{match[3]}</u>);
                 } else if (match[4]) {
-                    // _italic_
                     parts.push(<em key={`${lineIdx}-${match.index}`}>{match[4]}</em>);
                 } else if (match[5]) {
-                    // *italic*
                     parts.push(<em key={`${lineIdx}-${match.index}`}>{match[5]}</em>);
                 } else if (match[6]) {
-                    // `code`
                     parts.push(<code key={`${lineIdx}-${match.index}`} className="bg-white/10 px-1 py-0.5 rounded text-[13px]">{match[6]}</code>);
                 } else if (match[7] && match[8]) {
-                    // [text](url)
                     parts.push(
                         <a key={`${lineIdx}-${match.index}`} href={match[8]} target="_blank" rel="noopener noreferrer" className="underline text-[#4a9eff] hover:text-[#6bb3ff]">
                             {match[7]}
@@ -206,7 +221,6 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
                 lastIndex = match.index + match[0].length;
             }
 
-            // Push remaining text
             if (lastIndex < lineContent.length) {
                 parts.push(lineContent.slice(lastIndex));
             }
@@ -240,7 +254,7 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
 
                     {/* Messages Area */}
                     <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                        {messages.length === 0 && (
+                        {messages.length === 0 && !showEmailGate && (
                             <div className="mt-4 space-y-4">
                                 <p className="text-white/50 text-sm text-center font-sans leading-relaxed">
                                     👋 Hi! Any questions about hand sizes, pricing, or shipping?
@@ -260,6 +274,54 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
                                 )}
                             </div>
                         )}
+
+                        {/* Email Gate Screen */}
+                        {showEmailGate && !emailSubmitted && (
+                            <div className="flex flex-col items-center justify-center py-8 px-2 space-y-5 animate-in fade-in duration-300">
+                                <div className="w-14 h-14 rounded-full bg-[#4a9eff]/10 flex items-center justify-center">
+                                    <Mail className="w-7 h-7 text-[#4a9eff]" />
+                                </div>
+                                <div className="space-y-2 text-center">
+                                    <p className="text-white/90 text-sm font-medium leading-relaxed">
+                                        We can&apos;t wait to answer your question!
+                                    </p>
+                                    <p className="text-white/50 text-xs leading-relaxed">
+                                        Type your email here and we&apos;ll answer right away.
+                                    </p>
+                                </div>
+                                {pendingQuestion && (
+                                    <div className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2">
+                                        <p className="text-white/40 text-[10px] uppercase tracking-wider mb-0.5">Your question</p>
+                                        <p className="text-white/70 text-xs leading-relaxed">{pendingQuestion}</p>
+                                    </div>
+                                )}
+                                <form onSubmit={handleEmailSubmit} className="w-full space-y-2">
+                                    <input
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="your@email.com"
+                                        autoFocus
+                                        className="w-full bg-transparent border border-white/20 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#4a9eff] transition-colors placeholder:text-white/30"
+                                    />
+                                    <button
+                                        type="submit"
+                                        disabled={!email.trim()}
+                                        className="w-full flex items-center justify-center gap-2 bg-[#4a9eff] text-white py-2.5 rounded-xl text-sm font-medium hover:bg-[#4a9eff]/80 disabled:opacity-40 transition-colors cursor-pointer"
+                                    >
+                                        Continue
+                                        <ArrowRight size={14} />
+                                    </button>
+                                </form>
+                                <button
+                                    onClick={() => { setShowEmailGate(false); setPendingQuestion(null); }}
+                                    className="text-white/30 text-xs hover:text-white/50 transition-colors cursor-pointer"
+                                >
+                                    Go back
+                                </button>
+                            </div>
+                        )}
+
                         {messages.map((m) => (
                             <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                 <div className={`px-4 py-2.5 rounded-2xl max-w-[85%] text-sm font-sans leading-relaxed ${m.role === 'user' ? 'bg-[#4a9eff] text-white rounded-tr-sm' : 'bg-white/10 text-white/90 rounded-tl-sm'
@@ -291,36 +353,6 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
                             </div>
                         )}
 
-                        {/* Email Capture Prompt */}
-                        {showEmailPrompt && !emailSubmitted && (
-                            <div className="bg-white/5 border border-white/10 rounded-xl p-3 space-y-2">
-                                <p className="text-white/70 text-xs leading-relaxed">
-                                    Have we answered your question? If not, leave us your email and our team will respond to you right away. 📧 <span className="text-white/50">Average response time: 2 hours</span>
-                                </p>
-                                <form onSubmit={handleEmailSubmit} className="flex gap-2">
-                                    <input
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="your@email.com"
-                                        className="flex-1 bg-transparent border border-white/20 rounded-full px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#4a9eff] transition-colors"
-                                    />
-                                    <button
-                                        type="submit"
-                                        disabled={!email.trim()}
-                                        className="bg-[#4a9eff] text-white p-1.5 rounded-full hover:bg-[#4a9eff]/80 disabled:opacity-50 transition-colors cursor-pointer"
-                                    >
-                                        <Mail size={14} />
-                                    </button>
-                                </form>
-                            </div>
-                        )}
-                        {emailSubmitted && (
-                            <div className="text-center text-xs text-green-400/80 py-1">
-                                ✅ Thanks! We&apos;ll reach out if needed.
-                            </div>
-                        )}
-
                         <div ref={messagesEndRef} />
                     </div>
 
@@ -330,6 +362,7 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
                             className="flex-1 bg-transparent border border-white/20 rounded-full px-4 py-2 text-sm text-white focus:outline-none focus:border-[#4a9eff] transition-colors"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
+                            onFocus={handleInputFocus}
                             placeholder="Ask a question..."
                         />
                         <button
