@@ -20,7 +20,7 @@ const keySpecs = [
   },
   {
     label: "Active Key Width",
-    value: 'DS 6.0: 44.53" (1131 mm) | DS 5.5: 41.1" (1044 mm)',
+    value: 'DS 6.0: 44.53" (1131 mm) | DS 5.5: 41.14" (1045 mm)',
   },
   {
     label: "White Key Width (Center-to-Center)",
@@ -32,7 +32,7 @@ const keySpecs = [
   },
   {
     label: "Gap Between Black Keys",
-    value: 'DS 6.0: 0.511" / 13.0 mm | DS 5.5: 0.471" / 12.0 mm',
+    value: 'DS 6.0: 16.6 mm | DS 5.5: 15.3 mm',
   },
   {
     label: "Key Pivot Length",
