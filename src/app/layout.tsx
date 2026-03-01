@@ -5,6 +5,7 @@ import { ABTracker } from "@/components/features/analytics/ABTracker";
 import { EmailTracker } from "@/components/EmailTracker";
 import NewsletterPopup from "@/components/NewsletterPopup";
 import Chatbot from "@/components/chatbot/Chatbot";
+import { getChatbotEnabled } from "@/actions/admin-actions";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,11 +17,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isChatbotEnabled = await getChatbotEnabled();
+
   return (
     <html lang="en" data-wf-site="68b99847f96fcca15429faec" suppressHydrationWarning>
       <head>
@@ -50,7 +53,7 @@ export default function RootLayout({
         <EmailTracker />
         {children}
         <NewsletterPopup />
-        <Chatbot />
+        {isChatbotEnabled && <Chatbot />}
 
         {/* Scripts */}
         <Script

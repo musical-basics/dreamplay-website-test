@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { getCountdownDate, updateCountdownDate, getDiscountPopupStatus, updateDiscountPopupStatus, loginAdmin, getHomepageVersion, updateHomepageVersion, getHiddenProducts, updateHiddenProducts, getChatModel, updateChatModel, getChatKnowledge, updateChatKnowledge, getChatSuggestions, updateChatSuggestions, getPopupABConfig, updatePopupABConfig, getPopupABResults } from '@/actions/admin-actions'
+import { getCountdownDate, updateCountdownDate, getDiscountPopupStatus, updateDiscountPopupStatus, loginAdmin, getHomepageVersion, updateHomepageVersion, getHiddenProducts, updateHiddenProducts, getChatModel, updateChatModel, getChatKnowledge, updateChatKnowledge, getChatSuggestions, updateChatSuggestions, getPopupABConfig, updatePopupABConfig, getPopupABResults, getChatbotEnabled, updateChatbotEnabled } from '@/actions/admin-actions'
 import type { PopupABConfig } from '@/actions/admin-actions'
 
 type AdminTab = 'chatbot' | 'marketing' | 'other' | 'ab-config' | 'ab-results'
@@ -20,6 +20,7 @@ export default function AdminPage() {
     const [showDiscount, setShowDiscount] = useState(true)
     const [homepageVersion, setHomepageVersion] = useState<'old' | 'special-offer'>('special-offer')
     const [hiddenProducts, setHiddenProducts] = useState<string[]>(['reservation', 'reserve50'])
+    const [isChatbotEnabled, setIsChatbotEnabled] = useState(true)
     const [chatModel, setChatModel] = useState('google:gemini-2.5-flash')
     const [availableModels, setAvailableModels] = useState<{ id: string; provider: string; name: string }[]>([])
     const [modelsLoading, setModelsLoading] = useState(false)
@@ -77,7 +78,7 @@ export default function AdminPage() {
 
     async function loadData() {
         setLoading(true)
-        const [dateVal, discountVal, versionVal, hiddenVal, chatModelVal, chatKnowledgeVal, chatSuggestionsVal, abConfigVal] = await Promise.all([
+        const [dateVal, discountVal, versionVal, hiddenVal, chatModelVal, chatKnowledgeVal, chatSuggestionsVal, abConfigVal, chatbotEnabledVal] = await Promise.all([
             getCountdownDate(),
             getDiscountPopupStatus(),
             getHomepageVersion(),
@@ -85,7 +86,8 @@ export default function AdminPage() {
             getChatModel(),
             getChatKnowledge(),
             getChatSuggestions(),
-            getPopupABConfig()
+            getPopupABConfig(),
+            getChatbotEnabled()
         ])
 
         if (dateVal) setDate(dateVal)
@@ -98,6 +100,7 @@ export default function AdminPage() {
         setChatKnowledge(chatKnowledgeVal)
         setChatSuggestions(chatSuggestionsVal)
         setAbConfig(abConfigVal)
+        setIsChatbotEnabled(chatbotEnabledVal)
 
         // Fetch available models in background
         setModelsLoading(true)
@@ -153,6 +156,17 @@ export default function AdminPage() {
         if (!res.success) {
             alert('Failed to update chatbot model')
             loadData()
+        }
+    }
+
+    async function handleToggleChatbot() {
+        const newValue = !isChatbotEnabled
+        setIsChatbotEnabled(newValue)
+
+        const res = await updateChatbotEnabled(newValue)
+        if (!res.success) {
+            setIsChatbotEnabled(!newValue)
+            alert('Failed to update chatbot status')
         }
     }
 
@@ -312,6 +326,26 @@ export default function AdminPage() {
                 {/* ─── TAB 1: CHATBOT SETTINGS ─── */}
                 {activeTab === 'chatbot' && (
                     <div className="space-y-6">
+                        {/* Master Toggle */}
+                        <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <h3 className="font-medium text-white">Enable Chatbot</h3>
+                                    <p className="text-sm text-neutral-500">Show or hide the chatbot on the website.</p>
+                                </div>
+                                <button
+                                    onClick={handleToggleChatbot}
+                                    className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none ${isChatbotEnabled ? 'bg-green-600' : 'bg-neutral-700'
+                                        }`}
+                                >
+                                    <span
+                                        className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${isChatbotEnabled ? 'translate-x-6' : 'translate-x-1'
+                                            }`}
+                                    />
+                                </button>
+                            </div>
+                        </div>
+
                         {/* Chatbot Model */}
                         <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-800 shadow-xl">
                             <h3 className="font-medium text-white mb-1">AI Model</h3>

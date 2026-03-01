@@ -264,6 +264,49 @@ export async function updateHiddenProducts(hiddenIds: string[]) {
     }
 }
 
+export async function getChatbotEnabled(): Promise<boolean> {
+    try {
+        const { data, error } = await supabase
+            .from('admin_variables')
+            .select('value')
+            .eq('key', 'show_chatbot')
+            .single()
+
+        if (error) {
+            if (error.code === 'PGRST116') return true // default on
+            console.error('Error fetching chatbot enabled status:', error)
+            return true
+        }
+
+        return data?.value === 'true'
+    } catch (error) {
+        console.error('Failed to get chatbot enabled status:', error)
+        return true
+    }
+}
+
+export async function updateChatbotEnabled(enabled: boolean) {
+    try {
+        const { error } = await supabase
+            .from('admin_variables')
+            .upsert({
+                key: 'show_chatbot',
+                value: String(enabled),
+                updated_at: new Date().toISOString()
+            })
+
+        if (error) {
+            console.error('Error updating chatbot enabled status:', error)
+            throw new Error(error.message)
+        }
+
+        revalidatePath('/')
+        return { success: true }
+    } catch (error: any) {
+        return { success: false, error: error.message }
+    }
+}
+
 export async function getChatModel(): Promise<string> {
     try {
         const { data, error } = await supabase
