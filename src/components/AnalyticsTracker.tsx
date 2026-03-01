@@ -27,9 +27,35 @@ function AnalyticsTrackerContent() {
         if (em && typeof window !== 'undefined') {
             localStorage.setItem('dp_user_email', em);
         }
+
         if (typeof window !== 'undefined') {
             const savedEmail = localStorage.getItem('dp_user_email');
             if (savedEmail) metadata.email = savedEmail;
+
+            // --- CAPTURE UTM PARAMETERS ---
+            const utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+            utms.forEach(utm => {
+                const val = searchParams?.get(utm);
+                if (val) sessionStorage.setItem(`dp_${utm}`, val);
+
+                const storedVal = sessionStorage.getItem(`dp_${utm}`);
+                if (storedVal) metadata[utm] = storedVal;
+            });
+
+            // --- CAPTURE ORGANIC REFERRER ---
+            const currentReferrer = document.referrer;
+
+            // Only save if it exists and is NOT from our own domain (or localhost)
+            if (currentReferrer && !currentReferrer.includes(window.location.hostname) && !currentReferrer.includes('localhost')) {
+                // Only set it once per session so we remember the original entry point
+                if (!sessionStorage.getItem('dp_initial_referrer')) {
+                    sessionStorage.setItem('dp_initial_referrer', currentReferrer);
+                }
+            }
+
+            // --- ATTACH TO METADATA ---
+            const initialReferrer = sessionStorage.getItem('dp_initial_referrer');
+            if (initialReferrer) metadata.referrer = initialReferrer;
         }
 
         // 1. If navigating internally inside the App, fire the leave event for the OLD page
