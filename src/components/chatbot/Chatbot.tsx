@@ -283,7 +283,7 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
                                 </div>
                                 <div className="space-y-2 text-center">
                                     <p className="text-white/90 text-sm font-medium leading-relaxed">
-                                        Leave your email so we can give you all the information about our revolutionary narrow-key digital piano.
+                                        Leave your email so we can send you the most important information about our revolutionary narrow-key digital piano.
                                     </p>
                                 </div>
                                 {pendingQuestion && (
