@@ -115,8 +115,11 @@ export default function NewsletterPopup() {
         };
     }, []);
 
-    // --- UBIQUITOUS EXIT-INTENT ---
+    // --- UBIQUITOUS EXIT-INTENT (disabled — bypasses A/B delay timers) ---
     useEffect(() => {
+        // TODO: re-enable once exit-intent is gated behind A/B delay
+        return;
+
         const excludedPaths = ["/vip", "/login", "/register", "/activate", "/forgot-password", "/reset-password"];
         if (excludedPaths.includes(pathname)) return;
 
