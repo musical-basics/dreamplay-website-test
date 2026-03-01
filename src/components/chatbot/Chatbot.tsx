@@ -283,10 +283,7 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
                                 </div>
                                 <div className="space-y-2 text-center">
                                     <p className="text-white/90 text-sm font-medium leading-relaxed">
-                                        We can&apos;t wait to answer your question!
-                                    </p>
-                                    <p className="text-white/50 text-xs leading-relaxed">
-                                        Type your email here and we&apos;ll answer right away.
+                                        Leave your email so we can give you all the information about our revolutionary narrow-key digital piano.
                                     </p>
                                 </div>
                                 {pendingQuestion && (
