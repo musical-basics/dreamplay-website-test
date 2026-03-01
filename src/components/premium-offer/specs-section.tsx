@@ -38,21 +38,21 @@ const keySpecs = [
     label: "Key Pivot Length",
     value: '7.5" – 8.5" (folded-action mechanism)',
   },
-  { label: "Action", value: "Graded Hammer Action (Weighted)" },
+  { label: "Action", value: "Weighted Hammer Action" },
   { label: "Polyphony", value: "192 Notes (never cut off a sound)" },
 ]
 
 const speakerSpecs = [
-  { label: "Configuration", value: "Stereo Output" },
+  { label: "Configuration", value: "2.0 Channel Stereo" },
   { label: "Total Output Power", value: "30W" },
-  { label: "Power Allocation", value: "15W × 2 channels" },
+  { label: "Power Allocation", value: "(10W + 5W) × 2 channels" },
 ]
 
 const connectivitySpecs = [
   { label: "MIDI", value: "USB-MIDI (Type-C)" },
-  { label: "Bluetooth", value: "Bluetooth Audio Streaming" },
+  { label: "Bluetooth", value: "Audio & MIDI Streaming" },
   { label: "Headphone Jacks", value: "1× 3.5 mm stereo headphone output" },
-  { label: "Aux In/Out", value: "3.5 mm stereo auxiliary input & output" },
+  { label: "Aux In/Out", value: "3.5 mm stereo" },
   { label: "Sustain Pedal", value: "6.35 mm (¼\") pedal jack" },
 ]
 
