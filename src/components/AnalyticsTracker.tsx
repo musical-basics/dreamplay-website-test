@@ -22,10 +22,22 @@ function AnalyticsTrackerContent() {
             url = url + `?${searchParams.toString()}`
         }
 
-        const metadata: any = {};
-        const em = searchParams?.get('em');
-        if (em && typeof window !== 'undefined') {
-            localStorage.setItem('dp_user_email', em);
+        const metadata: Record<string, string> = {};
+
+        // --- RESOLVE EMAIL FROM SID (server-side, replaces ?em= which was spoofable) ---
+        const sid = searchParams?.get('sid');
+        const cid = searchParams?.get('cid');
+        if (sid && typeof window !== 'undefined' && !sessionStorage.getItem('dp_sid_resolved')) {
+            // Only resolve once per session to avoid hammering the endpoint
+            sessionStorage.setItem('dp_sid_resolved', '1');
+            fetch(`https://email.dreamplaypianos.com/api/resolve-subscriber?sid=${sid}${cid ? `&cid=${cid}` : ''}`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.email) {
+                        localStorage.setItem('dp_user_email', data.email);
+                    }
+                })
+                .catch(() => { });
         }
 
         if (typeof window !== 'undefined') {
