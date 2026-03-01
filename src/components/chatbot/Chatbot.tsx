@@ -7,6 +7,7 @@ import { MessageCircle, Send, MinusCircle, Mail, ArrowRight } from 'lucide-react
 
 export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
     const [isOpen, setIsOpen] = useState(false);
+    const [visible, setVisible] = useState(false);
     const [input, setInput] = useState('');
     const [sessionId, setSessionId] = useState<string | null>(null);
     const [email, setEmail] = useState('');
@@ -25,6 +26,12 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
     });
 
     const isLoading = status === 'submitted' || status === 'streaming';
+
+    // Delay chatbot visibility by 20 seconds
+    useEffect(() => {
+        const timer = setTimeout(() => setVisible(true), 20000);
+        return () => clearTimeout(timer);
+    }, []);
 
     // Create a session on first open
     const createSession = useCallback(async () => {
@@ -236,7 +243,7 @@ export default function Chatbot({ apiUrl = '/api/chat' }: { apiUrl?: string }) {
     };
 
     return (
-        <div className="fixed bottom-6 right-6 z-[9999] flex flex-col items-end">
+        <div className={`fixed bottom-6 right-6 z-[9999] flex flex-col items-end transition-opacity duration-700 ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
             {/* Chat Window */}
             {isOpen && (
                 <div className="bg-[#050505] border border-white/20 shadow-2xl rounded-2xl w-80 sm:w-96 h-[500px] mb-4 overflow-hidden flex flex-col animate-in slide-in-from-bottom-5 duration-300">
