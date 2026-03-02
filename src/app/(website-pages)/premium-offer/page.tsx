@@ -3,6 +3,7 @@ import { SpecialOfferHeader } from "@/components/special-offer/header"
 import { CrowdfundingSection } from "@/components/premium-offer/crowdfunding-section"
 import { SocialProofBar } from "@/components/premium-offer/social-proof-bar"
 import { AudienceForkSection } from "@/components/premium-offer/audience-fork-section"
+import { ChildHeroSection } from "@/components/premium-offer/child-hero-section"
 import { HandComparisonSection } from "@/components/premium-offer/hand-comparison-section"
 import { SizeFinderSection } from "@/components/premium-offer/size-finder-section"
 import { VideoSection } from "@/components/premium-offer/video-section"
@@ -45,6 +46,7 @@ export default async function PremiumOfferPage() {
 
                 {/* 🎯 PROBE — Make it personal */}
                 <AudienceForkSection />
+                <ChildHeroSection />
                 <HandComparisonSection />
                 <SizeFinderSection />
 
