@@ -1,21 +1,20 @@
-import Image from "next/image"
 import { Playfair_Display, Inter } from "next/font/google"
 import { SpecialOfferHeader } from "@/components/special-offer/header"
 import { CrowdfundingSection } from "@/components/premium-offer/crowdfunding-section"
-import { StatsSection } from "@/components/premium-offer/stats-section"
-import { HeroSection } from "@/components/premium-offer/hero-section"
 import { SocialProofBar } from "@/components/premium-offer/social-proof-bar"
+import { AudienceForkSection } from "@/components/premium-offer/audience-fork-section"
+import { HandComparisonSection } from "@/components/premium-offer/hand-comparison-section"
+import { SizeFinderSection } from "@/components/premium-offer/size-finder-section"
 import { VideoSection } from "@/components/premium-offer/video-section"
 import { FeaturesSection } from "@/components/premium-offer/features-section"
-import { SizeFinderSection } from "@/components/premium-offer/size-finder-section"
 import { SizeVisualSection } from "@/components/premium-offer/size-visual-section"
 import { SpecsSection } from "@/components/premium-offer/specs-section"
+import { StanfordQuoteSection } from "@/components/premium-offer/stanford-quote-section"
+import { SwitchingSection } from "@/components/premium-offer/switching-section"
 import { CreatorSection } from "@/components/premium-offer/creator-section"
 import { TrustSection } from "@/components/premium-offer/trust-section"
 import { PricingSection } from "@/components/premium-offer/pricing-section"
-import { StanfordQuoteSection } from "@/components/premium-offer/stanford-quote-section"
 import { GuaranteeSection } from "@/components/premium-offer/guarantee-section"
-import { HeroImageSection } from "@/components/premium-offer/hero-image-section"
 import Footer from "@/components/Footer"
 import { getHiddenProducts } from "@/actions/admin-actions"
 
@@ -40,24 +39,35 @@ export default async function PremiumOfferPage() {
         <div className={`${playfair.variable} ${inter.variable} font-sans antialiased`}>
             <SpecialOfferHeader />
             <main>
-                <section id="hero">
-                    <CrowdfundingSection />
-                    <StatsSection />
-                    <HeroSection />
-                    <SocialProofBar />
+                {/* ⚡ APPROACH — Hook in 3 seconds */}
+                <CrowdfundingSection />
+                <SocialProofBar />
+
+                {/* 🎯 PROBE — Make it personal */}
+                <AudienceForkSection />
+                <HandComparisonSection />
+                <SizeFinderSection />
+
+                {/* 📦 PRESENT — Show the product */}
+                <section id="video">
                     <VideoSection />
                 </section>
                 <FeaturesSection />
-                <StanfordQuoteSection />
-                <HeroImageSection />
-                <SizeFinderSection />
                 <SizeVisualSection />
                 <SpecsSection />
+
+                {/* 🔬 LEVERAGE — Build credibility */}
+                <StanfordQuoteSection />
+                <SwitchingSection />
                 <CreatorSection />
                 <TrustSection />
+
+                {/* 🔒 LOCKIN — Remove all risk */}
                 <PricingSection hiddenProducts={hiddenProducts} />
                 <GuaranteeSection />
             </main>
+
+            {/* 🔄 EXTEND */}
             <Footer />
         </div>
     )
