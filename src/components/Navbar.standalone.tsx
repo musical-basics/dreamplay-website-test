@@ -598,15 +598,7 @@ export default function Navbar() {
                   >
                     The DS Standard
                   </Link>
-                  <Link
-                    href="https://blog.dreamplaypianos.com/blog"
-                    className={`block px-4 py-3 text-sm transition-colors ${isCustomizePage
-                      ? 'text-gray-400 hover:text-white hover:bg-white/5'
-                      : 'text-gray-600 hover:text-black hover:bg-black/5'
-                      }`}
-                  >
-                    Our Blog
-                  </Link>
+
                 </div>
               </div>
               <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
@@ -791,13 +783,7 @@ export default function Navbar() {
             >
               The DS Standard
             </Link>
-            <Link
-              href="https://blog.dreamplaypianos.com/blog"
-              className="mobile-menu-sublink"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Our Blog
-            </Link>
+
             <div className="mobile-menu-divider" />
             <div className="mobile-menu-section-title">Information & Policies</div>
             <Link

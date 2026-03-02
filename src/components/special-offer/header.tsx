@@ -149,6 +149,7 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
 
                             <Link href="/information-and-policies/faq" className={linkClass(useDarkText)}>FAQ</Link>
                             <Link href="https://blog.dreamplaypianos.com/blog" className={linkClass(useDarkText)}>Blog</Link>
+
                         </nav>
 
                         {/* CTA + Auth */}
@@ -224,6 +225,7 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                                 <div className="border-t border-gray-200 my-2" />
                                 <Link href="/information-and-policies/faq" className="py-3 text-neutral-600 hover:text-black font-medium border-b border-gray-50" onClick={() => setIsMobileMenuOpen(false)}>FAQ</Link>
                                 <Link href="https://blog.dreamplaypianos.com/blog" className="py-3 text-neutral-600 hover:text-black font-medium" onClick={() => setIsMobileMenuOpen(false)}>Blog</Link>
+
 
                                 {!user && (
                                     <div className="py-2 flex items-center gap-3 border-t border-gray-100">
