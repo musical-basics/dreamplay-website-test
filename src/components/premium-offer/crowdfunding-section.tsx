@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useCallback, useState } from "react"
+import { useRef, useCallback, useState, useEffect } from "react"
 
 const BG_VIDEOS = [
   "https://pub-ae162277c7104eb2b558af08104deafc.r2.dev/Clip%203.m4v",
@@ -10,6 +10,7 @@ const BG_VIDEOS = [
 export function CrowdfundingSection() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [textSlide, setTextSlide] = useState(0)
 
   const handleEnded = useCallback(() => {
     const nextIndex = (currentIndex + 1) % BG_VIDEOS.length
@@ -20,6 +21,14 @@ export function CrowdfundingSection() {
       videoRef.current.play()
     }
   }, [currentIndex])
+
+  // Rotate text every 5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTextSlide((prev) => (prev === 0 ? 1 : 0))
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [])
 
   const scrollToVideo = () => {
     const el = document.getElementById("video")
@@ -44,32 +53,67 @@ export function CrowdfundingSection() {
 
       {/* Content */}
       <div className="relative z-10 flex h-full min-h-screen flex-col justify-center px-8 md:px-16 lg:px-24">
-        <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/70 md:text-xs">
-          Now available to pre-order
-        </p>
-        <h1 className="mt-4 font-serif text-3xl leading-tight text-white md:text-5xl lg:text-6xl xl:text-7xl text-balance">
-          The Pro Keyboard
-          <br />
-          for Hands That Don{"'"}t
-          <br />
-          Fit the Standard.
-        </h1>
-        <p className="mt-6 max-w-md font-sans text-sm leading-relaxed text-white/90 md:text-base">
-          88 weighted keys. Narrower by design. Built for the 87% of women and
-          24% of men whose hands were never the right size for a standard
-          keyboard.
-        </p>
-
-        {/* Inline stat */}
-        <div className="mt-8 flex items-center gap-6">
-          <div className="flex items-baseline gap-1">
-            <span className="font-serif text-4xl text-white md:text-5xl">55</span>
-            <span className="font-serif text-2xl text-white/70 md:text-3xl">%</span>
+        <div className="relative min-h-[280px] md:min-h-[320px]">
+          {/* Slide 1: Headline */}
+          <div
+            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${textSlide === 0
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 -translate-y-4 pointer-events-none"
+              }`}
+          >
+            <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/70 md:text-xs">
+              Now available to pre-order
+            </p>
+            <h1 className="mt-4 font-serif text-3xl leading-tight text-white md:text-5xl lg:text-6xl xl:text-7xl text-balance">
+              The Pro Keyboard
+              <br />
+              for Hands That Don{"'"}t
+              <br />
+              Fit the Standard.
+            </h1>
           </div>
-          <div className="h-10 w-px bg-white/30" />
-          <p className="font-sans text-xs uppercase tracking-[0.2em] text-white/60 leading-relaxed max-w-[180px]">
-            of pianists have hands under 8.5 inches
-          </p>
+
+          {/* Slide 2: Stat + Description */}
+          <div
+            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${textSlide === 1
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-4 pointer-events-none"
+              }`}
+          >
+            <p className="max-w-lg font-sans text-base leading-relaxed text-white/90 md:text-lg lg:text-xl">
+              88 weighted keys. Narrower by design. Built for the 87% of women and
+              24% of men whose hands were never the right size for a standard
+              keyboard.
+            </p>
+
+            {/* Inline stat */}
+            <div className="mt-8 flex items-center gap-6">
+              <div className="flex items-baseline gap-1">
+                <span className="font-serif text-5xl text-white md:text-7xl lg:text-8xl">55</span>
+                <span className="font-serif text-3xl text-white/70 md:text-4xl">%</span>
+              </div>
+              <div className="h-12 w-px bg-white/30" />
+              <p className="font-sans text-sm uppercase tracking-[0.2em] text-white/60 leading-relaxed max-w-[200px]">
+                of pianists have hands under 8.5 inches
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Slide dots */}
+        <div className="mt-6 flex gap-2">
+          <button
+            onClick={() => setTextSlide(0)}
+            className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${textSlide === 0 ? "w-6 bg-white" : "w-1.5 bg-white/40"
+              }`}
+            aria-label="Show headline"
+          />
+          <button
+            onClick={() => setTextSlide(1)}
+            className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${textSlide === 1 ? "w-6 bg-white" : "w-1.5 bg-white/40"
+              }`}
+            aria-label="Show stats"
+          />
         </div>
 
         {/* CTAs */}
