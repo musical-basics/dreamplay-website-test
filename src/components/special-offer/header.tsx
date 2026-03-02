@@ -8,6 +8,7 @@ import { useABAnalytics } from "@/hooks/use-ab-analytics"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/client"
 import { RegisterModal } from "../RegisterModal"
+import { CountdownBanner } from "../premium-offer/countdown-banner"
 
 interface SpecialOfferHeaderProps {
     forceOpaque?: boolean;
@@ -93,13 +94,8 @@ export function SpecialOfferHeader({ forceOpaque = false, darkMode = false, clas
                     className
                 )}
             >
-                {/* Global Announcement Bar */}
-                <Link
-                    href="/customize"
-                    className="bg-[#050505] border-b border-white/10 py-2.5 text-center flex items-center justify-center w-full z-50 text-[10px] sm:text-xs text-white/80 uppercase tracking-[0.2em] font-sans font-medium hover:text-white transition-colors"
-                >
-                    Founder&apos;s Batch Closing March 2nd. Retail MSRP ($1,199) Takes Effect After.
-                </Link>
+                {/* Countdown Banner */}
+                <CountdownBanner />
                 <div className={cn(
                     "w-full transition-all duration-300",
                     darkMode

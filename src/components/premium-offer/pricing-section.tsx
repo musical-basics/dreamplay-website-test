@@ -219,6 +219,13 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
                 Reserve for {tier.price}
                 <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
               </a>
+              {/* Risk-Reversal Badge */}
+              <div className="mt-3 flex items-center justify-center gap-1.5 text-background/40">
+                <span className="text-xs">🛡️</span>
+                <span className="font-sans text-[10px] tracking-wide">
+                  100% Risk-Free · Full Refund if We Don&apos;t Ship
+                </span>
+              </div>
             </div>
           ))}
         </div>
