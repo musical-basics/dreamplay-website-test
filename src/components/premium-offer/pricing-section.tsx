@@ -38,9 +38,9 @@ const allTiers = [
     id: 'solo',
     badge: null,
     title: "DreamPlay One",
-    subtitle: "Founder's Batch",
-    price: "$549",
-    msrp: "$1,099",
+    subtitle: "",
+    price: "$1,099",
+    msrp: null,
     description:
       "The DreamPlay One Keyboard. Available in DS5.5 or DS6.0. Choose Midnight Black or Pearl White.",
     includes: ["DreamPlay One Keyboard"],
@@ -54,9 +54,9 @@ const allTiers = [
     id: 'full',
     badge: "Most Popular",
     title: "DreamPlay Bundle",
-    subtitle: "Founder's Batch",
-    price: "$599",
-    msrp: "$1,199",
+    subtitle: "",
+    price: "$1,199",
+    msrp: null,
     description:
       "The complete DreamPlay experience. Keyboard, adjustable stand, responsive sustain pedal, and comfortable padded bench.",
     includes: ["DreamPlay One Keyboard", "Keyboard Stand", "Sustain Pedal", "Padded Bench"],
@@ -86,20 +86,7 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
           </p>
         </div>
 
-        {/* Price Increase Call-out */}
-        <div className="mb-12 border border-amber-500/30 bg-amber-500/5 px-6 py-5 max-w-2xl">
-          <div className="flex items-start gap-3">
-            <span className="mt-0.5 text-amber-400 text-lg leading-none">⚡</span>
-            <div>
-              <p className="font-sans text-sm font-semibold text-amber-300/90">
-                Prices increase after March 2nd, 2026
-              </p>
-              <p className="mt-1 font-sans text-xs leading-relaxed text-background/50">
-                Founder&apos;s Batch pricing ends March 2nd. After that, the retail MSRP of $1,199 takes effect.
-              </p>
-            </div>
-          </div>
-        </div>
+
 
         {/* Import Duties Call-out */}
         <div className="mb-12 border border-background/20 bg-background/5 px-6 py-5 max-w-2xl mt-4">

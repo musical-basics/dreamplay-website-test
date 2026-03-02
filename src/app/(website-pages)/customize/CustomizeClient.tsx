@@ -108,8 +108,8 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
             badge: null,
             title: "DreamPlay One",
             subtitle: "",
-            price: "$549",
-            retailPrice: "$1,099.00",
+            price: "$1,099",
+            retailPrice: null,
             originalPrice: null,
             description: "The DreamPlay One Keyboard. Available in DS5.5 or DS6.0. Choose Midnight Black or Pearl White.",
             includes: ["DreamPlay One Keyboard"],
@@ -118,15 +118,14 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
             remaining: 10,
             total: 50,
             highlight: false,
-            savings: "$550",
         },
         {
             id: 'full',
             badge: "Most Popular",
             title: "DreamPlay Bundle",
             subtitle: "",
-            price: "$599",
-            retailPrice: "$1,199.00",
+            price: "$1,199",
+            retailPrice: null,
             originalPrice: null,
             description: "The complete DreamPlay experience. Keyboard, adjustable stand, responsive sustain pedal, and comfortable padded bench.",
             includes: ["DreamPlay One Keyboard", "Keyboard Stand", "Sustain Pedal", "Padded Bench"],
@@ -135,7 +134,6 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
             remaining: 42,
             total: 250,
             highlight: true,
-            savings: "$600",
         },
         {
             id: 'signature',
@@ -979,7 +977,7 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
 
                     {/* Pricing footnote */}
                     <p className="text-center text-xs text-white/40 mt-10 max-w-xl mx-auto leading-relaxed font-sans">
-                        * Founder&apos;s Batch pricing ends March 2nd, 2026. After this date, prices will increase to the official retail MSRP. Reserve now to lock in the current rate.
+                        * All prices shown are the official retail MSRP. Shipping and applicable taxes will be calculated before dispatch.
                     </p>
 
                     {/* Pre-Order Logistics Box */}

@@ -384,7 +384,7 @@ export default function AdminPage() {
                                 onChange={(e) => setChatKnowledge(e.target.value)}
                                 rows={10}
                                 className="w-full bg-neutral-800 border border-neutral-700 rounded-lg p-3 text-white text-sm outline-none focus:border-blue-500 font-mono leading-relaxed resize-y"
-                                placeholder={`Example:\n- DS5.5: 5.5-inch keys, designed for hand spans under 8.5 inches\n- DS6.0: 6.0-inch keys, suits most adult hand sizes\n- Pricing: Starts at $549 for the DreamPlay One\n- Shipping: Batch 1 ships August 2026`}
+                                placeholder={`Example:\n- DS5.5: 5.5-inch keys, designed for hand spans under 8.5 inches\n- DS6.0: 6.0-inch keys, suits most adult hand sizes\n- Pricing: Starts at $1,099 for the DreamPlay One\n- Shipping: Batch 1 ships August 2026`}
                             />
                             <div className="flex items-center justify-between mt-3">
                                 <span className={`text-sm ${knowledgeMessage.includes('updated') ? 'text-green-400' : knowledgeMessage ? 'text-red-400' : 'text-transparent'}`}>
@@ -552,8 +552,8 @@ export default function AdminPage() {
                                 {[
                                     { id: 'reservation', label: 'Lock My Spot', price: '$99' },
                                     { id: 'reserve50', label: 'Reserve (50%)', price: '$274' },
-                                    { id: 'solo', label: 'DreamPlay One', price: '$549' },
-                                    { id: 'full', label: 'DreamPlay Bundle', price: '$599' },
+                                    { id: 'solo', label: 'DreamPlay One', price: '$1,099' },
+                                    { id: 'full', label: 'DreamPlay Bundle', price: '$1,199' },
                                     { id: 'signature', label: 'DreamPlay Signature', price: '$999' },
                                 ].map(product => {
                                     const isVisible = !hiddenProducts.includes(product.id)

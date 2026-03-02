@@ -22,8 +22,7 @@ export function FlashSale() {
         </div>
 
         <div className="flex items-baseline justify-center gap-4">
-          <span className="text-red-400 line-through text-xl font-medium">$899</span>
-          <span className="text-6xl md:text-7xl font-bold tracking-tight text-white">$549</span>
+          <span className="text-6xl md:text-7xl font-bold tracking-tight text-white">$1,099</span>
         </div>
 
         <p className="text-sm text-white font-medium tracking-widest uppercase">Complete Premium Bundle</p>

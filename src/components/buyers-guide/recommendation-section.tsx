@@ -81,7 +81,7 @@ export function RecommendationSection({ profile }: RecommendationSectionProps) {
                 alternative2: {
                     model: "DreamPlay Bundle",
                     name: "Complete Setup",
-                    reason: "Save $600 with the bundle including stand, bench, and sustain pedal",
+                    reason: "Get the complete setup with the bundle including stand, bench, and sustain pedal",
                 },
             }
         }
@@ -106,7 +106,7 @@ export function RecommendationSection({ profile }: RecommendationSectionProps) {
                 alternative2: {
                     model: "DreamPlay Bundle",
                     name: "Complete Setup",
-                    reason: "Save $600 with the bundle including stand, bench, and sustain pedal",
+                    reason: "Get the complete setup with the bundle including stand, bench, and sustain pedal",
                 },
             }
         }
@@ -230,12 +230,11 @@ export function RecommendationSection({ profile }: RecommendationSectionProps) {
 
                         {/* Pricing */}
                         <div className="w-full lg:w-auto lg:min-w-[280px] p-6 rounded-2xl bg-muted">
-                            <p className="text-sm text-muted-foreground mb-1">Founder&apos;s Price</p>
+                            <p className="text-sm text-muted-foreground mb-1">Price</p>
                             <div className="flex items-baseline gap-2 mb-2">
-                                <span className="text-4xl font-bold text-gray-900">$549</span>
-                                <span className="text-muted-foreground line-through">$1,099</span>
+                                <span className="text-4xl font-bold text-gray-900">$1,099</span>
                             </div>
-                            <p className="text-sm text-accent font-medium mb-4">Save $550 today</p>
+                            <p className="text-sm text-muted-foreground mb-4">Keyboard only</p>
 
                             <div className="pt-4 border-t border-border space-y-2 text-sm text-muted-foreground">
                                 <p className="flex items-center gap-2">

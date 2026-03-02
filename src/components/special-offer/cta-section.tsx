@@ -114,10 +114,9 @@ export function CTASection() {
                     <div
                         className={`mt-8 mb-4 transition-all duration-700 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                     >
-                        <p className="text-white text-sm mb-3 font-medium">Lock in the $599 Founder&apos;s Price</p>
+                        <p className="text-white text-sm mb-3 font-medium">DreamPlay Bundle</p>
                         <div className="flex items-baseline justify-center gap-4">
-                            <span className="text-white/50 text-2xl line-through">$899</span>
-                            <span className="text-5xl md:text-6xl font-semibold">$599</span>
+                            <span className="text-5xl md:text-6xl font-semibold">$1,199</span>
                         </div>
                     </div>
 
