@@ -22,11 +22,10 @@ export function CrowdfundingSection() {
     }
   }, [currentIndex])
 
-  // Rotate text every 5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
-      setTextSlide((prev) => (prev === 0 ? 1 : 0))
-    }, 5000)
+      setTextSlide((prev) => (prev + 1) % 3)
+    }, 3000)
     return () => clearInterval(timer)
   }, [])
 
@@ -37,7 +36,6 @@ export function CrowdfundingSection() {
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Video Background */}
       <video
         ref={videoRef}
         autoPlay
@@ -51,12 +49,11 @@ export function CrowdfundingSection() {
       <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/30" />
       <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%)' }} />
 
-      {/* Content */}
       <div className="relative z-10 flex h-full min-h-screen flex-col justify-center px-8 md:px-16 lg:px-24">
         <div className="relative min-h-[280px] md:min-h-[320px]">
           {/* Slide 1: Headline */}
           <div
-            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${textSlide === 0
+            className={`absolute inset-0 transition-all duration-500 ease-in-out ${textSlide === 0
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 -translate-y-4 pointer-events-none"
               }`}
@@ -75,7 +72,7 @@ export function CrowdfundingSection() {
 
           {/* Slide 2: Stat + Description */}
           <div
-            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${textSlide === 1
+            className={`absolute inset-0 transition-all duration-500 ease-in-out ${textSlide === 1
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-4 pointer-events-none"
               }`}
@@ -85,8 +82,6 @@ export function CrowdfundingSection() {
               24% of men whose hands were never the right size for a standard
               keyboard.
             </p>
-
-            {/* Inline stat */}
             <div className="mt-8 flex items-center gap-6">
               <div className="flex items-baseline gap-1">
                 <span className="font-serif text-5xl text-white md:text-7xl lg:text-8xl">55</span>
@@ -98,22 +93,42 @@ export function CrowdfundingSection() {
               </p>
             </div>
           </div>
+
+          {/* Slide 3: Mantra */}
+          <div
+            className={`absolute inset-0 transition-all duration-500 ease-in-out ${textSlide === 2
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-4 pointer-events-none"
+              }`}
+          >
+            <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/70 md:text-xs">
+              Your journey starts here
+            </p>
+            <h2 className="mt-4 font-serif text-3xl leading-tight text-white md:text-5xl lg:text-6xl xl:text-7xl text-balance">
+              Start With Keys
+              <br />
+              That Fit. Excel on
+              <br />
+              Any Stage.
+            </h2>
+            <p className="mt-6 max-w-md font-sans text-sm leading-relaxed text-white/80 md:text-base">
+              A keyboard designed for your unique handspan — so you can play
+              the way you were always meant to.
+            </p>
+          </div>
         </div>
 
         {/* Slide dots */}
         <div className="mt-6 flex gap-2">
-          <button
-            onClick={() => setTextSlide(0)}
-            className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${textSlide === 0 ? "w-6 bg-white" : "w-1.5 bg-white/40"
-              }`}
-            aria-label="Show headline"
-          />
-          <button
-            onClick={() => setTextSlide(1)}
-            className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${textSlide === 1 ? "w-6 bg-white" : "w-1.5 bg-white/40"
-              }`}
-            aria-label="Show stats"
-          />
+          {[0, 1, 2].map((i) => (
+            <button
+              key={i}
+              onClick={() => setTextSlide(i)}
+              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${textSlide === i ? "w-6 bg-white" : "w-1.5 bg-white/40"
+                }`}
+              aria-label={`Show slide ${i + 1}`}
+            />
+          ))}
         </div>
 
         {/* CTAs */}
