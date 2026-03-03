@@ -737,6 +737,7 @@ export default function AdminPage() {
                                                 >
                                                     <option value="shipping">Free Shipping</option>
                                                     <option value="pdf">PDF Guide</option>
+                                                    <option value="discount">$300 Off</option>
                                                 </select>
 
                                                 <label className="block text-sm text-neutral-400 mb-2">{ordinal}{suffix} Popup Delay</label>

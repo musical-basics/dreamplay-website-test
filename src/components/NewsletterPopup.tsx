@@ -2,13 +2,13 @@
 
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { X, FileText, Package, CheckCircle2 } from "lucide-react";
+import { X, FileText, Package, DollarSign, CheckCircle2 } from "lucide-react";
 
 import { getDiscountPopupStatus } from "@/actions/admin-actions";
 import { subscribeToNewsletter } from "@/actions/email-actions";
 import { trackEmailConversion } from "@/components/EmailTracker";
 
-type PopupType = "none" | "shipping" | "pdf";
+type PopupType = "none" | "shipping" | "pdf" | "discount";
 
 /** Safe analytics wrapper — won't crash if tracker is blocked or hasn't loaded */
 const trackPopup = (action: 'yes' | 'no', popupName: string) => {
@@ -71,7 +71,7 @@ export default function NewsletterPopup() {
             } catch (e) {
                 console.error('A/B assign failed, using defaults:', e);
                 abBucketRef.current = 'control';
-                abSettingsRef.current = { entries: [{ type: 'pdf', delaySec: 30 }, { type: 'shipping', delaySec: 300 }] };
+                abSettingsRef.current = { entries: [{ type: 'pdf', delaySec: 30 }, { type: 'shipping', delaySec: 300 }, { type: 'discount', delaySec: 600 }] };
             }
 
             const settings = abSettingsRef.current!;
@@ -140,6 +140,22 @@ export default function NewsletterPopup() {
         };
     }, [pathname]);
 
+    /** Try to show the next unseen popup after a delay */
+    const chainNextPopup = (excludeType: PopupType) => {
+        const types: PopupType[] = ["shipping", "pdf", "discount"];
+        for (const t of types) {
+            if (t === excludeType) continue;
+            if (localStorage.getItem(`dp_v2_${t}_seen`) === "true") continue;
+            if (pdfTimerRef.current) clearTimeout(pdfTimerRef.current);
+            pdfTimerRef.current = setTimeout(() => {
+                if (localStorage.getItem("dp_v2_subscribed") !== "true") {
+                    setActivePopup(t);
+                }
+            }, 22000);
+            break;
+        }
+    };
+
     const handleClose = () => {
         setErrorMsg("");
         if (activePopup === "shipping") {
@@ -147,21 +163,19 @@ export default function NewsletterPopup() {
             localStorage.setItem("dp_v2_shipping_seen", "true");
             setActivePopup("none");
             setIsSubmitted("none");
-
-            const pdfSeen = localStorage.getItem("dp_v2_pdf_seen") === "true";
-            if (!pdfSeen) {
-                if (pdfTimerRef.current) clearTimeout(pdfTimerRef.current);
-                pdfTimerRef.current = setTimeout(() => {
-                    if (localStorage.getItem("dp_v2_subscribed") !== "true") {
-                        setActivePopup("pdf");
-                    }
-                }, 22000);
-            }
+            chainNextPopup("shipping");
         } else if (activePopup === "pdf") {
             trackPopup('no', 'hand_size');
             localStorage.setItem("dp_v2_pdf_seen", "true");
             setActivePopup("none");
             setIsSubmitted("none");
+            chainNextPopup("pdf");
+        } else if (activePopup === "discount") {
+            trackPopup('no', 'discount_300');
+            localStorage.setItem("dp_v2_discount_seen", "true");
+            setActivePopup("none");
+            setIsSubmitted("none");
+            chainNextPopup("discount");
         } else {
             setActivePopup("none");
             setIsSubmitted("none");
@@ -176,7 +190,7 @@ export default function NewsletterPopup() {
         const currentOffer = activePopup;
 
         try {
-            const tag = currentOffer === "shipping" ? "Free Shipping Lead" : "Hand Guide Download";
+            const tag = currentOffer === "shipping" ? "Free Shipping Lead" : currentOffer === "discount" ? "$300 Off Lead" : "Hand Guide Download";
             const tempSession = localStorage.getItem("dp_temp_session") || undefined;
 
             const res = await subscribeToNewsletter({
@@ -206,12 +220,13 @@ export default function NewsletterPopup() {
             localStorage.setItem("dp_v2_subscribed", "true");
             localStorage.setItem("dp_v2_shipping_seen", "true");
             localStorage.setItem("dp_v2_pdf_seen", "true");
+            localStorage.setItem("dp_v2_discount_seen", "true");
             localStorage.setItem("dp_user_email", email);
             if (res.id) localStorage.setItem("dp_subscriber_id", res.id);
 
             setIsSubmitted(currentOffer);
             trackEmailConversion('conversion_t1', window.location.pathname);
-            trackPopup('yes', currentOffer === 'shipping' ? 'free_shipping' : 'hand_size');
+            trackPopup('yes', currentOffer === 'shipping' ? 'free_shipping' : currentOffer === 'discount' ? 'discount_300' : 'hand_size');
 
             // Auto-open PDF for pdf offer
             if (currentOffer === "pdf") {
@@ -247,25 +262,31 @@ export default function NewsletterPopup() {
                             <div className="mx-auto bg-white/5 border border-white/10 w-14 h-14 rounded-none flex items-center justify-center mb-6">
                                 {activePopup === "shipping" ? (
                                     <Package className="text-white" size={24} strokeWidth={1.5} />
+                                ) : activePopup === "discount" ? (
+                                    <DollarSign className="text-white" size={24} strokeWidth={1.5} />
                                 ) : (
                                     <FileText className="text-white" size={24} strokeWidth={1.5} />
                                 )}
                             </div>
 
                             <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-3">
-                                {activePopup === "shipping" ? "Waitlist Exclusive" : "Free Resource"}
+                                {activePopup === "shipping" ? "Waitlist Exclusive" : activePopup === "discount" ? "Limited Time Offer" : "Free Resource"}
                             </p>
 
                             <h2 className="text-2xl md:text-3xl font-serif text-white tracking-tight leading-tight mb-4">
                                 {activePopup === "shipping"
                                     ? "Unlock Free Global Shipping."
-                                    : "Are standard keys holding you back?"}
+                                    : activePopup === "discount"
+                                        ? "Save $300 on Your DreamPlay."
+                                        : "Are standard keys holding you back?"}
                             </h2>
 
                             <p className="text-white/60 font-sans text-sm leading-relaxed">
                                 {activePopup === "shipping"
                                     ? "Join our VIP list and get a Free Shipping Pass applied to your next reservation. Limited availability."
-                                    : "Enter your email to instantly download our Hand-Measuring Guide to see exactly which piano size will help you the most."}
+                                    : activePopup === "discount"
+                                        ? "Enter your email to unlock an exclusive $300 discount code for any DreamPlay keyboard or bundle."
+                                        : "Enter your email to instantly download our Hand-Measuring Guide to see exactly which piano size will help you the most."}
                             </p>
                         </div>
 
@@ -294,7 +315,9 @@ export default function NewsletterPopup() {
                                     ? "Processing..."
                                     : activePopup === "shipping"
                                         ? "Get Free Shipping Pass"
-                                        : "Get Free PDF Guide"}
+                                        : activePopup === "discount"
+                                            ? "Unlock $300 Off"
+                                            : "Get Free PDF Guide"}
                             </button>
 
                             <button
@@ -309,15 +332,18 @@ export default function NewsletterPopup() {
                             </p>
                         </form>
                     </>
-                ) : isSubmitted === "shipping" ? (
-                    /* ── Shipping Success: Check your email ── */
+                ) : isSubmitted === "shipping" || isSubmitted === "discount" ? (
+                    /* ── Shipping / Discount Success: Check your email ── */
                     <div className="text-center py-6">
                         <div className="mx-auto bg-white border border-white/20 w-16 h-16 rounded-none flex items-center justify-center mb-6">
                             <CheckCircle2 className="text-black" size={32} strokeWidth={1.5} />
                         </div>
                         <h3 className="text-2xl font-serif text-white mb-3">Check your inbox.</h3>
                         <p className="text-white/60 font-sans text-sm mb-8 max-w-xs mx-auto leading-relaxed">
-                            We just sent you an email with instructions to unlock your VIP Free Shipping Pass. Create your account to claim it.
+                            {isSubmitted === "discount"
+                                ? "We just sent you an email with your exclusive $300 discount code. Use it at checkout to save on any DreamPlay keyboard or bundle."
+                                : "We just sent you an email with instructions to unlock your VIP Free Shipping Pass. Create your account to claim it."
+                            }
                         </p>
                         <button
                             onClick={handleClose}
