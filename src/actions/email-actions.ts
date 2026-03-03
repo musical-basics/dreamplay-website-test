@@ -76,7 +76,38 @@ export async function subscribeToNewsletter(payload: SubscribePayload): Promise<
                         : "Here is your Hand-Measuring Guide 🎹";
 
                 const activateUrl = `https://dreamplaypianos.com/activate?email=${encodeURIComponent(payload.email)}`;
-                const discountCheckoutUrl = `https://dreamplaypianos.com/customize?discount=SAVE300`;
+
+                // Generate a real Shopify discount code for $300 Off leads
+                let discountCode = "SAVE300"; // fallback
+                if (isDiscountLead) {
+                    try {
+                        const discountRes = await fetch("https://email.dreamplaypianos.com/api/generate-discount", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": `Bearer ${process.env.INTERNAL_API_SECRET}`,
+                            },
+                            body: JSON.stringify({
+                                type: "fixed_amount",
+                                value: 300,
+                                durationDays: 30,
+                                codePrefix: "SAVE300",
+                                usageLimit: 1,
+                            }),
+                        });
+                        const discountData = await discountRes.json();
+                        if (discountData.success && discountData.code) {
+                            discountCode = discountData.code;
+                            console.log(`Generated Shopify discount code: ${discountCode} for ${payload.email}`);
+                        } else {
+                            console.error("Discount generation failed, using fallback:", discountData.error);
+                        }
+                    } catch (discountErr) {
+                        console.error("Failed to generate discount code, using fallback:", discountErr);
+                    }
+                }
+
+                const discountCheckoutUrl = `https://dreamplaypianos.com/customize?discount=${discountCode}`;
 
                 const emailHtml = isShippingLead
                     ? `
@@ -107,7 +138,7 @@ export async function subscribeToNewsletter(payload: SubscribePayload): Promise<
                             
                             <div style="background-color: #f9f9f9; border: 2px dashed #ccc; padding: 24px; text-align: center; margin: 30px 0;">
                                 <p style="font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 2px; margin: 0 0 8px 0;">Your Discount Code</p>
-                                <p style="font-size: 32px; font-weight: bold; font-family: monospace; letter-spacing: 4px; color: #111; margin: 0;">SAVE300</p>
+                                <p style="font-size: 32px; font-weight: bold; font-family: monospace; letter-spacing: 4px; color: #111; margin: 0;">${discountCode}</p>
                             </div>
 
                             <div style="text-align: center; margin: 30px 0;">
