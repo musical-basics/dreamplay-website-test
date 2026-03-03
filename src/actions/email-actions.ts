@@ -67,12 +67,16 @@ export async function subscribeToNewsletter(payload: SubscribePayload): Promise<
                 const resend = new Resend(resendApiKey);
 
                 const isShippingLead = apiPayload.tags?.includes("Free Shipping Lead");
+                const isDiscountLead = apiPayload.tags?.includes("$300 Off Lead");
 
                 const emailSubject = isShippingLead
                     ? "Lock in your Free Shipping Pass 🎹"
-                    : "Here is your Hand-Measuring Guide 🎹";
+                    : isDiscountLead
+                        ? "Your $300 discount code is here 🎹"
+                        : "Here is your Hand-Measuring Guide 🎹";
 
                 const activateUrl = `https://dreamplaypianos.com/activate?email=${encodeURIComponent(payload.email)}`;
+                const discountCheckoutUrl = `https://dreamplaypianos.com/customize?discount=SAVE300`;
 
                 const emailHtml = isShippingLead
                     ? `
@@ -95,7 +99,42 @@ export async function subscribeToNewsletter(payload: SubscribePayload): Promise<
                             <p style="font-size: 11px; color: #bbb;">If you didn't request this, you can safely ignore this email.</p>
                         </div>
                     `
-                    : `
+                    : isDiscountLead
+                        ? `
+                        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111;">
+                            <h1 style="font-family: serif; font-size: 28px;">Your exclusive $300 discount is ready.</h1>
+                            <p style="color: #444; line-height: 1.6;">As promised, here is your exclusive discount code to save $300 on any DreamPlay keyboard or bundle.</p>
+                            
+                            <div style="background-color: #f9f9f9; border: 2px dashed #ccc; padding: 24px; text-align: center; margin: 30px 0;">
+                                <p style="font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 2px; margin: 0 0 8px 0;">Your Discount Code</p>
+                                <p style="font-size: 32px; font-weight: bold; font-family: monospace; letter-spacing: 4px; color: #111; margin: 0;">SAVE300</p>
+                            </div>
+
+                            <div style="text-align: center; margin: 30px 0;">
+                                <a href="${discountCheckoutUrl}" 
+                                   style="background-color: #050505; color: white; padding: 16px 32px; text-decoration: none; font-weight: bold; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; display: inline-block;">
+                                   Apply Code & Configure My Piano
+                                </a>
+                            </div>
+
+                            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;" />
+
+                            <p style="color: #444; line-height: 1.6;"><strong>Want free worldwide shipping too?</strong></p>
+                            <p style="color: #444; line-height: 1.6;">Create a VIP account and stack a free shipping pass on top of your $300 discount (saves another $150+).</p>
+                            
+                            <div style="text-align: center; margin: 25px 0;">
+                                <a href="${activateUrl}" 
+                                   style="background-color: transparent; color: #050505; border: 2px solid #050505; padding: 14px 28px; text-decoration: none; font-weight: bold; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; display: inline-block;">
+                                   Create VIP Account for Free Shipping
+                                </a>
+                            </div>
+
+                            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;" />
+                            <p style="font-size: 12px; color: #999;">Best,<br>Lionel & the DreamPlay team</p>
+                            <p style="font-size: 11px; color: #bbb;">If you didn't request this, you can safely ignore this email.</p>
+                        </div>
+                    `
+                        : `
                         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111;">
                             <h1 style="font-family: serif;">Welcome to DreamPlay!</h1>
                             <p>As promised, here is your printable guide to figuring out exactly what piano size fits your biology.</p>
