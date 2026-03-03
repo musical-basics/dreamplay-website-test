@@ -9,9 +9,11 @@ import { X, CheckCircle2, ChevronRight, Loader2, Mail } from "lucide-react";
 interface RegisterModalProps {
     isOpen: boolean;
     onClose: () => void;
+    discountCode?: string;
+    onSuccess?: () => void;
 }
 
-export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
+export function RegisterModal({ isOpen, onClose, discountCode, onSuccess }: RegisterModalProps) {
     const [step, setStep] = useState(1);
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
@@ -70,10 +72,11 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
             }
 
             // 2. Add to Newsletter/CRM
+            const discountTag = discountCode ? [`Discount: ${discountCode}`] : [];
             const res = await subscribeToNewsletter({
                 email,
                 first_name: name.split(" ")[0],
-                tags: ["VIP Account", "Free Shipping Lead", `Reason: ${reason}`].filter(Boolean)
+                tags: ["VIP Account", "Free Shipping Lead", `Reason: ${reason}`, ...discountTag].filter(Boolean)
             });
 
             // 3. Save to LocalStorage for analytics/forms
@@ -85,7 +88,11 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
             }
 
             trackEmailConversion('conversion_t1', window.location.pathname);
-            setStep(5);
+            if (onSuccess) {
+                onSuccess();
+            } else {
+                setStep(5);
+            }
 
         } catch (err: any) {
             setError(err.message || "Something went wrong.");
@@ -96,7 +103,7 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
     return (
         <div className="fixed inset-0 z-[2000] flex items-center justify-center px-4 bg-black/80 backdrop-blur-sm transition-opacity duration-300">
             <div className="relative w-full max-w-md bg-[#050505] border border-white/10 shadow-2xl p-8 md:p-10">
-                {step < 5 && (
+                {step < 5 && !discountCode && (
                     <button onClick={onClose} className="absolute right-4 top-4 text-white/40 hover:text-white transition-colors cursor-pointer">
                         <X size={20} />
                     </button>
@@ -121,8 +128,14 @@ export function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
                 {step === 1 && (
                     <div className="space-y-4">
                         <div className="text-center mb-6">
-                            <h2 className="text-2xl font-serif text-white tracking-tight mb-2">Activate Free Shipping</h2>
-                            <p className="text-white/60 text-sm font-sans">Create a VIP account to unlock free global shipping on your order.</p>
+                            <h2 className="text-2xl font-serif text-white tracking-tight mb-2">
+                                {discountCode ? "Register to Claim Your Discount" : "Activate Free Shipping"}
+                            </h2>
+                            <p className="text-white/60 text-sm font-sans">
+                                {discountCode
+                                    ? "Create a VIP account to use your exclusive discount code."
+                                    : "Create a VIP account to unlock free global shipping on your order."}
+                            </p>
                         </div>
                         <form onSubmit={handleNext}>
                             <label className="block font-sans text-[10px] uppercase tracking-[0.3em] text-white/50 mb-2">Email Address</label>

@@ -11,6 +11,7 @@ import { useABAnalytics } from "@/hooks/use-ab-analytics";
 import { ArrowRight, ArrowLeft, Check, ShieldCheck, X, CheckCircle2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { VARIANT_MAP } from "./variant-map";
+import { RegisterModal } from "@/components/RegisterModal";
 
 interface CustomizeClientProps {
     urls: {
@@ -64,6 +65,8 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
 
     // Auth & Urgency Widget State
     const [authUser, setAuthUser] = useState<any>(null);
+    const [authChecked, setAuthChecked] = useState(false);
+    const [showRegisterGate, setShowRegisterGate] = useState(false);
     const [widgetTimeLeft, setWidgetTimeLeft] = useState(12 * 60);
     const [showWidget, setShowWidget] = useState(true);
 
@@ -253,7 +256,12 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
         const fetchUser = async () => {
             const supabase = createClient();
             const { data } = await supabase.auth.getUser();
-            if (data.user) setAuthUser(data.user);
+            if (data.user) {
+                setAuthUser(data.user);
+            } else if (discountCode) {
+                setShowRegisterGate(true);
+            }
+            setAuthChecked(true);
         };
         fetchUser();
     }, []);
@@ -1264,6 +1272,22 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
                         )}
                     </div>
                 </div>
+            )}
+
+            {/* Discount Registration Gate */}
+            {showRegisterGate && (
+                <RegisterModal
+                    isOpen={true}
+                    onClose={() => { }}
+                    discountCode={discountCode || undefined}
+                    onSuccess={async () => {
+                        setShowRegisterGate(false);
+                        // Re-fetch the auth user after registration
+                        const supabase = createClient();
+                        const { data } = await supabase.auth.getUser();
+                        if (data.user) setAuthUser(data.user);
+                    }}
+                />
             )}
         </div>
     );
