@@ -256,15 +256,18 @@ export default function CustomizeClient({ urls, hiddenProducts }: CustomizeClien
         const fetchUser = async () => {
             const supabase = createClient();
             const { data } = await supabase.auth.getUser();
+            // Read discount directly from URL/session — don't rely on discountCode state
+            // which may not be set yet due to React's async state batching
+            const hasDiscount = searchParams.get("discount") || sessionStorage.getItem("dp_vip_discount");
             if (data.user) {
                 setAuthUser(data.user);
-            } else if (discountCode) {
+            } else if (hasDiscount) {
                 setShowRegisterGate(true);
             }
             setAuthChecked(true);
         };
         fetchUser();
-    }, []);
+    }, [searchParams]);
 
     // 12-minute urgency timer
     useEffect(() => {
