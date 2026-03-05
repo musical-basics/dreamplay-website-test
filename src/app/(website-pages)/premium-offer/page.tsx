@@ -4,6 +4,8 @@ import { CrowdfundingSection } from "@/components/premium-offer/crowdfunding-sec
 import { SocialProofBar } from "@/components/premium-offer/social-proof-bar"
 import { InlineBuyersGuide } from "@/components/premium-offer/audience-fork-section"
 import { ChildHeroSection } from "@/components/premium-offer/child-hero-section"
+import { TradeInSection } from "@/components/premium-offer/trade-in-section"
+import { TradeInFaqSection } from "@/components/premium-offer/trade-in-faq-section"
 import { HandComparisonSection } from "@/components/premium-offer/hand-comparison-section"
 import { VideoHero3 } from "@/components/premium-offer/video-hero-3"
 import { SizeFinderSection } from "@/components/premium-offer/size-finder-section"
@@ -52,73 +54,83 @@ export default async function PremiumOfferPage() {
                         <InlineBuyersGuide />
                     </div>
 
-                    {/* Section 3 — Child Hero */}
+                    {/* Section 3 — Child Hero (Video Hero 2) */}
                     <div className="sticky top-0 z-[13] min-h-screen md:min-h-0 md:aspect-video">
                         <ChildHeroSection />
                     </div>
 
-                    {/* Section 4 — Hand Comparison */}
-                    <div className="sticky top-0 z-[14] min-h-screen md:min-h-0 md:aspect-video flex flex-col justify-center bg-white">
+                    {/* Section 4 — Trade-In Upgrade */}
+                    <div className="sticky top-0 z-[14]">
+                        <TradeInSection />
+                    </div>
+
+                    {/* Section 5 — Trade-In FAQ */}
+                    <div className="sticky top-0 z-[15] bg-white">
+                        <TradeInFaqSection />
+                    </div>
+
+                    {/* Section 6 — Hand Comparison */}
+                    <div className="sticky top-0 z-[16] min-h-screen md:min-h-0 md:aspect-video flex flex-col justify-center bg-white">
                         <HandComparisonSection />
                     </div>
 
-                    {/* Section 5 — Video Hero 3 */}
-                    <div className="sticky top-0 z-[15]">
+                    {/* Section 7 — Video Hero 3 */}
+                    <div className="sticky top-0 z-[17]">
                         <VideoHero3 />
                     </div>
 
-                    {/* Section 6 — Size Finder */}
-                    <div className="sticky top-0 z-[16] min-h-screen md:min-h-0 md:aspect-video flex flex-col justify-center bg-white">
+                    {/* Section 8 — Size Finder */}
+                    <div className="sticky top-0 z-[18] min-h-screen md:min-h-0 md:aspect-video flex flex-col justify-center bg-white">
                         <SizeFinderSection />
                     </div>
 
-                    {/* Section 7 — Video */}
-                    <div className="sticky top-0 z-[17] min-h-screen md:min-h-0 md:aspect-video">
+                    {/* Section 9 — Video */}
+                    <div className="sticky top-0 z-[19] min-h-screen md:min-h-0 md:aspect-video">
                         <section id="video"><VideoSection /></section>
                     </div>
 
-                    {/* Section 8 — Features */}
-                    <div className="sticky top-0 z-[18]">
+                    {/* Section 10 — Features */}
+                    <div className="sticky top-0 z-[20]">
                         <FeaturesSection />
                     </div>
 
-                    {/* Section 9 — Specs (accordion overlays Video Hero 4 below) */}
-                    <div className="sticky top-0 z-[20]">
+                    {/* Section 11 — Specs (accordion overlays Video Hero 4 below) */}
+                    <div className="sticky top-0 z-[22]">
                         <SpecsSection />
                     </div>
 
-                    {/* Section 10 — Video Hero 4 */}
-                    <div className="sticky top-0 z-[19]">
+                    {/* Section 12 — Video Hero 4 */}
+                    <div className="sticky top-0 z-[21]">
                         <VideoHero4 />
                     </div>
 
-                    {/* Section 11 — Size Visual */}
-                    <div className="sticky top-0 z-[21] bg-[#f5f5f0]">
+                    {/* Section 13 — Size Visual */}
+                    <div className="sticky top-0 z-[23] bg-[#f5f5f0]">
                         <SizeVisualSection />
                     </div>
 
-                    {/* Section 12 — Stanford Quote */}
-                    <div className="sticky top-0 z-[22]">
+                    {/* Section 14 — Stanford Quote */}
+                    <div className="sticky top-0 z-[24]">
                         <StanfordQuoteSection />
                     </div>
 
-                    {/* Section 13 — Creator */}
-                    <div className="sticky top-0 z-[23]">
-                        <CreatorSection />
-                    </div>
-
-                    {/* Section 14 — Trust */}
-                    <div className="sticky top-0 z-[24] bg-white">
+                    {/* Section 15 — Trust (Built to Last) */}
+                    <div className="sticky top-0 z-[25]">
                         <TrustSection />
                     </div>
 
-                    {/* Section 15 — Pricing */}
-                    <div className="sticky top-0 z-[25]">
+                    {/* Section 16 — Creator */}
+                    <div className="sticky top-0 z-[26]">
+                        <CreatorSection />
+                    </div>
+
+                    {/* Section 17 — Pricing */}
+                    <div className="sticky top-0 z-[27]">
                         <PricingSection hiddenProducts={hiddenProducts} />
                     </div>
 
-                    {/* Section 16 — Guarantee */}
-                    <div className="sticky top-0 z-[26] bg-white">
+                    {/* Section 18 — Guarantee */}
+                    <div className="sticky top-0 z-[28] bg-white">
                         <GuaranteeSection />
                     </div>
                 </div>
