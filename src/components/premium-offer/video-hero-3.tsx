@@ -1,42 +1,14 @@
 "use client"
 
-import { useRef, useEffect } from "react"
-
-const BG_VIDEO = "/videos/DreamPlay Hero 1080p v4 Loop.mov"
+const BG_VIDEO = "/videos/DreamPlay Hero 1080p Video Hero 3 Loop (Hand Sizes).mov"
 
 export function VideoHero3() {
-    const videoRef = useRef<HTMLVideoElement>(null)
-
-    useEffect(() => {
-        const video = videoRef.current
-        if (!video) return
-
-        const handleLoaded = () => {
-            video.currentTime = 0
-        }
-
-        const handleTimeUpdate = () => {
-            if (video.currentTime >= 7) {
-                video.currentTime = 0
-                video.play()
-            }
-        }
-
-        video.addEventListener("loadedmetadata", handleLoaded)
-        video.addEventListener("timeupdate", handleTimeUpdate)
-
-        return () => {
-            video.removeEventListener("loadedmetadata", handleLoaded)
-            video.removeEventListener("timeupdate", handleTimeUpdate)
-        }
-    }, [])
-
     return (
         <section className="relative min-h-screen md:min-h-0 md:aspect-video overflow-hidden">
             <video
-                ref={videoRef}
                 autoPlay
                 muted
+                loop
                 playsInline
                 className="absolute inset-0 h-full w-full object-cover brightness-[0.55] contrast-[1.1] saturate-[0.85]"
             >

@@ -13,7 +13,6 @@ import { VideoHero4 } from "@/components/premium-offer/video-hero-4"
 import { SizeVisualSection } from "@/components/premium-offer/size-visual-section"
 import { SpecsSection } from "@/components/premium-offer/specs-section"
 import { StanfordQuoteSection } from "@/components/premium-offer/stanford-quote-section"
-import { SwitchingSection } from "@/components/premium-offer/switching-section"
 import { CreatorSection } from "@/components/premium-offer/creator-section"
 import { TrustSection } from "@/components/premium-offer/trust-section"
 import { PricingSection } from "@/components/premium-offer/pricing-section"
@@ -79,23 +78,23 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 8 — Features */}
-                    <div className="sticky top-0 z-[18] min-h-screen md:min-h-0 md:aspect-video">
+                    <div className="sticky top-0 z-[18]">
                         <FeaturesSection />
                     </div>
 
-                    {/* Section 9 — Video Hero 4 */}
+                    {/* Section 9 — Specs (accordion overlays Video Hero 4 below) */}
                     <div className="sticky top-0 z-[19]">
+                        <SpecsSection />
+                    </div>
+
+                    {/* Section 10 — Video Hero 4 */}
+                    <div className="sticky top-0 z-[20]">
                         <VideoHero4 />
                     </div>
 
-                    {/* Section 10 — Size Visual */}
-                    <div className="sticky top-0 z-[20] bg-[#f5f5f0]">
+                    {/* Section 11 — Size Visual */}
+                    <div className="sticky top-0 z-[21] bg-[#f5f5f0]">
                         <SizeVisualSection />
-                    </div>
-
-                    {/* Section 11 — Specs */}
-                    <div className="sticky top-0 z-[21]">
-                        <SpecsSection />
                     </div>
 
                     {/* Section 12 — Stanford Quote */}
@@ -103,28 +102,23 @@ export default async function PremiumOfferPage() {
                         <StanfordQuoteSection />
                     </div>
 
-                    {/* Section 13 — Switching */}
-                    <div className="sticky top-0 z-[23] bg-neutral-50">
-                        <SwitchingSection />
-                    </div>
-
-                    {/* Section 14 — Creator */}
-                    <div className="sticky top-0 z-[24]">
+                    {/* Section 13 — Creator */}
+                    <div className="sticky top-0 z-[23]">
                         <CreatorSection />
                     </div>
 
-                    {/* Section 15 — Trust */}
-                    <div className="sticky top-0 z-[25] bg-white">
+                    {/* Section 14 — Trust */}
+                    <div className="sticky top-0 z-[24] bg-white">
                         <TrustSection />
                     </div>
 
-                    {/* Section 16 — Pricing */}
-                    <div className="sticky top-0 z-[26]">
+                    {/* Section 15 — Pricing */}
+                    <div className="sticky top-0 z-[25]">
                         <PricingSection hiddenProducts={hiddenProducts} />
                     </div>
 
-                    {/* Section 17 — Guarantee */}
-                    <div className="sticky top-0 z-[27] bg-white">
+                    {/* Section 16 — Guarantee */}
+                    <div className="sticky top-0 z-[26] bg-white">
                         <GuaranteeSection />
                     </div>
                 </div>
