@@ -80,7 +80,7 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
           <h2 className="mt-4 font-serif text-3xl leading-tight text-background md:text-4xl lg:text-5xl text-balance">
             Reserve your DreamPlay One.
           </h2>
-          <p className="mt-6 font-sans text-sm leading-relaxed text-background/60 md:text-base">
+          <p className="mt-6 font-sans text-sm font-medium leading-relaxed text-background/60 md:text-base">
             Ships worldwide. Choose the size and color that suits you after
             placing your order.
           </p>
@@ -149,7 +149,7 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
                 )}
               </div>
 
-              <p className="mt-6 font-sans text-sm leading-relaxed text-background/60">
+              <p className="mt-6 font-sans text-sm font-medium leading-relaxed text-background/60">
                 {tier.description}
               </p>
 
@@ -161,7 +161,7 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
                 {tier.includes.map((item) => (
                   <div key={item} className="flex items-center gap-2">
                     <span className="h-1 w-1 rounded-full bg-background/40" />
-                    <span className="font-sans text-sm text-background/70">
+                    <span className="font-sans text-sm font-medium text-background/70">
                       {item}
                     </span>
                   </div>
@@ -174,7 +174,7 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
                   <p className="font-sans text-xs text-background/40">
                     Delivery
                   </p>
-                  <p className="font-sans text-sm text-background/70">
+                  <p className="font-sans text-sm font-medium text-background/70">
                     {tier.delivery}
                   </p>
                 </div>
@@ -183,7 +183,7 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
                   <p className="font-sans text-xs text-background/40">
                     Backers
                   </p>
-                  <p className="font-sans text-sm text-background/70">
+                  <p className="font-sans text-sm font-medium text-background/70">
                     {tier.backers}
                   </p>
                 </div>
@@ -192,7 +192,7 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
                   <p className="font-sans text-xs text-background/40">
                     Left
                   </p>
-                  <p className="font-sans text-sm text-background/70">
+                  <p className="font-sans text-sm font-medium text-background/70">
                     {tier.remaining} of {tier.total}
                   </p>
                 </div>

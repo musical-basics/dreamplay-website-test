@@ -17,7 +17,7 @@ export function SizeFinderSection() {
           <h2 className="mt-2 font-serif text-3xl leading-tight text-neutral-900 md:text-4xl lg:text-5xl text-balance">
             Two sizes. One perfect fit.
           </h2>
-          <p className="mt-3 font-sans text-sm leading-relaxed text-neutral-500 md:text-base">
+          <p className="mt-3 font-sans text-sm font-medium leading-relaxed text-neutral-500 md:text-base">
             We use the official DS Standard sizes &mdash; the same standard
             adopted by top universities worldwide. This is a professional
             instrument, not a toy.
@@ -33,7 +33,7 @@ export function SizeFinderSection() {
                 How to Measure Your Hand
               </h3>
             </div>
-            <p className="mt-2 font-sans text-sm leading-relaxed text-neutral-500 md:text-base">
+            <p className="mt-2 font-sans text-sm font-medium leading-relaxed text-neutral-500 md:text-base">
               Place your hand flat on a table, fingers spread naturally. Measure
               from the tip of your thumb to the tip of your pinky. This is your
               hand span.
@@ -69,7 +69,7 @@ export function SizeFinderSection() {
             </p>
             <h3 className="font-serif text-2xl md:text-3xl">DS5.5</h3>
             <p
-              className={`font-sans text-sm leading-relaxed md:text-base ${selectedSize === "ds55"
+              className={`font-sans text-sm font-medium leading-relaxed md:text-base ${selectedSize === "ds55"
                 ? "text-white/70"
                 : "text-neutral-500"
                 }`}
@@ -113,7 +113,7 @@ export function SizeFinderSection() {
             </p>
             <h3 className="font-serif text-2xl md:text-3xl">DS6.0</h3>
             <p
-              className={`font-sans text-sm leading-relaxed md:text-base ${selectedSize === "ds60"
+              className={`font-sans text-sm font-medium leading-relaxed md:text-base ${selectedSize === "ds60"
                 ? "text-white/70"
                 : "text-neutral-500"
                 }`}
@@ -143,7 +143,7 @@ export function SizeFinderSection() {
 
         {selectedSize && (
           <div className="mt-8 border border-neutral-200 bg-neutral-50 p-6 md:p-8">
-            <p className="font-sans text-sm leading-relaxed text-neutral-900 md:text-base">
+            <p className="font-sans text-sm font-medium leading-relaxed text-neutral-900 md:text-base">
               {selectedSize === "ds55" ? (
                 <>
                   You are in {'"'}Zone A{'"'} of the pianists (under 7.6 inches

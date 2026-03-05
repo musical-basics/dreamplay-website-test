@@ -47,7 +47,7 @@ export function AudienceForkSection() {
                         <Music className={`h-7 w-7 ${selfIsDark ? "text-white/60" : "text-neutral-600"}`} strokeWidth={2} />
                         <div>
                             <h3 className="font-serif text-2xl font-semibold md:text-3xl">For Myself</h3>
-                            <p className={`mt-3 font-sans text-base leading-relaxed ${selfIsDark ? "text-white/70" : "text-neutral-600"}`}>
+                            <p className={`mt-3 font-sans text-base font-medium leading-relaxed ${selfIsDark ? "text-white/70" : "text-neutral-600"}`}>
                                 Eliminate wrist pain, unlock Chopin &amp; Liszt repertoire, and play with proper technique — endorsed by Stanford University researchers.
                             </p>
                         </div>
@@ -70,7 +70,7 @@ export function AudienceForkSection() {
                         <Baby className={`h-7 w-7 ${childIsDark ? "text-white/70" : "text-neutral-600"}`} strokeWidth={2} />
                         <div>
                             <h3 className="font-serif text-2xl font-semibold md:text-3xl">For a Child</h3>
-                            <p className={`mt-3 font-sans text-base leading-relaxed ${childIsDark ? "text-white/70" : "text-neutral-600"}`}>
+                            <p className={`mt-3 font-sans text-base font-medium leading-relaxed ${childIsDark ? "text-white/70" : "text-neutral-600"}`}>
                                 Build proper technique from day one with keys sized for smaller hands. Light-up LED keys make practice fun and engaging.
                             </p>
                         </div>

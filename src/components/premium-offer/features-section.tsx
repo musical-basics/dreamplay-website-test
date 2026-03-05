@@ -54,7 +54,7 @@ export function FeaturesSection() {
               <h3 className="font-serif text-xl text-background md:text-2xl">
                 {feature.title}
               </h3>
-              <p className="font-sans text-base leading-relaxed text-background/60 md:text-lg">
+              <p className="font-sans text-base font-medium leading-relaxed text-background/60 md:text-lg">
                 {feature.description}
               </p>
             </div>
