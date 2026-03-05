@@ -28,36 +28,35 @@ export function QuestionOne({ selected, onSelect }: QuestionOneProps) {
                     Let us know if you&apos;re shopping for yourself or someone special.
                 </p>
 
-                <div className="grid sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-6">
                     <button
                         onClick={() => onSelect("myself")}
                         className={cn(
-                            "group relative p-8 rounded-2xl border-2 text-left transition-all duration-200",
-                            "hover:border-foreground hover:shadow-lg",
+                            "group relative flex flex-col items-center justify-center text-center aspect-square rounded-2xl border-2 p-8 transition-all duration-200 cursor-pointer",
+                            "hover:shadow-xl hover:border-neutral-900 hover:bg-neutral-900 hover:text-white",
                             selected === "myself"
-                                ? "border-foreground bg-foreground/5"
-                                : "border-border bg-background"
+                                ? "border-neutral-900 bg-neutral-900 text-white shadow-xl"
+                                : "border-border bg-background text-foreground"
                         )}
                     >
-                        <div className="flex items-start gap-4">
-                            <div
-                                className={cn(
-                                    "flex items-center justify-center w-14 h-14 rounded-xl transition-colors",
-                                    selected === "myself" ? "bg-foreground text-background" : "bg-muted text-foreground"
-                                )}
-                            >
-                                <User className="w-6 h-6" />
-                            </div>
-                            <div className="flex-1">
-                                <h3 className="text-xl font-semibold text-foreground mb-1">For Myself</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    I&apos;m looking for a keyboard that fits my own hands
-                                </p>
-                            </div>
+                        <div
+                            className={cn(
+                                "flex items-center justify-center w-16 h-16 rounded-2xl mb-5 transition-colors",
+                                selected === "myself" ? "bg-white/15 text-white" : "bg-muted text-foreground group-hover:bg-white/15 group-hover:text-white"
+                            )}
+                        >
+                            <User className="w-7 h-7" />
                         </div>
+                        <h3 className="text-xl font-semibold mb-2">For Myself</h3>
+                        <p className={cn(
+                            "text-sm font-medium leading-relaxed",
+                            selected === "myself" ? "text-white/70" : "text-muted-foreground group-hover:text-white/70"
+                        )}>
+                            I&apos;m looking for a keyboard that fits my own hands
+                        </p>
                         {selected === "myself" && (
-                            <div className="absolute top-4 right-4 w-6 h-6 rounded-full bg-foreground flex items-center justify-center">
-                                <svg className="w-4 h-4 text-background" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <div className="absolute top-4 right-4 w-6 h-6 rounded-full bg-white flex items-center justify-center">
+                                <svg className="w-4 h-4 text-neutral-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
@@ -67,34 +66,31 @@ export function QuestionOne({ selected, onSelect }: QuestionOneProps) {
                     <button
                         onClick={() => onSelect("someone-else")}
                         className={cn(
-                            "group relative p-8 rounded-2xl border-2 text-left transition-all duration-200",
-                            "hover:border-foreground hover:shadow-lg",
+                            "group relative flex flex-col items-center justify-center text-center aspect-square rounded-2xl border-2 p-8 transition-all duration-200 cursor-pointer",
+                            "hover:shadow-xl hover:border-neutral-900 hover:bg-neutral-900 hover:text-white",
                             selected === "someone-else"
-                                ? "border-foreground bg-foreground/5"
-                                : "border-border bg-background"
+                                ? "border-neutral-900 bg-neutral-900 text-white shadow-xl"
+                                : "border-border bg-background text-foreground"
                         )}
                     >
-                        <div className="flex items-start gap-4">
-                            <div
-                                className={cn(
-                                    "flex items-center justify-center w-14 h-14 rounded-xl transition-colors",
-                                    selected === "someone-else"
-                                        ? "bg-foreground text-background"
-                                        : "bg-muted text-foreground"
-                                )}
-                            >
-                                <Gift className="w-6 h-6" />
-                            </div>
-                            <div className="flex-1">
-                                <h3 className="text-xl font-semibold text-foreground mb-1">For Someone Else</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    I&apos;m buying this as a gift for a child, partner, or friend
-                                </p>
-                            </div>
+                        <div
+                            className={cn(
+                                "flex items-center justify-center w-16 h-16 rounded-2xl mb-5 transition-colors",
+                                selected === "someone-else" ? "bg-white/15 text-white" : "bg-muted text-foreground group-hover:bg-white/15 group-hover:text-white"
+                            )}
+                        >
+                            <Gift className="w-7 h-7" />
                         </div>
+                        <h3 className="text-xl font-semibold mb-2">For Someone Else</h3>
+                        <p className={cn(
+                            "text-sm font-medium leading-relaxed",
+                            selected === "someone-else" ? "text-white/70" : "text-muted-foreground group-hover:text-white/70"
+                        )}>
+                            I&apos;m buying this as a gift for a child, partner, or friend
+                        </p>
                         {selected === "someone-else" && (
-                            <div className="absolute top-4 right-4 w-6 h-6 rounded-full bg-foreground flex items-center justify-center">
-                                <svg className="w-4 h-4 text-background" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <div className="absolute top-4 right-4 w-6 h-6 rounded-full bg-white flex items-center justify-center">
+                                <svg className="w-4 h-4 text-neutral-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
