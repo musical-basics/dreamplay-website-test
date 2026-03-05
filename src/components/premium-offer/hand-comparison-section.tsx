@@ -20,8 +20,8 @@ export function HandComparisonSection() {
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
-                    {/* Standard keyboard - strain */}
-                    <div className="relative group overflow-hidden">
+                    {/* Standard keyboard - strain → How It Works */}
+                    <a href="/how-it-works" className="relative group overflow-hidden block transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl rounded-sm">
                         <div className="relative aspect-[4/3] overflow-hidden">
                             <Image
                                 src="/images/Biomechanical Impact on Small Hands.png"
@@ -46,10 +46,10 @@ export function HandComparisonSection() {
                                 Fingers flatten, tendons overextend, wrists twist. This is the #1 cause of piano-related injuries.
                             </p>
                         </div>
-                    </div>
+                    </a>
 
-                    {/* DreamPlay keyboard - relaxed */}
-                    <div className="relative group overflow-hidden">
+                    {/* DreamPlay keyboard - relaxed → Product Information */}
+                    <a href="/product-information" className="relative group overflow-hidden block transition-transform duration-300 hover:scale-[1.02] hover:shadow-2xl rounded-sm">
                         <div className="relative aspect-[4/3] overflow-hidden">
                             <Image
                                 src="/images/DreamPlay Piano Hands.jpg"
@@ -74,7 +74,7 @@ export function HandComparisonSection() {
                                 Fingers stay curved, wrists neutral. Play for hours without fatigue or pain.
                             </p>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
