@@ -84,9 +84,9 @@ export default async function PremiumOfferPage() {
                         <SizeFinderSection />
                     </div>
 
-                    {/* Section 9 — Specs (accordion overlays Features/VH4 below) */}
-                    <div className="sticky top-0 z-[21]">
-                        <SpecsSection />
+                    {/* Section 9 — Video Hero 4 */}
+                    <div className="sticky top-0 z-[19]">
+                        <VideoHero4 />
                     </div>
 
                     {/* Section 10 — Features */}
@@ -94,9 +94,9 @@ export default async function PremiumOfferPage() {
                         <FeaturesSection />
                     </div>
 
-                    {/* Section 11 — Video Hero 4 */}
-                    <div className="sticky top-0 z-[19]">
-                        <VideoHero4 />
+                    {/* Section 11 — Specs */}
+                    <div className="sticky top-0 z-[21]">
+                        <SpecsSection />
                     </div>
 
                     {/* Section 12 — Size Visual */}
