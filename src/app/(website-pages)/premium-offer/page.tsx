@@ -69,14 +69,14 @@ export default async function PremiumOfferPage() {
                         <TradeInFaqSection />
                     </div>
 
-                    {/* Section 6 — Hand Comparison */}
-                    <div className="sticky top-0 z-[16] min-h-screen md:min-h-0 md:aspect-video flex flex-col justify-center bg-white">
-                        <HandComparisonSection />
+                    {/* Section 6 — Video Hero 3 */}
+                    <div className="sticky top-0 z-[16]">
+                        <VideoHero3 />
                     </div>
 
-                    {/* Section 7 — Video Hero 3 */}
-                    <div className="sticky top-0 z-[17]">
-                        <VideoHero3 />
+                    {/* Section 7 — Hand Comparison */}
+                    <div className="sticky top-0 z-[17] min-h-screen md:min-h-0 md:aspect-video flex flex-col justify-center bg-white">
+                        <HandComparisonSection />
                     </div>
 
                     {/* Section 8 — Size Finder */}
