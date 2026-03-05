@@ -42,33 +42,33 @@ export default async function PremiumOfferPage() {
             <main>
                 {/* ⚡ APPROACH — Hook in 3 seconds */}
                 <CrowdfundingSection />
-                {/* All sections below scroll OVER the sticky hero */}
+                {/* All sections below scroll OVER the sticky hero — each sticks and stacks */}
                 <div className="relative z-10">
-                    <SocialProofBar />
+                    <div className="sticky top-0 z-[11]"><SocialProofBar /></div>
 
                     {/* 🎯 PROBE — Make it personal */}
-                    <InlineBuyersGuide />
-                    <ChildHeroSection />
-                    <HandComparisonSection />
-                    <SizeFinderSection />
+                    <div className="sticky top-0 z-[12]"><InlineBuyersGuide /></div>
+                    <div className="sticky top-0 z-[13]"><ChildHeroSection /></div>
+                    <div className="sticky top-0 z-[14]"><HandComparisonSection /></div>
+                    <div className="sticky top-0 z-[15]"><SizeFinderSection /></div>
 
                     {/* 📦 PRESENT — Show the product */}
-                    <section id="video">
-                        <VideoSection />
-                    </section>
-                    <FeaturesSection />
-                    <SizeVisualSection />
-                    <SpecsSection />
+                    <div className="sticky top-0 z-[16]">
+                        <section id="video"><VideoSection /></section>
+                    </div>
+                    <div className="sticky top-0 z-[17]"><FeaturesSection /></div>
+                    <div className="sticky top-0 z-[18]"><SizeVisualSection /></div>
+                    <div className="sticky top-0 z-[19]"><SpecsSection /></div>
 
                     {/* 🔬 LEVERAGE — Build credibility */}
-                    <StanfordQuoteSection />
-                    <SwitchingSection />
-                    <CreatorSection />
-                    <TrustSection />
+                    <div className="sticky top-0 z-[20]"><StanfordQuoteSection /></div>
+                    <div className="sticky top-0 z-[21]"><SwitchingSection /></div>
+                    <div className="sticky top-0 z-[22]"><CreatorSection /></div>
+                    <div className="sticky top-0 z-[23]"><TrustSection /></div>
 
                     {/* 🔒 LOCKIN — Remove all risk */}
-                    <PricingSection hiddenProducts={hiddenProducts} />
-                    <GuaranteeSection />
+                    <div className="sticky top-0 z-[24]"><PricingSection hiddenProducts={hiddenProducts} /></div>
+                    <div className="sticky top-0 z-[25]"><GuaranteeSection /></div>
                 </div>
             </main>
 
