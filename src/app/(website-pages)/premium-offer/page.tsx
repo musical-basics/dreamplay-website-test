@@ -65,7 +65,7 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 5 — Trade-In FAQ */}
-                    <div className="sticky top-0 z-[15] bg-white">
+                    <div className="sticky top-0 z-[15] bg-neutral-50">
                         <TradeInFaqSection />
                     </div>
 
@@ -110,22 +110,22 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 14 — Stanford Quote */}
-                    <div className="sticky top-0 z-[24]">
+                    <div className="sticky top-0 z-[24] bg-foreground">
                         <StanfordQuoteSection />
                     </div>
 
                     {/* Section 15 — Trust (Built to Last) */}
-                    <div className="sticky top-0 z-[25]">
+                    <div className="sticky top-0 z-[25] bg-background">
                         <TrustSection />
                     </div>
 
                     {/* Section 16 — Creator */}
-                    <div className="sticky top-0 z-[26]">
+                    <div className="sticky top-0 z-[26] bg-foreground">
                         <CreatorSection />
                     </div>
 
                     {/* Section 17 — Pricing */}
-                    <div className="sticky top-0 z-[27]">
+                    <div className="sticky top-0 z-[27] bg-foreground">
                         <PricingSection hiddenProducts={hiddenProducts} />
                     </div>
 
