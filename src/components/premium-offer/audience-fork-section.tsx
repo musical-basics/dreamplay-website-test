@@ -22,7 +22,7 @@ const journeySteps = [
 ]
 
 export function InlineBuyersGuide() {
-    const [currentStep, setCurrentStep] = useState(0)
+    const [currentStep, setCurrentStep] = useState(1)
     const [profile, setProfile] = useState<UserProfile>({
         buyingFor: null,
         demographic: null,
