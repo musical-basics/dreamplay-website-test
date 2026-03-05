@@ -1,27 +1,19 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 const BG_VIDEO = "/videos/DreamPlay Hero 1080p v3.mov"
 
 export function CrowdfundingSection() {
   const [textSlide, setTextSlide] = useState(0)
 
-  // All slides display for 4 seconds, then loop
-  const slideDurations = [4000, 4000, 4000, 4000]
-  const totalSlides = slideDurations.length
+  const totalSlides = 4
 
   useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>
-    const advance = () => {
-      setTextSlide((prev) => {
-        const next = (prev + 1) % totalSlides
-        timeout = setTimeout(advance, slideDurations[next])
-        return next
-      })
-    }
-    timeout = setTimeout(advance, slideDurations[0])
-    return () => clearTimeout(timeout)
+    const timer = setInterval(() => {
+      setTextSlide((prev) => (prev + 1) % totalSlides)
+    }, 4000)
+    return () => clearInterval(timer)
   }, [])
 
   const scrollToVideo = () => {
