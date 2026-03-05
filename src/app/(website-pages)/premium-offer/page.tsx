@@ -42,31 +42,34 @@ export default async function PremiumOfferPage() {
             <main>
                 {/* ⚡ APPROACH — Hook in 3 seconds */}
                 <CrowdfundingSection />
-                <SocialProofBar />
+                {/* All sections below scroll OVER the sticky hero */}
+                <div className="relative z-10">
+                    <SocialProofBar />
 
-                {/* 🎯 PROBE — Make it personal */}
-                <InlineBuyersGuide />
-                <ChildHeroSection />
-                <HandComparisonSection />
-                <SizeFinderSection />
+                    {/* 🎯 PROBE — Make it personal */}
+                    <InlineBuyersGuide />
+                    <ChildHeroSection />
+                    <HandComparisonSection />
+                    <SizeFinderSection />
 
-                {/* 📦 PRESENT — Show the product */}
-                <section id="video">
-                    <VideoSection />
-                </section>
-                <FeaturesSection />
-                <SizeVisualSection />
-                <SpecsSection />
+                    {/* 📦 PRESENT — Show the product */}
+                    <section id="video">
+                        <VideoSection />
+                    </section>
+                    <FeaturesSection />
+                    <SizeVisualSection />
+                    <SpecsSection />
 
-                {/* 🔬 LEVERAGE — Build credibility */}
-                <StanfordQuoteSection />
-                <SwitchingSection />
-                <CreatorSection />
-                <TrustSection />
+                    {/* 🔬 LEVERAGE — Build credibility */}
+                    <StanfordQuoteSection />
+                    <SwitchingSection />
+                    <CreatorSection />
+                    <TrustSection />
 
-                {/* 🔒 LOCKIN — Remove all risk */}
-                <PricingSection hiddenProducts={hiddenProducts} />
-                <GuaranteeSection />
+                    {/* 🔒 LOCKIN — Remove all risk */}
+                    <PricingSection hiddenProducts={hiddenProducts} />
+                    <GuaranteeSection />
+                </div>
             </main>
 
             {/* 🔄 EXTEND */}
