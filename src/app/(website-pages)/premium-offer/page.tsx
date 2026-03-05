@@ -84,44 +84,44 @@ export default async function PremiumOfferPage() {
                         <SizeFinderSection />
                     </div>
 
-                    {/* Section 9 — Video */}
-                    <div className="sticky top-0 z-[19] min-h-screen md:min-h-0 md:aspect-video">
-                        <section id="video"><VideoSection /></section>
-                    </div>
-
-                    {/* Section 10 — Features */}
-                    <div className="sticky top-0 z-[20]">
+                    {/* Section 9 — Features */}
+                    <div className="sticky top-0 z-[19]">
                         <FeaturesSection />
                     </div>
 
-                    {/* Section 11 — Specs (accordion overlays Video Hero 4 below) */}
-                    <div className="sticky top-0 z-[22]">
+                    {/* Section 10 — Specs (accordion overlays Video Hero 4 below) */}
+                    <div className="sticky top-0 z-[21]">
                         <SpecsSection />
                     </div>
 
-                    {/* Section 12 — Video Hero 4 */}
-                    <div className="sticky top-0 z-[21]">
+                    {/* Section 11 — Video Hero 4 */}
+                    <div className="sticky top-0 z-[20]">
                         <VideoHero4 />
                     </div>
 
-                    {/* Section 13 — Size Visual */}
-                    <div className="sticky top-0 z-[23] bg-[#f5f5f0]">
+                    {/* Section 12 — Size Visual */}
+                    <div className="sticky top-0 z-[22] bg-[#f5f5f0]">
                         <SizeVisualSection />
                     </div>
 
-                    {/* Section 14 — Stanford Quote */}
-                    <div className="sticky top-0 z-[24] bg-foreground">
+                    {/* Section 13 — Stanford Quote */}
+                    <div className="sticky top-0 z-[23] bg-foreground">
                         <StanfordQuoteSection />
                     </div>
 
-                    {/* Section 15 — Trust (Built to Last) */}
-                    <div className="sticky top-0 z-[25] bg-background">
+                    {/* Section 14 — Trust (Built to Last) */}
+                    <div className="sticky top-0 z-[24] bg-background">
                         <TrustSection />
                     </div>
 
-                    {/* Section 16 — Creator */}
-                    <div className="sticky top-0 z-[26] bg-foreground">
+                    {/* Section 15 — Creator */}
+                    <div className="sticky top-0 z-[25] bg-foreground">
                         <CreatorSection />
+                    </div>
+
+                    {/* Section 16 — Video */}
+                    <div className="sticky top-0 z-[26] min-h-screen md:min-h-0 md:aspect-video bg-neutral-200">
+                        <section id="video"><VideoSection /></section>
                     </div>
 
                     {/* Section 17 — Pricing */}
