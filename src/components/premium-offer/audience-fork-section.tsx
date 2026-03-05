@@ -74,8 +74,8 @@ export function AudienceForkSection() {
                         onMouseEnter={() => setHovered("self")}
                         onMouseLeave={() => setHovered(null)}
                         className={`group flex flex-col items-start gap-4 rounded-xl p-8 md:p-10 text-left transition-all duration-300 cursor-pointer ${selfIsDark
-                                ? "bg-neutral-900 text-white shadow-lg hover:bg-black hover:shadow-2xl hover:scale-[1.02]"
-                                : "bg-white text-neutral-900 shadow-lg border border-neutral-200 hover:bg-neutral-100 hover:shadow-xl hover:scale-[1.02]"
+                            ? "bg-neutral-900 text-white shadow-lg hover:bg-black hover:shadow-2xl hover:scale-[1.02]"
+                            : "bg-white text-neutral-900 shadow-lg border border-neutral-200 hover:bg-neutral-100 hover:shadow-xl hover:scale-[1.02]"
                             }`}
                     >
                         <Music className={`h-7 w-7 ${selfIsDark ? "text-white/60" : "text-neutral-600"}`} strokeWidth={2} />
@@ -97,8 +97,8 @@ export function AudienceForkSection() {
                         onMouseEnter={() => setHovered("child")}
                         onMouseLeave={() => setHovered(null)}
                         className={`group flex flex-col items-start gap-4 rounded-xl p-8 md:p-10 text-left transition-all duration-300 cursor-pointer ${childIsDark
-                                ? "bg-neutral-800 text-white shadow-2xl scale-[1.02] ring-2 ring-neutral-800"
-                                : "bg-white text-neutral-900 shadow-lg border border-neutral-200 hover:bg-neutral-100 hover:shadow-xl hover:scale-[1.02]"
+                            ? "bg-neutral-800 text-white shadow-2xl scale-[1.02] ring-2 ring-neutral-800"
+                            : "bg-white text-neutral-900 shadow-lg border border-neutral-200 hover:bg-neutral-100 hover:shadow-xl hover:scale-[1.02]"
                             }`}
                     >
                         <Baby className={`h-7 w-7 ${childIsDark ? "text-white/70" : "text-neutral-600"}`} strokeWidth={2} />
@@ -138,10 +138,10 @@ export function AudienceForkSection() {
                                         <div
                                             key={step}
                                             className={`h-1 flex-1 rounded-full transition-all duration-300 ${step === 1
+                                                ? "bg-neutral-900"
+                                                : step <= guideStep
                                                     ? "bg-neutral-900"
-                                                    : step <= guideStep
-                                                        ? "bg-neutral-900"
-                                                        : "bg-neutral-200"
+                                                    : "bg-neutral-200"
                                                 }`}
                                         />
                                     ))}
@@ -152,7 +152,7 @@ export function AudienceForkSection() {
                             <div className="p-6 md:p-8">
                                 {/* Q2: Demographics */}
                                 {guideStep >= 1 && (
-                                    <div className={`transition-all duration-300 ${guideStep === 1 ? "opacity-100" : "opacity-60"}`}>
+                                    <div className="transition-all duration-300">
                                         <QuestionTwo
                                             selected={profile.demographic}
                                             buyingFor={profile.buyingFor}
@@ -166,7 +166,7 @@ export function AudienceForkSection() {
 
                                 {/* Q3: Hand Size */}
                                 {guideStep >= 2 && (
-                                    <div className={`mt-8 pt-8 border-t border-neutral-100 transition-all duration-300 ${guideStep === 2 ? "opacity-100" : "opacity-60"}`}>
+                                    <div className="mt-8 pt-8 border-t border-neutral-100 transition-all duration-300">
                                         <QuestionThree
                                             selected={profile.handSize}
                                             demographic={profile.demographic}
@@ -180,7 +180,7 @@ export function AudienceForkSection() {
 
                                 {/* Q4: Goals */}
                                 {guideStep >= 3 && (
-                                    <div className={`mt-8 pt-8 border-t border-neutral-100 transition-all duration-300 ${guideStep === 3 ? "opacity-100" : "opacity-60"}`}>
+                                    <div className="mt-8 pt-8 border-t border-neutral-100 transition-all duration-300">
                                         <QuestionFour
                                             selected={profile.goal}
                                             onSelect={(value) => {
