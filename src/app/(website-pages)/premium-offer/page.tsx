@@ -124,13 +124,13 @@ export default async function PremiumOfferPage() {
                         <CreatorSection />
                     </div>
 
-                    {/* Section 17 — Pricing */}
-                    <div className="sticky top-0 z-[27] bg-foreground">
+                    {/* Section 17 — Pricing (regular scroll) */}
+                    <div className="relative z-[27] bg-foreground">
                         <PricingSection hiddenProducts={hiddenProducts} />
                     </div>
 
-                    {/* Section 18 — Guarantee */}
-                    <div className="sticky top-0 z-[28] bg-white">
+                    {/* Section 18 — Guarantee (regular scroll) */}
+                    <div className="relative z-[28] bg-white">
                         <GuaranteeSection />
                     </div>
                 </div>
