@@ -99,13 +99,13 @@ export default async function PremiumOfferPage() {
                         <SpecsSection />
                     </div>
 
-                    {/* Section 12 — Size Visual */}
-                    <div className="sticky top-0 z-[22] bg-[#f5f5f0]">
+                    {/* Section 12 — Size Visual (regular scroll) */}
+                    <div className="relative z-[22] bg-[#f5f5f0]">
                         <SizeVisualSection />
                     </div>
 
-                    {/* Section 13 — Stanford Quote */}
-                    <div className="sticky top-0 z-[23] bg-foreground">
+                    {/* Section 13 — Stanford Quote (regular scroll) */}
+                    <div className="relative z-[23] bg-foreground">
                         <StanfordQuoteSection />
                     </div>
 
@@ -114,14 +114,14 @@ export default async function PremiumOfferPage() {
                         <TrustSection />
                     </div>
 
-                    {/* Section 15 — Creator */}
-                    <div className="sticky top-0 z-[25] bg-foreground">
-                        <CreatorSection />
+                    {/* Section 15 — Video */}
+                    <div className="sticky top-0 z-[25] min-h-screen md:min-h-0 md:aspect-video bg-neutral-200">
+                        <section id="video"><VideoSection /></section>
                     </div>
 
-                    {/* Section 16 — Video */}
-                    <div className="sticky top-0 z-[26] min-h-screen md:min-h-0 md:aspect-video bg-neutral-200">
-                        <section id="video"><VideoSection /></section>
+                    {/* Section 16 — Creator */}
+                    <div className="sticky top-0 z-[26] bg-foreground">
+                        <CreatorSection />
                     </div>
 
                     {/* Section 17 — Pricing */}
