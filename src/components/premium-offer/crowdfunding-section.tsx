@@ -102,15 +102,13 @@ export function CrowdfundingSection() {
               Your professional journey
             </p>
             <h2 className="mt-4 font-serif text-2xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
-              Start Here on
+              Start on the DS6.0.
               <br />
-              the DS6.0. Play on
-              <br />
-              Any Stage.
+              Perform on Any Stage.
             </h2>
             <p className="mt-5 max-w-md font-sans text-base font-medium leading-relaxed text-white/80 md:text-xl">
-              Begin with a keyboard built for your hands — then take your
-              skills to any piano, any stage, anywhere.
+              Embark on your professional journey the right way —
+              perform live without strain on any stage.
             </p>
           </div>
 
