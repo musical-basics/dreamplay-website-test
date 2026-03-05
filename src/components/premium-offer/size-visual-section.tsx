@@ -48,7 +48,7 @@ export function SizeVisualSection() {
     const selectedSize = sizes.find(s => s.id === selectedId)
 
     return (
-        <section className="relative overflow-hidden bg-[#f5f5f0]">
+        <section className="relative bg-[#f5f5f0]">
             <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
                 <div className="mb-16 max-w-2xl">
                     <p className="font-sans text-sm uppercase tracking-[0.3em] text-black/50">

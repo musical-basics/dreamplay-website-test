@@ -4,7 +4,7 @@ import Image from "next/image"
 
 export function HandComparisonSection() {
     return (
-        <section className="relative overflow-hidden bg-white">
+        <section className="relative bg-white">
             <div className="mx-auto max-w-6xl px-6 py-16 md:py-24">
                 <div className="mb-10 text-center max-w-2xl mx-auto">
                     <p className="font-sans text-sm uppercase tracking-[0.3em] text-neutral-500">

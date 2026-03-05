@@ -16,7 +16,7 @@ export function GuaranteeSection() {
   }
 
   return (
-    <section id="guarantee" className="relative overflow-hidden bg-background">
+    <section id="guarantee" className="relative bg-background">
       <div className="mx-auto max-w-4xl px-6 py-20 md:py-28 lg:py-32">
         <div className="flex flex-col items-center text-center">
           <ShieldCheck
