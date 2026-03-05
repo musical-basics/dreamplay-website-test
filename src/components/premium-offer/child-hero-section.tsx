@@ -12,17 +12,17 @@ import {
 export function ChildHeroSection() {
     return (
         <section className="relative leading-[0] bg-white">
-            {/* Hero Image */}
-            <div className="relative w-full">
-                <Image
-                    src="/images/mother-child-dreamplay.jpg"
-                    alt="Mother teaching her child to play on DreamPlay One keyboard"
-                    width={1920}
-                    height={1080}
-                    sizes="100vw"
-                    className="block w-full h-auto"
-                    priority
-                />
+            {/* Video Hero 2 */}
+            <div className="relative w-full aspect-video">
+                <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="absolute inset-0 h-full w-full object-cover brightness-[0.6] contrast-[1.1] saturate-[0.85]"
+                >
+                    <source src="/videos/DreamPlay Hero 1080p v5 Loop (mom+child).mov" type="video/mp4" />
+                </video>
                 <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/15 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
 
