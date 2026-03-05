@@ -60,7 +60,7 @@ export function CrowdfundingSection() {
               : "opacity-0 -translate-y-4 pointer-events-none"
               }`}
           >
-            <p className="font-sans text-sm font-medium uppercase tracking-[0.3em] text-white/70 md:text-lg">
+            <p className="font-sans text-sm font-bold uppercase tracking-[0.3em] text-white/70 md:text-lg">
               Now available to pre-order
             </p>
             <h1 className="mt-4 font-serif text-2xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
@@ -79,7 +79,7 @@ export function CrowdfundingSection() {
               : "opacity-0 translate-y-4 pointer-events-none"
               }`}
           >
-            <p className="font-sans text-sm font-medium uppercase tracking-[0.3em] text-white/60 md:text-lg">
+            <p className="font-sans text-sm font-bold uppercase tracking-[0.3em] text-white/60 md:text-lg">
               The reality
             </p>
             <div className="mt-4 flex items-baseline gap-2">
@@ -98,19 +98,19 @@ export function CrowdfundingSection() {
               : "opacity-0 translate-y-4 pointer-events-none"
               }`}
           >
-            <p className="font-sans text-sm font-medium uppercase tracking-[0.3em] text-white/70 md:text-lg">
-              Your journey starts here
+            <p className="font-sans text-sm font-bold uppercase tracking-[0.3em] text-white/70 md:text-lg">
+              Your professional journey
             </p>
             <h2 className="mt-4 font-serif text-2xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
-              Start With Keys
+              Start Here on
               <br />
-              That Fit. Excel on
+              the DS6.0. Play on
               <br />
               Any Stage.
             </h2>
             <p className="mt-5 max-w-md font-sans text-base font-medium leading-relaxed text-white/80 md:text-xl">
-              A keyboard designed for your unique handspan — so you can play
-              the way you were always meant to.
+              Begin with a keyboard built for your hands — then take your
+              skills to any piano, any stage, anywhere.
             </p>
           </div>
 
@@ -121,7 +121,7 @@ export function CrowdfundingSection() {
               : "opacity-0 translate-y-4 pointer-events-none"
               }`}
           >
-            <p className="font-sans text-sm font-medium uppercase tracking-[0.3em] text-white/70 md:text-lg">
+            <p className="font-sans text-sm font-bold uppercase tracking-[0.3em] text-white/70 md:text-lg">
               Learn faster. Play more.
             </p>
             <h2 className="mt-4 font-serif text-2xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
