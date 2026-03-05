@@ -16,7 +16,7 @@ export function VideoHero3() {
         }
 
         const handleTimeUpdate = () => {
-            if (video.currentTime >= 8) {
+            if (video.currentTime >= 7) {
                 video.currentTime = 0
                 video.play()
             }
