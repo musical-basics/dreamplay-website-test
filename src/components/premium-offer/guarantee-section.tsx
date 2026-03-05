@@ -26,7 +26,7 @@ export function GuaranteeSection() {
           <h2 className="mt-6 font-serif text-3xl leading-tight text-foreground md:text-4xl lg:text-5xl text-balance">
             The {'"'}No-Risk{'"'} Guarantee
           </h2>
-          <p className="mt-8 max-w-2xl font-sans text-sm leading-relaxed text-muted-foreground md:text-base">
+          <p className="mt-8 max-w-2xl font-sans text-sm font-medium leading-relaxed text-muted-foreground md:text-base">
             Your pre-order is held in a separate account until production
             begins. If we do not hit our production minimums to maintain our
             quality standards, you get a 100% refund immediately.
@@ -36,7 +36,7 @@ export function GuaranteeSection() {
             You risk nothing.
           </p>
 
-          <div className="mt-6 max-w-xl font-sans text-sm leading-relaxed text-muted-foreground">
+          <div className="mt-6 max-w-xl font-sans text-sm font-medium leading-relaxed text-muted-foreground">
             <p>
               We are working overtime to make sure you get your DreamPlay One
               within the estimated time frame. If we cannot hit the deadline, you

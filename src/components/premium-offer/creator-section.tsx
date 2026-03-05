@@ -32,11 +32,11 @@ export function CreatorSection() {
             <h2 className="mt-4 font-serif text-3xl leading-tight text-background md:text-4xl lg:text-5xl text-balance">
               Lionel Yu
             </h2>
-            <p className="mt-2 font-sans text-sm text-background/50">
+            <p className="mt-2 font-sans text-sm font-medium text-background/50">
               Concert Pianist & Founder &middot; Las Vegas, NV
             </p>
 
-            <p className="mt-8 font-sans text-sm leading-relaxed text-background/70 md:text-base">
+            <p className="mt-8 font-sans text-sm font-medium leading-relaxed text-background/70 md:text-base">
               {'"'}I{"'"}ve been a concert pianist for years, performing at
               Carnegie Hall, the Kennedy Center, Barbican Hall and venues around the world. But
               there{"'"}s something most people never saw: I was constantly
@@ -48,7 +48,7 @@ export function CreatorSection() {
                 <AccordionTrigger className="font-serif text-base text-background hover:no-underline md:text-lg [&>svg]:text-background/60">
                   Read the full story
                 </AccordionTrigger>
-                <AccordionContent className="font-sans text-sm leading-relaxed text-background/60 md:text-base">
+                <AccordionContent className="font-sans text-sm font-medium leading-relaxed text-background/60 md:text-base">
                   <p>
                     My hands span at exactly 8.0 inches. That meant many
                     traditional pieces were difficult, sometimes impossible, for
@@ -89,7 +89,7 @@ export function CreatorSection() {
                     <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-background/30 font-sans text-xs text-background/60">
                       {i + 1}
                     </span>
-                    <p className="font-sans text-sm leading-relaxed text-background/70 md:text-base">
+                    <p className="font-sans text-sm font-medium leading-relaxed text-background/70 md:text-base">
                       {item}
                     </p>
                   </div>

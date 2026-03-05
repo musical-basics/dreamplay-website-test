@@ -36,7 +36,7 @@ export function ChildHeroSection() {
                             <br />
                             Built for Little Hands.
                         </h2>
-                        <p className="mt-4 max-w-sm font-sans text-sm leading-relaxed text-white/85 md:text-base">
+                        <p className="mt-4 max-w-sm font-sans text-sm font-medium leading-relaxed text-white/85 md:text-base">
                             Children deserve keys that actually fit. Start on the DS5.5,
                             upgrade when they grow.
                         </p>
@@ -66,7 +66,7 @@ export function ChildHeroSection() {
                             </div>
                             <h4 className="font-serif text-2xl text-neutral-900 md:text-3xl">DS5.5</h4>
                             <p className="mt-1 font-sans text-xs uppercase tracking-wider text-neutral-400">7/8ths Size</p>
-                            <p className="mt-4 font-sans text-sm leading-relaxed text-neutral-600">
+                            <p className="mt-4 font-sans text-sm font-medium leading-relaxed text-neutral-600">
                                 Perfect for children and petite adults with handspans under 7.6&quot;. The smaller keys
                                 let young hands reach octaves comfortably, building <strong className="text-neutral-900">proper technique</strong> from
                                 the very first lesson.
@@ -87,7 +87,7 @@ export function ChildHeroSection() {
                             </div>
                             <h4 className="font-serif text-2xl text-neutral-900 md:text-3xl">DS6.0</h4>
                             <p className="mt-1 font-sans text-xs uppercase tracking-wider text-neutral-400">15/16ths Size</p>
-                            <p className="mt-4 font-sans text-sm leading-relaxed text-neutral-600">
+                            <p className="mt-4 font-sans text-sm font-medium leading-relaxed text-neutral-600">
                                 As their hands grow past 7.6&quot;, they upgrade to the DS6.0 — the universal size
                                 used by top university programs. Same muscle memory, same relaxed technique, just more room.
                             </p>
@@ -101,7 +101,7 @@ export function ChildHeroSection() {
                                 <AccordionTrigger className="font-sans text-sm uppercase tracking-[0.15em] text-neutral-600 hover:no-underline hover:text-neutral-900 py-4">
                                     Learn More About the Upgrade Path
                                 </AccordionTrigger>
-                                <AccordionContent className="font-sans text-sm leading-relaxed text-neutral-600 md:text-base">
+                                <AccordionContent className="font-sans text-sm font-medium leading-relaxed text-neutral-600 md:text-base">
                                     <div className="flex flex-col gap-4 max-w-3xl">
                                         <p>
                                             <strong className="text-neutral-900">How the upgrade works:</strong> When your child outgrows

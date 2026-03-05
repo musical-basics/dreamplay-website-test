@@ -13,7 +13,7 @@ export function HandComparisonSection() {
                     <h2 className="mt-3 font-serif text-3xl leading-tight text-neutral-900 md:text-4xl lg:text-5xl text-balance">
                         Your hands were never the problem.
                     </h2>
-                    <p className="mt-4 font-sans text-sm leading-relaxed text-neutral-500 md:text-base">
+                    <p className="mt-4 font-sans text-sm font-medium leading-relaxed text-neutral-500 md:text-base">
                         87% of women and 24% of men have hands too small for a standard keyboard.
                         The standard 6.5&quot; octave span was designed for one hand size — and it probably isn&apos;t yours.
                     </p>
@@ -52,8 +52,8 @@ export function HandComparisonSection() {
                     <div className="relative group overflow-hidden">
                         <div className="relative aspect-[4/3] overflow-hidden">
                             <Image
-                                src="/images/Zone B Hand.jpg"
-                                alt="Hand relaxed and naturally arched on DreamPlay DS5.5 keyboard"
+                                src="/images/DreamPlay Piano Hands.jpg"
+                                alt="Hand relaxed and naturally arched on DreamPlay keyboard"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 50vw"
                                 className="object-cover"
