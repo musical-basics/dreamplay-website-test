@@ -89,42 +89,42 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 10 — Size Visual */}
-                    <div className="sticky top-0 z-[20] min-h-screen md:min-h-0 md:aspect-video flex flex-col justify-center bg-[#f5f5f0]">
+                    <div className="sticky top-0 z-[20] bg-[#f5f5f0]">
                         <SizeVisualSection />
                     </div>
 
                     {/* Section 11 — Specs */}
-                    <div className="sticky top-0 z-[21] min-h-screen md:min-h-0 md:aspect-video">
+                    <div className="sticky top-0 z-[21]">
                         <SpecsSection />
                     </div>
 
                     {/* Section 12 — Stanford Quote */}
-                    <div className="sticky top-0 z-[22] min-h-screen md:min-h-0 md:aspect-video flex flex-col justify-center">
+                    <div className="sticky top-0 z-[22]">
                         <StanfordQuoteSection />
                     </div>
 
                     {/* Section 13 — Switching */}
-                    <div className="sticky top-0 z-[23] min-h-screen md:min-h-0 md:aspect-video flex flex-col justify-center bg-neutral-50">
+                    <div className="sticky top-0 z-[23] bg-neutral-50">
                         <SwitchingSection />
                     </div>
 
                     {/* Section 14 — Creator */}
-                    <div className="sticky top-0 z-[24] min-h-screen md:min-h-0 md:aspect-video">
+                    <div className="sticky top-0 z-[24]">
                         <CreatorSection />
                     </div>
 
                     {/* Section 15 — Trust */}
-                    <div className="sticky top-0 z-[25] min-h-screen md:min-h-0 md:aspect-video flex flex-col justify-center bg-white">
+                    <div className="sticky top-0 z-[25] bg-white">
                         <TrustSection />
                     </div>
 
                     {/* Section 16 — Pricing */}
-                    <div className="sticky top-0 z-[26] min-h-screen md:min-h-0 md:aspect-video">
+                    <div className="sticky top-0 z-[26]">
                         <PricingSection hiddenProducts={hiddenProducts} />
                     </div>
 
                     {/* Section 17 — Guarantee */}
-                    <div className="sticky top-0 z-[27] min-h-screen md:min-h-0 md:aspect-video flex flex-col justify-center bg-white">
+                    <div className="sticky top-0 z-[27] bg-white">
                         <GuaranteeSection />
                     </div>
                 </div>
