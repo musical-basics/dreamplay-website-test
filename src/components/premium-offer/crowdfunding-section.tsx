@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 
-const BG_VIDEO = "/videos/DreamPlay Hero 1080p v3.mov"
+const BG_VIDEO = "/videos/DreamPlay Hero 1080p v4 Loop.mov"
 
 export function CrowdfundingSection() {
   const [textSlide, setTextSlide] = useState(0)

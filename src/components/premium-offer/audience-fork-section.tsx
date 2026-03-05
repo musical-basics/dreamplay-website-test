@@ -29,46 +29,46 @@ export function AudienceForkSection() {
                     </h2>
                 </div>
 
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="grid gap-6 md:grid-cols-2">
                     {/* Path A: For Myself */}
                     <button
                         onClick={() => handleSelect("self")}
-                        className={`group flex flex-col items-start gap-4 border-2 p-6 md:p-8 text-left transition-all duration-300 cursor-pointer ${selected === "self"
-                            ? "border-neutral-900 bg-neutral-900 text-white shadow-xl scale-[1.02]"
-                            : "border-neutral-200 bg-white text-neutral-900 hover:border-neutral-400 hover:shadow-lg"
+                        className={`group flex flex-col items-start gap-4 rounded-xl p-8 md:p-10 text-left transition-all duration-300 cursor-pointer ${selected === "self"
+                            ? "bg-neutral-900 text-white shadow-2xl scale-[1.02] ring-2 ring-neutral-900"
+                            : "bg-white text-neutral-900 shadow-lg hover:shadow-xl hover:scale-[1.01]"
                             }`}
                     >
-                        <Music className={`h-6 w-6 ${selected === "self" ? "text-white/70" : "text-neutral-400"}`} strokeWidth={1.5} />
+                        <Music className={`h-7 w-7 ${selected === "self" ? "text-white/70" : "text-neutral-600"}`} strokeWidth={2} />
                         <div>
-                            <h3 className="font-serif text-xl md:text-2xl">For Myself</h3>
-                            <p className={`mt-2 font-sans text-base leading-relaxed ${selected === "self" ? "text-white/70" : "text-neutral-500"}`}>
+                            <h3 className="font-serif text-2xl font-semibold md:text-3xl">For Myself</h3>
+                            <p className={`mt-3 font-sans text-base leading-relaxed ${selected === "self" ? "text-white/70" : "text-neutral-600"}`}>
                                 Eliminate wrist pain, unlock Chopin &amp; Liszt repertoire, and play with proper technique — endorsed by Stanford University researchers.
                             </p>
                         </div>
-                        <div className={`flex items-center gap-2 font-sans text-sm uppercase tracking-wider ${selected === "self" ? "text-white/60" : "text-neutral-400"}`}>
-                            Explore
-                            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+                        <div className={`flex items-center gap-2 font-sans text-sm font-semibold uppercase tracking-wider ${selected === "self" ? "text-white/80" : "text-neutral-900"}`}>
+                            Select
+                            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </div>
                     </button>
 
                     {/* Path B: For a Child */}
                     <button
                         onClick={() => handleSelect("child")}
-                        className={`group flex flex-col items-start gap-4 border-2 p-6 md:p-8 text-left transition-all duration-300 cursor-pointer ${selected === "child"
-                            ? "border-neutral-900 bg-neutral-900 text-white shadow-xl scale-[1.02]"
-                            : "border-neutral-200 bg-white text-neutral-900 hover:border-neutral-400 hover:shadow-lg"
+                        className={`group flex flex-col items-start gap-4 rounded-xl p-8 md:p-10 text-left transition-all duration-300 cursor-pointer ${selected === "child"
+                            ? "bg-neutral-900 text-white shadow-2xl scale-[1.02] ring-2 ring-neutral-900"
+                            : "bg-white text-neutral-900 shadow-lg hover:shadow-xl hover:scale-[1.01]"
                             }`}
                     >
-                        <Baby className={`h-6 w-6 ${selected === "child" ? "text-white/70" : "text-neutral-400"}`} strokeWidth={1.5} />
+                        <Baby className={`h-7 w-7 ${selected === "child" ? "text-white/70" : "text-neutral-600"}`} strokeWidth={2} />
                         <div>
-                            <h3 className="font-serif text-xl md:text-2xl">For a Child</h3>
-                            <p className={`mt-2 font-sans text-base leading-relaxed ${selected === "child" ? "text-white/70" : "text-neutral-500"}`}>
+                            <h3 className="font-serif text-2xl font-semibold md:text-3xl">For a Child</h3>
+                            <p className={`mt-3 font-sans text-base leading-relaxed ${selected === "child" ? "text-white/70" : "text-neutral-600"}`}>
                                 Build proper technique from day one with keys sized for smaller hands. Light-up LED keys make practice fun and engaging.
                             </p>
                         </div>
-                        <div className={`flex items-center gap-2 font-sans text-sm uppercase tracking-wider ${selected === "child" ? "text-white/60" : "text-neutral-400"}`}>
-                            Explore
-                            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+                        <div className={`flex items-center gap-2 font-sans text-sm font-semibold uppercase tracking-wider ${selected === "child" ? "text-white/80" : "text-neutral-900"}`}>
+                            Select
+                            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </div>
                     </button>
                 </div>
