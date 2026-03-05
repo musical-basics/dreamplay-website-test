@@ -47,7 +47,7 @@ export default async function PremiumOfferPage() {
                     <div className="sticky top-0 z-[11]"><SocialProofBar /></div>
 
                     {/* Section 2 — Buyer's Guide */}
-                    <div className="sticky top-0 z-[12] min-h-screen md:min-h-0 md:aspect-video flex flex-col justify-center bg-neutral-100">
+                    <div className="sticky top-0 z-[12] bg-neutral-100">
                         <InlineBuyersGuide />
                     </div>
 
