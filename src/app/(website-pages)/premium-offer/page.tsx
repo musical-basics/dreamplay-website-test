@@ -85,13 +85,9 @@ export default async function PremiumOfferPage() {
                         <VideoHero4 />
                     </div>
 
-                    {/* Section 10 — Features */}
+                    {/* Section 10+11 — Features + Specs (merged) */}
                     <div className="sticky top-0 z-[20]">
                         <FeaturesSection />
-                    </div>
-
-                    {/* Section 11 — Specs */}
-                    <div className="sticky top-0 z-[21]">
                         <SpecsSection />
                     </div>
 
@@ -105,13 +101,9 @@ export default async function PremiumOfferPage() {
                         <StanfordQuoteSection />
                     </div>
 
-                    {/* Section 14 — Trust (Built to Last) */}
-                    <div className="sticky top-0 z-[24] bg-background">
+                    {/* Section 14+15 — Trust + Video (merged) */}
+                    <div className="sticky top-0 z-[24]">
                         <TrustSection />
-                    </div>
-
-                    {/* Section 15 — Video */}
-                    <div className="sticky top-0 z-[25] min-h-screen md:min-h-0 md:aspect-video bg-neutral-200">
                         <section id="video"><VideoSection /></section>
                     </div>
 
