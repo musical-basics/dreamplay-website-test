@@ -74,13 +74,9 @@ export default async function PremiumOfferPage() {
                         <VideoHero3 />
                     </div>
 
-                    {/* Section 7 — Hand Comparison */}
-                    <div className="sticky top-0 z-[17] min-h-screen md:min-h-0 md:aspect-video flex flex-col justify-center bg-white">
+                    {/* Section 7+8 — Hand Comparison + Size Finder (merged) */}
+                    <div className="sticky top-0 z-[17] bg-white">
                         <HandComparisonSection />
-                    </div>
-
-                    {/* Section 8 — Size Finder */}
-                    <div className="sticky top-0 z-[18] min-h-screen md:min-h-0 md:aspect-video flex flex-col justify-center bg-white">
                         <SizeFinderSection />
                     </div>
 

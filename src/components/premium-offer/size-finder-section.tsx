@@ -9,7 +9,7 @@ export function SizeFinderSection() {
 
   return (
     <section id="size" className="relative bg-white">
-      <div className="mx-auto max-w-6xl px-6 py-12 md:py-20">
+      <div className="mx-auto max-w-6xl px-6 pb-12 md:pb-20">
         <div className="mb-8 max-w-2xl">
           <p className="font-sans text-sm uppercase tracking-[0.3em] text-neutral-500">
             Choose Your Fit
