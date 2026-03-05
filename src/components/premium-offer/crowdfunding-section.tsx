@@ -2,25 +2,10 @@
 
 import { useRef, useCallback, useState, useEffect } from "react"
 
-const BG_VIDEOS = [
-  "https://pub-ae162277c7104eb2b558af08104deafc.r2.dev/Clip%203.m4v",
-  "https://pub-ae162277c7104eb2b558af08104deafc.r2.dev/Clip%202.m4v",
-]
+const BG_VIDEO = "/videos/DreamPlay Hero 1080p v3.mov"
 
 export function CrowdfundingSection() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [currentIndex, setCurrentIndex] = useState(0)
   const [textSlide, setTextSlide] = useState(0)
-
-  const handleEnded = useCallback(() => {
-    const nextIndex = (currentIndex + 1) % BG_VIDEOS.length
-    setCurrentIndex(nextIndex)
-    if (videoRef.current) {
-      videoRef.current.src = BG_VIDEOS[nextIndex]
-      videoRef.current.load()
-      videoRef.current.play()
-    }
-  }, [currentIndex])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -37,25 +22,32 @@ export function CrowdfundingSection() {
   return (
     <section className="relative min-h-screen overflow-hidden">
       <video
-        ref={videoRef}
         autoPlay
         muted
+        loop
         playsInline
         className="absolute inset-0 h-full w-full object-cover brightness-[0.6] contrast-[1.1] saturate-[0.85]"
-        onEnded={handleEnded}
       >
-        <source src={BG_VIDEOS[0]} type="video/mp4" />
+        <source src={BG_VIDEO} type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/30" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/25 to-black/10" />
       <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%)' }} />
 
-      <div className="relative z-10 flex h-full min-h-screen flex-col justify-center px-8 md:px-16 lg:px-24">
+      <div
+        className="relative z-10 flex h-full min-h-screen flex-col justify-center px-8 md:px-16 lg:px-24"
+        style={{
+          textShadow: '0 2px 8px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.4)',
+          willChange: 'transform',
+          backfaceVisibility: 'hidden',
+          transform: 'translateZ(0)',
+        }}
+      >
         <div className="relative min-h-[280px] md:min-h-[320px]">
           {/* Slide 1: Headline */}
           <div
             className={`absolute inset-0 transition-all duration-500 ease-in-out ${textSlide === 0
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 -translate-y-4 pointer-events-none"
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-4 pointer-events-none"
               }`}
           >
             <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/70 md:text-xs">
@@ -70,35 +62,30 @@ export function CrowdfundingSection() {
             </h1>
           </div>
 
-          {/* Slide 2: Stat + Description */}
+          {/* Slide 2: Stat */}
           <div
             className={`absolute inset-0 transition-all duration-500 ease-in-out ${textSlide === 1
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4 pointer-events-none"
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-4 pointer-events-none"
               }`}
           >
-            <p className="max-w-lg font-sans text-base leading-relaxed text-white/90 md:text-lg lg:text-xl">
-              88 weighted keys. Narrower by design. Built for the 87% of women and
-              24% of men whose hands were never the right size for a standard
-              keyboard.
+            <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/60 md:text-xs">
+              The reality
             </p>
-            <div className="mt-8 flex items-center gap-6">
-              <div className="flex items-baseline gap-1">
-                <span className="font-serif text-5xl text-white md:text-7xl lg:text-8xl">55</span>
-                <span className="font-serif text-3xl text-white/70 md:text-4xl">%</span>
-              </div>
-              <div className="h-12 w-px bg-white/30" />
-              <p className="font-sans text-sm uppercase tracking-[0.2em] text-white/60 leading-relaxed max-w-[200px]">
-                of pianists have hands under 8.5 inches
-              </p>
+            <div className="mt-4 flex items-baseline gap-2">
+              <span className="font-serif text-6xl text-white md:text-8xl lg:text-9xl">55</span>
+              <span className="font-serif text-4xl text-white/60 md:text-5xl">%</span>
             </div>
+            <p className="mt-4 font-sans text-base text-white/80 md:text-lg max-w-sm">
+              of pianists have hands too small for a standard keyboard.
+            </p>
           </div>
 
           {/* Slide 3: Mantra */}
           <div
             className={`absolute inset-0 transition-all duration-500 ease-in-out ${textSlide === 2
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4 pointer-events-none"
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-4 pointer-events-none"
               }`}
           >
             <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/70 md:text-xs">
@@ -141,7 +128,8 @@ export function CrowdfundingSection() {
           </a>
           <button
             onClick={scrollToVideo}
-            className="group inline-flex items-center justify-center gap-2 border border-white/30 px-8 py-3 text-center text-xs font-sans uppercase tracking-widest text-white transition-colors hover:bg-white/10 md:text-sm cursor-pointer"
+            className="group inline-flex items-center justify-center gap-2 border border-white/40 bg-black px-8 py-3 text-center text-xs font-sans uppercase tracking-widest text-white transition-colors hover:bg-neutral-900 md:text-sm cursor-pointer"
+            style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
           >
             <span className="flex h-5 w-5 items-center justify-center rounded-full border border-white/40">
               <svg viewBox="0 0 24 24" fill="currentColor" className="ml-0.5 h-2.5 w-2.5">
