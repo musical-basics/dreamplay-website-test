@@ -10,7 +10,7 @@ export function SwitchingSection() {
                     <div className="flex-1 lg:max-w-xl">
                         <div className="flex items-center gap-3 mb-4">
                             <RefreshCw className="h-5 w-5 text-neutral-900" strokeWidth={1.5} />
-                            <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-500">
+                            <p className="font-sans text-sm uppercase tracking-[0.3em] text-neutral-500">
                                 The #1 Question We Get
                             </p>
                         </div>
