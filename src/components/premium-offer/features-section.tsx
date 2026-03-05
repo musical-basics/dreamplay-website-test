@@ -33,7 +33,7 @@ export function FeaturesSection() {
     <section id="features" className="relative overflow-hidden bg-foreground">
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
         <div className="mb-16 max-w-2xl">
-          <p className="font-sans text-xs uppercase tracking-[0.3em] text-background/50">
+          <p className="font-sans text-sm uppercase tracking-[0.3em] text-background/50">
             Key Features
           </p>
           <h2 className="mt-4 font-serif text-3xl leading-tight text-background md:text-4xl lg:text-5xl text-balance">
@@ -54,7 +54,7 @@ export function FeaturesSection() {
               <h3 className="font-serif text-xl text-background md:text-2xl">
                 {feature.title}
               </h3>
-              <p className="font-sans text-sm leading-relaxed text-background/60 md:text-base">
+              <p className="font-sans text-base leading-relaxed text-background/60 md:text-lg">
                 {feature.description}
               </p>
             </div>

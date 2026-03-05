@@ -11,7 +11,7 @@ export function SizeFinderSection() {
     <section id="size" className="relative overflow-hidden bg-white">
       <div className="mx-auto max-w-6xl px-6 py-12 md:py-20">
         <div className="mb-8 max-w-2xl">
-          <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-500">
+          <p className="font-sans text-sm uppercase tracking-[0.3em] text-neutral-500">
             Choose Your Fit
           </p>
           <h2 className="mt-2 font-serif text-3xl leading-tight text-neutral-900 md:text-4xl lg:text-5xl text-balance">
@@ -60,7 +60,7 @@ export function SizeFinderSection() {
               }`}
           >
             <p
-              className={`font-sans text-xs uppercase tracking-[0.3em] ${selectedSize === "ds55"
+              className={`font-sans text-sm uppercase tracking-[0.3em] ${selectedSize === "ds55"
                 ? "text-white/60"
                 : "text-neutral-500"
                 }`}
@@ -104,7 +104,7 @@ export function SizeFinderSection() {
               }`}
           >
             <p
-              className={`font-sans text-xs uppercase tracking-[0.3em] ${selectedSize === "ds60"
+              className={`font-sans text-sm uppercase tracking-[0.3em] ${selectedSize === "ds60"
                 ? "text-white/60"
                 : "text-neutral-500"
                 }`}

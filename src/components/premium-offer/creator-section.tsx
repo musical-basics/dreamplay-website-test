@@ -26,7 +26,7 @@ export function CreatorSection() {
 
           {/* Content */}
           <div className="flex flex-col justify-center lg:w-3/5">
-            <p className="font-sans text-xs uppercase tracking-[0.3em] text-background/50">
+            <p className="font-sans text-sm uppercase tracking-[0.3em] text-background/50">
               Meet the Creator
             </p>
             <h2 className="mt-4 font-serif text-3xl leading-tight text-background md:text-4xl lg:text-5xl text-balance">

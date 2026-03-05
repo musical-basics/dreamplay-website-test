@@ -7,7 +7,7 @@ export function HandComparisonSection() {
         <section className="relative overflow-hidden bg-white">
             <div className="mx-auto max-w-6xl px-6 py-16 md:py-24">
                 <div className="mb-10 text-center max-w-2xl mx-auto">
-                    <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-500">
+                    <p className="font-sans text-sm uppercase tracking-[0.3em] text-neutral-500">
                         See the Difference
                     </p>
                     <h2 className="mt-3 font-serif text-3xl leading-tight text-neutral-900 md:text-4xl lg:text-5xl text-balance">

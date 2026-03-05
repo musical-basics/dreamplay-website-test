@@ -12,7 +12,7 @@ export function TrustSection() {
     <section id="trust" className="relative overflow-hidden bg-background">
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
         <div className="mb-16 max-w-2xl">
-          <p className="font-sans text-xs uppercase tracking-[0.3em] text-muted-foreground">
+          <p className="font-sans text-sm uppercase tracking-[0.3em] text-muted-foreground">
             Built to Last
           </p>
           <h2 className="mt-4 font-serif text-3xl leading-tight text-foreground md:text-4xl lg:text-5xl text-balance">

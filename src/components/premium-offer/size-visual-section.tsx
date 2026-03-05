@@ -51,7 +51,7 @@ export function SizeVisualSection() {
         <section className="relative overflow-hidden bg-[#f5f5f0]">
             <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
                 <div className="mb-16 max-w-2xl">
-                    <p className="font-sans text-xs uppercase tracking-[0.3em] text-black/50">
+                    <p className="font-sans text-sm uppercase tracking-[0.3em] text-black/50">
                         Introducing the Sizes
                     </p>
                     <h2 className="mt-4 font-serif text-3xl leading-tight text-black md:text-4xl lg:text-5xl text-balance">

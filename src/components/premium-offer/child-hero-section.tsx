@@ -48,7 +48,7 @@ export function ChildHeroSection() {
             <div className="bg-[#fafaf8]">
                 <div className="mx-auto max-w-5xl px-6 py-16 md:py-24">
                     <div className="mb-10 max-w-2xl">
-                        <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-500">
+                        <p className="font-sans text-sm uppercase tracking-[0.3em] text-neutral-500">
                             The Growth Path
                         </p>
                         <h3 className="mt-3 font-serif text-2xl leading-tight text-neutral-900 md:text-3xl lg:text-4xl text-balance">
