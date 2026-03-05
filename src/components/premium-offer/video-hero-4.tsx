@@ -1,0 +1,37 @@
+"use client"
+
+const BG_VIDEO = "/videos/DreamPlay Hero 1080p Video Hero 4 Loop (Specs.mov"
+
+export function VideoHero4() {
+    return (
+        <section className="relative min-h-screen md:min-h-0 md:aspect-video overflow-hidden">
+            <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 h-full w-full object-cover brightness-[0.55] contrast-[1.1] saturate-[0.85]"
+            >
+                <source src={BG_VIDEO} type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-black/[0.02] to-transparent" />
+            <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.25) 100%)' }} />
+
+            <div
+                className="relative z-10 flex h-full min-h-screen md:min-h-0 md:aspect-video flex-col justify-center px-8 md:px-16 lg:px-24"
+                style={{
+                    textShadow: '0 2px 8px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.4)',
+                }}
+            >
+                <p className="font-sans text-sm font-bold uppercase tracking-[0.3em] text-white/70 md:text-lg">
+                    Professional Grade
+                </p>
+                <h2 className="mt-4 font-serif text-2xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
+                    Everything you need.
+                    <br />
+                    Nothing you don{"'"}t.
+                </h2>
+            </div>
+        </section>
+    )
+}
