@@ -97,7 +97,7 @@ export function SpecsSection() {
   const currentTab = tabData[activeTab]
 
   return (
-    <section id="specs" className="relative overflow-hidden bg-neutral-950">
+    <section id="specs" className="relative bg-neutral-950">
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
         <div className="mb-16 max-w-2xl">
           <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400">

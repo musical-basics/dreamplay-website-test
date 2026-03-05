@@ -8,7 +8,7 @@ import {
 
 export function CreatorSection() {
   return (
-    <section id="creator" className="relative overflow-hidden bg-foreground">
+    <section id="creator" className="relative bg-foreground">
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
         <div className="flex flex-col gap-12 lg:flex-row lg:gap-16">
           {/* Image */}

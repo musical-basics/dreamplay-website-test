@@ -3,7 +3,7 @@ import { ArrowRight, RefreshCw } from "lucide-react"
 
 export function SwitchingSection() {
     return (
-        <section className="relative overflow-hidden bg-neutral-50">
+        <section className="relative bg-neutral-50">
             <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
                 <div className="flex flex-col gap-12 lg:flex-row lg:gap-16 lg:items-center">
                     {/* Content */}

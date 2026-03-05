@@ -11,7 +11,7 @@ import {
 
 export function ChildHeroSection() {
     return (
-        <section className="relative overflow-hidden leading-[0]">
+        <section className="relative leading-[0] bg-white">
             {/* Hero Image */}
             <div className="relative w-full">
                 <Image

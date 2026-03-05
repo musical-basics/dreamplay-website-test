@@ -1,6 +1,6 @@
 export function StanfordQuoteSection() {
     return (
-        <section className="relative overflow-hidden bg-foreground">
+        <section className="relative bg-foreground">
             <div className="mx-auto max-w-4xl px-6 pt-4 pb-16 md:pt-6 md:pb-24">
                 <div className="border-l-2 border-background/20 pl-8 md:pl-12">
                     <blockquote className="font-serif text-xl leading-relaxed text-background/80 md:text-2xl lg:text-3xl text-balance italic">

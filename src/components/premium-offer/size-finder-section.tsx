@@ -8,7 +8,7 @@ export function SizeFinderSection() {
   const [selectedSize, setSelectedSize] = useState<"ds55" | "ds60" | null>(null)
 
   return (
-    <section id="size" className="relative overflow-hidden bg-white">
+    <section id="size" className="relative bg-white">
       <div className="mx-auto max-w-6xl px-6 py-12 md:py-20">
         <div className="mb-8 max-w-2xl">
           <p className="font-sans text-sm uppercase tracking-[0.3em] text-neutral-500">
