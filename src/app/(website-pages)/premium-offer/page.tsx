@@ -46,29 +46,75 @@ export default async function PremiumOfferPage() {
                 <div className="relative z-10">
                     <div className="sticky top-0 z-[11]"><SocialProofBar /></div>
 
-                    {/* 🎯 PROBE — Make it personal */}
-                    <div className="sticky top-0 z-[12]"><InlineBuyersGuide /></div>
-                    <div className="sticky top-0 z-[13]"><ChildHeroSection /></div>
-                    <div className="sticky top-0 z-[14]"><HandComparisonSection /></div>
-                    <div className="sticky top-0 z-[15]"><SizeFinderSection /></div>
+                    {/* Section 2 — Buyer's Guide */}
+                    <div className="sticky top-0 z-[12] min-h-screen flex flex-col justify-center bg-neutral-100">
+                        <InlineBuyersGuide />
+                    </div>
 
-                    {/* 📦 PRESENT — Show the product */}
-                    <div className="sticky top-0 z-[16]">
+                    {/* Section 3 — Child Hero */}
+                    <div className="sticky top-0 z-[13] min-h-screen">
+                        <ChildHeroSection />
+                    </div>
+
+                    {/* Section 4 — Hand Comparison */}
+                    <div className="sticky top-0 z-[14] min-h-screen flex flex-col justify-center bg-white">
+                        <HandComparisonSection />
+                    </div>
+
+                    {/* Section 5 — Size Finder */}
+                    <div className="sticky top-0 z-[15] min-h-screen flex flex-col justify-center bg-white">
+                        <SizeFinderSection />
+                    </div>
+
+                    {/* Section 6 — Video */}
+                    <div className="sticky top-0 z-[16] min-h-screen">
                         <section id="video"><VideoSection /></section>
                     </div>
-                    <div className="sticky top-0 z-[17]"><FeaturesSection /></div>
-                    <div className="sticky top-0 z-[18]"><SizeVisualSection /></div>
-                    <div className="sticky top-0 z-[19]"><SpecsSection /></div>
 
-                    {/* 🔬 LEVERAGE — Build credibility */}
-                    <div className="sticky top-0 z-[20]"><StanfordQuoteSection /></div>
-                    <div className="sticky top-0 z-[21]"><SwitchingSection /></div>
-                    <div className="sticky top-0 z-[22]"><CreatorSection /></div>
-                    <div className="sticky top-0 z-[23]"><TrustSection /></div>
+                    {/* Section 7 — Features */}
+                    <div className="sticky top-0 z-[17] min-h-screen">
+                        <FeaturesSection />
+                    </div>
 
-                    {/* 🔒 LOCKIN — Remove all risk */}
-                    <div className="sticky top-0 z-[24]"><PricingSection hiddenProducts={hiddenProducts} /></div>
-                    <div className="sticky top-0 z-[25]"><GuaranteeSection /></div>
+                    {/* Section 8 — Size Visual */}
+                    <div className="sticky top-0 z-[18] min-h-screen flex flex-col justify-center bg-[#f5f5f0]">
+                        <SizeVisualSection />
+                    </div>
+
+                    {/* Section 9 — Specs */}
+                    <div className="sticky top-0 z-[19] min-h-screen">
+                        <SpecsSection />
+                    </div>
+
+                    {/* Section 10 — Stanford Quote */}
+                    <div className="sticky top-0 z-[20] min-h-screen flex flex-col justify-center">
+                        <StanfordQuoteSection />
+                    </div>
+
+                    {/* Section 11 — Switching */}
+                    <div className="sticky top-0 z-[21] min-h-screen flex flex-col justify-center bg-neutral-50">
+                        <SwitchingSection />
+                    </div>
+
+                    {/* Section 12 — Creator */}
+                    <div className="sticky top-0 z-[22] min-h-screen">
+                        <CreatorSection />
+                    </div>
+
+                    {/* Section 13 — Trust */}
+                    <div className="sticky top-0 z-[23] min-h-screen flex flex-col justify-center bg-white">
+                        <TrustSection />
+                    </div>
+
+                    {/* Section 14 — Pricing */}
+                    <div className="sticky top-0 z-[24] min-h-screen">
+                        <PricingSection hiddenProducts={hiddenProducts} />
+                    </div>
+
+                    {/* Section 15 — Guarantee */}
+                    <div className="sticky top-0 z-[25] min-h-screen flex flex-col justify-center bg-white">
+                        <GuaranteeSection />
+                    </div>
                 </div>
             </main>
 
