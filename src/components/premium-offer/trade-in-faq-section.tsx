@@ -42,7 +42,7 @@ const faqs = [
 
 export function TradeInFaqSection() {
     return (
-        <section className="relative bg-white">
+        <section className="relative bg-neutral-50">
             <div className="mx-auto max-w-4xl px-6 py-20 md:py-28 lg:py-32">
                 <div className="mb-12 max-w-2xl">
                     <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-500">
