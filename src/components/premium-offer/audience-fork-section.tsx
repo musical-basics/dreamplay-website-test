@@ -34,8 +34,8 @@ export function AudienceForkSection() {
                     <button
                         onClick={() => handleSelect("self")}
                         className={`group flex flex-col items-start gap-4 rounded-xl p-8 md:p-10 text-left transition-all duration-300 cursor-pointer ${selected === "self"
-                            ? "bg-neutral-900 text-white shadow-2xl scale-[1.02] ring-2 ring-neutral-900"
-                            : "bg-neutral-900 text-white shadow-lg hover:shadow-xl hover:scale-[1.01]"
+                            ? "bg-black text-white shadow-2xl scale-[1.02] ring-2 ring-white/20"
+                            : "bg-neutral-900 text-white shadow-lg hover:bg-black hover:shadow-2xl hover:scale-[1.02]"
                             }`}
                     >
                         <Music className="h-7 w-7 text-white/60" strokeWidth={2} />
@@ -56,7 +56,7 @@ export function AudienceForkSection() {
                         onClick={() => handleSelect("child")}
                         className={`group flex flex-col items-start gap-4 rounded-xl p-8 md:p-10 text-left transition-all duration-300 cursor-pointer ${selected === "child"
                             ? "bg-neutral-800 text-white shadow-2xl scale-[1.02] ring-2 ring-neutral-800"
-                            : "bg-white text-neutral-900 shadow-lg hover:shadow-xl hover:scale-[1.01] border border-neutral-200"
+                            : "bg-white text-neutral-900 shadow-lg border border-neutral-200 hover:bg-neutral-100 hover:shadow-xl hover:scale-[1.02]"
                             }`}
                     >
                         <Baby className={`h-7 w-7 ${selected === "child" ? "text-white/70" : "text-neutral-600"}`} strokeWidth={2} />
