@@ -35,10 +35,16 @@ export function InlineBuyersGuide() {
     }
 
     const nextStep = () => {
-        setCurrentStep((prev) => prev + 1)
-        setTimeout(() => {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })
-        }, 100)
+        setCurrentStep((prev) => {
+            const next = prev + 1
+            setTimeout(() => {
+                const el = document.getElementById(`guide-question-${next}`)
+                if (el) {
+                    el.scrollIntoView({ behavior: "smooth", block: "start" })
+                }
+            }, 150)
+            return next
+        })
     }
 
     const startGuide = () => {
