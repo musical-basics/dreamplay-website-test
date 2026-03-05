@@ -7,8 +7,8 @@ const BG_VIDEO = "/videos/DreamPlay Hero 1080p v3.mov"
 export function CrowdfundingSection() {
   const [textSlide, setTextSlide] = useState(0)
 
-  // All slides display for 4.5 seconds
-  const slideDurations = [4500, 4500, 4500, 4500]
+  // All slides display for 4 seconds, then loop
+  const slideDurations = [4000, 4000, 4000, 4000]
   const totalSlides = slideDurations.length
 
   useEffect(() => {
