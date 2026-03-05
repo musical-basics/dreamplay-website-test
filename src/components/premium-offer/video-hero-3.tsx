@@ -1,6 +1,6 @@
 "use client"
 
-const BG_VIDEO = "/videos/DreamPlay Hero 1080p Video Hero 3 Loop (Hand Sizes).mov"
+const BG_VIDEO = "https://pub-ae162277c7104eb2b558af08104deafc.r2.dev/DreamPlay%20Hero%201080p%20Video%20Hero%203%20Loop%20(Hand%20Sizes).mov"
 
 export function VideoHero3() {
     return (
