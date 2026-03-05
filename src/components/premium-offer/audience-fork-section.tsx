@@ -1,25 +1,59 @@
 "use client"
 
-import { useState } from "react"
-import { ArrowRight, Music, Baby } from "lucide-react"
+import { useState, useRef, useEffect } from "react"
+import { ArrowRight, Music, Baby, ChevronDown } from "lucide-react"
+import { QuestionTwo } from "@/components/buyers-guide/question-two"
+import { QuestionThree } from "@/components/buyers-guide/question-three"
+import { QuestionFour } from "@/components/buyers-guide/question-four"
+import { RecommendationSection, UserProfile } from "@/components/buyers-guide/recommendation-section"
 
 type Audience = "self" | "child" | null
 
 export function AudienceForkSection() {
     const [selected, setSelected] = useState<Audience>(null)
     const [hovered, setHovered] = useState<Audience>(null)
+    const [guideStep, setGuideStep] = useState(0) // 0=hidden, 1=Q2, 2=Q3, 3=Q4, 4=recommendation
+    const [profile, setProfile] = useState<UserProfile>({
+        buyingFor: null,
+        demographic: null,
+        handSize: null,
+        goal: null,
+    })
+    const guideRef = useRef<HTMLDivElement>(null)
 
     const handleSelect = (audience: Audience) => {
         setSelected(audience)
-        setTimeout(() => {
-            const next = document.getElementById("video")
-            if (next) next.scrollIntoView({ behavior: "smooth", block: "start" })
-        }, 300)
+        const buyingFor = audience === "self" ? "myself" : "someone-else"
+        setProfile((prev) => ({ ...prev, buyingFor }))
+        setGuideStep(1)
+    }
+
+    // Scroll to accordion when it opens or advances
+    useEffect(() => {
+        if (guideStep > 0 && guideRef.current) {
+            setTimeout(() => {
+                guideRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+            }, 150)
+        }
+    }, [guideStep])
+
+    const updateProfile = (key: keyof UserProfile, value: string) => {
+        setProfile((prev) => ({ ...prev, [key]: value }))
+    }
+
+    const nextGuideStep = () => {
+        setGuideStep((prev) => prev + 1)
     }
 
     // When hovering child, "For Myself" reverts to white; when hovering self or nothing, it stays dark
     const selfIsDark = hovered !== "child" && selected !== "child"
     const childIsDark = selected === "child" || hovered === "child"
+
+    const stepLabels = [
+        { num: 2, label: "About You" },
+        { num: 3, label: "Hand Size" },
+        { num: 4, label: "Goals" },
+    ]
 
     return (
         <section className="relative overflow-hidden bg-neutral-50">
@@ -79,6 +113,93 @@ export function AudienceForkSection() {
                             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </div>
                     </button>
+                </div>
+
+                {/* Inline Buyer's Guide Accordion */}
+                <div
+                    ref={guideRef}
+                    className={`overflow-hidden transition-all duration-500 ease-in-out ${guideStep > 0 ? "max-h-[3000px] opacity-100 mt-10" : "max-h-0 opacity-0 mt-0"
+                        }`}
+                >
+                    {guideStep > 0 && (
+                        <div className="rounded-2xl border border-neutral-200 bg-white shadow-lg overflow-hidden">
+                            {/* Progress header */}
+                            <div className="bg-neutral-50 border-b border-neutral-200 px-6 py-4">
+                                <div className="flex items-center justify-between mb-3">
+                                    <p className="font-sans text-sm font-semibold uppercase tracking-wider text-neutral-500">
+                                        Find Your Perfect Size
+                                    </p>
+                                    <span className="font-sans text-xs text-neutral-400">
+                                        Step {Math.min(guideStep + 1, 4)} of 4
+                                    </span>
+                                </div>
+                                <div className="flex gap-1.5">
+                                    {[1, 2, 3, 4].map((step) => (
+                                        <div
+                                            key={step}
+                                            className={`h-1 flex-1 rounded-full transition-all duration-300 ${step === 1
+                                                    ? "bg-neutral-900"
+                                                    : step <= guideStep
+                                                        ? "bg-neutral-900"
+                                                        : "bg-neutral-200"
+                                                }`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Question panels */}
+                            <div className="p-6 md:p-8">
+                                {/* Q2: Demographics */}
+                                {guideStep >= 1 && (
+                                    <div className={`transition-all duration-300 ${guideStep === 1 ? "opacity-100" : "opacity-60"}`}>
+                                        <QuestionTwo
+                                            selected={profile.demographic}
+                                            buyingFor={profile.buyingFor}
+                                            onSelect={(value) => {
+                                                updateProfile("demographic", value)
+                                                nextGuideStep()
+                                            }}
+                                        />
+                                    </div>
+                                )}
+
+                                {/* Q3: Hand Size */}
+                                {guideStep >= 2 && (
+                                    <div className={`mt-8 pt-8 border-t border-neutral-100 transition-all duration-300 ${guideStep === 2 ? "opacity-100" : "opacity-60"}`}>
+                                        <QuestionThree
+                                            selected={profile.handSize}
+                                            demographic={profile.demographic}
+                                            onSelect={(value) => {
+                                                updateProfile("handSize", value)
+                                                nextGuideStep()
+                                            }}
+                                        />
+                                    </div>
+                                )}
+
+                                {/* Q4: Goals */}
+                                {guideStep >= 3 && (
+                                    <div className={`mt-8 pt-8 border-t border-neutral-100 transition-all duration-300 ${guideStep === 3 ? "opacity-100" : "opacity-60"}`}>
+                                        <QuestionFour
+                                            selected={profile.goal}
+                                            onSelect={(value) => {
+                                                updateProfile("goal", value)
+                                                nextGuideStep()
+                                            }}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Recommendation */}
+                            {guideStep >= 4 && (
+                                <div className="border-t border-neutral-200">
+                                    <RecommendationSection profile={profile} />
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
         </section>
