@@ -49,13 +49,13 @@ export default async function PremiumOfferPage() {
                 <div className="relative z-10">
                     <div className="sticky top-0 z-[11]"><SocialProofBar /></div>
 
-                    {/* Section 2 — Buyer's Guide */}
-                    <div className="sticky top-0 z-[12] min-h-screen flex flex-col justify-center bg-neutral-100">
+                    {/* Section 2 — Buyer's Guide (regular scroll) */}
+                    <div className="relative z-[12] min-h-screen flex flex-col justify-center bg-neutral-100">
                         <InlineBuyersGuide />
                     </div>
 
-                    {/* Section 3 — Child Hero (Video Hero 2) */}
-                    <div className="sticky top-0 z-[13] min-h-screen md:min-h-0 md:aspect-video">
+                    {/* Section 3 — Child Hero / Video Hero 2 (regular scroll) */}
+                    <div className="relative z-[13] min-h-screen md:min-h-0 md:aspect-video">
                         <ChildHeroSection />
                     </div>
 
