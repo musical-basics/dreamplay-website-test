@@ -83,12 +83,12 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 9 — Specs (accordion overlays Video Hero 4 below) */}
-                    <div className="sticky top-0 z-[19]">
+                    <div className="sticky top-0 z-[20]">
                         <SpecsSection />
                     </div>
 
                     {/* Section 10 — Video Hero 4 */}
-                    <div className="sticky top-0 z-[20]">
+                    <div className="sticky top-0 z-[19]">
                         <VideoHero4 />
                     </div>
 
