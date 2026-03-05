@@ -60,7 +60,7 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 4 — Trade-In Upgrade */}
-                    <div className="sticky top-0 z-[14]">
+                    <div className="sticky top-0 z-[14] bg-neutral-100">
                         <TradeInSection />
                     </div>
 
