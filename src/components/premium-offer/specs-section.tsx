@@ -111,7 +111,7 @@ export function SpecsSection() {
         {/* Collapsible Specs Detail */}
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="full-specs" className="border-neutral-800">
-            <AccordionTrigger className="font-sans text-sm uppercase tracking-[0.2em] text-neutral-300 hover:no-underline hover:text-white py-4 justify-center">
+            <AccordionTrigger className="font-sans text-sm uppercase tracking-[0.2em] text-neutral-300 hover:no-underline hover:text-white py-6 justify-center gap-4 [&>svg]:h-6 [&>svg]:w-6">
               View Full Specifications
             </AccordionTrigger>
             <AccordionContent>
