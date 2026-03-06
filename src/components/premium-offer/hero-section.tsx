@@ -28,7 +28,7 @@ export function HeroSection() {
         autoPlay
         muted
         playsInline
-        className="absolute inset-0 h-full w-full object-cover brightness-[0.7] contrast-[1.15] saturate-[0.85]"
+        className="absolute inset-0 h-full w-full object-cover"
         onEnded={handleEnded}
       >
         <source src={BG_VIDEOS[0]} type="video/mp4" />
