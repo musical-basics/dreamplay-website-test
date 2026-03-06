@@ -54,8 +54,8 @@ export default async function PremiumOfferPage() {
                         <InlineBuyersGuide />
                     </div>
 
-                    {/* Section 3 — Child Hero / Video Hero 2 (regular scroll) */}
-                    <div className="relative z-[13] min-h-screen md:min-h-0 md:aspect-video">
+                    {/* Section 3 — Child Hero / Video Hero 2 (sticky parallax) */}
+                    <div className="sticky top-0 z-[13] min-h-screen md:min-h-0 md:aspect-video">
                         <ChildHeroSection />
                     </div>
 
