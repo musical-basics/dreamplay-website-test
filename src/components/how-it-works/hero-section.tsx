@@ -32,21 +32,21 @@ export function HowItWorksHero() {
     ]
 
     return (
-        <section className="relative bg-black text-white py-20 md:py-28 w-full">
-            <div className="mx-auto max-w-5xl px-6 text-center">
+        <section className="relative bg-black text-white py-12 md:py-28 w-full">
+            <div className="mx-auto max-w-5xl px-4 md:px-6 text-center">
                 <p className="font-sans text-xs uppercase tracking-[0.3em] text-white/40">
                     The Solution
                 </p>
                 <h2 className="mt-4 font-sans text-3xl leading-tight text-white md:text-4xl lg:text-5xl text-balance font-bold">
                     A Keyboard That Fits You.
                 </h2>
-                <p className="mt-6 font-sans text-base leading-relaxed text-white/60 max-w-2xl mx-auto md:text-lg">
+                <p className="mt-4 md:mt-6 font-sans text-sm leading-relaxed text-white/60 max-w-2xl mx-auto md:text-base lg:text-lg">
                     Standard keyboards use a one-size-fits-all key width designed for large hands.
                     DreamPlay&apos;s DS Standard matches your biology — so you can finally play with comfort, power, and control.
                 </p>
 
                 {/* Size Cards — info only, hover to enlarge */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-14 text-left">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-5 mt-10 md:mt-14 text-left">
                     {sizes.map((s) => (
                         <div
                             key={s.model}
@@ -61,28 +61,28 @@ export function HowItWorksHero() {
                                 </div>
                             )}
                             {/* Product image */}
-                            <div className="bg-neutral-100 px-6 pt-10 pb-6 flex items-center justify-center min-h-[160px]">
+                            <div className="bg-neutral-100 px-4 md:px-6 pt-8 md:pt-10 pb-4 md:pb-6 flex items-center justify-center min-h-[120px] md:min-h-[160px]">
                                 <Image
                                     src={s.img}
                                     alt={`DreamPlay ${s.model}`}
                                     width={400}
                                     height={200}
-                                    className="w-full h-auto object-contain max-h-[120px]"
+                                    className="w-full h-auto object-contain max-h-[90px] md:max-h-[120px]"
                                 />
                             </div>
                             {/* Card body */}
-                            <div className="flex flex-col flex-grow p-6">
-                                <h3 className="font-sans text-2xl font-bold text-neutral-900 mb-1">{s.model}</h3>
+                            <div className="flex flex-col flex-grow p-4 md:p-6">
+                                <h3 className="font-sans text-xl md:text-2xl font-bold text-neutral-900 mb-1">{s.model}</h3>
                                 <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-4">{s.label}</p>
-                                <p className="font-sans text-sm text-neutral-500 leading-relaxed mb-6 flex-grow">{s.desc}</p>
+                                <p className="font-sans text-sm text-neutral-500 leading-relaxed mb-4 md:mb-6 flex-grow">{s.desc}</p>
                                 {/* Stats row */}
                                 <div className="flex justify-between items-end border-t border-neutral-100 pt-4">
                                     <div>
-                                        <div className="font-sans text-2xl font-bold text-neutral-900">{s.keys}</div>
+                                        <div className="font-sans text-xl md:text-2xl font-bold text-neutral-900">{s.keys}</div>
                                         <div className="font-sans text-[10px] uppercase tracking-[0.15em] text-neutral-400">Keys</div>
                                     </div>
                                     <div className="text-right">
-                                        <div className="font-sans text-2xl font-bold text-neutral-900">{s.width}</div>
+                                        <div className="font-sans text-xl md:text-2xl font-bold text-neutral-900">{s.width}</div>
                                         <div className="font-sans text-[10px] uppercase tracking-[0.15em] text-neutral-400">Key Width</div>
                                     </div>
                                 </div>

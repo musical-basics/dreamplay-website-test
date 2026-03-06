@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 
 export function CalculatorSection() {
@@ -43,31 +43,31 @@ export function CalculatorSection() {
     }, [sliderValue])
 
     return (
-        <section className="w-full bg-black text-white py-12 md:py-24 px-4 flex justify-center">
-            <div className="w-full max-w-6xl border border-white/10 p-6 md:p-16">
-                <div className="text-center mb-16">
+        <section className="w-full bg-black text-white py-12 md:py-24 px-4 md:px-6 flex justify-center">
+            <div className="w-full max-w-6xl border border-white/10 p-4 md:p-16">
+                <div className="text-center mb-10 md:mb-16">
                     <p className="font-sans text-xs uppercase tracking-[0.3em] text-white/40">Hand Span Calculator</p>
                     <h2 className="mt-4 font-sans text-3xl leading-tight text-white md:text-4xl lg:text-5xl text-balance font-bold">Find Your Perfect Size</h2>
-                    <p className="font-sans text-sm md:text-base leading-relaxed text-white/60 max-w-2xl mx-auto">
+                    <p className="mt-4 font-sans text-sm md:text-base leading-relaxed text-white/60 max-w-2xl mx-auto">
                         DreamPlay&apos;s DS Standard keyboards come in different sizes to match your biology.
                     </p>
                 </div>
 
-                <div className="grid lg:grid-cols-12 gap-8">
+                <div className="grid lg:grid-cols-12 gap-6 md:gap-8">
                     {/* INPUT CARD */}
-                    <div className="lg:col-span-7 border border-white/10 p-8 md:p-10 bg-black flex flex-col">
-                        <div className="flex items-center gap-3 mb-8">
+                    <div className="lg:col-span-7 border border-white/10 p-5 md:p-8 lg:p-10 bg-black flex flex-col">
+                        <div className="flex items-center gap-3 mb-6 md:mb-8">
                             <div className="w-10 h-10 border border-white/10 flex items-center justify-center">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 text-white/60"><path d="M2 12h20M12 2v20" /></svg>
                             </div>
-                            <div className="font-sans text-2xl font-semibold">Find Your Zone</div>
+                            <div className="font-sans text-xl md:text-2xl font-semibold">Find Your Zone</div>
                         </div>
 
-                        <div className="mb-12">
-                            <div className="flex justify-between items-end mb-6">
-                                <span className="font-sans text-sm uppercase tracking-[0.3em] text-white/40">Your hand span</span>
-                                <div className={`text-4xl font-bold ${result.activeTwColor} transition-colors duration-300`}>
-                                    {result.val.toFixed(1)}&quot; <span className="text-white/40 text-lg font-normal">/ {result.cm.toFixed(1)} cm</span>
+                        <div className="mb-8 md:mb-12">
+                            <div className="flex justify-between items-end mb-4 md:mb-6">
+                                <span className="font-sans text-xs md:text-sm uppercase tracking-[0.3em] text-white/40">Your hand span</span>
+                                <div className={`text-3xl md:text-4xl font-bold ${result.activeTwColor} transition-colors duration-300`}>
+                                    {result.val.toFixed(1)}&quot; <span className="text-white/40 text-base md:text-lg font-normal">/ {result.cm.toFixed(1)} cm</span>
                                 </div>
                             </div>
 
@@ -108,41 +108,41 @@ export function CalculatorSection() {
                   input[type=range]::-webkit-slider-runnable-track { background: transparent; height: 6px; }
                 `}</style>
                             </div>
-                            <div className="flex justify-between font-sans text-xs uppercase tracking-[0.3em] text-white/40 mt-4 px-1">
+                            <div className="flex justify-between font-sans text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-white/40 mt-3 md:mt-4 px-1">
                                 <span>Small (6 in)</span><span>Average (8 in)</span><span>Large (10 in)</span>
                             </div>
-                            <p className="font-sans text-xs text-white/40 text-center mt-4 italic">Drag the slider to find your zone.</p>
+                            <p className="font-sans text-xs text-white/40 text-center mt-3 md:mt-4 italic">Drag the slider to find your zone.</p>
                         </div>
 
-                        <div className="bg-[#0a0a0a] p-6 flex items-center gap-6 mt-auto border border-white/10">
-                            <div className="w-20 h-20 relative overflow-hidden bg-black flex-shrink-0">
+                        <div className="bg-[#0a0a0a] p-4 md:p-6 flex items-center gap-4 md:gap-6 mt-auto border border-white/10">
+                            <div className="w-16 h-16 md:w-20 md:h-20 relative overflow-hidden bg-black flex-shrink-0">
                                 <Image src="/images/generated-hand-image.jpg" alt="Hand span guide" fill className="object-cover opacity-80" />
                             </div>
                             <div>
-                                <div className="font-sans text-base font-semibold mb-1 text-white">How to measure</div>
-                                <p className="font-sans text-sm text-white/60 leading-relaxed">Spread your hand wide. Measure from the <strong>tip of the thumb</strong> to the <strong>tip of the pinky</strong>.</p>
+                                <div className="font-sans text-sm md:text-base font-semibold mb-1 text-white">How to measure</div>
+                                <p className="font-sans text-xs md:text-sm text-white/60 leading-relaxed">Spread your hand wide. Measure from the <strong>tip of the thumb</strong> to the <strong>tip of the pinky</strong>.</p>
                             </div>
                         </div>
                     </div>
 
                     {/* RESULT CARD */}
-                    <div className="lg:col-span-5 border border-white/10 p-8 md:p-10 bg-black flex flex-col">
-                        <div className="font-sans text-sm uppercase tracking-[0.3em] text-white/40 mb-2">Your match</div>
-                        <div className={`text-5xl font-bold mb-2 ${result.activeTwColor} transition-colors duration-300`}>Zone {result.zone}</div>
-                        <div className="font-sans text-sm text-white/40 mb-8">Hand span range: {result.val < 7.6 ? '6.0 to 7.6 inches' : result.val <= 8.5 ? '7.6 to 8.5 inches' : '8.5 inches +'}</div>
-                        <div className="font-sans text-6xl font-bold text-white mb-2 tracking-tight">{result.model}</div>
-                        <div className="text-white/60 font-medium text-lg mb-8">
+                    <div className="lg:col-span-5 border border-white/10 p-5 md:p-8 lg:p-10 bg-black flex flex-col">
+                        <div className="font-sans text-xs md:text-sm uppercase tracking-[0.3em] text-white/40 mb-2">Your match</div>
+                        <div className={`text-4xl md:text-5xl font-bold mb-2 ${result.activeTwColor} transition-colors duration-300`}>Zone {result.zone}</div>
+                        <div className="font-sans text-xs md:text-sm text-white/40 mb-6 md:mb-8">Hand span range: {result.val < 7.6 ? '6.0 to 7.6 inches' : result.val <= 8.5 ? '7.6 to 8.5 inches' : '8.5 inches +'}</div>
+                        <div className="font-sans text-5xl md:text-6xl font-bold text-white mb-2 tracking-tight">{result.model}</div>
+                        <div className="text-white/60 font-medium text-base md:text-lg mb-6 md:mb-8">
                             Recommended model <br />
                             <a href="/about-us/ds-standard" className="font-sans text-sm underline hover:text-white transition-colors">Learn about the DS Standard</a>
                         </div>
-                        <p className="font-sans text-base leading-relaxed text-white/60 mb-8 flex-grow">{result.desc}</p>
-                        <div className="mt-auto bg-[#0a0a0a] border border-white/10 p-5 flex items-center gap-4">
+                        <p className="font-sans text-sm md:text-base leading-relaxed text-white/60 mb-6 md:mb-8 flex-grow">{result.desc}</p>
+                        <div className="mt-auto bg-[#0a0a0a] border border-white/10 p-4 md:p-5 flex items-center gap-3 md:gap-4">
                             <div className="w-10 h-10 border border-white/10 flex items-center justify-center text-green-500">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-5 h-5"><path d="M20 6 9 17l-5-5" /></svg>
                             </div>
                             <div>
-                                <div className="font-sans text-xs uppercase tracking-[0.3em] text-white/40 mb-0.5">Capability Unlocked</div>
-                                <div className="text-base font-semibold text-white">{result.reach}</div>
+                                <div className="font-sans text-[10px] md:text-xs uppercase tracking-[0.3em] text-white/40 mb-0.5">Capability Unlocked</div>
+                                <div className="text-sm md:text-base font-semibold text-white">{result.reach}</div>
                             </div>
                         </div>
                     </div>
