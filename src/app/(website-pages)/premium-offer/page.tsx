@@ -86,7 +86,7 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 10+11 — Features + Specs (merged, regular scroll) */}
-                    <div className="relative z-[20]" style={{ background: 'linear-gradient(to bottom, #000000 0%, #000000 60%, #010101 68%, #020202 75%, #030303 80%, #040404 85%, #050505 90%, #060606 94%, #080808 100%)' }}>
+                    <div className="relative z-[20]" style={{ background: 'linear-gradient(to bottom, #000000 0%, #000000 60%, #020202 68%, #040404 75%, #070707 80%, #0a0a0a 85%, #0d0d0d 90%, #111111 94%, #141414 100%)' }}>
                         <FeaturesSection />
                         <SpecsSection />
                     </div>
