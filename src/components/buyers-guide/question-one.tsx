@@ -28,6 +28,13 @@ export function QuestionOne({ selected, onSelect }: QuestionOneProps) {
                     Let us know if you&apos;re shopping for yourself or someone special.
                 </p>
 
+                {!selected && (
+                    <p className="text-sm font-medium text-neutral-400 mb-6 flex items-center gap-2">
+                        <span className="inline-block w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                        Select one to continue
+                    </p>
+                )}
+
                 <div className="grid grid-cols-2 gap-6">
                     <button
                         onClick={() => onSelect("myself")}

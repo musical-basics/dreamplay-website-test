@@ -79,6 +79,13 @@ export function QuestionThree({ selected, demographic, onSelect }: QuestionThree
                     </div>
                 )}
 
+                {!selected && (
+                    <p className="text-sm font-medium text-neutral-400 mb-6 flex items-center gap-2">
+                        <span className="inline-block w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                        Select one to continue
+                    </p>
+                )}
+
                 <div className="grid sm:grid-cols-3 gap-4">
                     {(["small", "average", "large"] as const).map((size) => (
                         <button

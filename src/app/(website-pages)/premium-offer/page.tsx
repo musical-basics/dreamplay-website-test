@@ -85,8 +85,8 @@ export default async function PremiumOfferPage() {
                         <VideoHero4 />
                     </div>
 
-                    {/* Section 10+11 — Features + Specs (merged) */}
-                    <div className="sticky top-0 z-[20]">
+                    {/* Section 10+11 — Features + Specs (merged, regular scroll) */}
+                    <div className="relative z-[20]">
                         <FeaturesSection />
                         <SpecsSection />
                     </div>
