@@ -71,7 +71,7 @@ const allTiers = [
 export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: string[] }) {
   const tiers = allTiers.filter(t => !hiddenProducts.includes(t.id))
   return (
-    <section id="pricing" className="relative bg-foreground">
+    <section id="pricing" className="relative" style={{ background: 'linear-gradient(135deg, rgba(30,30,30,0.6) 0%, rgba(50,50,50,0.4) 50%, rgba(30,30,30,0.6) 100%)', backdropFilter: 'blur(40px) saturate(1.8)', WebkitBackdropFilter: 'blur(40px) saturate(1.8)' }}>
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
         <div className="mb-16 max-w-2xl">
           <p className="font-sans text-xs uppercase tracking-[0.3em] text-background/50">
@@ -89,7 +89,7 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
 
 
         {/* Import Duties Call-out */}
-        <div className="mb-12 border border-background/20 bg-background/5 px-6 py-5 max-w-2xl mt-4">
+        <div className="mb-12 border border-white/15 px-6 py-5 max-w-2xl mt-4 rounded-xl" style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.1), 0 4px 24px rgba(0,0,0,0.2)' }}>
           <div className="flex items-start gap-3">
             <span className="mt-0.5 text-background/60 text-lg leading-none">⚖️</span>
             <div>
@@ -107,10 +107,20 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
           {tiers.map((tier) => (
             <div
               key={tier.title}
-              className={`relative flex flex-col border p-8 transition-all md:p-10 ${tier.highlight
-                ? "border-background/30 bg-background/5"
-                : "border-background/10 bg-transparent"
+              className={`relative flex flex-col border p-8 transition-all md:p-10 rounded-2xl ${tier.highlight
+                ? "border-white/20"
+                : "border-white/10"
                 }`}
+              style={{
+                background: tier.highlight
+                  ? 'rgba(255,255,255,0.1)'
+                  : 'rgba(255,255,255,0.05)',
+                backdropFilter: 'blur(24px) saturate(1.5)',
+                WebkitBackdropFilter: 'blur(24px) saturate(1.5)',
+                boxShadow: tier.highlight
+                  ? 'inset 0 1px 0 0 rgba(255,255,255,0.15), 0 8px 32px rgba(0,0,0,0.3)'
+                  : 'inset 0 1px 0 0 rgba(255,255,255,0.08), 0 4px 16px rgba(0,0,0,0.15)',
+              }}
             >
               {tier.badge && (
                 <span className="mb-4 self-start font-sans text-[10px] uppercase tracking-[0.3em] text-background/50">
@@ -198,10 +208,14 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
               {/* CTA */}
               <a
                 href="/customize"
-                className={`mt-8 group flex items-center justify-center gap-2 border px-6 py-4 text-center font-sans text-xs uppercase tracking-widest transition-colors ${tier.highlight
-                  ? "border-background bg-background text-foreground hover:bg-background/90"
-                  : "border-background/30 text-background hover:bg-background/10"
+                className={`mt-8 group flex items-center justify-center gap-2 border px-6 py-4 text-center font-sans text-xs uppercase tracking-widest transition-all rounded-xl ${tier.highlight
+                  ? "border-white/30 bg-white text-black hover:bg-white/90"
+                  : "border-white/20 text-white hover:bg-white/10"
                   }`}
+                style={{
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
+                }}
               >
                 Reserve for {tier.price}
                 <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
