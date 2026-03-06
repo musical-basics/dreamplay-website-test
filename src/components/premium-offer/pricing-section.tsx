@@ -71,7 +71,7 @@ const allTiers = [
 export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: string[] }) {
   const tiers = allTiers.filter(t => !hiddenProducts.includes(t.id))
   return (
-    <section id="pricing" className="relative" style={{ background: 'linear-gradient(135deg, rgba(30,30,30,0.6) 0%, rgba(50,50,50,0.4) 50%, rgba(30,30,30,0.6) 100%)', backdropFilter: 'blur(40px) saturate(1.8)', WebkitBackdropFilter: 'blur(40px) saturate(1.8)' }}>
+    <section id="pricing" className="relative" style={{ background: 'linear-gradient(135deg, rgba(10,10,10,0.85) 0%, rgba(20,20,20,0.75) 50%, rgba(10,10,10,0.85) 100%)', backdropFilter: 'blur(40px) saturate(1.8)', WebkitBackdropFilter: 'blur(40px) saturate(1.8)' }}>
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
         <div className="mb-16 max-w-2xl">
           <p className="font-sans text-xs uppercase tracking-[0.3em] text-background/50">
@@ -113,8 +113,8 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
                 }`}
               style={{
                 background: tier.highlight
-                  ? 'rgba(255,255,255,0.1)'
-                  : 'rgba(255,255,255,0.05)',
+                  ? 'rgba(255,255,255,0.18)'
+                  : 'rgba(255,255,255,0.12)',
                 backdropFilter: 'blur(24px) saturate(1.5)',
                 WebkitBackdropFilter: 'blur(24px) saturate(1.5)',
                 boxShadow: tier.highlight
