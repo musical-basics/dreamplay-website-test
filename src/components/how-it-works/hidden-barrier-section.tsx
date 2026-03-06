@@ -27,10 +27,10 @@ export function HiddenBarrierSection() {
                     <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight leading-tight text-white">The Hidden Barrier</h2>
                 </div>
 
-                {/* Donut charts row — full width */}
-                <div className={`flex flex-col md:flex-row items-center justify-center gap-12 md:gap-0 mb-8 transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                {/* Donut charts row — grid aligned with bottom stats */}
+                <div className={`grid grid-cols-1 md:grid-cols-2 gap-12 mb-8 transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     {/* Female stat */}
-                    <div className="flex flex-col items-center text-center px-8 md:px-20">
+                    <div className="flex flex-col items-center text-center relative">
                         <div className="relative w-[220px] h-[220px] mb-6">
                             <svg width="220" height="220" viewBox="0 0 220 220" className="transform -rotate-90">
                                 <defs>
@@ -70,13 +70,12 @@ export function HiddenBarrierSection() {
                             </div>
                         </div>
                         <p className="font-sans text-base text-white/50">of Females</p>
+                        {/* Divider — right edge */}
+                        <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-56 bg-white/10" />
                     </div>
 
-                    {/* Divider */}
-                    <div className="hidden md:block w-px h-56 bg-white/10" />
-
                     {/* Male stat */}
-                    <div className="flex flex-col items-center text-center px-8 md:px-20">
+                    <div className="flex flex-col items-center text-center">
                         <div className="relative w-[220px] h-[220px] mb-6">
                             <svg width="220" height="220" viewBox="0 0 220 220" className="transform -rotate-90">
                                 {/* Track */}
