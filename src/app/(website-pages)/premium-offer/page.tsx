@@ -111,7 +111,7 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 15 — Product Video (sticky parallax) */}
-                    <div className="sticky top-0 z-[25] min-h-screen md:min-h-0 md:aspect-video bg-neutral-200">
+                    <div className="sticky top-0 z-[25] min-h-screen md:min-h-0 md:aspect-video bg-black">
                         <section id="video"><VideoSection /></section>
                     </div>
 
