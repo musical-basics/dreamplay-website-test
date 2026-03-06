@@ -61,13 +61,13 @@ export function HowItWorksHero() {
                                 </div>
                             )}
                             {/* Product image */}
-                            <div className="bg-neutral-100 px-4 md:px-6 pt-8 md:pt-10 pb-4 md:pb-6 flex items-center justify-center min-h-[120px] md:min-h-[160px]">
+                            <div className="bg-neutral-800 px-6 md:px-8 py-8 md:py-10 flex items-center justify-center min-h-[140px] md:min-h-[180px]">
                                 <Image
                                     src={s.img}
                                     alt={`DreamPlay ${s.model}`}
                                     width={400}
                                     height={200}
-                                    className="w-full h-auto object-contain max-h-[90px] md:max-h-[120px]"
+                                    className="w-full h-auto object-contain max-h-[100px] md:max-h-[130px] drop-shadow-lg"
                                 />
                             </div>
                             {/* Card body */}

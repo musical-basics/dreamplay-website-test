@@ -4,7 +4,6 @@ import Image from "next/image";
 
 const stories = [
     {
-        image: "/images/_DSC1180-2-copy.jpg",
         quote: `"I often witness pianists place their hands for the first time on a keyboard that better suits their hand span. How often the pianist spontaneously bursts into tears. A lifetime of struggling with a seemingly insurmountable problem vanishes in the moment they realize, 'It's not me that is the problem; it is the instrument!' Following on that, the joy of possibility overwhelms them."`,
         avatar: "/images/carol-leone.png",
         name: "Dr. Carol Leone",
@@ -12,7 +11,6 @@ const stories = [
         school: "SMU Meadows School of the Arts"
     },
     {
-        image: "/images/special-offer/elegant-hands-playing-modern-digital-piano-keyboar.jpg",
         quote: `"I can play for much longer and continue to play every day. I don't get frustrated from the pain and from being limited in my playing."`,
         avatar: "/images/Jen-McCabe.png",
         name: "Jen McCabe",
@@ -20,7 +18,6 @@ const stories = [
         school: "harmonypianostudio.com"
     },
     {
-        image: "/images/hands-playing-illuminated-piano-keys-learning.jpg",
         quote: `"My favorite story is from a piano performance major, who couldn't believe that playing the piano didn't have to hurt. The instrument restored her joy for piano repertoire. She had been preparing to change over to harpsichord due to keyboard size issues. I will never forget the day she first played a Chopin ballade on the DS5.5. She literally could not stop beaming."`,
         avatar: "/images/Kathryn-Ananda-Owens.png",
         name: "Kathryn-Ananda Owens",
@@ -39,84 +36,36 @@ export default function TestimonialsSection() {
     const story = stories[currentSlide];
 
     return (
-        <section className="bg-white text-black py-12 md:py-24 px-4 md:px-6 flex items-center">
-            <div className="max-w-6xl mx-auto w-full">
-                <div className="text-center mb-8 md:mb-16">
+        <section className="bg-white text-black py-12 md:py-24 px-4 md:px-6">
+            <div className="max-w-3xl mx-auto w-full">
+                <div className="text-center mb-8 md:mb-12">
                     <span className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400 mb-3 block">Why We&apos;re Doing This</span>
                     <h2 className="font-serif text-2xl md:text-4xl lg:text-5xl leading-tight text-black text-balance">Playing the piano<br />doesn&apos;t have to hurt</h2>
                 </div>
 
-                {/* Desktop layout: side-by-side image + quote */}
-                <div className="hidden md:grid md:grid-cols-2 gap-16 items-center">
-                    {/* Image Column */}
-                    <div className="relative aspect-square w-full overflow-hidden bg-neutral-100">
+                {/* Quote */}
+                <blockquote className="font-serif text-lg md:text-2xl lg:text-3xl leading-relaxed md:leading-tight text-neutral-800 text-center mb-8 md:mb-12 min-h-[120px] md:min-h-[180px] flex items-center justify-center">
+                    <span className="transition-opacity duration-300">{story.quote}</span>
+                </blockquote>
+
+                {/* Attribution */}
+                <div className="flex items-center gap-4 justify-center border-t border-black/10 pt-6 md:pt-8 mb-6 md:mb-10">
+                    <div className="relative w-12 h-12 overflow-hidden bg-neutral-200 rounded-full flex-shrink-0">
                         <Image
-                            src={story.image}
-                            alt="Pianist playing"
-                            fill
-                            className="object-cover transition-opacity duration-500"
-                        />
-                    </div>
-
-                    {/* Content Column */}
-                    <div className="flex flex-col justify-center">
-                        <blockquote className="font-serif text-3xl lg:text-4xl leading-tight mb-12 text-neutral-800">
-                            {story.quote}
-                        </blockquote>
-
-                        <div className="flex items-center gap-4 border-t border-black/10 pt-8">
-                            <div className="relative w-12 h-12 overflow-hidden bg-neutral-200 flex-shrink-0">
-                                <Image
-                                    src={story.avatar}
-                                    alt={story.name}
-                                    fill
-                                    className="object-cover"
-                                />
-                            </div>
-                            <div>
-                                <h4 className="font-sans text-lg font-bold text-black">{story.name}</h4>
-                                <p className="font-sans text-sm text-neutral-500 leading-tight mt-1">{story.role}<br />{story.school}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Mobile layout: stacked card with image, quote, attribution */}
-                <div className="md:hidden">
-                    {/* Image */}
-                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100 mb-6">
-                        <Image
-                            src={story.image}
-                            alt="Pianist playing"
+                            src={story.avatar}
+                            alt={story.name}
                             fill
                             className="object-cover"
                         />
                     </div>
-
-                    {/* Quote */}
-                    <blockquote className="font-serif text-lg leading-relaxed mb-6 text-neutral-800">
-                        {story.quote}
-                    </blockquote>
-
-                    {/* Attribution */}
-                    <div className="flex items-center gap-4 border-t border-black/10 pt-6 mb-6">
-                        <div className="relative w-12 h-12 overflow-hidden bg-neutral-200 flex-shrink-0">
-                            <Image
-                                src={story.avatar}
-                                alt={story.name}
-                                fill
-                                className="object-cover"
-                            />
-                        </div>
-                        <div>
-                            <h4 className="font-sans text-base font-bold text-black">{story.name}</h4>
-                            <p className="font-sans text-xs text-neutral-500 leading-tight mt-0.5">{story.role}<br />{story.school}</p>
-                        </div>
+                    <div className="text-left">
+                        <h4 className="font-sans text-sm md:text-base font-bold text-black">{story.name}</h4>
+                        <p className="font-sans text-xs md:text-sm text-neutral-500 leading-tight mt-0.5">{story.role}<br />{story.school}</p>
                     </div>
                 </div>
 
                 {/* Controls */}
-                <div className="flex justify-center md:justify-end gap-6 mt-4 md:mt-8">
+                <div className="flex justify-center gap-6">
                     <div className="flex gap-2 items-center">
                         {stories.map((_, i) => (
                             <button
