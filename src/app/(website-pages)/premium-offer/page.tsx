@@ -105,8 +105,8 @@ export default async function PremiumOfferPage() {
                         <StanfordQuoteSection />
                     </div>
 
-                    {/* Section 14 — Trust (regular scroll) */}
-                    <div className="relative z-[24]">
+                    {/* Section 14 — Trust (regular scroll, gradient) */}
+                    <div className="relative z-[24]" style={{ background: 'linear-gradient(to bottom, #000000 0%, #000000 60%, #020202 68%, #040404 75%, #070707 80%, #0a0a0a 85%, #0d0d0d 90%, #111111 94%, #141414 100%)' }}>
                         <TrustSection />
                     </div>
 
