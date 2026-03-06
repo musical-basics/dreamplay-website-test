@@ -19,12 +19,12 @@ export function ChildHeroSection() {
                     muted
                     loop
                     playsInline
-                    className="absolute inset-0 h-full w-full object-cover brightness-[0.6] contrast-[1.1] saturate-[0.85]"
+                    className="absolute inset-0 h-full w-full object-cover brightness-[0.8] contrast-[1.1] saturate-[0.85]"
                 >
                     <source src="https://pub-ae162277c7104eb2b558af08104deafc.r2.dev/DreamPlay%20Hero%201080p%20v5%20Loop%20(mom%2Bchild).mp4" type="video/mp4" />
                 </video>
-                <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/15 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 
                 <div className="absolute inset-0 z-10 flex items-end px-8 pb-10 md:px-16 md:pb-14 lg:px-24 leading-normal">
                     <div className="max-w-md">
