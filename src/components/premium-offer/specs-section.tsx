@@ -111,8 +111,8 @@ export function SpecsSection() {
         {/* Collapsible Specs Detail */}
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="full-specs" className="border-neutral-800">
-            <AccordionTrigger className="font-sans text-sm uppercase tracking-[0.2em] text-neutral-300 hover:no-underline hover:text-white py-6 justify-center gap-4 [&>svg]:h-6 [&>svg]:w-6">
-              View Full Specifications
+            <AccordionTrigger className="font-sans text-sm uppercase tracking-[0.2em] text-neutral-300 hover:no-underline hover:text-white hover:border-white/40 py-4 px-8 justify-center gap-4 [&>svg]:h-5 [&>svg]:w-5 border border-white/20 rounded-sm mx-auto w-fit transition-all">
+              Expand to View Full Specifications
             </AccordionTrigger>
             <AccordionContent>
               {/* Product Dimensions Thumbnail */}
