@@ -48,25 +48,25 @@ export function ScienceSection() {
             {/* ─── The problem vs. the fix — side by side ─── */}
             <section className="w-full bg-white">
                 <div className="mx-auto max-w-5xl px-6 py-20 md:py-28">
-                    <div className="grid md:grid-cols-2 gap-0">
+                    <div className="grid md:grid-cols-2 gap-5 md:gap-8">
                         {/* Problem side */}
-                        <div className="border-l-4 border-red-500 pl-8 md:pl-10 pr-6 py-2 md:py-4">
+                        <div className="border border-neutral-200 rounded-lg p-6 md:p-8 border-l-4 border-l-red-500">
                             <p className="font-sans text-xs font-bold uppercase tracking-[0.25em] text-red-500 mb-4">The Problem</p>
                             <h3 className="font-serif text-2xl md:text-3xl text-neutral-900 leading-snug mb-4">
                                 Fingers splay flat.<br />The hand arch collapses.
                             </h3>
-                            <p className="font-sans text-base text-neutral-500 leading-relaxed">
+                            <p className="font-sans text-base text-neutral-600 leading-relaxed">
                                 Severe <strong className="text-neutral-900 font-semibold">ulnar deviation</strong> — the wrist bends sharply toward the pinky, destroying the natural bridge of the hand.
                             </p>
                         </div>
 
                         {/* Solution side */}
-                        <div className="border-l-4 border-emerald-500 pl-8 md:pl-10 pr-6 py-2 md:py-4 mt-10 md:mt-0">
+                        <div className="border border-neutral-200 rounded-lg p-6 md:p-8 border-l-4 border-l-emerald-500">
                             <p className="font-sans text-xs font-bold uppercase tracking-[0.25em] text-emerald-500 mb-4">The Fix</p>
                             <h3 className="font-serif text-2xl md:text-3xl text-neutral-900 leading-snug mb-4">
                                 Natural arch maintained.<br />Wrist stays neutral.
                             </h3>
-                            <p className="font-sans text-base text-neutral-500 leading-relaxed">
+                            <p className="font-sans text-base text-neutral-600 leading-relaxed">
                                 Full mechanical leverage is restored — producing a <strong className="text-neutral-900 font-semibold">richer, more powerful tone</strong> with zero strain.
                             </p>
                         </div>
@@ -77,33 +77,33 @@ export function ScienceSection() {
             {/* ─── Hero stats ─── */}
             <section className="w-full bg-neutral-950 text-white">
                 <div className="mx-auto max-w-5xl px-6 py-20 md:py-28">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 text-center">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 text-center">
                         {/* Stat 1 */}
-                        <div>
-                            <div className="font-sans text-6xl md:text-7xl font-bold tracking-tight mb-3">
+                        <div className="border border-white/15 rounded-lg p-8 md:p-10">
+                            <div className="font-sans text-5xl md:text-6xl font-bold tracking-tight mb-3">
                                 86<span className="text-red-500">%</span>
                             </div>
-                            <p className="font-sans text-base text-white/60 leading-relaxed max-w-[240px] mx-auto">
+                            <p className="font-sans text-sm md:text-base text-white/60 leading-relaxed">
                                 of university piano majors experience <strong className="text-white font-semibold">active pain</strong> while playing
                             </p>
                         </div>
 
                         {/* Stat 2 */}
-                        <div>
-                            <div className="font-sans text-6xl md:text-7xl font-bold tracking-tight mb-3">
+                        <div className="border border-white/15 rounded-lg p-8 md:p-10">
+                            <div className="font-sans text-5xl md:text-6xl font-bold tracking-tight mb-3">
                                 3<span className="text-red-500">×</span>
                             </div>
-                            <p className="font-sans text-base text-white/60 leading-relaxed max-w-[240px] mx-auto">
+                            <p className="font-sans text-sm md:text-base text-white/60 leading-relaxed">
                                 higher risk of <strong className="text-white font-semibold">tendonitis, focal dystonia</strong> and carpal tunnel syndrome
                             </p>
                         </div>
 
                         {/* Stat 3 */}
-                        <div>
-                            <div className="font-sans text-5xl md:text-6xl font-bold tracking-tight text-emerald-400 mb-3">
+                        <div className="border border-white/15 rounded-lg p-8 md:p-10">
+                            <div className="font-sans text-4xl md:text-5xl font-bold tracking-tight text-emerald-400 mb-3">
                                 Proven
                             </div>
-                            <p className="font-sans text-base text-white/60 leading-relaxed max-w-[240px] mx-auto">
+                            <p className="font-sans text-sm md:text-base text-white/60 leading-relaxed">
                                 Narrower keyboards show a <strong className="text-white font-semibold">drastic reduction</strong> in muscle fatigue via EMG
                             </p>
                         </div>
