@@ -1,8 +1,22 @@
 import {
   Timer, CircleDot, Music, Radio,
   Cpu, Volume2, Monitor, PianoIcon,
-  Headphones, LayoutGrid, Bluetooth, Lightbulb
+  Headphones, Bluetooth, Lightbulb
 } from "lucide-react"
+
+function PianoKeysIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="4" width="28" height="24" rx="1" stroke="currentColor" strokeWidth="2" fill="none" />
+      <rect x="8" y="4" width="1" height="24" fill="currentColor" opacity="0.3" />
+      <rect x="15.5" y="4" width="1" height="24" fill="currentColor" opacity="0.3" />
+      <rect x="23" y="4" width="1" height="24" fill="currentColor" opacity="0.3" />
+      <rect x="6" y="4" width="4" height="14" rx="0.5" fill="currentColor" />
+      <rect x="14" y="4" width="4" height="14" rx="0.5" fill="currentColor" />
+      <rect x="22" y="4" width="4" height="14" rx="0.5" fill="currentColor" />
+    </svg>
+  )
+}
 
 const features = [
   { icon: Timer, label: "Built-in Metronome" },
@@ -14,7 +28,7 @@ const features = [
   { icon: Monitor, label: "Backlit LCD Screen" },
   { icon: PianoIcon, label: "Grand Piano Sound" },
   { icon: Headphones, label: "High-fidelity Speakers and Headphone Audio" },
-  { icon: LayoutGrid, label: "88 Graded, Weighted Keys" },
+  { icon: PianoKeysIcon, label: "88 Graded, Weighted Keys" },
   { icon: Bluetooth, label: "Bluetooth Connectivity" },
   { icon: Lightbulb, label: "LED Lighting For Every Key" },
 ]
