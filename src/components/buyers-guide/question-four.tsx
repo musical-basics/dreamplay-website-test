@@ -35,6 +35,13 @@ export function QuestionFour({ selected, onSelect }: QuestionFourProps) {
                     Understanding your musical goals helps us fine-tune our recommendation.
                 </p>
 
+                {!selected && (
+                    <p className="text-sm font-medium text-neutral-400 mb-6 flex items-center gap-2">
+                        <span className="inline-block w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                        Select one to continue
+                    </p>
+                )}
+
                 <div className="grid sm:grid-cols-2 gap-4">
                     {goals.map((goal) => {
                         const Icon = goal.icon

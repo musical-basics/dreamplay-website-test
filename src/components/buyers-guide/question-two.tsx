@@ -33,6 +33,13 @@ export function QuestionTwo({ selected, buyingFor, onSelect }: QuestionTwoProps)
                     }
                 </p>
 
+                {!selected && (
+                    <p className="text-sm font-medium text-neutral-400 mb-6 flex items-center gap-2">
+                        <span className="inline-block w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                        Select one to continue
+                    </p>
+                )}
+
                 <div className="grid gap-4">
                     {(["adult-female", "adult-male", "child"] as const).map((value) => {
                         const labels: Record<string, { self: string; gift: string; sub: string }> = {
