@@ -27,7 +27,10 @@ export default function HowItWorksPage() {
                 {/* The Hidden Barrier — full-width animated donut charts */}
                 <HiddenBarrierSection />
 
-                {/* Hero — A Keyboard That Fits You + size cards */}
+                {/* The Science — biomechanics (right after Hidden Barrier) */}
+                <ScienceSection />
+
+                {/* A Keyboard That Fits You + size cards */}
                 <HowItWorksHero />
 
                 {/* Testimonials */}
@@ -35,9 +38,6 @@ export default function HowItWorksPage() {
 
                 {/* Hand Span Calculator */}
                 <CalculatorSection />
-
-                {/* The Science — biomechanics */}
-                <ScienceSection />
 
                 {/* Published Research */}
                 <ResearchSection />
