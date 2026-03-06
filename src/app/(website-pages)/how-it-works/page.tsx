@@ -30,11 +30,11 @@ export default function HowItWorksPage() {
                 {/* The Science — biomechanics (right after Hidden Barrier) */}
                 <ScienceSection />
 
+                {/* Testimonials — integrated with biomechanics section */}
+                <TestimonialsSection />
+
                 {/* A Keyboard That Fits You + size cards */}
                 <HowItWorksHero />
-
-                {/* Testimonials */}
-                <TestimonialsSection />
 
                 {/* Hand Span Calculator */}
                 <CalculatorSection />

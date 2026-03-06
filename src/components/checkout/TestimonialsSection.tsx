@@ -12,7 +12,7 @@ const stories = [
         school: "SMU Meadows School of the Arts"
     },
     {
-        image: "/images/pianist-playing-grand-piano-warm-lighting.jpg",
+        image: "/images/special-offer/elegant-hands-playing-modern-digital-piano-keyboar.jpg",
         quote: `"I can play for much longer and continue to play every day. I don't get frustrated from the pain and from being limited in my playing."`,
         avatar: "/images/Jen-McCabe.png",
         name: "Jen McCabe",
@@ -20,7 +20,7 @@ const stories = [
         school: "harmonypianostudio.com"
     },
     {
-        image: "/images/person-practicing-piano-with-glowing-led-keys.jpg",
+        image: "/images/hands-playing-illuminated-piano-keys-learning.jpg",
         quote: `"My favorite story is from a piano performance major, who couldn't believe that playing the piano didn't have to hurt. The instrument restored her joy for piano repertoire. She had been preparing to change over to harpsichord due to keyboard size issues. I will never forget the day she first played a Chopin ballade on the DS5.5. She literally could not stop beaming."`,
         avatar: "/images/Kathryn-Ananda-Owens.png",
         name: "Kathryn-Ananda Owens",
@@ -39,11 +39,11 @@ export default function TestimonialsSection() {
     const story = stories[currentSlide];
 
     return (
-        <section className="bg-white text-black pt-28 pb-16 md:py-24 px-6 md:min-h-screen flex items-center">
-            <div className="max-w-7xl mx-auto w-full">
-                <div className="text-center mb-10 md:mb-16">
-                    <span className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-3 block">Why We&apos;re Doing This</span>
-                    <h2 className="font-serif text-3xl md:text-5xl tracking-tight leading-tight text-black">Playing the piano<br />doesn&apos;t have to hurt</h2>
+        <section className="bg-white text-black py-12 md:py-24 px-4 md:px-6 flex items-center">
+            <div className="max-w-6xl mx-auto w-full">
+                <div className="text-center mb-8 md:mb-16">
+                    <span className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400 mb-3 block">Why We&apos;re Doing This</span>
+                    <h2 className="font-serif text-2xl md:text-4xl lg:text-5xl leading-tight text-black text-balance">Playing the piano<br />doesn&apos;t have to hurt</h2>
                 </div>
 
                 {/* Desktop layout: side-by-side image + quote */}
