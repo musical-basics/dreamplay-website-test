@@ -36,7 +36,7 @@ export function VideoSection() {
 
   return (
     <section className="relative leading-[0] -mt-px bg-neutral-200">
-      <div className="relative w-full aspect-video">
+      <div className="relative w-full min-h-[60vh] md:min-h-0 md:aspect-video">
         <video
           ref={videoRef}
           className="h-full w-full object-cover block"

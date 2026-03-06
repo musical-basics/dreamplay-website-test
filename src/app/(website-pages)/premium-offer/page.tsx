@@ -50,7 +50,7 @@ export default async function PremiumOfferPage() {
                     <div className="sticky top-0 z-[11]"><SocialProofBar /></div>
 
                     {/* Section 2 — Buyer's Guide (regular scroll) */}
-                    <div className="relative z-[12] min-h-screen flex flex-col justify-center bg-neutral-100">
+                    <div className="relative z-[12] min-h-[100svh] md:min-h-screen flex flex-col justify-center bg-neutral-100">
                         <InlineBuyersGuide />
                     </div>
 
@@ -74,7 +74,7 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 6 — Video Hero 3 */}
-                    <div className="sticky top-0 z-[16]">
+                    <div className="sticky top-0 z-[16] min-h-screen md:min-h-0 md:aspect-video overflow-hidden">
                         <VideoHero3 />
                     </div>
 
@@ -85,7 +85,7 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 9 — Video Hero 4 */}
-                    <div className="sticky top-0 z-[19]">
+                    <div className="sticky top-0 z-[19] min-h-screen md:min-h-0 md:aspect-video overflow-hidden">
                         <VideoHero4 />
                     </div>
 
@@ -111,7 +111,7 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 15 — Product Video (sticky parallax) */}
-                    <div className="sticky top-0 z-[25] min-h-screen md:min-h-0 md:aspect-video bg-black">
+                    <div className="sticky top-0 z-[25] min-h-[60vh] md:min-h-0 md:aspect-video bg-black overflow-hidden">
                         <section id="video"><VideoSection /></section>
                     </div>
 

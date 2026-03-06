@@ -12,7 +12,7 @@ import {
 export function ChildHeroSection() {
     return (
         <section className="relative leading-[0] bg-white">
-            <div className="relative w-full aspect-video">
+            <div className="relative w-full min-h-screen md:min-h-0 md:aspect-video">
                 <video
                     autoPlay
                     muted
