@@ -60,12 +60,12 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 4 — Trade-In Upgrade */}
-                    <div className="sticky top-0 z-[14] bg-neutral-100">
+                    <div className="relative z-[14] bg-neutral-100">
                         <TradeInSection />
                     </div>
 
                     {/* Section 5 — Trade-In FAQ */}
-                    <div className="sticky top-0 z-[15] bg-neutral-50">
+                    <div className="relative z-[15] bg-neutral-50">
                         <TradeInFaqSection />
                     </div>
 
@@ -75,7 +75,7 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 7+8 — Hand Comparison + Size Finder (merged) */}
-                    <div className="sticky top-0 z-[17] bg-white">
+                    <div className="relative z-[17] bg-white">
                         <HandComparisonSection />
                         <SizeFinderSection />
                     </div>
@@ -102,13 +102,13 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 14+15 — Trust + Video (merged) */}
-                    <div className="sticky top-0 z-[24]">
+                    <div className="relative z-[24]">
                         <TrustSection />
                         <section id="video"><VideoSection /></section>
                     </div>
 
                     {/* Section 16 — Creator */}
-                    <div className="sticky top-0 z-[26] bg-foreground">
+                    <div className="relative z-[26] bg-foreground">
                         <CreatorSection />
                     </div>
 
