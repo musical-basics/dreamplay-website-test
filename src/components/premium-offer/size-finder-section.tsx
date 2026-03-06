@@ -5,7 +5,7 @@ import Image from "next/image"
 import { Hand, ArrowRight } from "lucide-react"
 
 export function SizeFinderSection() {
-  const [selectedSize, setSelectedSize] = useState<"ds55" | "ds60" | null>("ds60")
+  const [selectedSize, setSelectedSize] = useState<"ds55" | "ds60" | null>("ds55")
 
   return (
     <section id="size" className="relative bg-white">
