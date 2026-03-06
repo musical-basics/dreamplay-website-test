@@ -19,7 +19,7 @@ export function ChildHeroSection() {
                     muted
                     loop
                     playsInline
-                    className="absolute inset-0 h-full w-full object-cover brightness-[0.8] contrast-[1.1] saturate-[0.85]"
+                    className="absolute inset-0 h-full w-full object-cover brightness-[0.8]"
                 >
                     <source src="https://pub-ae162277c7104eb2b558af08104deafc.r2.dev/DreamPlay%20Hero%201080p%20v5%20Loop%20(mom%2Bchild).mp4" type="video/mp4" />
                 </video>

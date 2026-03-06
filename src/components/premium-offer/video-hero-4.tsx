@@ -10,7 +10,7 @@ export function VideoHero4() {
                 muted
                 loop
                 playsInline
-                className="absolute inset-0 h-full w-full object-cover brightness-[0.8] contrast-[1.1] saturate-[0.85]"
+                className="absolute inset-0 h-full w-full object-cover brightness-[0.8]"
             >
                 <source src={BG_VIDEO} type="video/mp4" />
             </video>
