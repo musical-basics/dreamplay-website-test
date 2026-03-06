@@ -61,7 +61,7 @@ export function CrowdfundingSection() {
               <p className="font-sans text-sm font-bold uppercase tracking-[0.3em] text-white/70 md:text-lg">
                 Now available to pre-order
               </p>
-              <h1 className="mt-4 font-serif text-2xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
+              <h1 className="mt-4 font-sans text-2xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
                 The Pro Keyboard
                 <br />
                 for Hands That Don{"'"}t
@@ -81,8 +81,8 @@ export function CrowdfundingSection() {
                 The reality
               </p>
               <div className="mt-4 flex items-baseline gap-2">
-                <span className="font-serif text-[6rem] leading-none text-white md:text-[10rem]">55</span>
-                <span className="font-serif text-4xl text-white/60 md:text-6xl">%</span>
+                <span className="font-sans text-[6rem] leading-none text-white md:text-[10rem]">55</span>
+                <span className="font-sans text-4xl text-white/60 md:text-6xl">%</span>
               </div>
               <p className="mt-4 font-sans text-base font-medium text-white/80 md:text-xl max-w-md">
                 of pianists have hands too small<br />for a standard keyboard.
@@ -99,7 +99,7 @@ export function CrowdfundingSection() {
               <p className="font-sans text-sm font-bold uppercase tracking-[0.3em] text-white/70 md:text-lg">
                 Your professional journey
               </p>
-              <h2 className="mt-4 font-serif text-2xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
+              <h2 className="mt-4 font-sans text-2xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
                 Start on the DS6.0.
                 <br />
                 Perform on Any Stage.
@@ -120,7 +120,7 @@ export function CrowdfundingSection() {
               <p className="font-sans text-sm font-bold uppercase tracking-[0.3em] text-white/70 md:text-lg">
                 Learn faster. Play more.
               </p>
-              <h2 className="mt-4 font-serif text-2xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
+              <h2 className="mt-4 font-sans text-2xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
                 DreamPlay Learning
                 <br />
                 Makes Practice Fun.

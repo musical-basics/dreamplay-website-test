@@ -26,7 +26,7 @@ export function VideoHero4() {
                 <p className="font-sans text-sm font-bold uppercase tracking-[0.3em] text-white/70 md:text-lg">
                     Professional Grade
                 </p>
-                <h2 className="mt-4 font-serif text-2xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
+                <h2 className="mt-4 font-sans text-2xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
                     Everything you need.
                     <br />
                     Nothing you don{"'"}t.

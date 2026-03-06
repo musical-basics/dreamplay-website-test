@@ -103,7 +103,7 @@ export function SpecsSection() {
           <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400">
             Technical Details
           </p>
-          <h2 className="mt-4 font-serif text-3xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
+          <h2 className="mt-4 font-sans text-3xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
             Built without compromise.
           </h2>
         </div>
@@ -180,7 +180,7 @@ export function SpecsSection() {
                 {soundDetails.map((detail) => (
                   <Accordion key={detail.title} type="single" collapsible>
                     <AccordionItem value={detail.title} className="border-neutral-800">
-                      <AccordionTrigger className="font-serif text-lg text-white hover:no-underline md:text-xl">
+                      <AccordionTrigger className="font-sans text-lg text-white hover:no-underline md:text-xl">
                         {detail.title}
                       </AccordionTrigger>
                       <AccordionContent className="font-sans text-sm leading-relaxed text-neutral-400 md:text-base">

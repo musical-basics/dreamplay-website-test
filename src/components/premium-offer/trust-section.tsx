@@ -15,7 +15,7 @@ export function TrustSection() {
           <p className="font-sans text-sm uppercase tracking-[0.3em] text-muted-foreground">
             Built to Last
           </p>
-          <h2 className="mt-4 font-serif text-3xl leading-tight text-foreground md:text-4xl lg:text-5xl text-balance">
+          <h2 className="mt-4 font-sans text-3xl leading-tight text-foreground md:text-4xl lg:text-5xl text-balance">
             Trusted manufacturing. Transparent process.
           </h2>
         </div>
@@ -38,7 +38,7 @@ export function TrustSection() {
           <div className="flex flex-col justify-center lg:w-3/5">
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="manufacturer" className="border-border/60">
-                <AccordionTrigger className="font-serif text-lg text-foreground hover:no-underline md:text-xl">
+                <AccordionTrigger className="font-sans text-lg text-foreground hover:no-underline md:text-xl">
                   About Our Manufacturer
                 </AccordionTrigger>
                 <AccordionContent className="font-sans text-sm leading-relaxed text-muted-foreground md:text-base">
@@ -78,7 +78,7 @@ export function TrustSection() {
               </AccordionItem>
 
               <AccordionItem value="timeline" className="border-border/60">
-                <AccordionTrigger className="font-serif text-lg text-foreground hover:no-underline md:text-xl">
+                <AccordionTrigger className="font-sans text-lg text-foreground hover:no-underline md:text-xl">
                   Production Timeline
                 </AccordionTrigger>
                 <AccordionContent className="font-sans text-sm leading-relaxed text-muted-foreground md:text-base">
@@ -115,7 +115,7 @@ export function TrustSection() {
               </AccordionItem>
 
               <AccordionItem value="risks" className="border-border/60">
-                <AccordionTrigger className="font-serif text-lg text-foreground hover:no-underline md:text-xl">
+                <AccordionTrigger className="font-sans text-lg text-foreground hover:no-underline md:text-xl">
                   Risks & Challenges
                 </AccordionTrigger>
                 <AccordionContent className="font-sans text-sm leading-relaxed text-muted-foreground md:text-base">
@@ -139,7 +139,7 @@ export function TrustSection() {
               </AccordionItem>
 
               <AccordionItem value="shipping" className="border-border/60">
-                <AccordionTrigger className="font-serif text-lg text-foreground hover:no-underline md:text-xl">
+                <AccordionTrigger className="font-sans text-lg text-foreground hover:no-underline md:text-xl">
                   Shipping & Delivery
                 </AccordionTrigger>
                 <AccordionContent className="font-sans text-sm leading-relaxed text-muted-foreground md:text-base">

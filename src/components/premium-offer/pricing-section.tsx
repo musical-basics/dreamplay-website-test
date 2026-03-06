@@ -77,7 +77,7 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
           <p className="font-sans text-xs uppercase tracking-[0.3em] text-background/50">
             Pre-Order Now
           </p>
-          <h2 className="mt-4 font-serif text-3xl leading-tight text-background md:text-4xl lg:text-5xl text-balance">
+          <h2 className="mt-4 font-sans text-3xl leading-tight text-background md:text-4xl lg:text-5xl text-balance">
             Reserve your DreamPlay One.
           </h2>
           <p className="mt-6 font-sans text-sm font-medium leading-relaxed text-background/60 md:text-base">
@@ -118,7 +118,7 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
                 </span>
               )}
 
-              <h3 className="font-serif text-xl text-background md:text-2xl">
+              <h3 className="font-sans text-xl text-background md:text-2xl">
                 {tier.title}
               </h3>
               <p className="mt-1 font-sans text-xs text-background/40">
@@ -126,7 +126,7 @@ export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: strin
               </p>
 
               <div className="mt-6 flex items-baseline gap-3">
-                <p className="font-serif text-4xl text-background md:text-5xl">
+                <p className="font-sans text-4xl text-background md:text-5xl">
                   {tier.price}
                 </p>
                 {tier.msrp && (

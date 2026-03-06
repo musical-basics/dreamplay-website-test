@@ -50,7 +50,7 @@ export function FeaturesSection() {
     <section id="features" className="relative">
       <div className="mx-auto max-w-5xl px-6 py-20 md:py-28 lg:py-32">
         <div className="mb-16 text-center">
-          <h2 className="font-serif text-3xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
+          <h2 className="font-sans text-3xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
             Everything You Need, Built In
           </h2>
         </div>

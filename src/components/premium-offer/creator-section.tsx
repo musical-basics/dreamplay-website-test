@@ -29,7 +29,7 @@ export function CreatorSection() {
             <p className="font-sans text-sm uppercase tracking-[0.3em] text-background/50">
               Meet the Creator
             </p>
-            <h2 className="mt-4 font-serif text-3xl leading-tight text-background md:text-4xl lg:text-5xl text-balance">
+            <h2 className="mt-4 font-sans text-3xl leading-tight text-background md:text-4xl lg:text-5xl text-balance">
               Lionel Yu
             </h2>
             <p className="mt-2 font-sans text-sm font-medium text-background/50">
@@ -45,7 +45,7 @@ export function CreatorSection() {
 
             <Accordion type="single" collapsible className="mt-6">
               <AccordionItem value="story" className="border-background/20">
-                <AccordionTrigger className="font-serif text-base text-background hover:no-underline md:text-lg [&>svg]:text-background/60">
+                <AccordionTrigger className="font-sans text-base text-background hover:no-underline md:text-lg [&>svg]:text-background/60">
                   Read the full story
                 </AccordionTrigger>
                 <AccordionContent className="font-sans text-sm font-medium leading-relaxed text-background/60 md:text-base">
@@ -75,7 +75,7 @@ export function CreatorSection() {
 
             {/* Who is it for */}
             <div className="mt-10">
-              <h3 className="font-serif text-lg text-background md:text-xl">
+              <h3 className="font-sans text-lg text-background md:text-xl">
                 Who DreamPlay Is For
               </h3>
               <div className="mt-6 flex flex-col gap-4">
