@@ -1,8 +1,20 @@
 import {
-  Timer, CircleDot, Music, Radio,
+  CircleDot, Music, Radio,
   Cpu, Volume2, Monitor, PianoIcon,
   Headphones, Bluetooth, Lightbulb
 } from "lucide-react"
+
+function MetronomeIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="8" y="27" width="16" height="2" rx="0.5" fill="currentColor" />
+      <path d="M11 27L14 8H18L21 27" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round" />
+      <rect x="13" y="7" width="6" height="3" rx="1" fill="currentColor" />
+      <line x1="16" y1="24" x2="11" y2="6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="12" cy="10" r="2" fill="currentColor" />
+    </svg>
+  )
+}
 
 function PianoKeysIcon({ className }: { className?: string }) {
   return (
@@ -19,7 +31,7 @@ function PianoKeysIcon({ className }: { className?: string }) {
 }
 
 const features = [
-  { icon: Timer, label: "Built-in Metronome" },
+  { icon: MetronomeIcon, label: "Built-in Metronome" },
   { icon: CircleDot, label: "Recording & Playback" },
   { icon: Music, label: "256-note Polyphony" },
   { icon: Radio, label: "Dual-Sensor Velocity Keys" },

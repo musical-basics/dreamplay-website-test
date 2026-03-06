@@ -5,7 +5,7 @@ import Image from "next/image"
 import { Hand, ArrowRight } from "lucide-react"
 
 export function SizeFinderSection() {
-  const [selectedSize, setSelectedSize] = useState<"ds55" | "ds60" | null>(null)
+  const [selectedSize, setSelectedSize] = useState<"ds55" | "ds60" | null>("ds60")
 
   return (
     <section id="size" className="relative bg-white">
@@ -54,9 +54,9 @@ export function SizeFinderSection() {
         <div className="grid gap-4 md:grid-cols-2">
           <button
             onClick={() => setSelectedSize("ds55")}
-            className={`group flex flex-col items-start gap-4 border p-5 text-left transition-all duration-200 cursor-pointer shadow-md hover:shadow-xl hover:-translate-y-0.5 md:p-6 ${selectedSize === "ds55"
-              ? "border-neutral-900 bg-neutral-900 text-white shadow-lg"
-              : "border-neutral-200 bg-white text-neutral-900 hover:border-neutral-900"
+            className={`group flex flex-col items-start gap-4 border p-5 text-left transition-all duration-200 cursor-pointer hover:shadow-xl hover:-translate-y-0.5 md:p-6 ${selectedSize === "ds55"
+              ? "border-neutral-900 bg-neutral-900 text-white shadow-xl ring-2 ring-neutral-900 ring-offset-2"
+              : "border-neutral-200 bg-white text-neutral-900 shadow-lg hover:border-neutral-900"
               }`}
           >
             <p
@@ -98,9 +98,9 @@ export function SizeFinderSection() {
 
           <button
             onClick={() => setSelectedSize("ds60")}
-            className={`group flex flex-col items-start gap-4 border p-5 text-left transition-all duration-200 cursor-pointer shadow-md hover:shadow-xl hover:-translate-y-0.5 md:p-6 ${selectedSize === "ds60"
-              ? "border-neutral-900 bg-neutral-900 text-white shadow-lg"
-              : "border-neutral-200 bg-white text-neutral-900 hover:border-neutral-900"
+            className={`group flex flex-col items-start gap-4 border p-5 text-left transition-all duration-200 cursor-pointer hover:shadow-xl hover:-translate-y-0.5 md:p-6 ${selectedSize === "ds60"
+              ? "border-neutral-900 bg-neutral-900 text-white shadow-xl ring-2 ring-neutral-900 ring-offset-2"
+              : "border-neutral-200 bg-white text-neutral-900 shadow-lg hover:border-neutral-900"
               }`}
           >
             <p
