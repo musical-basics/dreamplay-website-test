@@ -26,21 +26,24 @@ export function ChildHeroSection() {
                 <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-black/10 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 
-                <div className="absolute inset-0 z-10 flex items-end px-8 pb-10 md:px-16 md:pb-14 lg:px-24 leading-normal">
-                    <div className="max-w-md">
-                        <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-white/70 md:text-xs">
-                            A Piano That Grows With Them
-                        </p>
-                        <h2 className="mt-3 font-serif text-2xl leading-tight text-white md:text-3xl lg:text-4xl xl:text-5xl text-balance">
-                            Their First Real Piano.
-                            <br />
-                            Built for Little Hands.
-                        </h2>
-                        <p className="mt-4 max-w-sm font-sans text-sm font-medium leading-relaxed text-white/85 md:text-base">
-                            Children deserve keys that actually fit. Start on the DS5.5,
-                            upgrade when they grow.
-                        </p>
-                    </div>
+                <div
+                    className="absolute inset-0 z-10 flex flex-col justify-center px-8 md:px-16 lg:px-24"
+                    style={{
+                        textShadow: '0 2px 8px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.4)',
+                    }}
+                >
+                    <p className="font-sans text-sm font-bold uppercase tracking-[0.3em] text-white/70 md:text-lg">
+                        A Piano That Grows With Them
+                    </p>
+                    <h2 className="mt-4 font-serif text-2xl leading-tight text-white md:text-4xl lg:text-5xl text-balance">
+                        Their First Real Piano.
+                        <br />
+                        Built for Little Hands.
+                    </h2>
+                    <p className="mt-5 max-w-md font-sans text-base font-medium leading-relaxed text-white/80 md:text-xl">
+                        Children deserve keys that actually fit. Start on the DS5.5,
+                        upgrade when they grow.
+                    </p>
                 </div>
             </div>
 
