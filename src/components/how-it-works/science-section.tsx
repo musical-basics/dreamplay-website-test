@@ -18,13 +18,13 @@ export function ScienceSection() {
                         <h2 className="mt-4 font-serif text-3xl leading-tight text-neutral-900 md:text-4xl lg:text-5xl text-balance">
                             How Standard Keyboards Cause Pain
                         </h2>
-                        <p className="mt-4 font-sans text-sm font-medium leading-relaxed text-neutral-600 md:text-base">
+                        <p className="mt-4 font-sans text-base font-medium leading-relaxed text-neutral-600 md:text-lg">
                             When small-handed pianists attempt to play octaves or large chords, they are forced
-                            into a state of maximum stretch known as <strong className="text-neutral-800">hyperabduction</strong>.
+                            into a state of maximum stretch known as <strong className="text-neutral-900">hyperabduction</strong>.
                         </p>
                     </div>
 
-                    {/* Biomechanical image — in an elevated card */}
+                    {/* Biomechanical image card */}
                     <div className="bg-white rounded-sm shadow-lg shadow-black/5 border border-neutral-200/60 overflow-hidden mb-2">
                         <button
                             onClick={() => setBioLightbox(true)}
@@ -41,61 +41,94 @@ export function ScienceSection() {
                     </div>
                     <button
                         onClick={() => setBioLightbox(true)}
-                        className="font-sans text-xs uppercase tracking-[0.2em] text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer mb-8 md:mb-12 block"
+                        className="font-sans text-xs uppercase tracking-[0.2em] text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer mb-10 md:mb-14 block"
                     >
                         Click to enlarge
                     </button>
 
+                    {/* ── What the Research Shows ── */}
+                    <h3 className="font-serif text-2xl md:text-3xl text-neutral-900 mb-6 md:mb-8">
+                        What the Research Shows
+                    </h3>
+
                     {/* Comparison cards */}
-                    <div className="grid md:grid-cols-2 gap-3 md:gap-5 mb-8 md:mb-12">
-                        <div className="bg-white rounded-sm shadow-lg shadow-black/5 border border-neutral-200/60 p-5 md:p-7 transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl">
-                            <div className="flex items-center gap-2 mb-3">
-                                <span className="inline-block w-2.5 h-2.5 rounded-full bg-red-500" />
-                                <span className="font-sans text-[10px] uppercase tracking-[0.25em] text-red-600 font-bold">Standard Keyboard (Left)</span>
+                    <div className="grid md:grid-cols-2 gap-4 md:gap-6 mb-10 md:mb-14">
+                        {/* Standard Keyboard card */}
+                        <div className="bg-white rounded-sm shadow-lg shadow-black/5 border-l-4 border-l-red-500 border border-neutral-200/60 p-6 md:p-8">
+                            <div className="flex items-center gap-2.5 mb-4">
+                                <span className="inline-block w-3 h-3 rounded-full bg-red-500" />
+                                <h4 className="font-sans text-sm font-bold uppercase tracking-wider text-red-600">
+                                    Standard Keyboard
+                                </h4>
                             </div>
-                            <p className="font-sans text-sm text-neutral-700 leading-relaxed">
-                                Players depress keys with fingers splayed completely flat, destroying the supportive bridge-like arch of the hand. This is accompanied by severe <strong className="text-neutral-900">ulnar deviation</strong> — bending the wrist sharply toward the pinky.
+                            <p className="font-sans text-base font-semibold text-neutral-900 mb-3 leading-snug">
+                                Fingers splay flat. The hand arch collapses.
+                            </p>
+                            <p className="font-sans text-sm text-neutral-600 leading-relaxed">
+                                Players are forced into severe <strong className="font-bold text-neutral-900">ulnar deviation</strong> — bending the wrist sharply toward the pinky — destroying the supportive bridge-like arch of the hand.
                             </p>
                         </div>
-                        <div className="bg-white rounded-sm shadow-lg shadow-black/5 border border-neutral-200/60 p-5 md:p-7 transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl">
-                            <div className="flex items-center gap-2 mb-3">
-                                <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                                <span className="font-sans text-[10px] uppercase tracking-[0.25em] text-emerald-600 font-bold">Narrower Keyboard (Right)</span>
+
+                        {/* Narrower Keyboard card */}
+                        <div className="bg-white rounded-sm shadow-lg shadow-black/5 border-l-4 border-l-emerald-500 border border-neutral-200/60 p-6 md:p-8">
+                            <div className="flex items-center gap-2.5 mb-4">
+                                <span className="inline-block w-3 h-3 rounded-full bg-emerald-500" />
+                                <h4 className="font-sans text-sm font-bold uppercase tracking-wider text-emerald-600">
+                                    Narrower Keyboard
+                                </h4>
                             </div>
-                            <p className="font-sans text-sm text-neutral-700 leading-relaxed">
-                                The same hand maintains an anatomically neutral arch and relaxed wrist position. Full mechanical leverage is restored, producing a richer, more powerful tone with zero strain.
+                            <p className="font-sans text-base font-semibold text-neutral-900 mb-3 leading-snug">
+                                Natural arch maintained. Wrist stays neutral.
+                            </p>
+                            <p className="font-sans text-sm text-neutral-600 leading-relaxed">
+                                Full mechanical leverage is restored, producing a <strong className="font-bold text-neutral-900">richer, more powerful tone</strong> with zero strain on tendons and joints.
                             </p>
                         </div>
                     </div>
 
-                    {/* Key Findings */}
-                    <div className="bg-white rounded-sm shadow-lg shadow-black/5 border border-neutral-200/60 p-5 md:p-8 mb-6 md:mb-10">
-                        <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400 mb-5">Key Findings</p>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-                            <div className="flex items-start gap-3">
-                                <div className="w-6 h-6 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-3 h-3 text-red-500"><path d="M18 6 6 18M6 6l12 12" /></svg>
-                                </div>
-                                <p className="font-sans text-sm text-neutral-700"><strong className="text-neutral-900">86%</strong> of university piano majors experience active pain while playing</p>
+                    {/* ── Key Findings ── */}
+                    <h3 className="font-serif text-2xl md:text-3xl text-neutral-900 mb-6 md:mb-8">
+                        Key Findings
+                    </h3>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-10 md:mb-14">
+                        {/* Finding 1 */}
+                        <div className="bg-white rounded-sm shadow-lg shadow-black/5 border border-neutral-200/60 p-6">
+                            <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mb-4">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-4 h-4 text-red-500"><path d="M18 6 6 18M6 6l12 12" /></svg>
                             </div>
-                            <div className="flex items-start gap-3">
-                                <div className="w-6 h-6 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-3 h-3 text-red-500"><path d="M18 6 6 18M6 6l12 12" /></svg>
-                                </div>
-                                <p className="font-sans text-sm text-neutral-700">Over-stretching leads to <strong className="text-neutral-900">tendonitis, focal dystonia, and carpal tunnel syndrome</strong></p>
+                            <div className="font-sans text-3xl font-bold text-neutral-900 mb-2">86%</div>
+                            <p className="font-sans text-sm font-medium text-neutral-600 leading-relaxed">
+                                of university piano majors experience <strong className="text-neutral-900">active pain</strong> while playing
+                            </p>
+                        </div>
+
+                        {/* Finding 2 */}
+                        <div className="bg-white rounded-sm shadow-lg shadow-black/5 border border-neutral-200/60 p-6">
+                            <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mb-4">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-4 h-4 text-red-500"><path d="M18 6 6 18M6 6l12 12" /></svg>
                             </div>
-                            <div className="flex items-start gap-3">
-                                <div className="w-6 h-6 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-3 h-3 text-emerald-500"><path d="M20 6 9 17l-5-5" /></svg>
-                                </div>
-                                <p className="font-sans text-sm text-neutral-700">Narrower keyboards show a <strong className="text-neutral-900">drastic reduction in muscle fatigue</strong> via EMG</p>
+                            <h4 className="font-sans text-base font-bold text-neutral-900 mb-2">Injury Risk</h4>
+                            <p className="font-sans text-sm font-medium text-neutral-600 leading-relaxed">
+                                Over-stretching leads to <strong className="text-neutral-900">tendonitis, focal dystonia, and carpal tunnel syndrome</strong>
+                            </p>
+                        </div>
+
+                        {/* Finding 3 */}
+                        <div className="bg-white rounded-sm shadow-lg shadow-black/5 border border-neutral-200/60 p-6">
+                            <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center mb-4">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-4 h-4 text-emerald-500"><path d="M20 6 9 17l-5-5" /></svg>
                             </div>
+                            <h4 className="font-sans text-base font-bold text-emerald-700 mb-2">The Solution Works</h4>
+                            <p className="font-sans text-sm font-medium text-neutral-600 leading-relaxed">
+                                Narrower keyboards show a <strong className="text-neutral-900">drastic reduction in muscle fatigue</strong> via EMG
+                            </p>
                         </div>
                     </div>
 
                     {/* Sources */}
                     <div className="bg-white rounded-sm shadow-sm shadow-black/5 border border-neutral-200/60 p-5 md:p-7">
-                        <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400 mb-3">Sources</p>
+                        <h4 className="font-sans text-xs font-bold uppercase tracking-[0.3em] text-neutral-400 mb-3">Sources</h4>
                         <ul className="space-y-1.5">
                             <li className="font-sans text-xs text-neutral-500 leading-relaxed">
                                 Yoshimura, E., et al. (2006). <em>Risk factors for piano-related pain among college students and piano teachers.</em> Medical Problems of Performing Artists.
