@@ -16,65 +16,83 @@ export function ScienceSection() {
                         <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight leading-tight text-white">The Hidden Barrier</h2>
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-16 lg:gap-24 mb-20">
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-0 mb-8">
                         {/* Female stat */}
-                        <div className="flex flex-col items-center text-center">
-                            <div className="relative w-[200px] h-[200px] mb-8">
+                        <div className="flex flex-col items-center text-center px-8 md:px-16">
+                            <div className="relative w-[200px] h-[200px] mb-6">
                                 <svg width="200" height="200" viewBox="0 0 200 200" className="transform -rotate-90">
                                     <defs>
-                                        <filter id="arc-glow" x="-50%" y="-50%" width="200%" height="200%">
-                                            <feGaussianBlur stdDeviation="5" result="blur" />
+                                        <filter id="glow-red" x="-50%" y="-50%" width="200%" height="200%">
+                                            <feGaussianBlur stdDeviation="4" result="blur" />
+                                            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                                        </filter>
+                                        <filter id="glow-green" x="-50%" y="-50%" width="200%" height="200%">
+                                            <feGaussianBlur stdDeviation="4" result="blur" />
                                             <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
                                         </filter>
                                     </defs>
                                     {/* Track */}
-                                    <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="20" />
-                                    {/* Comfortable arc (green with glow) */}
-                                    <circle cx="100" cy="100" r="80" fill="none" stroke="#4ade80" strokeWidth="20"
-                                        strokeDasharray={`${0.13 * 2 * Math.PI * 80} ${0.87 * 2 * Math.PI * 80}`}
-                                        strokeDashoffset={`${-0.87 * 2 * Math.PI * 80}`}
-                                        strokeLinecap="butt" filter="url(#arc-glow)" />
-                                    {/* Affected arc (subtle white) */}
-                                    <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="20"
-                                        strokeDasharray={`${0.87 * 2 * Math.PI * 80} ${0.13 * 2 * Math.PI * 80}`}
-                                        strokeLinecap="butt" />
+                                    <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="18" />
+                                    {/* Green (comfortable) arc */}
+                                    <circle cx="100" cy="100" r="78" fill="none" stroke="#4ade80" strokeWidth="18"
+                                        strokeDasharray={`${0.13 * 2 * Math.PI * 78} ${0.87 * 2 * Math.PI * 78}`}
+                                        strokeDashoffset={`${-0.87 * 2 * Math.PI * 78}`}
+                                        strokeLinecap="butt" filter="url(#glow-green)"
+                                        style={{ animation: 'sweep-in 1.2s ease-out forwards' }} />
+                                    {/* Red (affected) arc */}
+                                    <circle cx="100" cy="100" r="78" fill="none" stroke="#ef4444" strokeWidth="18"
+                                        strokeDasharray={`${0.87 * 2 * Math.PI * 78} ${0.13 * 2 * Math.PI * 78}`}
+                                        strokeLinecap="butt" filter="url(#glow-red)"
+                                        style={{ animation: 'sweep-in 1.2s ease-out forwards' }} />
                                 </svg>
                                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span className="font-sans text-4xl font-light tracking-tight text-white">87<span className="text-xl text-white/40">%</span></span>
+                                    <span className="font-sans text-4xl font-bold tracking-tight text-white">87%</span>
                                 </div>
                             </div>
-                            <p className="font-sans text-xs uppercase tracking-[0.25em] text-white/40 mb-2">of women</p>
-                            <p className="font-sans text-sm leading-relaxed text-white/40 max-w-[260px]">
-                                Have hand spans below the 8.5&quot; threshold that standard keyboards require.
-                            </p>
+                            <p className="font-sans text-sm text-white/50">of Females</p>
                         </div>
 
+                        {/* Divider */}
+                        <div className="hidden md:block w-px h-48 bg-white/10" />
+
                         {/* Male stat */}
-                        <div className="flex flex-col items-center text-center">
-                            <div className="relative w-[200px] h-[200px] mb-8">
+                        <div className="flex flex-col items-center text-center px-8 md:px-16">
+                            <div className="relative w-[200px] h-[200px] mb-6">
                                 <svg width="200" height="200" viewBox="0 0 200 200" className="transform -rotate-90">
                                     {/* Track */}
-                                    <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="20" />
-                                    {/* Comfortable arc (green with glow) */}
-                                    <circle cx="100" cy="100" r="80" fill="none" stroke="#4ade80" strokeWidth="20"
-                                        strokeDasharray={`${0.76 * 2 * Math.PI * 80} ${0.24 * 2 * Math.PI * 80}`}
-                                        strokeDashoffset={`${-0.24 * 2 * Math.PI * 80}`}
-                                        strokeLinecap="butt" filter="url(#arc-glow)" />
-                                    {/* Affected arc (subtle white) */}
-                                    <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="20"
-                                        strokeDasharray={`${0.24 * 2 * Math.PI * 80} ${0.76 * 2 * Math.PI * 80}`}
-                                        strokeLinecap="butt" />
+                                    <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="18" />
+                                    {/* Green (comfortable) arc */}
+                                    <circle cx="100" cy="100" r="78" fill="none" stroke="#4ade80" strokeWidth="18"
+                                        strokeDasharray={`${0.76 * 2 * Math.PI * 78} ${0.24 * 2 * Math.PI * 78}`}
+                                        strokeDashoffset={`${-0.24 * 2 * Math.PI * 78}`}
+                                        strokeLinecap="butt" filter="url(#glow-green)"
+                                        style={{ animation: 'sweep-in 1.2s ease-out 0.2s forwards' }} />
+                                    {/* Red (affected) arc */}
+                                    <circle cx="100" cy="100" r="78" fill="none" stroke="#ef4444" strokeWidth="18"
+                                        strokeDasharray={`${0.24 * 2 * Math.PI * 78} ${0.76 * 2 * Math.PI * 78}`}
+                                        strokeLinecap="butt" filter="url(#glow-red)"
+                                        style={{ animation: 'sweep-in 1.2s ease-out 0.2s forwards' }} />
                                 </svg>
                                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span className="font-sans text-4xl font-light tracking-tight text-white">24<span className="text-xl text-white/40">%</span></span>
+                                    <span className="font-sans text-4xl font-bold tracking-tight text-white">24%</span>
                                 </div>
                             </div>
-                            <p className="font-sans text-xs uppercase tracking-[0.25em] text-white/40 mb-2">of men</p>
-                            <p className="font-sans text-sm leading-relaxed text-white/40 max-w-[260px]">
-                                Also fall below the comfortable reach threshold for a standard 6.5&quot; keyboard.
-                            </p>
+                            <p className="font-sans text-sm text-white/50">of Males</p>
                         </div>
                     </div>
+
+                    {/* Shared subtitle */}
+                    <p className="text-center font-sans text-sm text-white/30 mb-20">
+                        can&apos;t comfortably reach standard piano keys
+                    </p>
+
+                    {/* Animation keyframes */}
+                    <style jsx>{`
+                        @keyframes sweep-in {
+                            from { stroke-dashoffset: ${2 * Math.PI * 78}; opacity: 0; }
+                            to { opacity: 1; }
+                        }
+                    `}</style>
 
                     <div className="border-t border-white/10 pt-16 grid md:grid-cols-2 gap-12 text-center md:text-left">
                         <div>
