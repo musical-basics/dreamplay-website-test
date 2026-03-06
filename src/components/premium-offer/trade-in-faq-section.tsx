@@ -11,7 +11,7 @@ const faqs = [
     {
         question: "How does the free trade-in work?",
         answer:
-            "When your child's hands grow beyond the DS5.5 sizing, simply contact us and we'll send you a prepaid return label. Ship your DS5.5 back and we'll send a brand-new DS6.0 to your door — completely free of charge, including shipping.",
+            "When your child's hands grow beyond the DS5.5 sizing, simply contact us. Ship your DS5.5 back (buyer pays shipping) and we'll send a brand-new DS6.0 to your door. The upgrade itself is completely free when you purchase during our launch promotion.",
     },
     {
         question: "Is there a time limit on when I can trade in?",
@@ -26,7 +26,7 @@ const faqs = [
     {
         question: "Do I need to pay for shipping?",
         answer:
-            "No. We cover both the return shipping of your DS5.5 and the delivery of your new DS6.0. The entire process is free.",
+            "Yes, the buyer is responsible for shipping costs. However, the upgrade itself from DS5.5 to DS6.0 is completely free when you purchase during our launch promotion.",
     },
     {
         question: "Why is this only available during the launch promo?",
@@ -36,7 +36,7 @@ const faqs = [
     {
         question: "Can I trade a DS6.0 for a DS5.5 instead?",
         answer:
-            "Yes! The trade-in works both ways. If you started with a DS6.0 and realize a DS5.5 is a better fit, we'll swap it for free during the promo period.",
+            "No. The trade-in program is designed for growing children — it only goes from DS5.5 to DS6.0 as their hands get bigger. If you ordered the wrong size, we offer a 90-day exchange period where you can swap for the correct model. Buyer pays shipping for exchanges.",
     },
 ]
 
