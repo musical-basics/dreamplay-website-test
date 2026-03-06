@@ -24,11 +24,11 @@ export default function HowItWorksPage() {
             <SpecialOfferHeader forceOpaque={true} darkMode={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
 
             <main className="flex flex-col items-center">
-                {/* Hero */}
-                <HowItWorksHero />
-
                 {/* The Hidden Barrier — full-width animated donut charts */}
                 <HiddenBarrierSection />
+
+                {/* Hero — A Keyboard That Fits You + size cards */}
+                <HowItWorksHero />
 
                 {/* Testimonials */}
                 <TestimonialsSection />

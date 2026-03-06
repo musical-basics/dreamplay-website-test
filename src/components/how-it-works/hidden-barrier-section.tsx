@@ -19,7 +19,7 @@ export function HiddenBarrierSection() {
     const circumference = 2 * Math.PI * r
 
     return (
-        <section ref={sectionRef} className="w-full bg-black text-white py-24 md:py-36">
+        <section ref={sectionRef} className="w-full bg-black text-white pt-32 pb-24 md:pt-40 md:pb-36">
             <div className="max-w-5xl mx-auto px-6">
                 {/* Heading */}
                 <div className={`text-center mb-16 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
