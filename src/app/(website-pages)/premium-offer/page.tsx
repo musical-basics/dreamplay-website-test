@@ -101,9 +101,13 @@ export default async function PremiumOfferPage() {
                         <StanfordQuoteSection />
                     </div>
 
-                    {/* Section 14+15 — Trust + Video (merged) */}
+                    {/* Section 14 — Trust (regular scroll) */}
                     <div className="relative z-[24]">
                         <TrustSection />
+                    </div>
+
+                    {/* Section 15 — Product Video (sticky parallax) */}
+                    <div className="sticky top-0 z-[25] min-h-screen md:min-h-0 md:aspect-video bg-neutral-200">
                         <section id="video"><VideoSection /></section>
                     </div>
 
