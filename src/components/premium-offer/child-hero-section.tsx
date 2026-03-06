@@ -20,7 +20,7 @@ export function ChildHeroSection() {
                     playsInline
                     className="absolute inset-0 h-full w-full object-cover"
                 >
-                    <source src="/videos/DreamPlay Hero 1080p Video Hero 2 Loop.mp4" type="video/mp4" />
+                    <source src="/videos/DreamPlay Hero 1080p Video Hero 2 Loop (Child+Mom+LearningApp).mp4" type="video/mp4" />
                 </video>
                 <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-black/10 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
