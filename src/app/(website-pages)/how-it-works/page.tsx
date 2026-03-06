@@ -1,5 +1,4 @@
-"use client"
-
+import { Playfair_Display, Inter } from "next/font/google"
 import { SpecialOfferHeader } from "@/components/special-offer/header"
 import Footer from "@/components/Footer"
 import TestimonialsSection from "@/components/checkout/TestimonialsSection"
@@ -10,9 +9,18 @@ import { ScienceSection } from "@/components/how-it-works/science-section"
 import { ResearchSection } from "@/components/how-it-works/research-section"
 import { CtaSection } from "@/components/how-it-works/cta-section"
 
+const playfair = Playfair_Display({
+    subsets: ["latin"],
+    variable: "--font-playfair",
+})
+const inter = Inter({
+    subsets: ["latin"],
+    variable: "--font-inter",
+})
+
 export default function HowItWorksPage() {
     return (
-        <div className="min-h-screen selection:bg-white/20">
+        <div className={`${playfair.variable} ${inter.variable} font-sans antialiased min-h-screen selection:bg-white/20`}>
             <SpecialOfferHeader forceOpaque={true} darkMode={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
 
             <main className="flex flex-col items-center">

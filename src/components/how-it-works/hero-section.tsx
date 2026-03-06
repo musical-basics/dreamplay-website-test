@@ -5,7 +5,7 @@ export function HowItWorksHero() {
                 <p className="font-sans text-sm uppercase tracking-[0.3em] text-white/40">
                     How It Works
                 </p>
-                <h1 className="mt-4 font-serif text-4xl leading-tight text-white md:text-5xl lg:text-6xl text-balance">
+                <h1 className="mt-4 font-sans text-4xl leading-tight text-white md:text-5xl lg:text-6xl text-balance font-bold">
                     A Keyboard That Fits You.
                 </h1>
                 <p className="mt-6 font-sans text-base leading-relaxed text-white/60 max-w-2xl mx-auto md:text-lg">

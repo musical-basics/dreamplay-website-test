@@ -23,8 +23,8 @@ export function HiddenBarrierSection() {
             <div className="max-w-5xl mx-auto px-6">
                 {/* Heading */}
                 <div className={`text-center mb-16 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-                    <p className="font-sans text-sm uppercase tracking-[0.3em] text-white/40 mb-4">The Data</p>
-                    <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight leading-tight text-white">The Hidden Barrier</h2>
+                    <p className="font-sans text-xs uppercase tracking-[0.3em] text-white/40">The Data</p>
+                    <h2 className="mt-4 font-sans text-3xl leading-tight text-white md:text-4xl lg:text-5xl text-balance font-bold">The Hidden Barrier</h2>
                 </div>
 
                 {/* Donut charts row — grid aligned with bottom stats */}
@@ -116,14 +116,14 @@ export function HiddenBarrierSection() {
                 {/* Bottom stats — same container */}
                 <div className={`border-t border-white/10 pt-16 grid md:grid-cols-2 gap-12 text-center md:text-left transition-all duration-700 delay-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
                     <div>
-                        <div className="font-serif text-5xl md:text-6xl font-bold text-white mb-3">8.5&quot;</div>
+                        <div className="font-sans text-5xl md:text-6xl font-bold text-white mb-3">8.5&quot;</div>
                         <div className="font-sans text-xs uppercase tracking-[0.3em] text-white/40 mb-4">The Threshold</div>
                         <p className="font-sans text-base leading-relaxed text-white/60">
                             Minimum hand span needed to play a conventional 6.5 inch keyboard from Yamaha or Steinway with real comfort.
                         </p>
                     </div>
                     <div>
-                        <div className="font-serif text-5xl md:text-6xl font-bold text-white mb-3">25–30%</div>
+                        <div className="font-sans text-5xl md:text-6xl font-bold text-white mb-3">25–30%</div>
                         <div className="font-sans text-xs uppercase tracking-[0.3em] text-white/40 mb-4">Larger Reach Required</div>
                         <p className="font-sans text-base leading-relaxed text-white/60">
                             Hand span often needs to be at least one quarter larger than the octave just to reach 8ths, 9ths, and 10ths without strain.

@@ -2,8 +2,8 @@ export function CtaSection() {
     return (
         <section className="w-full bg-black text-white py-28 md:py-36 text-center border-t border-white/10">
             <div className="mx-auto max-w-3xl px-6">
-                <p className="font-sans text-sm uppercase tracking-[0.3em] text-white/40 mb-4">Get Started</p>
-                <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight leading-tight mb-4 text-white">
+                <p className="font-sans text-xs uppercase tracking-[0.3em] text-white/40">Get Started</p>
+                <h2 className="mt-4 font-sans text-3xl leading-tight text-white md:text-4xl lg:text-5xl text-balance font-bold">
                     Ready to Play Pain-Free?
                 </h2>
                 <p className="font-sans text-base text-white/60 leading-relaxed mb-10 max-w-xl mx-auto">

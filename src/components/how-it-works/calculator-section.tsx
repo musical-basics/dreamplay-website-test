@@ -46,8 +46,8 @@ export function CalculatorSection() {
         <section className="w-full bg-black text-white py-12 md:py-24 px-4 flex justify-center">
             <div className="w-full max-w-6xl border border-white/10 p-6 md:p-16">
                 <div className="text-center mb-16">
-                    <p className="font-sans text-sm uppercase tracking-[0.3em] text-white/40 mb-4">Hand Span Calculator</p>
-                    <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight leading-tight mb-4 text-white">Find Your Perfect Size</h2>
+                    <p className="font-sans text-xs uppercase tracking-[0.3em] text-white/40">Hand Span Calculator</p>
+                    <h2 className="mt-4 font-sans text-3xl leading-tight text-white md:text-4xl lg:text-5xl text-balance font-bold">Find Your Perfect Size</h2>
                     <p className="font-sans text-sm md:text-base leading-relaxed text-white/60 max-w-2xl mx-auto">
                         DreamPlay&apos;s DS Standard keyboards come in different sizes to match your biology.
                     </p>
@@ -60,7 +60,7 @@ export function CalculatorSection() {
                             <div className="w-10 h-10 border border-white/10 flex items-center justify-center">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 text-white/60"><path d="M2 12h20M12 2v20" /></svg>
                             </div>
-                            <div className="font-serif text-2xl font-semibold">Find Your Zone</div>
+                            <div className="font-sans text-2xl font-semibold">Find Your Zone</div>
                         </div>
 
                         <div className="mb-12">
@@ -130,7 +130,7 @@ export function CalculatorSection() {
                         <div className="font-sans text-sm uppercase tracking-[0.3em] text-white/40 mb-2">Your match</div>
                         <div className={`text-5xl font-bold mb-2 ${result.activeTwColor} transition-colors duration-300`}>Zone {result.zone}</div>
                         <div className="font-sans text-sm text-white/40 mb-8">Hand span range: {result.val < 7.6 ? '6.0 to 7.6 inches' : result.val <= 8.5 ? '7.6 to 8.5 inches' : '8.5 inches +'}</div>
-                        <div className="font-serif text-6xl font-bold text-white mb-2 tracking-tight">{result.model}</div>
+                        <div className="font-sans text-6xl font-bold text-white mb-2 tracking-tight">{result.model}</div>
                         <div className="text-white/60 font-medium text-lg mb-8">
                             Recommended model <br />
                             <a href="/about-us/ds-standard" className="font-sans text-sm underline hover:text-white transition-colors">Learn about the DS Standard</a>

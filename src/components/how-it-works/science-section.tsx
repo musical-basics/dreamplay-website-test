@@ -26,7 +26,7 @@ export function ScienceSection() {
                         <div className="p-6 md:p-10 lg:p-12">
                             <div className="mb-8 md:mb-10">
                                 <p className="font-sans text-xs uppercase tracking-[0.3em] text-white/40 mb-3">Peer-Reviewed Analysis</p>
-                                <h3 className="font-serif text-2xl md:text-4xl font-semibold text-white leading-tight mb-4">
+                                <h3 className="font-sans text-2xl md:text-4xl font-semibold text-white leading-tight mb-4">
                                     How Standard Keyboards Cause Pain
                                 </h3>
                                 <p className="font-sans text-sm md:text-base text-white/60 leading-relaxed max-w-3xl">

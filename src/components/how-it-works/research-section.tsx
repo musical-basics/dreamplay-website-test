@@ -3,9 +3,9 @@ export function ResearchSection() {
         <section className="w-full bg-black text-white py-20 md:py-28">
             <div className="mx-auto max-w-6xl px-6">
                 <div className="text-center mb-16">
-                    <p className="font-sans text-sm uppercase tracking-[0.3em] text-white/40 mb-4">Evidence</p>
-                    <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl tracking-tight leading-tight text-white mb-4">Published Research</h2>
-                    <p className="font-sans text-base text-white/60 max-w-xl mx-auto leading-relaxed">Decades of peer reviewed research explain why standard keyboards hold most pianists back.</p>
+                    <p className="font-sans text-xs uppercase tracking-[0.3em] text-white/40">Evidence</p>
+                    <h2 className="mt-4 font-sans text-3xl leading-tight text-white md:text-4xl lg:text-5xl text-balance font-bold">Published Research</h2>
+                    <p className="mt-6 font-sans text-base text-white/60 max-w-xl mx-auto leading-relaxed">Decades of peer reviewed research explain why standard keyboards hold most pianists back.</p>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6 mb-16">
@@ -40,7 +40,7 @@ export function ResearchSection() {
                         },
                     ].map((item) => (
                         <div key={item.title} className="border border-white/10 bg-white/5 p-10 flex flex-col hover:border-white/20 transition-all">
-                            <div className="font-serif text-xl font-bold text-white mb-3">{item.title}</div>
+                            <div className="font-sans text-xl font-bold text-white mb-3">{item.title}</div>
                             <div className="font-sans text-xs uppercase tracking-[0.3em] text-white/40 mb-4">{item.source}</div>
                             <div className="font-sans text-sm text-white/60 leading-relaxed mb-8 flex-grow">{item.desc}</div>
                             <a href={item.href} target="_blank" className="group inline-flex items-center justify-center gap-2 border border-white bg-white px-8 py-4 font-sans text-xs uppercase tracking-widest text-black transition-colors hover:bg-white/90 w-fit">
@@ -53,7 +53,7 @@ export function ResearchSection() {
 
                 {/* Academic Recognition */}
                 <div className="border border-white/10 p-10 bg-white/5">
-                    <h3 className="font-serif text-2xl font-bold text-white mb-2">Academic recognition</h3>
+                    <h3 className="font-sans text-2xl font-bold text-white mb-2">Academic recognition</h3>
                     <p className="font-sans text-sm text-white/60 leading-relaxed">The Donison Steinbuhler standard appears in research and teaching at leading institutions.</p>
                     <div className="grid md:grid-cols-2 gap-8 mt-10">
                         {[
@@ -65,7 +65,7 @@ export function ResearchSection() {
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }} className="text-[#34c759]"><path d="M20 6 9 17l-5-5" /></svg>
                                 </div>
                                 <div>
-                                    <h4 className="font-serif text-lg font-bold text-white mb-1">{inst.name}</h4>
+                                    <h4 className="font-sans text-lg font-bold text-white mb-1">{inst.name}</h4>
                                     <p className="font-sans text-sm text-white/60">{inst.desc}</p>
                                 </div>
                             </div>
