@@ -36,31 +36,33 @@ export default function TestimonialsSection() {
     const story = stories[currentSlide];
 
     return (
-        <section className="bg-white text-black py-12 md:py-24 px-4 md:px-6">
+        <section className="bg-neutral-100 text-black py-12 md:py-24 px-4 md:px-6">
             <div className="max-w-3xl mx-auto w-full">
                 <div className="text-center mb-8 md:mb-12">
                     <span className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400 mb-3 block">Why We&apos;re Doing This</span>
                     <h2 className="font-serif text-2xl md:text-4xl lg:text-5xl leading-tight text-black text-balance">Playing the piano<br />doesn&apos;t have to hurt</h2>
                 </div>
 
-                {/* Quote */}
-                <blockquote className="font-serif text-lg md:text-2xl lg:text-3xl leading-relaxed md:leading-tight text-neutral-800 text-center mb-8 md:mb-12 min-h-[120px] md:min-h-[180px] flex items-center justify-center">
-                    <span className="transition-opacity duration-300">{story.quote}</span>
-                </blockquote>
+                {/* Quote card */}
+                <div className="bg-white rounded-sm shadow-lg shadow-black/5 border border-neutral-200/60 p-6 md:p-10 mb-8 md:mb-10">
+                    <blockquote className="font-serif text-lg md:text-2xl lg:text-3xl leading-relaxed md:leading-tight text-neutral-800 text-center min-h-[100px] md:min-h-[140px] flex items-center justify-center">
+                        <span className="transition-opacity duration-300">{story.quote}</span>
+                    </blockquote>
 
-                {/* Attribution */}
-                <div className="flex items-center gap-4 justify-center border-t border-black/10 pt-6 md:pt-8 mb-6 md:mb-10">
-                    <div className="relative w-12 h-12 overflow-hidden bg-neutral-200 rounded-full flex-shrink-0">
-                        <Image
-                            src={story.avatar}
-                            alt={story.name}
-                            fill
-                            className="object-cover"
-                        />
-                    </div>
-                    <div className="text-left">
-                        <h4 className="font-sans text-sm md:text-base font-bold text-black">{story.name}</h4>
-                        <p className="font-sans text-xs md:text-sm text-neutral-500 leading-tight mt-0.5">{story.role}<br />{story.school}</p>
+                    {/* Attribution */}
+                    <div className="flex items-center gap-4 justify-center border-t border-neutral-100 pt-6 mt-6 md:mt-8">
+                        <div className="relative w-12 h-12 overflow-hidden bg-neutral-200 rounded-full flex-shrink-0">
+                            <Image
+                                src={story.avatar}
+                                alt={story.name}
+                                fill
+                                className="object-cover"
+                            />
+                        </div>
+                        <div className="text-left">
+                            <h4 className="font-sans text-sm md:text-base font-bold text-black">{story.name}</h4>
+                            <p className="font-sans text-xs md:text-sm text-neutral-500 leading-tight mt-0.5">{story.role}<br />{story.school}</p>
+                        </div>
                     </div>
                 </div>
 

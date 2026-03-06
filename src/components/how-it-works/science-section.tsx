@@ -8,9 +8,9 @@ export function ScienceSection() {
 
     return (
         <>
-            <section className="w-full bg-neutral-50 text-neutral-900">
+            <section className="w-full bg-neutral-100 text-neutral-900">
                 <div className="mx-auto max-w-6xl px-4 md:px-6 py-12 md:py-24">
-                    {/* Section header — premium offer style */}
+                    {/* Section header */}
                     <div className="mb-8 md:mb-12 text-center max-w-2xl mx-auto">
                         <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400">
                             Clinical Research
@@ -24,12 +24,12 @@ export function ScienceSection() {
                         </p>
                     </div>
 
-                    {/* Biomechanical image — hover to enlarge feel */}
-                    <button
-                        onClick={() => setBioLightbox(true)}
-                        className="group relative overflow-hidden block w-full mb-2 transition-transform duration-300 hover:scale-[1.01] hover:shadow-2xl rounded-sm border border-neutral-200"
-                    >
-                        <div className="relative overflow-hidden">
+                    {/* Biomechanical image — in an elevated card */}
+                    <div className="bg-white rounded-sm shadow-lg shadow-black/5 border border-neutral-200/60 overflow-hidden mb-2">
+                        <button
+                            onClick={() => setBioLightbox(true)}
+                            className="group relative block w-full transition-transform duration-300 hover:scale-[1.005]"
+                        >
                             <Image
                                 src="/images/Biomechanical Impact on Small Hands copy.png"
                                 alt="Biomechanical Impact of Key Width on Small Hands"
@@ -37,8 +37,8 @@ export function ScienceSection() {
                                 height={900}
                                 className="w-full h-auto group-hover:brightness-105 transition-all duration-300 object-contain"
                             />
-                        </div>
-                    </button>
+                        </button>
+                    </div>
                     <button
                         onClick={() => setBioLightbox(true)}
                         className="font-sans text-xs uppercase tracking-[0.2em] text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer mb-8 md:mb-12 block"
@@ -46,9 +46,9 @@ export function ScienceSection() {
                         Click to enlarge
                     </button>
 
-                    {/* Comparison cards — premium offer style grid */}
-                    <div className="grid md:grid-cols-2 gap-3 md:gap-4 mb-8 md:mb-12">
-                        <div className="relative group overflow-hidden rounded-sm border border-neutral-200 bg-white p-4 md:p-6 transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg">
+                    {/* Comparison cards with shadows */}
+                    <div className="grid md:grid-cols-2 gap-3 md:gap-5 mb-8 md:mb-12">
+                        <div className="bg-white rounded-sm shadow-lg shadow-black/5 border border-neutral-200/60 p-5 md:p-7 transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-black/8">
                             <div className="flex items-center gap-2 mb-3">
                                 <span className="inline-block w-2.5 h-2.5 rounded-full bg-red-500" />
                                 <span className="font-sans text-[10px] uppercase tracking-[0.25em] text-red-600 font-bold">Standard Keyboard (Left)</span>
@@ -57,7 +57,7 @@ export function ScienceSection() {
                                 Players depress keys with fingers splayed completely flat, destroying the supportive bridge-like arch of the hand. This is accompanied by severe <strong className="text-neutral-800">ulnar deviation</strong> — bending the wrist sharply toward the pinky.
                             </p>
                         </div>
-                        <div className="relative group overflow-hidden rounded-sm border border-neutral-200 bg-white p-4 md:p-6 transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg">
+                        <div className="bg-white rounded-sm shadow-lg shadow-black/5 border border-neutral-200/60 p-5 md:p-7 transition-transform duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-black/8">
                             <div className="flex items-center gap-2 mb-3">
                                 <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500" />
                                 <span className="font-sans text-[10px] uppercase tracking-[0.25em] text-emerald-600 font-bold">Narrower Keyboard (Right)</span>
@@ -68,9 +68,9 @@ export function ScienceSection() {
                         </div>
                     </div>
 
-                    {/* Key Findings */}
-                    <div className="border-t border-neutral-200 pt-6 md:pt-10 mb-6 md:mb-10">
-                        <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400 mb-6">Key Findings</p>
+                    {/* Key Findings — elevated card */}
+                    <div className="bg-white rounded-sm shadow-lg shadow-black/5 border border-neutral-200/60 p-5 md:p-8 mb-6 md:mb-10">
+                        <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400 mb-5">Key Findings</p>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
                             <div className="flex items-start gap-3">
                                 <div className="w-6 h-6 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -93,8 +93,8 @@ export function ScienceSection() {
                         </div>
                     </div>
 
-                    {/* Sources */}
-                    <div className="border-t border-neutral-200 pt-6 md:pt-8">
+                    {/* Sources — elevated card */}
+                    <div className="bg-white rounded-sm shadow-sm shadow-black/5 border border-neutral-200/60 p-5 md:p-7">
                         <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400 mb-3">Sources</p>
                         <ul className="space-y-1.5">
                             <li className="font-sans text-xs text-neutral-400 leading-relaxed">
