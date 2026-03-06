@@ -20,7 +20,7 @@ const inter = Inter({
 
 export default function HowItWorksPage() {
     return (
-        <div className={`${playfair.variable} ${inter.variable} font-sans antialiased min-h-screen selection:bg-white/20`}>
+        <div className={`${playfair.variable} ${inter.variable} font-sans antialiased min-h-screen selection:bg-white/20 bg-black`}>
             <SpecialOfferHeader forceOpaque={true} darkMode={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
 
             <main className="flex flex-col items-center">
