@@ -24,6 +24,7 @@ export function ChildHeroSection() {
                 </video>
                 <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-black/10 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-black/[0.15]" />
 
                 <div
                     className="absolute inset-0 z-10 flex flex-col justify-center px-8 md:px-16 lg:px-24"

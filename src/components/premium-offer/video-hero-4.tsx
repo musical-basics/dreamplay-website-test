@@ -16,6 +16,7 @@ export function VideoHero4() {
             </video>
             <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-black/[0.02] to-transparent" />
             <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.15) 100%)' }} />
+            <div className="absolute inset-0 bg-black/[0.15]" />
 
             <div
                 className="relative z-10 flex h-full min-h-screen md:min-h-0 md:aspect-video flex-col justify-center px-8 md:px-16 lg:px-24"

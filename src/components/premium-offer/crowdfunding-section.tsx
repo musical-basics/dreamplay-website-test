@@ -36,6 +36,7 @@ export function CrowdfundingSection() {
         </video>
         <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-black/[0.02] to-transparent" />
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.25) 100%)' }} />
+        <div className="absolute inset-0 bg-black/[0.15]" />
       </div>
 
       {/* Scrollable content overlay */}
