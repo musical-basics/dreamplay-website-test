@@ -99,7 +99,7 @@ export function SpecsSection() {
   return (
     <section id="specs" className="relative bg-neutral-950">
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
-        <div className="mb-16 max-w-2xl">
+        <div className="mb-16 max-w-2xl mx-auto text-center">
           <p className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400">
             Technical Details
           </p>
@@ -111,7 +111,7 @@ export function SpecsSection() {
         {/* Collapsible Specs Detail */}
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="full-specs" className="border-neutral-800">
-            <AccordionTrigger className="font-sans text-sm uppercase tracking-[0.2em] text-neutral-300 hover:no-underline hover:text-white py-4">
+            <AccordionTrigger className="font-sans text-sm uppercase tracking-[0.2em] text-neutral-300 hover:no-underline hover:text-white py-4 justify-center">
               View Full Specifications
             </AccordionTrigger>
             <AccordionContent>
