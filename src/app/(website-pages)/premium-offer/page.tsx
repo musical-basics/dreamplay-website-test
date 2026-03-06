@@ -121,7 +121,7 @@ export default async function PremiumOfferPage() {
                     </div>
 
                     {/* Section 17 — Pricing (regular scroll) */}
-                    <div className="relative z-[27] bg-foreground">
+                    <div className="relative z-[27]" style={{ background: 'linear-gradient(180deg, #f5f0e8 0%, #f7f3ec 30%, #faf6f0 60%, #f5efe5 100%)' }}>
                         <PricingSection hiddenProducts={hiddenProducts} />
                     </div>
 
