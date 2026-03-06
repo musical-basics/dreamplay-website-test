@@ -62,7 +62,7 @@ export function SizeFinderSection() {
             <p
               className={`font-sans text-sm uppercase tracking-[0.3em] ${selectedSize === "ds55"
                 ? "text-white/60"
-                : "text-neutral-500"
+                : "text-neutral-400"
                 }`}
             >
               7/8ths Size
@@ -71,7 +71,7 @@ export function SizeFinderSection() {
             <p
               className={`font-sans text-sm font-medium leading-relaxed md:text-base ${selectedSize === "ds55"
                 ? "text-white/70"
-                : "text-neutral-500"
+                : "text-neutral-400"
                 }`}
             >
               Designed for pianists with hands under 7.6 inches. Play octaves
@@ -82,7 +82,7 @@ export function SizeFinderSection() {
               <span
                 className={`font-sans text-xs uppercase tracking-wider ${selectedSize === "ds55"
                   ? "text-white/80"
-                  : "text-neutral-500"
+                  : "text-neutral-700"
                   }`}
               >
                 {'Hand span < 7.6"'}
@@ -90,7 +90,7 @@ export function SizeFinderSection() {
               <ArrowRight
                 className={`h-3 w-3 transition-transform group-hover:translate-x-1 ${selectedSize === "ds55"
                   ? "text-white/80"
-                  : "text-neutral-500"
+                  : "text-neutral-700"
                   }`}
               />
             </div>
@@ -106,7 +106,7 @@ export function SizeFinderSection() {
             <p
               className={`font-sans text-sm uppercase tracking-[0.3em] ${selectedSize === "ds60"
                 ? "text-white/60"
-                : "text-neutral-500"
+                : "text-neutral-400"
                 }`}
             >
               15/16ths Size
@@ -115,7 +115,7 @@ export function SizeFinderSection() {
             <p
               className={`font-sans text-sm font-medium leading-relaxed md:text-base ${selectedSize === "ds60"
                 ? "text-white/70"
-                : "text-neutral-500"
+                : "text-neutral-400"
                 }`}
             >
               Designed for pianists with hands between 7.6 and 8.5 inches. Play
@@ -126,7 +126,7 @@ export function SizeFinderSection() {
               <span
                 className={`font-sans text-xs uppercase tracking-wider ${selectedSize === "ds60"
                   ? "text-white/80"
-                  : "text-neutral-500"
+                  : "text-neutral-700"
                   }`}
               >
                 {'Hand span 7.6" – 8.5"'}
@@ -134,7 +134,7 @@ export function SizeFinderSection() {
               <ArrowRight
                 className={`h-3 w-3 transition-transform group-hover:translate-x-1 ${selectedSize === "ds60"
                   ? "text-white/80"
-                  : "text-neutral-500"
+                  : "text-neutral-700"
                   }`}
               />
             </div>
