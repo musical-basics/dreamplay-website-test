@@ -3,7 +3,7 @@ import { SpecialOfferHeader } from "@/components/special-offer/header"
 import { CrowdfundingSection } from "@/components/premium-offer/crowdfunding-section"
 import { SocialProofBar } from "@/components/premium-offer/social-proof-bar"
 import { InlineBuyersGuide } from "@/components/premium-offer/audience-fork-section"
-import { ChildHeroSection } from "@/components/premium-offer/child-hero-section"
+import { ChildHeroSection, ChildUpgradePath } from "@/components/premium-offer/child-hero-section"
 import { TradeInSection } from "@/components/premium-offer/trade-in-section"
 import { TradeInFaqSection } from "@/components/premium-offer/trade-in-faq-section"
 import { HandComparisonSection } from "@/components/premium-offer/hand-comparison-section"
@@ -54,9 +54,13 @@ export default async function PremiumOfferPage() {
                         <InlineBuyersGuide />
                     </div>
 
-                    {/* Section 3 — Child Hero / Video Hero 2 (sticky parallax) */}
                     <div className="sticky top-0 z-[13] min-h-screen md:min-h-0 md:aspect-video">
                         <ChildHeroSection />
+                    </div>
+
+                    {/* Section 3b — Upgrade Path (regular scroll) */}
+                    <div className="relative z-[13] bg-[#fafaf8]">
+                        <ChildUpgradePath />
                     </div>
 
                     {/* Section 4 — Trade-In Upgrade */}

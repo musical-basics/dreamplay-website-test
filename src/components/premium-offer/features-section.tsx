@@ -39,10 +39,10 @@ export function FeaturesSection() {
               className="flex flex-col items-center gap-3 text-center"
             >
               <feature.icon
-                className="h-7 w-7 text-white/60"
-                strokeWidth={1.2}
+                className="h-7 w-7 text-white/80"
+                strokeWidth={1.5}
               />
-              <p className="font-sans text-sm font-medium text-white/70 md:text-base">
+              <p className="font-sans text-sm font-semibold text-white/90 md:text-base">
                 {feature.label}
               </p>
             </div>
