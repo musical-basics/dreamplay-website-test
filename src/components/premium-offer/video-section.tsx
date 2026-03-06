@@ -1,7 +1,6 @@
 "use client"
 
 import { useRef, useState, useCallback } from "react"
-import Image from "next/image"
 import { Play } from "lucide-react"
 
 const VIDEO_SOURCES = [
@@ -42,7 +41,7 @@ export function VideoSection() {
           className="h-full w-full object-cover block"
           controls={isPlaying}
           playsInline
-          preload="metadata"
+          preload="auto"
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
           onEnded={playNextVideo}
@@ -55,24 +54,15 @@ export function VideoSection() {
         </video>
 
         {!isPlaying && (
-          <>
-            <Image
-              src="/images/Piano + Bench Frontal + Bundle.png"
-              alt="DreamPlay One with Bench"
-              fill
-              className="object-cover"
-              priority
-            />
-            <button
-              onClick={handlePlay}
-              className="absolute inset-0 z-10 flex cursor-pointer items-center justify-center transition-colors hover:bg-white/5"
-              aria-label="Play DreamPlay intro video"
-            >
-              <span className="flex h-20 w-20 items-center justify-center rounded-full border border-white/20 bg-black/40 backdrop-blur-sm transition-transform hover:scale-110 md:h-24 md:w-24">
-                <Play className="ml-1 h-8 w-8 fill-white text-white md:h-10 md:w-10" />
-              </span>
-            </button>
-          </>
+          <button
+            onClick={handlePlay}
+            className="absolute inset-0 z-10 flex cursor-pointer items-center justify-center transition-colors hover:bg-white/5"
+            aria-label="Play DreamPlay intro video"
+          >
+            <span className="flex h-20 w-20 items-center justify-center rounded-full border border-white/20 bg-black/40 backdrop-blur-sm transition-transform hover:scale-110 md:h-24 md:w-24">
+              <Play className="ml-1 h-8 w-8 fill-white text-white md:h-10 md:w-10" />
+            </span>
+          </button>
         )}
       </div>
     </section>
