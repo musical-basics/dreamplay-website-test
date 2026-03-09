@@ -347,9 +347,12 @@ export default function LearnPage() {
 
                             <AnimatedSection delay={200}>
                                 <div className="relative overflow-hidden border border-white/10 shadow-2xl shadow-cyan-500/10">
-                                    <img
-                                        src="/images/learn/keyboard-led-lights.jpg"
-                                        alt="LED keys lighting up on DreamPlay One keyboard"
+                                    <video
+                                        src="/videos/clip 2.mp4"
+                                        autoPlay
+                                        loop
+                                        muted
+                                        playsInline
                                         className="h-full w-full object-cover"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/50 to-transparent" />
