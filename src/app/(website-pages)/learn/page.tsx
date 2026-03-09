@@ -101,7 +101,7 @@ export default function LearnPage() {
                             <AnimatedSection delay={100} className="group relative overflow-hidden border border-neutral-200 bg-neutral-50 shadow-sm transition-all hover:shadow-xl">
                                 <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
                                     <img
-                                        src="/images/learn/sheet-music-mode.png"
+                                        src="/images/learn/sheet-music-mode-real.jpg"
                                         alt="Sheet Music Mode"
                                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
