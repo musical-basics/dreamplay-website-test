@@ -453,9 +453,12 @@ export default function LearnPage() {
                         {/* Full-width keyboard shot */}
                         <AnimatedSection>
                             <div className="relative mb-16 overflow-hidden">
-                                <img
-                                    src="/images/learn/keyboard-front-view.jpg"
-                                    alt="DreamPlay One keyboard - full front view"
+                                <video
+                                    src="/videos/clip-3.mp4"
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
                                     className="w-full object-cover"
                                 />
                             </div>
