@@ -38,11 +38,10 @@ export default function LearnPage() {
                         container.dataset.initialized = "true";
 
                         const sources = [
-                            { src: "/videos/DreamPlay Grid Hero.mp4", startAt: 0, endBefore: 0 },
-                            { src: "/videos/Falling Notes Mode.mp4", startAt: 0, endBefore: 0 },
-                            { src: "/videos/UI Play through 2.mp4", startAt: 2, endBefore: 1.5 },
+                            { src: "/videos/DreamPlay Grid Hero.mp4", startAt: 0, endBefore: 0, fadeMs: 600 },
+                            { src: "/videos/Falling Notes Mode.mp4", startAt: 0, endBefore: 0, fadeMs: 600 },
+                            { src: "/videos/UI Play through 2.mp4", startAt: 2, endBefore: 1.5, fadeMs: 400 },
                         ];
-                        const FADE_MS = 600;
                         let idx = 0;
 
                         // Create two stacked video elements for crossfading
@@ -50,7 +49,7 @@ export default function LearnPage() {
                             const v = document.createElement("video");
                             v.muted = true;
                             v.playsInline = true;
-                            v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity " + FADE_MS + "ms ease-in-out;";
+                            v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 600ms ease-in-out;";
                             container.appendChild(v);
                             return v;
                         });
@@ -69,7 +68,7 @@ export default function LearnPage() {
                             if (clip.endBefore > 0) {
                                 // Cut clip short — trigger crossfade early
                                 vidEl.ontimeupdate = () => {
-                                    if (vidEl.duration && vidEl.currentTime >= vidEl.duration - clip.endBefore - (FADE_MS / 1000)) {
+                                    if (vidEl.duration && vidEl.currentTime >= vidEl.duration - clip.endBefore - (clip.fadeMs / 1000)) {
                                         vidEl.ontimeupdate = null;
                                         triggerNext();
                                     }
@@ -89,7 +88,10 @@ export default function LearnPage() {
                             const nextVid = vids[nextActive];
 
                             loadAndPlay(nextVid, nextIdx);
-                            // Crossfade
+                            // Set per-clip fade duration and crossfade
+                            const fadeMs = sources[idx].fadeMs;
+                            nextVid.style.transition = `opacity ${fadeMs}ms ease-in-out`;
+                            vids[active].style.transition = `opacity ${fadeMs}ms ease-in-out`;
                             nextVid.style.opacity = "1";
                             vids[active].style.opacity = "0";
 
