@@ -123,24 +123,10 @@ export default function LearnPage() {
                             <AnimatedSection delay={200} className="group relative overflow-hidden border border-neutral-200 bg-neutral-50 shadow-sm transition-all hover:shadow-xl">
                                 <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
                                     <video
-                                        ref={(el) => {
-                                            if (el && !el.dataset.initialized) {
-                                                el.dataset.initialized = "true";
-                                                const sources = [
-                                                    "/videos/UI Play through 2.mp4",
-                                                    "/videos/Falling Notes Mode.mp4",
-                                                ];
-                                                let idx = 0;
-                                                el.src = sources[idx];
-                                                el.onended = () => {
-                                                    idx = (idx + 1) % sources.length;
-                                                    el.src = sources[idx];
-                                                    el.play();
-                                                };
-                                            }
-                                        }}
+                                        src="/videos/Falling Notes Mode.mp4"
                                         autoPlay
                                         muted
+                                        loop
                                         playsInline
                                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
@@ -160,15 +146,33 @@ export default function LearnPage() {
                         </div>
 
                         {/* Both modes together callout */}
-                        <AnimatedSection delay={300} className="mt-8 border border-neutral-200 bg-neutral-50 p-8 text-center md:p-10">
-                            <div className="mx-auto flex max-w-2xl items-center justify-center gap-4">
-                                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-blue-200 bg-blue-50">
-                                    <Eye className="h-5 w-5 text-blue-600" />
+                        <AnimatedSection delay={300} className="mt-8 overflow-hidden border border-neutral-200 bg-neutral-50">
+                            <div className="grid md:grid-cols-[1fr_1.5fr] items-center">
+                                <div className="flex items-center gap-4 p-8 md:p-10">
+                                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-blue-200 bg-blue-50">
+                                        <Eye className="h-5 w-5 text-blue-600" />
+                                    </div>
+                                    <p className="text-left font-sans text-sm leading-relaxed text-neutral-700">
+                                        <strong className="text-black">Use both at once.</strong>{" "}
+                                        Enable dual view to see falling notes and sheet music simultaneously—the best of both worlds.
+                                    </p>
                                 </div>
-                                <p className="text-left font-sans text-sm leading-relaxed text-neutral-700">
-                                    <strong className="text-black">Use both at once.</strong>{" "}
-                                    Enable dual view to see falling notes and sheet music simultaneously—the best of both worlds.
-                                </p>
+                                <div className="relative aspect-video overflow-hidden bg-neutral-100">
+                                    <video
+                                        ref={(el) => {
+                                            if (el && !el.dataset.initialized) {
+                                                el.dataset.initialized = "true";
+                                                el.currentTime = 2;
+                                            }
+                                        }}
+                                        src="/videos/UI Play through 2.mp4"
+                                        autoPlay
+                                        muted
+                                        loop
+                                        playsInline
+                                        className="h-full w-full object-cover"
+                                    />
+                                </div>
                             </div>
                         </AnimatedSection>
                     </div>
