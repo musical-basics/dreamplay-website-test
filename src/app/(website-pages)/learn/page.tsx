@@ -32,35 +32,79 @@ export default function LearnPage() {
                     SECTION 1 — HERO
                 ═══════════════════════════════════════════════════════════ */}
                 <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden bg-[#050505] py-20 text-center">
-                    {/* Background video */}
-                    <div className="absolute inset-0">
-                        <video
-                            ref={(el) => {
-                                if (el && !el.dataset.initialized) {
-                                    el.dataset.initialized = "true";
-                                    const sources = [
-                                        { src: "/videos/DreamPlay Grid Hero.mp4", startAt: 0 },
-                                        { src: "/videos/Falling Notes Mode.mp4", startAt: 0 },
-                                        { src: "/videos/UI Play through 2.mp4", startAt: 2 },
-                                    ];
-                                    let idx = 0;
-                                    el.src = sources[idx].src;
-                                    el.currentTime = sources[idx].startAt;
-                                    el.onended = () => {
-                                        idx = (idx + 1) % sources.length;
-                                        el.src = sources[idx].src;
-                                        el.currentTime = sources[idx].startAt;
-                                        el.play();
-                                    };
-                                }
-                            }}
-                            autoPlay
-                            muted
-                            playsInline
-                            className="h-full w-full object-cover opacity-40"
-                        />
-                    </div>
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#050505]/70 via-[#050505]/30 to-[#050505]" />
+                    {/* Background video — dual-element crossfade for seamless loops */}
+                    <div className="absolute inset-0" ref={(container) => {
+                        if (!container || container.dataset.initialized) return;
+                        container.dataset.initialized = "true";
+
+                        const sources = [
+                            { src: "/videos/DreamPlay Grid Hero.mp4", startAt: 0, endBefore: 0 },
+                            { src: "/videos/Falling Notes Mode.mp4", startAt: 0, endBefore: 0 },
+                            { src: "/videos/UI Play through 2.mp4", startAt: 2, endBefore: 1.5 },
+                        ];
+                        const FADE_MS = 600;
+                        let idx = 0;
+
+                        // Create two stacked video elements for crossfading
+                        const vids = [0, 1].map(() => {
+                            const v = document.createElement("video");
+                            v.muted = true;
+                            v.playsInline = true;
+                            v.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity " + FADE_MS + "ms ease-in-out;";
+                            container.appendChild(v);
+                            return v;
+                        });
+
+                        let active = 0; // which of the two video elements is currently visible
+
+                        function loadAndPlay(vidEl: HTMLVideoElement, clipIdx: number) {
+                            const clip = sources[clipIdx];
+                            vidEl.src = clip.src;
+                            vidEl.currentTime = clip.startAt;
+                            vidEl.play().catch(() => { });
+                        }
+
+                        function scheduleTransition(vidEl: HTMLVideoElement, clipIdx: number) {
+                            const clip = sources[clipIdx];
+                            if (clip.endBefore > 0) {
+                                // Cut clip short — trigger crossfade early
+                                vidEl.ontimeupdate = () => {
+                                    if (vidEl.duration && vidEl.currentTime >= vidEl.duration - clip.endBefore - (FADE_MS / 1000)) {
+                                        vidEl.ontimeupdate = null;
+                                        triggerNext();
+                                    }
+                                };
+                            } else {
+                                // Play full clip — crossfade on natural end
+                                vidEl.onended = () => {
+                                    vidEl.onended = null;
+                                    triggerNext();
+                                };
+                            }
+                        }
+
+                        function triggerNext() {
+                            const nextActive = 1 - active;
+                            const nextIdx = (idx + 1) % sources.length;
+                            const nextVid = vids[nextActive];
+
+                            loadAndPlay(nextVid, nextIdx);
+                            // Crossfade
+                            nextVid.style.opacity = "1";
+                            vids[active].style.opacity = "0";
+
+                            idx = nextIdx;
+                            active = nextActive;
+                            scheduleTransition(nextVid, nextIdx);
+                        }
+
+                        // Start first clip
+                        loadAndPlay(vids[0], 0);
+                        vids[0].style.opacity = "1";
+                        active = 0;
+                        scheduleTransition(vids[0], 0);
+                    }} />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#050505]/60 via-[#050505]/20 to-[#050505]/90" />
 
                     <AnimatedSection className="relative z-10 mx-auto max-w-4xl px-6">
                         <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
