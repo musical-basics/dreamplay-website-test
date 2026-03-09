@@ -122,9 +122,12 @@ export default function LearnPage() {
                             {/* Falling Notes Mode */}
                             <AnimatedSection delay={200} className="group relative overflow-hidden border border-neutral-200 bg-neutral-50 shadow-sm transition-all hover:shadow-xl">
                                 <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
-                                    <img
-                                        src="/images/learn/falling-notes-mode.png"
-                                        alt="Falling Notes Mode"
+                                    <video
+                                        src="/videos/UI Play through 2.mp4"
+                                        autoPlay
+                                        muted
+                                        loop
+                                        playsInline
                                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
                                 </div>
