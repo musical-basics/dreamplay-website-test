@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import Footer from "@/components/Footer";
-import { Monitor, Mail, BookOpen, Columns2, ChevronDown, Palette, RefreshCw } from "lucide-react";
+import { Monitor, Mail, BookOpen, Columns2, ChevronDown, Palette, RefreshCw, Copy, Check, Wand2, AlertCircle } from "lucide-react";
 
 // ── Types ────────────────────────────────────────────────
-type ViewTab = "website" | "newsletter" | "blog";
+type ViewTab = "website" | "newsletter" | "blog" | "gmail";
 type PageId = string;
 type BlogTheme = "minimalist" | "luxury" | "gold-accent";
 
@@ -13,6 +13,7 @@ const TABS: { id: ViewTab; label: string; icon: React.ReactNode }[] = [
   { id: "website", label: "Website", icon: <Monitor className="h-4 w-4" /> },
   { id: "newsletter", label: "Newsletter", icon: <Mail className="h-4 w-4" /> },
   { id: "blog", label: "Blog", icon: <BookOpen className="h-4 w-4" /> },
+  { id: "gmail", label: "Gmail", icon: <Mail className="h-4 w-4" /> },
 ];
 
 const PAGES: { id: PageId; label: string; path: string }[] = [
@@ -218,11 +219,103 @@ const NEWSLETTER_CONTENT: Record<PageId, string> = {
 `, "The Benefits of Practicing on Narrower Keys"),
 };
 
+// ── Gmail-safe content (table layout, pure inline, no CSS classes) ──
+const GMAIL_CONTENT: Record<string, string> = {
+  "learn": `< !DOCTYPE html> <html><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" /><title>DreamPlay Learn</title></head>
+  <body style="margin:0;padding:0;background:#f4f4f7;font-family:Arial,Helvetica,sans-serif;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f4f4f7;">
+      <tr><td align="center" style="padding:20px 0;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="580" style="max-width:580px;background:#ffffff;">
+          <tr><td style="padding:0;background:#050505;text-align:center;">
+            <img src="/images/learn/grid-hero-still.jpg" alt="DreamPlay Learn" width="580" style="display:block;width:100%;max-width:580px;height:auto;border:0;" />
+          </td></tr>
+          <tr><td style="padding:10px 30px;text-align:center;background:#050505;">
+            <p style="margin:0;font-size:10px;text-transform:uppercase;letter-spacing:3px;color:#888888;">Software + Hardware Integration</p>
+          </td></tr>
+          <tr><td style="padding:10px 30px;text-align:center;background:#050505;">
+            <h1 style="margin:0;font-size:28px;color:#ffffff;font-family:Georgia,serif;font-weight:bold;line-height:1.3;">Learn Piano.<br /><span style="color:#3b82f6;">The Smart Way.</span></h1>
+          </td></tr>
+          <tr><td style="padding:5px 30px;text-align:center;background:#050505;">
+            <p style="margin:0;font-size:15px;color:#999999;font-family:Georgia,serif;">DreamPlay Learn guides you note by note - on screen and on your keyboard.</p>
+          </td></tr>
+          <tr><td style="padding:20px 30px;background:#050505;text-align:center;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;"><tr><td style="background:#ffffff;padding:12px 36px;"><a href="https://www.dreamplaypianos.com/learn" style="color:#000000;text-decoration:none;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;font-family:Arial,sans-serif;">Learn More</a></td></tr></table>
+          </td></tr>
+          <tr><td style="height:20px;background:#050505;"></td></tr>
+          <tr><td style="padding:10px 30px;text-align:center;"><hr style="border:none;border-top:1px solid #e5e5e5;width:60%;margin:0 auto;" /></td></tr>
+          <tr><td style="padding:20px 30px;">
+            <h2 style="margin:0 0 10px;font-size:22px;color:#1a1a1a;font-family:Georgia,serif;">Two Modes. One App.</h2>
+            <p style="font-size:15px;line-height:1.7;color:#444444;">Choose <strong>Sheet Music Mode</strong> for traditional reading or <strong>Falling Notes Mode</strong> for visual learning. Use both simultaneously for the full experience.</p>
+          </td></tr>
+          <tr><td style="padding:10px 30px;text-align:center;">
+            <img src="/images/learn/sheet-music-mode-real.jpg" alt="Sheet Music Mode" width="540" style="display:block;max-width:100%;width:540px;height:auto;margin:0 auto;border:0;" />
+          </td></tr>
+          <tr><td style="padding:10px 30px;text-align:center;">
+            <img src="/images/learn/falling-notes-still.jpg" alt="Falling Notes Mode" width="540" style="display:block;max-width:100%;width:540px;height:auto;margin:0 auto;border:0;" />
+          </td></tr>
+          <tr><td style="padding:20px 30px;">
+            <h2 style="margin:0 0 10px;font-size:22px;color:#1a1a1a;font-family:Georgia,serif;">LED Key Integration</h2>
+            <p style="font-size:15px;line-height:1.7;color:#444444;">The DreamPlay One lights up the keys you need to press - learn by sight <strong>and</strong> by feel.</p>
+          </td></tr>
+          <tr><td style="padding:10px 30px;text-align:center;">
+            <img src="/images/learn/pianist-led-keys.jpg" alt="LED keys" width="540" style="display:block;max-width:100%;width:540px;height:auto;margin:0 auto;border:0;" />
+          </td></tr>
+          <tr><td style="padding:20px 30px;text-align:center;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;"><tr><td style="background:#000000;padding:14px 40px;"><a href="https://www.dreamplaypianos.com/customize" style="color:#ffffff;text-decoration:none;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;font-family:Arial,sans-serif;">Get DreamPlay One</a></td></tr></table>
+          </td></tr>
+          <tr><td style="padding:15px 30px 30px;text-align:center;font-size:11px;color:#aaaaaa;">
+            <p style="margin:0;">DreamPlay Pianos - Victoria, BC, Canada</p>
+            <p style="margin:5px 0 0;"><a href="{{unsubscribe_url}}" style="color:#aaaaaa;text-decoration:underline;">Unsubscribe</a></p>
+          </td></tr>
+        </table>
+      </td></tr></table></body></html>`,
+
+  "better-practice": `< !DOCTYPE html > <html><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" /><title>The Benefits of Narrower Keys</title></head>
+  <body style="margin:0;padding:0;background:#f4f4f7;font-family:Arial,Helvetica,sans-serif;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f4f4f7;">
+      <tr><td align="center" style="padding:20px 0;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="580" style="max-width:580px;background:#ffffff;">
+          <tr><td style="padding:30px 30px 10px;text-align:center;">
+            <p style="margin:0;font-size:10px;text-transform:uppercase;letter-spacing:3px;color:#888888;">Science + Research</p>
+          </td></tr>
+          <tr><td style="padding:10px 30px;text-align:center;">
+            <h1 style="margin:0;font-size:26px;color:#1a1a1a;font-family:Georgia,serif;font-weight:bold;line-height:1.3;">The Benefits of Practicing<br />on Narrower Keys</h1>
+          </td></tr>
+          <tr><td style="padding:5px 30px 20px;text-align:center;">
+            <p style="margin:0;font-size:14px;color:#666666;">Why reducing key width transforms technique and unlocks new musicality.</p>
+          </td></tr>
+          <tr><td style="padding:10px 30px;text-align:center;"><hr style="border:none;border-top:1px solid #e5e5e5;width:60%;margin:0 auto;" /></td></tr>
+          <tr><td style="padding:20px 30px;">
+            <h2 style="margin:0 0 10px;font-size:22px;color:#1a1a1a;font-family:Georgia,serif;">The Cognitive Load Problem</h2>
+            <p style="font-size:15px;line-height:1.7;color:#444444;">The greater the technical difficulty, <strong>the greater the practice required</strong>. When small-handed pianists switch to a smaller keyboard, it is often a revelation.</p>
+          </td></tr>
+          <tr><td style="padding:10px 30px;background:#f8f8f8;border-left:3px solid #e5e5e5;">
+            <p style="font-size:15px;line-height:1.6;color:#555555;font-style:italic;margin:10px 0;">"I realize now that most of the time I spent practicing was used trying to overcome difficulties because of my hand-size..."</p>
+            <p style="font-size:12px;color:#888888;margin:5px 0 10px;"><strong>Christopher Donison</strong> - Executive Artistic Director, Music by the Sea</p>
+          </td></tr>
+          <tr><td style="padding:20px 30px;">
+            <p style="font-size:15px;line-height:1.7;color:#444444;">Narrower keys teach relaxed technique. That muscle memory translates back to any piano.</p>
+          </td></tr>
+          <tr><td style="padding:10px 30px;background:#f8f8f8;border-left:3px solid #e5e5e5;">
+            <p style="font-size:15px;line-height:1.6;color:#555555;font-style:italic;margin:10px 0;">"Another surprising effect was that playing the DS6.0 also has a positive effect when you go back to the normal keyboard."</p>
+            <p style="font-size:12px;color:#888888;margin:5px 0 10px;"><strong>Hubert Ness</strong> - Professor of Jazz Piano, HMDK University of Stuttgart</p>
+          </td></tr>
+          <tr><td style="padding:20px 30px;text-align:center;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;"><tr><td style="background:#000000;padding:14px 40px;"><a href="https://www.dreamplaypianos.com/customize" style="color:#ffffff;text-decoration:none;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;font-family:Arial,sans-serif;">Configure Yours</a></td></tr></table>
+          </td></tr>
+          <tr><td style="padding:15px 30px 30px;text-align:center;font-size:11px;color:#aaaaaa;">
+            <p style="margin:0;">DreamPlay Pianos - Victoria, BC, Canada</p>
+            <p style="margin:5px 0 0;"><a href="{{unsubscribe_url}}" style="color:#aaaaaa;text-decoration:underline;">Unsubscribe</a></p>
+          </td></tr>
+        </table>
+      </td></tr></table></body></html>`,
+};
+
 // ── Blog content per page (theme-agnostic HTML using CSS classes) ──
 function getBlogContent(page: PageId, theme: BlogTheme): string {
   if (page === "learn") {
     return blogWrap(
-      `<div style="position:relative;min-height:450px;overflow:hidden;" class="hero-bg">
+      `< div style = "position:relative;min-height:450px;overflow:hidden;" class="hero-bg" >
 <img src="/images/learn/grid-hero-still.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.35;"/>
 <div style="position:absolute;inset:0;" class="hero-overlay"></div>
 <div class="bc" style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;min-height:450px;padding-bottom:60px;">
@@ -237,9 +330,9 @@ function getBlogContent(page: PageId, theme: BlogTheme): string {
 <div class="hero-author-box sf" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:14px;">DP</div>
 <div><span class="hero-author-name" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;">DreamPlay Editorial</span><div class="hero-author-date" style="font-size:10px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;">March 9, 2026</div></div>
 </div>
-</div></div>`,
+</div></div > `,
       `
-<h2 class="sf" style="font-size:32px;font-weight:600;margin-bottom:24px;">Two Modes. One App.</h2>
+  < h2 class="sf" style = "font-size:32px;font-weight:600;margin-bottom:24px;" > Two Modes.One App.</h2 >
 <p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:20px;">DreamPlay Learn offers two complementary practice modes: <strong>Sheet Music Mode</strong> for traditional notation reading, and <strong>Falling Notes Mode</strong> for an intuitive, visual approach.</p>
 <div class="img-border" style="margin:30px 0;overflow:hidden;"><img src="/images/learn/sheet-music-mode-real.jpg" alt="Sheet Music Mode" style="width:100%;height:auto;"/></div>
 <p class="caption" style="font-size:13px;margin-bottom:20px;text-align:center;">Sheet Music Mode  -  real-time notation tracking</p>
@@ -276,7 +369,7 @@ function getBlogContent(page: PageId, theme: BlogTheme): string {
 
   if (page === "better-practice") {
     return blogWrap(
-      `<div style="position:relative;min-height:450px;overflow:hidden;" class="hero-bg">
+      `< div style = "position:relative;min-height:450px;overflow:hidden;" class="hero-bg" >
 <img src="/images/BW%20Piano%20(1).jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.4;"/>
 <div style="position:absolute;inset:0;" class="hero-overlay"></div>
 <div class="bc" style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;min-height:450px;padding-bottom:60px;">
@@ -291,9 +384,9 @@ function getBlogContent(page: PageId, theme: BlogTheme): string {
 <div class="hero-author-box sf" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:14px;">DP</div>
 <div><span class="hero-author-name" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;">DreamPlay Editorial</span><div class="hero-author-date" style="font-size:10px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;">March 9, 2026</div></div>
 </div>
-</div></div>`,
+</div></div > `,
       `
-<h2 class="sf" style="font-size:32px;font-weight:600;margin-bottom:24px;">The Cognitive Load of Small Hands</h2>
+  < h2 class="sf" style = "font-size:32px;font-weight:600;margin-bottom:24px;" > The Cognitive Load of Small Hands</h2 >
 <p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:20px;">The greater the degree of technical difficulty, <strong>the greater the practice required</strong>. Less time and mental capacity for musical expression.</p>
 <p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:40px;">When small-handed pianists switch to a smaller keyboard, <strong>it is often a revelation</strong>.</p>
 
@@ -341,20 +434,48 @@ export default function ContentRemixerPage() {
   const [blogTheme, setBlogTheme] = useState<BlogTheme>("luxury");
   const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [copied, setCopied] = useState(false);
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
 
   const currentPage = PAGES.find((p) => p.id === selectedPage)!;
 
   const fallbackHtml = (format: string, pageId: string) =>
-    `<!DOCTYPE html><html><body style="display:flex;align-items:center;justify-content:center;min-height:400px;font-family:system-ui;color:#888;background:#f4f4f7;"><div style="text-align:center;"><p style="font-size:48px;margin-bottom:16px;">\uD83D\uDCC4</p><p style="font-size:16px;font-weight:600;">No ${format} conversion yet</p><p style="font-size:13px;margin-top:8px;color:#aaa;">Page: ${pageId}</p></div></body></html>`;
+    '<!DOCTYPE html><html><body style="display:flex;align-items:center;justify-content:center;min-height:400px;font-family:system-ui;color:#888;background:#f4f4f7;"><div style="text-align:center;"><p style="font-size:16px;font-weight:600;">No ' + format + ' conversion yet</p><p style="font-size:13px;margin-top:8px;color:#aaa;">Page: ' + pageId + '</p></div></body></html>';
+
+  // Gmail-safe HTML (table layout, pure inline styles)
+  const getGmailContent = useCallback((pageId: string): string => {
+    if (pageId === "learn") return GMAIL_CONTENT["learn"] || fallbackHtml("Gmail", pageId);
+    if (pageId === "better-practice") return GMAIL_CONTENT["better-practice"] || fallbackHtml("Gmail", pageId);
+    return fallbackHtml("Gmail", pageId);
+  }, []);
 
   // Decide what right-side content to show
   const rightContent = splitRight === "newsletter"
     ? (NEWSLETTER_CONTENT[selectedPage] || fallbackHtml("Newsletter", selectedPage))
     : getBlogContent(selectedPage, blogTheme);
 
-  const singleContent = activeTab === "newsletter"
-    ? (NEWSLETTER_CONTENT[selectedPage] || fallbackHtml("Newsletter", selectedPage))
-    : getBlogContent(selectedPage, blogTheme);
+  const getActiveContent = (): string => {
+    if (activeTab === "newsletter") return NEWSLETTER_CONTENT[selectedPage] || fallbackHtml("Newsletter", selectedPage);
+    if (activeTab === "blog") return getBlogContent(selectedPage, blogTheme);
+    if (activeTab === "gmail") return getGmailContent(selectedPage);
+    return "";
+  };
+
+  const singleContent = getActiveContent();
+
+  const handleCopyHtml = useCallback(() => {
+    const html = splitView ? rightContent : getActiveContent();
+    if (!html) return;
+    navigator.clipboard.writeText(html).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, [splitView, rightContent, activeTab, selectedPage, blogTheme]);
+
+  const showToast = (msg: string) => {
+    setToastMsg(msg);
+    setTimeout(() => setToastMsg(null), 3000);
+  };
 
   return (
     <div>
@@ -384,7 +505,7 @@ export default function ContentRemixerPage() {
                 <div className="absolute left-0 top-full mt-1 z-50 border border-white/10 bg-[#0a0a0f] shadow-2xl min-w-[200px]">
                   {PAGES.map((p) => (
                     <button key={p.id} onClick={() => { setSelectedPage(p.id); setPageDropdownOpen(false); }}
-                      className={`flex w-full items-center gap-3 px-5 py-3 text-left font-sans text-xs uppercase tracking-wider transition-all cursor-pointer ${selectedPage === p.id ? "bg-amber-400/10 text-amber-300" : "text-white/50 hover:bg-white/5 hover:text-white/80"}`}>
+                      className={`flex w - full items - center gap - 3 px - 5 py - 3 text - left font - sans text - xs uppercase tracking - wider transition - all cursor - pointer ${selectedPage === p.id ? "bg-amber-400/10 text-amber-300" : "text-white/50 hover:bg-white/5 hover:text-white/80"} `}>
                       <span className="font-medium">{p.label}</span>
                       <span className="text-white/20 ml-auto">{p.path}</span>
                     </button>
@@ -398,7 +519,7 @@ export default function ContentRemixerPage() {
             {/* View tabs */}
             {TABS.map((tab) => (
               <button key={tab.id} onClick={() => { setActiveTab(tab.id); setSplitView(false); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
-                className={`flex items-center gap-2 border px-4 py-2 font-sans text-xs font-medium uppercase tracking-wider transition-all cursor-pointer ${!splitView && activeTab === tab.id ? "border-white bg-white text-black" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
+                className={`flex items - center gap - 2 border px - 4 py - 2 font - sans text - xs font - medium uppercase tracking - wider transition - all cursor - pointer ${!splitView && activeTab === tab.id ? "border-white bg-white text-black" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"} `}>
                 {tab.icon} {tab.label}
               </button>
             ))}
@@ -407,11 +528,11 @@ export default function ContentRemixerPage() {
 
             {/* Split views */}
             <button onClick={() => { setSplitView(true); setSplitRight("newsletter"); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
-              className={`flex items-center gap-2 border px-4 py-2 font-sans text-xs font-medium uppercase tracking-wider transition-all cursor-pointer ${splitView && splitRight === "newsletter" ? "border-cyan-400 bg-cyan-400/10 text-cyan-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
+              className={`flex items - center gap - 2 border px - 4 py - 2 font - sans text - xs font - medium uppercase tracking - wider transition - all cursor - pointer ${splitView && splitRight === "newsletter" ? "border-cyan-400 bg-cyan-400/10 text-cyan-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"} `}>
               <Columns2 className="h-4 w-4" /> Web ↔ Newsletter
             </button>
             <button onClick={() => { setSplitView(true); setSplitRight("blog"); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
-              className={`flex items-center gap-2 border px-4 py-2 font-sans text-xs font-medium uppercase tracking-wider transition-all cursor-pointer ${splitView && splitRight === "blog" ? "border-purple-400 bg-purple-400/10 text-purple-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
+              className={`flex items - center gap - 2 border px - 4 py - 2 font - sans text - xs font - medium uppercase tracking - wider transition - all cursor - pointer ${splitView && splitRight === "blog" ? "border-purple-400 bg-purple-400/10 text-purple-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"} `}>
               <Columns2 className="h-4 w-4" /> Web ↔ Blog
             </button>
 
@@ -430,8 +551,8 @@ export default function ContentRemixerPage() {
                     <div className="absolute right-0 top-full mt-1 z-50 border border-white/10 bg-[#0a0a0f] shadow-2xl min-w-[180px]">
                       {BLOG_THEMES.map((t) => (
                         <button key={t.id} onClick={() => { setBlogTheme(t.id); setThemeDropdownOpen(false); }}
-                          className={`flex w-full items-center gap-3 px-5 py-3 text-left font-sans text-xs uppercase tracking-wider transition-all cursor-pointer ${blogTheme === t.id ? "bg-purple-400/10 text-purple-300" : "text-white/50 hover:bg-white/5 hover:text-white/80"}`}>
-                          <span className={`font-medium ${t.color}`}>{t.label}</span>
+                          className={`flex w - full items - center gap - 3 px - 5 py - 3 text - left font - sans text - xs uppercase tracking - wider transition - all cursor - pointer ${blogTheme === t.id ? "bg-purple-400/10 text-purple-300" : "text-white/50 hover:bg-white/5 hover:text-white/80"} `}>
+                          <span className={`font - medium ${t.color} `}>{t.label}</span>
                         </button>
                       ))}
                     </div>
@@ -447,6 +568,25 @@ export default function ContentRemixerPage() {
               className="flex items-center gap-2 border border-white/10 px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider text-white/50 transition-all cursor-pointer hover:border-white/30 hover:text-white/80" title="Force refresh all previews">
               <RefreshCw className="h-4 w-4" /> Refresh
             </button>
+
+            {/* Copy HTML — visible when not on website tab */}
+            {(activeTab !== "website" || splitView) && (
+              <button onClick={handleCopyHtml}
+                className={`flex items - center gap - 2 border px - 3 py - 2 font - sans text - xs font - medium uppercase tracking - wider transition - all cursor - pointer ${copied ? "border-green-400 bg-green-400/10 text-green-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"} `}
+                title="Copy HTML to clipboard">
+                {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                {copied ? "Copied!" : "Copy HTML"}
+              </button>
+            )}
+
+            {/* Generate placeholder */}
+            {(activeTab !== "website" || splitView) && (
+              <button onClick={() => showToast("AI Generation coming soon — for now, conversions are hand-crafted for Learn and Better Practice pages.")}
+                className="flex items-center gap-2 border border-white/10 px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider text-white/50 transition-all cursor-pointer hover:border-amber-400/30 hover:bg-amber-400/5 hover:text-amber-300"
+                title="Generate conversion (coming soon)">
+                <Wand2 className="h-4 w-4" /> Generate
+              </button>
+            )}
           </div>
         </div>
 
@@ -461,21 +601,21 @@ export default function ContentRemixerPage() {
                   <span className="ml-auto font-sans text-[10px] text-white/20">{currentPage.path}</span>
                 </div>
                 <div className="overflow-hidden border border-white/10 bg-white shadow-2xl">
-                  <iframe key={`web-${refreshKey}`} src={currentPage.path} className="h-[800px] w-full" title="Website" />
+                  <iframe key={`web - ${refreshKey} `} src={currentPage.path} className="h-[800px] w-full" title="Website" />
                 </div>
               </div>
               <div>
                 <div className="mb-3 flex items-center gap-2">
                   {splitRight === "newsletter" ? <Mail className="h-4 w-4 text-cyan-400/60" /> : <BookOpen className="h-4 w-4 text-purple-400/60" />}
-                  <span className={`font-sans text-[10px] font-bold uppercase tracking-[0.2em] ${splitRight === "newsletter" ? "text-cyan-400/60" : "text-purple-400/60"}`}>
+                  <span className={`font - sans text - [10px] font - bold uppercase tracking - [0.2em] ${splitRight === "newsletter" ? "text-cyan-400/60" : "text-purple-400/60"} `}>
                     {splitRight === "newsletter" ? "Newsletter" : "Blog"}
                   </span>
                   <span className="ml-auto font-sans text-[10px] text-white/20">
-                    {splitRight === "newsletter" ? "email-safe HTML" : `blog / ${blogTheme}`}
+                    {splitRight === "newsletter" ? "email-safe HTML" : `blog / ${blogTheme} `}
                   </span>
                 </div>
                 <div className="overflow-hidden border border-white/10 bg-[#f4f4f7] shadow-2xl">
-                  <iframe key={`right-${refreshKey}`} srcDoc={rightContent} className="h-[800px] w-full" title={splitRight} sandbox="allow-same-origin allow-popups" />
+                  <iframe key={`right - ${refreshKey} `} srcDoc={rightContent} className="h-[800px] w-full" title={splitRight} sandbox="allow-same-origin allow-popups" />
                 </div>
               </div>
             </div>
@@ -485,22 +625,31 @@ export default function ContentRemixerPage() {
                 {activeTab === "website" && <Monitor className="h-4 w-4 text-white/40" />}
                 {activeTab === "newsletter" && <Mail className="h-4 w-4 text-cyan-400/60" />}
                 {activeTab === "blog" && <BookOpen className="h-4 w-4 text-purple-400/60" />}
+                {activeTab === "gmail" && <Mail className="h-4 w-4 text-orange-400/60" />}
                 <span className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
-                  {activeTab === "website" ? `Website — ${currentPage.path}` : activeTab === "newsletter" ? "Newsletter — Email-safe HTML" : `Blog — ${blogTheme}`}
+                  {activeTab === "website" ? `Website — ${currentPage.path} ` : activeTab === "newsletter" ? "Newsletter — Email-safe HTML" : activeTab === "gmail" ? "Gmail — Table-layout HTML" : `Blog — ${blogTheme} `}
                 </span>
               </div>
-              <div className={`overflow-hidden border border-white/10 shadow-2xl ${activeTab === "website" ? "bg-white" : "bg-[#f4f4f7]"}`}>
+              <div className={`overflow - hidden border border - white / 10 shadow - 2xl ${activeTab === "website" ? "bg-white" : "bg-[#f4f4f7]"} `}>
                 {activeTab === "website" ? (
-                  <iframe key={`web-${refreshKey}`} src={currentPage.path} className="h-[900px] w-full" title="Website" />
+                  <iframe key={`web - ${refreshKey} `} src={currentPage.path} className="h-[900px] w-full" title="Website" />
                 ) : (
-                  <iframe key={`single-${refreshKey}`} srcDoc={singleContent} className="h-[900px] w-full" title={activeTab} sandbox="allow-same-origin allow-popups" />
+                  <iframe key={`single - ${refreshKey} `} srcDoc={singleContent} className="h-[900px] w-full" title={activeTab} sandbox="allow-same-origin allow-popups" />
                 )}
               </div>
             </div>
           )}
 
+          {/* Toast notification */}
+          {toastMsg && (
+            <div className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 flex items-center gap-3 border border-amber-400/30 bg-[#1a1a0f] px-6 py-3 shadow-2xl">
+              <AlertCircle className="h-4 w-4 text-amber-400" />
+              <span className="font-sans text-xs text-amber-200">{toastMsg}</span>
+            </div>
+          )}
+
           {/* Legend */}
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="mt-12 grid gap-6 md:grid-cols-4">
             <div className="border border-white/10 bg-white/[0.02] p-6">
               <div className="mb-3 flex items-center gap-2"><Monitor className="h-4 w-4 text-white/40" /><span className="font-sans text-xs font-bold uppercase tracking-wider text-white">Website</span></div>
               <p className="font-sans text-xs leading-relaxed text-white/40">Full interactive landing page with scroll animations, videos, and responsive layout.</p>
@@ -512,6 +661,10 @@ export default function ContentRemixerPage() {
             <div className="border border-purple-500/20 bg-purple-500/[0.03] p-6">
               <div className="mb-3 flex items-center gap-2"><BookOpen className="h-4 w-4 text-purple-400" /><span className="font-sans text-xs font-bold uppercase tracking-wider text-purple-300">Blog</span></div>
               <p className="font-sans text-xs leading-relaxed text-white/40">Cormorant Garamond headings, 800px max-width, 3 themes: Minimalist (light), Luxury (dark), Gold Accent.</p>
+            </div>
+            <div className="border border-orange-500/20 bg-orange-500/[0.03] p-6">
+              <div className="mb-3 flex items-center gap-2"><Mail className="h-4 w-4 text-orange-400" /><span className="font-sans text-xs font-bold uppercase tracking-wider text-orange-300">Gmail</span></div>
+              <p className="font-sans text-xs leading-relaxed text-white/40">Table-based layout, pure inline styles, no CSS classes, Gmail-safe fonts. 580px max-width.</p>
             </div>
           </div>
         </div>
