@@ -466,19 +466,6 @@ export default function LearnPage() {
                             <AnimatedSection>
                                 <div className="relative overflow-hidden border border-white/10">
                                     <img
-                                        src="/images/learn/keyboard-led-lights.jpg"
-                                        alt="LED keys close-up with colored lights"
-                                        className="w-full object-cover"
-                                    />
-                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                                        <h3 className="font-serif text-xl font-semibold text-white">Custom LED System</h3>
-                                        <p className="mt-1 font-sans text-xs text-white/50">Color-coded keys guide every note</p>
-                                    </div>
-                                </div>
-                            </AnimatedSection>
-                            <AnimatedSection delay={150}>
-                                <div className="relative overflow-hidden border border-white/10">
-                                    <img
                                         src="/images/learn/keyboard-back-ports.jpg"
                                         alt="DreamPlay One back panel - USB, MIDI, Aux, Pedal, DC ports"
                                         className="w-full object-cover"
@@ -486,6 +473,19 @@ export default function LearnPage() {
                                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
                                         <h3 className="font-serif text-xl font-semibold text-white">Full Connectivity</h3>
                                         <p className="mt-1 font-sans text-xs text-white/50">USB to Host, MIDI Out, Aux In, Pedal, DC Power</p>
+                                    </div>
+                                </div>
+                            </AnimatedSection>
+                            <AnimatedSection delay={150}>
+                                <div className="relative overflow-hidden border border-white/10">
+                                    <img
+                                        src="/images/learn/keyboard-led-lights.jpg"
+                                        alt="LED keys close-up with colored lights"
+                                        className="w-full object-cover"
+                                    />
+                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                                        <h3 className="font-serif text-xl font-semibold text-white">Custom LED System</h3>
+                                        <p className="mt-1 font-sans text-xs text-white/50">Color-coded keys guide every note</p>
                                     </div>
                                 </div>
                             </AnimatedSection>
