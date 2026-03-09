@@ -1,8 +1,10 @@
 "use client";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import Footer from "@/components/Footer";
-import { Monitor, Mail, BookOpen, Columns2, ChevronDown, Palette, RefreshCw, Copy, Check, Wand2, AlertCircle } from "lucide-react";
+import { Monitor, Mail, BookOpen, Columns2, ChevronDown, Palette, RefreshCw, Copy, Check, ArrowRightLeft, AlertCircle } from "lucide-react";
+import { scrapePageContent, blocksToNewsletter, blocksToBlog, blocksToGmail } from "./converter";
+import type { ContentBlock } from "./converter";
 
 // ── Types ────────────────────────────────────────────────
 type ViewTab = "website" | "newsletter" | "blog" | "gmail";
@@ -436,27 +438,49 @@ export default function ContentRemixerPage() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [copied, setCopied] = useState(false);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
+  const [converting, setConverting] = useState(false);
+  const [convertedContent, setConvertedContent] = useState<Record<string, {
+    newsletter: string;
+    blog: Record<string, string>;
+    gmail: string;
+    blocks: ContentBlock[];
+  }>>({});
+  const webIframeRef = useRef<HTMLIFrameElement>(null);
+  const splitWebIframeRef = useRef<HTMLIFrameElement>(null);
 
   const currentPage = PAGES.find((p) => p.id === selectedPage)!;
 
   const fallbackHtml = (format: string, pageId: string) =>
-    '<!DOCTYPE html><html><body style="display:flex;align-items:center;justify-content:center;min-height:400px;font-family:system-ui;color:#888;background:#f4f4f7;"><div style="text-align:center;"><p style="font-size:16px;font-weight:600;">No ' + format + ' conversion yet</p><p style="font-size:13px;margin-top:8px;color:#aaa;">Page: ' + pageId + '</p></div></body></html>';
+    '<!DOCTYPE html><html><body style="display:flex;align-items:center;justify-content:center;min-height:400px;font-family:system-ui;color:#888;background:#f4f4f7;"><div style="text-align:center;"><p style="font-size:16px;font-weight:600;">No ' + format + ' conversion yet</p><p style="font-size:13px;margin-top:8px;color:#aaa;">Click <strong>Convert</strong> to generate from website content</p></div></body></html>';
 
-  // Gmail-safe HTML (table layout, pure inline styles)
+  // Gmail content: converted → hardcoded → fallback
   const getGmailContent = useCallback((pageId: string): string => {
-    if (pageId === "learn") return GMAIL_CONTENT["learn"] || fallbackHtml("Gmail", pageId);
-    if (pageId === "better-practice") return GMAIL_CONTENT["better-practice"] || fallbackHtml("Gmail", pageId);
+    if (convertedContent[pageId]?.gmail) return convertedContent[pageId].gmail;
+    if (GMAIL_CONTENT[pageId]) return GMAIL_CONTENT[pageId];
     return fallbackHtml("Gmail", pageId);
-  }, []);
+  }, [convertedContent]);
+
+  // Newsletter content: converted → hardcoded → fallback
+  const getNewsletterContent = useCallback((pageId: string): string => {
+    if (convertedContent[pageId]?.newsletter) return convertedContent[pageId].newsletter;
+    if (NEWSLETTER_CONTENT[pageId]) return NEWSLETTER_CONTENT[pageId];
+    return fallbackHtml("Newsletter", pageId);
+  }, [convertedContent]);
+
+  // Blog content: converted → hardcoded → fallback
+  const getDynamicBlogContent = useCallback((pageId: string, theme: BlogTheme): string => {
+    if (convertedContent[pageId]?.blog?.[theme]) return convertedContent[pageId].blog[theme];
+    return getBlogContent(pageId, theme);
+  }, [convertedContent]);
 
   // Decide what right-side content to show
   const rightContent = splitRight === "newsletter"
-    ? (NEWSLETTER_CONTENT[selectedPage] || fallbackHtml("Newsletter", selectedPage))
-    : getBlogContent(selectedPage, blogTheme);
+    ? getNewsletterContent(selectedPage)
+    : getDynamicBlogContent(selectedPage, blogTheme);
 
   const getActiveContent = (): string => {
-    if (activeTab === "newsletter") return NEWSLETTER_CONTENT[selectedPage] || fallbackHtml("Newsletter", selectedPage);
-    if (activeTab === "blog") return getBlogContent(selectedPage, blogTheme);
+    if (activeTab === "newsletter") return getNewsletterContent(selectedPage);
+    if (activeTab === "blog") return getDynamicBlogContent(selectedPage, blogTheme);
     if (activeTab === "gmail") return getGmailContent(selectedPage);
     return "";
   };
@@ -470,12 +494,69 @@ export default function ContentRemixerPage() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
-  }, [splitView, rightContent, activeTab, selectedPage, blogTheme]);
+  }, [splitView, rightContent, activeTab, selectedPage, blogTheme, convertedContent]);
 
   const showToast = (msg: string) => {
     setToastMsg(msg);
     setTimeout(() => setToastMsg(null), 3000);
   };
+
+  // Convert: scrape iframe DOM and build all formats
+  const handleConvert = useCallback(() => {
+    const iframe = splitView ? splitWebIframeRef.current : webIframeRef.current;
+    if (!iframe) {
+      // Try the other ref
+      const altIframe = splitView ? webIframeRef.current : splitWebIframeRef.current;
+      if (!altIframe) {
+        showToast("No website iframe found. Switch to a view that shows the website first.");
+        return;
+      }
+    }
+    const activeIframe = (splitView ? splitWebIframeRef.current : webIframeRef.current) || splitWebIframeRef.current || webIframeRef.current;
+    if (!activeIframe) return;
+
+    try {
+      const doc = activeIframe.contentDocument;
+      if (!doc) {
+        showToast("Cannot access iframe content. Make sure the website is loaded.");
+        return;
+      }
+
+      setConverting(true);
+      const blocks = scrapePageContent(doc);
+
+      if (blocks.length === 0) {
+        showToast("No content blocks found. Wait for the page to fully load and try again.");
+        setConverting(false);
+        return;
+      }
+
+      const title = currentPage.label;
+      const newsletter = blocksToNewsletter(blocks, title);
+      const gmail = blocksToGmail(blocks, title);
+      const blog: Record<string, string> = {
+        minimalist: blocksToBlog(blocks, title, "minimalist"),
+        luxury: blocksToBlog(blocks, title, "luxury"),
+        "gold-accent": blocksToBlog(blocks, title, "gold-accent"),
+      };
+
+      setConvertedContent((prev) => ({
+        ...prev,
+        [selectedPage]: { newsletter, blog, gmail, blocks },
+      }));
+
+      showToast(`Converted! ${blocks.length} content blocks extracted from ${currentPage.label}.`);
+      setConverting(false);
+
+      // Auto-switch to newsletter view if on website tab
+      if (activeTab === "website" && !splitView) {
+        setActiveTab("newsletter");
+      }
+    } catch (e) {
+      showToast("Conversion error: " + (e as Error).message);
+      setConverting(false);
+    }
+  }, [selectedPage, currentPage, splitView, activeTab, blogTheme]);
 
   return (
     <div>
@@ -579,14 +660,13 @@ export default function ContentRemixerPage() {
               </button>
             )}
 
-            {/* Generate placeholder */}
-            {(activeTab !== "website" || splitView) && (
-              <button onClick={() => showToast("AI Generation coming soon — for now, conversions are hand-crafted for Learn and Better Practice pages.")}
-                className="flex items-center gap-2 border border-white/10 px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider text-white/50 transition-all cursor-pointer hover:border-amber-400/30 hover:bg-amber-400/5 hover:text-amber-300"
-                title="Generate conversion (coming soon)">
-                <Wand2 className="h-4 w-4" /> Generate
-              </button>
-            )}
+            {/* Generate / Convert */}
+            <button onClick={handleConvert}
+              disabled={converting}
+              className={`flex items-center gap-2 border px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider transition-all cursor-pointer ${converting ? "border-green-400/50 bg-green-400/10 text-green-300 animate-pulse" : "border-emerald-400/30 bg-emerald-400/5 text-emerald-300 hover:bg-emerald-400/10 hover:border-emerald-400/50"}`}
+              title="Convert website content to newsletter, blog, and gmail formats">
+              <ArrowRightLeft className="h-4 w-4" /> {converting ? "Converting..." : (convertedContent[selectedPage] ? "Re-convert" : "Convert")}
+            </button>
           </div>
         </div>
 
@@ -601,7 +681,7 @@ export default function ContentRemixerPage() {
                   <span className="ml-auto font-sans text-[10px] text-white/20">{currentPage.path}</span>
                 </div>
                 <div className="overflow-hidden border border-white/10 bg-white shadow-2xl">
-                  <iframe key={`web - ${refreshKey} `} src={currentPage.path} className="h-[800px] w-full" title="Website" />
+                  <iframe ref={splitWebIframeRef} key={`web-${refreshKey}`} src={currentPage.path} className="h-[800px] w-full" title="Website" />
                 </div>
               </div>
               <div>
@@ -632,7 +712,7 @@ export default function ContentRemixerPage() {
               </div>
               <div className={`overflow - hidden border border - white / 10 shadow - 2xl ${activeTab === "website" ? "bg-white" : "bg-[#f4f4f7]"} `}>
                 {activeTab === "website" ? (
-                  <iframe key={`web - ${refreshKey} `} src={currentPage.path} className="h-[900px] w-full" title="Website" />
+                  <iframe ref={webIframeRef} key={`web-${refreshKey}`} src={currentPage.path} className="h-[900px] w-full" title="Website" />
                 ) : (
                   <iframe key={`single - ${refreshKey} `} srcDoc={singleContent} className="h-[900px] w-full" title={activeTab} sandbox="allow-same-origin allow-popups" />
                 )}
