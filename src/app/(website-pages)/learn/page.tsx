@@ -347,12 +347,9 @@ export default function LearnPage() {
 
                             <AnimatedSection delay={200}>
                                 <div className="relative overflow-hidden border border-white/10 shadow-2xl shadow-cyan-500/10">
-                                    <video
-                                        src="/videos/clip 2.mp4"
-                                        autoPlay
-                                        loop
-                                        muted
-                                        playsInline
+                                    <img
+                                        src="/images/learn/pianist-led-keys.jpg"
+                                        alt="Pianist playing DreamPlay One with LED-lit keys and Learn app on tablet"
                                         className="h-full w-full object-cover"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/50 to-transparent" />
