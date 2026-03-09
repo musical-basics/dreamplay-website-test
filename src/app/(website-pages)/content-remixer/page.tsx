@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import Footer from "@/components/Footer";
-import { Monitor, Mail, BookOpen, Columns2, ChevronDown, Palette } from "lucide-react";
+import { Monitor, Mail, BookOpen, Columns2, ChevronDown, Palette, RefreshCw } from "lucide-react";
 
 // ── Types ────────────────────────────────────────────────
 type ViewTab = "website" | "newsletter" | "blog";
-type PageId = "learn" | "better-practice";
+type PageId = string;
 type BlogTheme = "minimalist" | "luxury" | "gold-accent";
 
 const TABS: { id: ViewTab; label: string; icon: React.ReactNode }[] = [
@@ -18,6 +18,20 @@ const TABS: { id: ViewTab; label: string; icon: React.ReactNode }[] = [
 const PAGES: { id: PageId; label: string; path: string }[] = [
   { id: "learn", label: "DreamPlay Learn", path: "/learn" },
   { id: "better-practice", label: "The Benefits", path: "/better-practice" },
+  { id: "how-it-works", label: "How It Works", path: "/how-it-works" },
+  { id: "customize", label: "Customize", path: "/customize" },
+  { id: "premium-offer", label: "Premium Offer", path: "/premium-offer" },
+  { id: "our-story", label: "Our Story", path: "/our-story" },
+  { id: "why-narrow", label: "Why Narrow Keys", path: "/why-narrow" },
+  { id: "buyers-guide", label: "Buyer's Guide", path: "/buyers-guide" },
+  { id: "product-information", label: "Product Info", path: "/product-information" },
+  { id: "special-offer", label: "Special Offer", path: "/special-offer" },
+  { id: "flash-sale", label: "Flash Sale", path: "/flash-sale" },
+  { id: "vip", label: "VIP", path: "/vip" },
+  { id: "production-timeline", label: "Production Timeline", path: "/production-timeline" },
+  { id: "contact", label: "Contact", path: "/contact" },
+  { id: "faq", label: "FAQ", path: "/information-and-policies/faq" },
+  { id: "shipping", label: "Shipping", path: "/information-and-policies/shipping" },
 ];
 
 const BLOG_THEMES: { id: BlogTheme; label: string; color: string }[] = [
@@ -260,9 +274,9 @@ function getBlogContent(page: PageId, theme: BlogTheme): string {
 `, "DreamPlay Learn — The Smart Way", theme);
   }
 
-  // better-practice
-  return blogWrap(
-    `<div style="position:relative;min-height:450px;overflow:hidden;" class="hero-bg">
+  if (page === "better-practice") {
+    return blogWrap(
+      `<div style="position:relative;min-height:450px;overflow:hidden;" class="hero-bg">
 <img src="/images/BW%20Piano%20(1).jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.4;"/>
 <div style="position:absolute;inset:0;" class="hero-overlay"></div>
 <div class="bc" style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;min-height:450px;padding-bottom:60px;">
@@ -278,7 +292,7 @@ function getBlogContent(page: PageId, theme: BlogTheme): string {
 <div><span class="hero-author-name" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;">DreamPlay Editorial</span><div class="hero-author-date" style="font-size:10px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;">March 9, 2026</div></div>
 </div>
 </div></div>`,
-    `
+      `
 <h2 class="sf" style="font-size:32px;font-weight:600;margin-bottom:24px;">The Cognitive Load of Small Hands</h2>
 <p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:20px;">The greater the degree of technical difficulty, <strong>the greater the practice required</strong>. Less time and mental capacity for musical expression.</p>
 <p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:40px;">When small-handed pianists switch to a smaller keyboard, <strong>it is often a revelation</strong>.</p>
@@ -311,6 +325,10 @@ function getBlogContent(page: PageId, theme: BlogTheme): string {
 <a href="https://www.dreamplaypianos.com/customize" class="cta-btn" style="display:inline-block;padding:14px 40px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3px;text-decoration:none;">Configure Yours &rarr;</a>
 </div>
 `, "The Benefits of Practicing on Narrower Keys", theme);
+  }
+
+  // Fallback for pages without custom blog content
+  return '<!DOCTYPE html><html><body style="display:flex;align-items:center;justify-content:center;min-height:400px;font-family:system-ui;color:#888;background:#f4f4f7;"><div style="text-align:center;"><p style="font-size:16px;font-weight:600;">No Blog conversion yet</p><p style="font-size:13px;margin-top:8px;color:#aaa;">Page: ' + page + '</p></div></body></html>';
 }
 
 // ── Page Component ────────────────────────────────────────
@@ -322,16 +340,20 @@ export default function ContentRemixerPage() {
   const [pageDropdownOpen, setPageDropdownOpen] = useState(false);
   const [blogTheme, setBlogTheme] = useState<BlogTheme>("luxury");
   const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const currentPage = PAGES.find((p) => p.id === selectedPage)!;
 
+  const fallbackHtml = (format: string, pageId: string) =>
+    `<!DOCTYPE html><html><body style="display:flex;align-items:center;justify-content:center;min-height:400px;font-family:system-ui;color:#888;background:#f4f4f7;"><div style="text-align:center;"><p style="font-size:48px;margin-bottom:16px;">\uD83D\uDCC4</p><p style="font-size:16px;font-weight:600;">No ${format} conversion yet</p><p style="font-size:13px;margin-top:8px;color:#aaa;">Page: ${pageId}</p></div></body></html>`;
+
   // Decide what right-side content to show
   const rightContent = splitRight === "newsletter"
-    ? NEWSLETTER_CONTENT[selectedPage]
+    ? (NEWSLETTER_CONTENT[selectedPage] || fallbackHtml("Newsletter", selectedPage))
     : getBlogContent(selectedPage, blogTheme);
 
   const singleContent = activeTab === "newsletter"
-    ? NEWSLETTER_CONTENT[selectedPage]
+    ? (NEWSLETTER_CONTENT[selectedPage] || fallbackHtml("Newsletter", selectedPage))
     : getBlogContent(selectedPage, blogTheme);
 
   return (
@@ -417,6 +439,14 @@ export default function ContentRemixerPage() {
                 </div>
               </>
             )}
+
+            <div className="mx-1 h-6 w-px bg-white/10" />
+
+            {/* Force refresh */}
+            <button onClick={() => { setRefreshKey((k) => k + 1); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
+              className="flex items-center gap-2 border border-white/10 px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider text-white/50 transition-all cursor-pointer hover:border-white/30 hover:text-white/80" title="Force refresh all previews">
+              <RefreshCw className="h-4 w-4" /> Refresh
+            </button>
           </div>
         </div>
 
@@ -431,7 +461,7 @@ export default function ContentRemixerPage() {
                   <span className="ml-auto font-sans text-[10px] text-white/20">{currentPage.path}</span>
                 </div>
                 <div className="overflow-hidden border border-white/10 bg-white shadow-2xl">
-                  <iframe src={currentPage.path} className="h-[800px] w-full" title="Website" />
+                  <iframe key={`web-${refreshKey}`} src={currentPage.path} className="h-[800px] w-full" title="Website" />
                 </div>
               </div>
               <div>
@@ -445,7 +475,7 @@ export default function ContentRemixerPage() {
                   </span>
                 </div>
                 <div className="overflow-hidden border border-white/10 bg-[#f4f4f7] shadow-2xl">
-                  <iframe srcDoc={rightContent} className="h-[800px] w-full" title={splitRight} sandbox="allow-same-origin allow-popups" />
+                  <iframe key={`right-${refreshKey}`} srcDoc={rightContent} className="h-[800px] w-full" title={splitRight} sandbox="allow-same-origin allow-popups" />
                 </div>
               </div>
             </div>
@@ -461,9 +491,9 @@ export default function ContentRemixerPage() {
               </div>
               <div className={`overflow-hidden border border-white/10 shadow-2xl ${activeTab === "website" ? "bg-white" : "bg-[#f4f4f7]"}`}>
                 {activeTab === "website" ? (
-                  <iframe src={currentPage.path} className="h-[900px] w-full" title="Website" />
+                  <iframe key={`web-${refreshKey}`} src={currentPage.path} className="h-[900px] w-full" title="Website" />
                 ) : (
-                  <iframe srcDoc={singleContent} className="h-[900px] w-full" title={activeTab} sandbox="allow-same-origin allow-popups" />
+                  <iframe key={`single-${refreshKey}`} srcDoc={singleContent} className="h-[900px] w-full" title={activeTab} sandbox="allow-same-origin allow-popups" />
                 )}
               </div>
             </div>
