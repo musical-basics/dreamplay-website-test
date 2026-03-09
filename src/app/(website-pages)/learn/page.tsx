@@ -32,11 +32,31 @@ export default function LearnPage() {
                     SECTION 1 — HERO
                 ═══════════════════════════════════════════════════════════ */}
                 <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden bg-[#050505] py-20 text-center">
-                    {/* Background image */}
+                    {/* Background video */}
                     <div className="absolute inset-0">
-                        <img
-                            src="/images/learn/hero.png"
-                            alt="DreamPlay Learn app with LED keyboard"
+                        <video
+                            ref={(el) => {
+                                if (el && !el.dataset.initialized) {
+                                    el.dataset.initialized = "true";
+                                    const sources = [
+                                        { src: "/videos/DreamPlay Grid Hero.mp4", startAt: 0 },
+                                        { src: "/videos/Falling Notes Mode.mp4", startAt: 0 },
+                                        { src: "/videos/UI Play through 2.mp4", startAt: 2 },
+                                    ];
+                                    let idx = 0;
+                                    el.src = sources[idx].src;
+                                    el.currentTime = sources[idx].startAt;
+                                    el.onended = () => {
+                                        idx = (idx + 1) % sources.length;
+                                        el.src = sources[idx].src;
+                                        el.currentTime = sources[idx].startAt;
+                                        el.play();
+                                    };
+                                }
+                            }}
+                            autoPlay
+                            muted
+                            playsInline
                             className="h-full w-full object-cover opacity-40"
                         />
                     </div>
