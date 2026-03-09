@@ -163,7 +163,7 @@ const NEWSLETTER_CONTENT: Record<PageId, string> = {
 <div style="height:30px;"></div>
 <div style="padding:10px 30px;text-align:center;"><p style="margin:0;font-size:10px;text-transform:uppercase;letter-spacing:3px;color:#888;">Software + Hardware Integration</p></div>
 <div style="padding:10px 30px;text-align:center;"><h1 style="margin:0;font-size:28px;color:#1a1a1a;font-family:Georgia,serif;font-weight:bold;line-height:1.3;">Learn Piano.<br/><span style="color:#3b82f6;">The Smart Way.</span></h1></div>
-<div style="padding:5px 30px;text-align:center;"><p style="margin:0;font-size:15px;color:#666;font-family:Georgia,serif;">DreamPlay Learn guides you note by note&mdash;on screen and on your keyboard.</p></div>
+<div style="padding:5px 30px;text-align:center;"><p style="margin:0;font-size:15px;color:#666;font-family:Georgia,serif;">DreamPlay Learn guides you note by note - on screen and on your keyboard.</p></div>
 <div style="height:20px;"></div>
 <div style="padding:10px 30px;text-align:center;"><hr style="border:none;border-top:1px solid #e5e5e5;width:60%;margin:0 auto;"/></div>
 <div style="padding:20px 30px;"><h2 style="margin:0 0 10px;font-size:22px;color:#1a1a1a;font-family:Georgia,serif;">Two Modes. One App.</h2><p style="font-size:15px;line-height:1.7;color:#444;">Choose <strong>Sheet Music Mode</strong> for traditional reading or <strong>Falling Notes Mode</strong> for visual learning. Use both simultaneously for the full experience.</p></div>
@@ -175,7 +175,7 @@ const NEWSLETTER_CONTENT: Record<PageId, string> = {
 <div style="height:15px;"></div>
 <div style="padding:20px 30px;"><h2 style="margin:0 0 10px;font-size:22px;color:#1a1a1a;font-family:Georgia,serif;">Smart Guidance</h2><p style="font-size:15px;line-height:1.7;color:#444;">Every note comes with <strong>finger number suggestions</strong>. Correct notes light up green, wrong notes flash red.</p></div>
 <div style="height:10px;"></div>
-<div style="padding:20px 30px;"><h2 style="margin:0 0 10px;font-size:22px;color:#1a1a1a;font-family:Georgia,serif;">LED Key Integration</h2><p style="font-size:15px;line-height:1.7;color:#444;">The DreamPlay One lights up the keys you need to press&mdash;learn by sight <strong>and</strong> by feel.</p></div>
+<div style="padding:20px 30px;"><h2 style="margin:0 0 10px;font-size:22px;color:#1a1a1a;font-family:Georgia,serif;">LED Key Integration</h2><p style="font-size:15px;line-height:1.7;color:#444;">The DreamPlay One lights up the keys you need to press - learn by sight <strong>and</strong> by feel.</p></div>
 <div style="padding:10px 30px;text-align:center;"><img src="/images/learn/led-keys-glowing.png" alt="LED keys" style="display:block;max-width:100%;width:540px;height:auto;margin:0 auto;"/></div>
 <div style="height:10px;"></div>
 <div style="padding:20px 30px;"><h2 style="margin:0 0 10px;font-size:22px;color:#1a1a1a;font-family:Georgia,serif;">Tempo Control &amp; Detection</h2><p style="font-size:15px;line-height:1.7;color:#444;">Slow it down to learn, speed it up to challenge yourself. The app adapts to <strong>your pace</strong>.</p></div>
@@ -228,14 +228,14 @@ function getBlogContent(page: PageId, theme: BlogTheme): string {
 <h2 class="sf" style="font-size:32px;font-weight:600;margin-bottom:24px;">Two Modes. One App.</h2>
 <p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:20px;">DreamPlay Learn offers two complementary practice modes: <strong>Sheet Music Mode</strong> for traditional notation reading, and <strong>Falling Notes Mode</strong> for an intuitive, visual approach.</p>
 <div class="img-border" style="margin:30px 0;overflow:hidden;"><img src="/images/learn/sheet-music-mode-real.jpg" alt="Sheet Music Mode" style="width:100%;height:auto;"/></div>
-<p class="caption" style="font-size:13px;margin-bottom:20px;text-align:center;">Sheet Music Mode &mdash; real-time notation tracking</p>
+<p class="caption" style="font-size:13px;margin-bottom:20px;text-align:center;">Sheet Music Mode  -  real-time notation tracking</p>
 <div class="img-border" style="margin:30px 0;overflow:hidden;"><img src="/images/learn/falling-notes-still.jpg" alt="Falling Notes Mode" style="width:100%;height:auto;"/></div>
-<p class="caption" style="font-size:13px;margin-bottom:20px;text-align:center;">Falling Notes Mode &mdash; intuitive visual learning</p>
+<p class="caption" style="font-size:13px;margin-bottom:20px;text-align:center;">Falling Notes Mode  -  intuitive visual learning</p>
 <div class="img-border" style="margin:30px 0;overflow:hidden;"><img src="/images/learn/ui-playthrough-still.jpg" alt="Both modes together" style="width:100%;height:auto;"/></div>
 <p class="caption" style="font-size:13px;margin-bottom:40px;text-align:center;">Use both modes at once for the ultimate practice session</p>
 
 <h2 class="sf" style="font-size:32px;font-weight:600;margin-bottom:24px;">Smart Guidance That Listens</h2>
-<p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:20px;">Every note comes with <strong>finger number suggestions</strong>. Correct notes light up green, wrong notes flash red&mdash;like a patient teacher 24/7.</p>
+<p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:20px;">Every note comes with <strong>finger number suggestions</strong>. Correct notes light up green, wrong notes flash red - like a patient teacher 24/7.</p>
 
 <div class="quote-card" style="padding:30px;margin:30px 0;text-align:center;">
 <div class="sf quote-text" style="font-size:22px;line-height:1.5;margin-bottom:12px;">The only keyboard that teaches you <em>while</em> you play.</div>

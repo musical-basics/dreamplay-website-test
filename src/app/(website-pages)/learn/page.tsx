@@ -348,7 +348,7 @@ export default function LearnPage() {
                             <AnimatedSection delay={200}>
                                 <div className="relative overflow-hidden border border-white/10 shadow-2xl shadow-cyan-500/10">
                                     <img
-                                        src="/images/learn/led-keys-glowing.png"
+                                        src="/images/learn/keyboard-led-lights.jpg"
                                         alt="LED keys lighting up on DreamPlay One keyboard"
                                         className="h-full w-full object-cover"
                                     />
@@ -368,8 +368,8 @@ export default function LearnPage() {
                             <AnimatedSection>
                                 <div className="relative overflow-hidden border border-neutral-200 shadow-xl">
                                     <img
-                                        src="/images/learn/tempo-control.png"
-                                        alt="Tempo control and MIDI detection"
+                                        src="/images/learn/control-buttons.jpg"
+                                        alt="DreamPlay One control buttons - Stop, Rec, Play/Pause, Back, Cancel/Exit, Next"
                                         className="h-full w-full object-cover"
                                     />
                                 </div>
@@ -419,6 +419,67 @@ export default function LearnPage() {
                                                 Loop any section to practice difficult passages. Combine with slow tempo for maximum efficiency in your practice sessions.
                                             </p>
                                         </div>
+                                    </div>
+                                </div>
+                            </AnimatedSection>
+                        </div>
+                    </div>
+                </section>
+
+                {/* ═══════════════════════════════════════════════════════════
+                    SECTION 5.5 — HARDWARE SHOWCASE
+                ═══════════════════════════════════════════════════════════ */}
+                <section className="border-t border-white/10 bg-[#050505] py-24 text-white md:py-32">
+                    <div className="container mx-auto max-w-6xl px-6">
+                        <AnimatedSection>
+                            <div className="mb-16 text-center">
+                                <p className="mb-4 font-sans text-[10px] uppercase tracking-[0.3em] text-white/50">
+                                    Purpose-Built Hardware
+                                </p>
+                                <h2 className="font-serif text-3xl font-semibold leading-tight md:text-5xl">
+                                    Designed for learning.
+                                    <br />
+                                    <span className="text-white/40">Built to last.</span>
+                                </h2>
+                            </div>
+                        </AnimatedSection>
+
+                        {/* Full-width keyboard shot */}
+                        <AnimatedSection>
+                            <div className="relative mb-16 overflow-hidden">
+                                <img
+                                    src="/images/learn/keyboard-front-view.jpg"
+                                    alt="DreamPlay One keyboard - full front view"
+                                    className="w-full object-cover"
+                                />
+                            </div>
+                        </AnimatedSection>
+
+                        {/* Two-column detail grid */}
+                        <div className="grid gap-6 md:grid-cols-2">
+                            <AnimatedSection>
+                                <div className="relative overflow-hidden border border-white/10">
+                                    <img
+                                        src="/images/learn/keyboard-led-lights.jpg"
+                                        alt="LED keys close-up with colored lights"
+                                        className="w-full object-cover"
+                                    />
+                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                                        <h3 className="font-serif text-xl font-semibold text-white">Custom LED System</h3>
+                                        <p className="mt-1 font-sans text-xs text-white/50">Color-coded keys guide every note</p>
+                                    </div>
+                                </div>
+                            </AnimatedSection>
+                            <AnimatedSection delay={150}>
+                                <div className="relative overflow-hidden border border-white/10">
+                                    <img
+                                        src="/images/learn/keyboard-back-ports.jpg"
+                                        alt="DreamPlay One back panel - USB, MIDI, Aux, Pedal, DC ports"
+                                        className="w-full object-cover"
+                                    />
+                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                                        <h3 className="font-serif text-xl font-semibold text-white">Full Connectivity</h3>
+                                        <p className="mt-1 font-sans text-xs text-white/50">USB to Host, MIDI Out, Aux In, Pedal, DC Power</p>
                                     </div>
                                 </div>
                             </AnimatedSection>
