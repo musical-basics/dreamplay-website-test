@@ -551,6 +551,13 @@ export default function Navbar() {
                 How It Works
               </Link>
               <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
+              <Link
+                href="/learn"
+                className={getLinkClass("/learn")}
+              >
+                DreamPlay Learn
+              </Link>
+              <div className={`nav-divider ${isCustomizePage ? 'bg-white/20' : ''}`}></div>
               <div
                 className="relative group h-full flex items-center"
                 onMouseEnter={() => setShowAboutDropdown(true)}
@@ -766,6 +773,13 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
             >
               How It Works
+            </Link>
+            <Link
+              href="/learn"
+              className="mobile-menu-link"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              DreamPlay Learn
             </Link>
             <div className="mobile-menu-divider" />
             <div className="mobile-menu-section-title">About Us</div>

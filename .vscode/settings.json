@@ -1,0 +1,5 @@
+{
+    "git.autofetch": false,
+    "git.fetchOnPull": false,
+    "git.autorefresh": false
+}
