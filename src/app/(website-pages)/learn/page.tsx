@@ -123,10 +123,24 @@ export default function LearnPage() {
                             <AnimatedSection delay={200} className="group relative overflow-hidden border border-neutral-200 bg-neutral-50 shadow-sm transition-all hover:shadow-xl">
                                 <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
                                     <video
-                                        src="/videos/UI Play through 2.mp4"
+                                        ref={(el) => {
+                                            if (el && !el.dataset.initialized) {
+                                                el.dataset.initialized = "true";
+                                                const sources = [
+                                                    "/videos/UI Play through 2.mp4",
+                                                    "/videos/Falling Notes Mode.mp4",
+                                                ];
+                                                let idx = 0;
+                                                el.src = sources[idx];
+                                                el.onended = () => {
+                                                    idx = (idx + 1) % sources.length;
+                                                    el.src = sources[idx];
+                                                    el.play();
+                                                };
+                                            }
+                                        }}
                                         autoPlay
                                         muted
-                                        loop
                                         playsInline
                                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
