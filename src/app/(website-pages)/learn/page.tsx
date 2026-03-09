@@ -367,9 +367,12 @@ export default function LearnPage() {
                         <div className="grid gap-16 lg:grid-cols-[1fr_1.2fr] lg:items-center">
                             <AnimatedSection>
                                 <div className="relative overflow-hidden border border-neutral-200 shadow-xl">
-                                    <img
-                                        src="/images/learn/control-buttons.jpg"
-                                        alt="DreamPlay One control buttons - Stop, Rec, Play/Pause, Back, Cancel/Exit, Next"
+                                    <video
+                                        src="/videos/clip-4-transcode.mp4"
+                                        autoPlay
+                                        loop
+                                        muted
+                                        playsInline
                                         className="h-full w-full object-cover"
                                     />
                                 </div>
