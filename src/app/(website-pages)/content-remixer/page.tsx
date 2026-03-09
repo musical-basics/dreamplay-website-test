@@ -191,10 +191,10 @@ const NEWSLETTER_CONTENT: Record<PageId, string> = {
 <div style="padding:20px 30px;"><h2 style="margin:0 0 10px;font-size:22px;color:#1a1a1a;font-family:Georgia,serif;">Smart Guidance</h2><p style="font-size:15px;line-height:1.7;color:#444;">Every note comes with <strong>finger number suggestions</strong>. Correct notes light up green, wrong notes flash red.</p></div>
 <div style="height:10px;"></div>
 <div style="padding:20px 30px;"><h2 style="margin:0 0 10px;font-size:22px;color:#1a1a1a;font-family:Georgia,serif;">LED Key Integration</h2><p style="font-size:15px;line-height:1.7;color:#444;">The DreamPlay One lights up the keys you need to press - learn by sight <strong>and</strong> by feel.</p></div>
-<div style="padding:10px 30px;text-align:center;"><img src="/images/learn/led-keys-glowing.png" alt="LED keys" style="display:block;max-width:100%;width:540px;height:auto;margin:0 auto;"/></div>
+<div style="padding:10px 30px;text-align:center;"><img src="/images/learn/pianist-led-keys.jpg" alt="LED keys" style="display:block;max-width:100%;width:540px;height:auto;margin:0 auto;"/></div>
 <div style="height:10px;"></div>
 <div style="padding:20px 30px;"><h2 style="margin:0 0 10px;font-size:22px;color:#1a1a1a;font-family:Georgia,serif;">Tempo Control &amp; Detection</h2><p style="font-size:15px;line-height:1.7;color:#444;">Slow it down to learn, speed it up to challenge yourself. The app adapts to <strong>your pace</strong>.</p></div>
-<div style="padding:10px 30px;text-align:center;"><img src="/images/learn/tempo-control.png" alt="Tempo control" style="display:block;max-width:100%;width:540px;height:auto;margin:0 auto;"/></div>
+<div style="padding:10px 30px;text-align:center;"><img src="/images/learn/control-buttons.jpg" alt="Control buttons" style="display:block;max-width:100%;width:540px;height:auto;margin:0 auto;"/></div>
 <div style="height:20px;"></div>
 <div style="padding:10px 30px;text-align:center;"><a href="https://www.dreamplaypianos.com/customize" target="_blank" style="display:inline-block;padding:14px 40px;background:#1a1a1a;color:#fff;font-size:12px;font-weight:bold;text-decoration:none;text-transform:uppercase;letter-spacing:2px;">Get DreamPlay One &rarr;</a></div>
 <div style="height:30px;"></div>
@@ -351,12 +351,12 @@ function getBlogContent(page: PageId, theme: BlogTheme): string {
 
 <h2 class="sf" style="font-size:32px;font-weight:600;margin-bottom:24px;">LED Key Integration</h2>
 <p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:20px;">The DreamPlay One literally <strong>lights up the keys</strong> you need to press. Learn by sight and feel simultaneously.</p>
-<div class="img-border" style="margin:30px 0;overflow:hidden;"><img src="/images/learn/led-keys-glowing.png" alt="LED keys glowing" style="width:100%;height:auto;"/></div>
+<div class="img-border" style="margin:30px 0;overflow:hidden;"><img src="/images/learn/pianist-led-keys.jpg" alt="LED keys glowing" style="width:100%;height:auto;"/></div>
 <p class="caption" style="font-size:13px;margin-bottom:40px;text-align:center;">LED-lit keys guide your fingers in real time</p>
 
 <h2 class="sf" style="font-size:32px;font-weight:600;margin-bottom:24px;">Tempo Control &amp; Detection</h2>
 <p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:20px;">Start slow, build confidence, then speed up. The app adapts to <strong>your pace</strong>.</p>
-<div class="img-border" style="margin:30px 0;overflow:hidden;"><img src="/images/learn/tempo-control.png" alt="Tempo control" style="width:100%;height:auto;"/></div>
+<div class="img-border" style="margin:30px 0;overflow:hidden;"><img src="/images/learn/control-buttons.jpg" alt="Control buttons" style="width:100%;height:auto;"/></div>
 <p class="caption" style="font-size:13px;margin-bottom:40px;text-align:center;">Adaptive tempo control interface</p>
 
 <div style="text-align:center;padding:40px 0;">
