@@ -616,7 +616,7 @@ export default function ContentRemixerPage() {
 
       const title = currentPage.label;
       const pageUrl = "https://www.dreamplaypianos.com" + currentPage.path;
-      const newsletter = blocksToNewsletter(blocks, title);
+      const newsletter = blocksToNewsletter(blocks, title, pageUrl);
       const gmail = blocksToGmail(blocks, title);
       const blog: Record<string, string> = {
         minimalist: blocksToBlog(blocks, title, "minimalist"),
@@ -763,7 +763,7 @@ export default function ContentRemixerPage() {
             )}
 
             {/* Generate / Convert */}
-            <button onClick={handleConvert}
+            <button onClick={() => handleConvert()}
               disabled={converting}
               className={`flex items-center gap-2 border px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider transition-all cursor-pointer ${converting ? "border-green-400/50 bg-green-400/10 text-green-300 animate-pulse" : "border-emerald-400/30 bg-emerald-400/5 text-emerald-300 hover:bg-emerald-400/10 hover:border-emerald-400/50"}`}
               title="Convert website content to newsletter, blog, and gmail formats">

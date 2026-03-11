@@ -68,14 +68,8 @@ export function scrapePageContent(doc: Document): ContentBlock[] {
             const key = "vid:" + (src || poster);
             if (seen.has(key)) return;
             seen.add(key);
-            // Add as video block with actual video src
             if (src) {
                 blocks.push({ type: "video", src, poster: poster || undefined });
-            }
-            // Also add poster as image if available
-            if (poster && !seen.has("img:" + poster)) {
-                seen.add("img:" + poster);
-                blocks.push({ type: "image", src: poster, alt: "Video still" });
             }
         });
 
@@ -132,76 +126,152 @@ export function scrapePageContent(doc: Document): ContentBlock[] {
     return withDividers;
 }
 
-// ── Newsletter Builder (600px, inline styles) ────────────
-export function blocksToNewsletter(blocks: ContentBlock[], pageTitle: string): string {
+// ── Newsletter Builder (600px, inline styles, email-safe) ────────────
+export function blocksToNewsletter(blocks: ContentBlock[], pageTitle: string, pageUrl: string = "https://www.dreamplaypianos.com"): string {
     // Extract hero image: first image or first video poster
     let heroSrc = "";
     for (const b of blocks) {
-        if (b.type === "image" && b.src) { heroSrc = b.src; break; }
-        if (b.type === "video") { heroSrc = b.poster || b.src; break; }
+        const src = getImageSrc(b);
+        if (src) { heroSrc = src; break; }
     }
 
+    // Extract excerpt from first text block
+    const texts = getTexts(blocks);
+    const excerpt = texts[0] ? truncate(texts[0], 140) : "";
+
+    // Build content rows with editorial polish
     const rows = blocks.map((b) => {
         switch (b.type) {
             case "heading":
-                if (b.level === 1) {
-                    return `<tr><td style="padding:20px 30px 10px;text-align:center;background:#050505;">
-<h1 style="margin:0;font-size:28px;color:#ffffff;font-family:Georgia,serif;font-weight:bold;line-height:1.3;">${b.text}</h1>
-</td></tr>`;
-                }
-                return `<tr><td style="padding:20px 30px 5px;">
-<h2 style="margin:0;font-size:22px;color:#1a1a1a;font-family:Georgia,serif;">${b.text}</h2>
+                if (b.level === 1) return ""; // h1 is in hero
+                return `<tr><td style="padding:30px 40px 8px;">
+<h2 style="margin:0;font-size:22px;color:#1a1a1a;font-family:Georgia,'Times New Roman',serif;font-weight:bold;line-height:1.35;">${b.text}</h2>
 </td></tr>`;
             case "text":
-                return `<tr><td style="padding:5px 30px 10px;">
-<p style="font-size:15px;line-height:1.7;color:#444444;margin:0;">${b.html}</p>
+                return `<tr><td style="padding:8px 40px 12px;">
+<p style="font-size:15px;line-height:1.75;color:#444444;margin:0;font-family:Arial,Helvetica,sans-serif;">${b.html}</p>
 </td></tr>`;
             case "image":
-                return `<tr><td style="padding:10px 30px;text-align:center;">
-<img src="${b.src}" alt="${b.alt}" width="540" style="display:block;max-width:100%;width:540px;height:auto;margin:0 auto;border:0;" />
+                return `<tr><td style="padding:12px 40px;">
+<a href="${pageUrl}" target="_blank" style="display:block;text-decoration:none;">
+<img src="${b.src}" alt="${b.alt || 'DreamPlay Pianos'}" width="520" style="display:block;max-width:100%;width:520px;height:auto;margin:0 auto;border:0;border-radius:4px;" />
+</a>
 </td></tr>`;
-            case "video":
-                return `<tr><td style="padding:10px 30px;text-align:center;">
-<img src="${b.poster || b.src}" alt="Video" width="540" style="display:block;max-width:100%;width:540px;height:auto;margin:0 auto;border:0;" />
+            case "video": {
+                // Poster image with play button overlay — links to website page
+                const poster = b.poster || b.src;
+                return `<tr><td style="padding:12px 40px;">
+<a href="${pageUrl}" target="_blank" style="display:block;text-decoration:none;position:relative;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="520" style="max-width:100%;margin:0 auto;">
+<tr><td style="position:relative;text-align:center;background:#000;">
+<img src="${poster}" alt="Watch on DreamPlay" width="520" style="display:block;max-width:100%;width:520px;height:auto;border:0;border-radius:4px;opacity:0.85;" />
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+<div style="width:0;height:0;border-left:22px solid #ffffff;border-top:14px solid transparent;border-bottom:14px solid transparent;margin-left:4px;"></div>
+</div>
+</td></tr>
+</table>
+</a>
+<p style="font-size:11px;color:#999;text-align:center;margin:8px 0 0;font-family:Arial,sans-serif;">▶ Watch on dreamplaypianos.com</p>
 </td></tr>`;
-            case "cta":
-                return `<tr><td style="padding:15px 30px;text-align:center;">
-<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;"><tr><td style="background:#000000;padding:14px 40px;">
-<a href="${b.href}" style="color:#ffffff;text-decoration:none;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;font-family:Arial,sans-serif;">${b.text}</a>
-</td></tr></table>
+            }
+            case "cta": {
+                // Bulletproof button (table-based for Outlook)
+                const ctaText = b.text.replace(/→|➜|➝/g, "").trim();
+                const warmText = ctaText || "Explore More";
+                return `<tr><td style="padding:24px 40px;text-align:center;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
+<tr>
+<td style="background:#1a1a1a;border-radius:3px;padding:14px 44px;">
+<a href="${b.href}" target="_blank" style="color:#ffffff;text-decoration:none;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;font-family:Arial,Helvetica,sans-serif;display:inline-block;">${warmText} →</a>
+</td>
+</tr>
+</table>
 </td></tr>`;
+            }
             case "quote":
-                return `<tr><td style="padding:15px 30px;background:#f8f8f8;border-left:3px solid #e5e5e5;">
-<p style="font-size:15px;line-height:1.6;color:#555;font-style:italic;margin:0 0 5px;">${b.text}</p>
-${b.author ? `<p style="font-size:12px;color:#888;margin:0;"><strong>${b.author}</strong>${b.role ? ` — ${b.role}` : ""}</p>` : ""}
+                return `<tr><td style="padding:16px 40px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td style="border-left:3px solid #c4a44a;padding:20px 24px;background:#fafaf8;">
+<p style="font-size:16px;line-height:1.6;color:#333;font-style:italic;margin:0 0 8px;font-family:Georgia,serif;">"${b.text}"</p>
+${b.author ? `<p style="font-size:12px;color:#888;margin:0;font-family:Arial,sans-serif;"><strong>${b.author}</strong>${b.role ? ` — ${b.role}` : ""}</p>` : ""}
+</td>
+</tr>
+</table>
 </td></tr>`;
             case "divider":
-                return `<tr><td style="padding:10px 30px;"><hr style="border:none;border-top:1px solid #e5e5e5;margin:0;" /></td></tr>`;
+                return `<tr><td style="padding:8px 40px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="border-top:1px solid #e8e8e8;font-size:0;line-height:0;">&nbsp;</td></tr></table>
+</td></tr>`;
             case "stat":
-                return `<tr><td style="padding:10px 30px;text-align:center;">
-<p style="font-size:36px;font-weight:bold;color:#1a1a1a;margin:0;">${b.value}</p>
-<p style="font-size:12px;color:#888;margin:4px 0 0;text-transform:uppercase;letter-spacing:2px;">${b.label}</p>
+                return `<tr><td style="padding:16px 40px;text-align:center;">
+<p style="font-size:42px;font-weight:bold;color:#1a1a1a;margin:0;font-family:Georgia,serif;line-height:1.1;">${b.value}</p>
+<p style="font-size:11px;color:#999;margin:6px 0 0;text-transform:uppercase;letter-spacing:3px;font-family:Arial,sans-serif;">${b.label}</p>
 </td></tr>`;
             default:
                 return "";
         }
-    }).join("\n");
+    }).filter(Boolean).join("\n");
 
-    // Logo header with actual logo image (matching emailWrap)
-    const logoHeader = `<tr><td style="padding:30px 20px;text-align:center;background:#050505;">
-<img src="/images/DreamPlay%20Logo%20White.png" alt="DreamPlay" style="height:32px;display:inline-block;" />
+    // Logo header
+    const logoHeader = `<tr><td style="padding:28px 20px;text-align:center;background:#050505;">
+<a href="https://www.dreamplaypianos.com" target="_blank" style="text-decoration:none;">
+<img src="/images/DreamPlay%20Logo%20White.png" alt="DreamPlay Pianos" style="height:30px;display:inline-block;border:0;" />
+</a>
 </td></tr>`;
 
-    // Hero image row (full-width, no padding)
-    const heroRow = heroSrc ? `<tr><td style="padding:0;">
-<img src="${heroSrc}" alt="" width="600" style="display:block;width:100%;max-width:600px;height:auto;border:0;" />
-</td></tr>` : "";
+    // Hero: full-bleed image + headline overlay
+    const heroSection = heroSrc ? `<tr><td style="padding:0;position:relative;background:#050505;">
+<a href="${pageUrl}" target="_blank" style="display:block;text-decoration:none;">
+<img src="${heroSrc}" alt="${pageTitle}" width="600" style="display:block;width:100%;max-width:600px;height:auto;border:0;opacity:0.7;" />
+</a>
+</td></tr>
+<tr><td style="padding:24px 40px 8px;background:#050505;">
+<h1 style="margin:0;font-size:26px;color:#ffffff;font-family:Georgia,'Times New Roman',serif;font-weight:bold;line-height:1.3;">${pageTitle}</h1>
+${excerpt ? `<p style="font-size:14px;line-height:1.6;color:rgba(255,255,255,0.6);margin:10px 0 0;font-family:Arial,sans-serif;">${excerpt}</p>` : ""}
+</td></tr>
+<tr><td style="padding:16px 40px 0;background:#050505;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+<td style="padding-right:12px;">
+<p style="margin:0;font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:2px;font-family:Arial,sans-serif;">DreamPlay Editorial</p>
+</td>
+<td><p style="margin:0;font-size:10px;color:rgba(255,255,255,0.25);font-family:Arial,sans-serif;">•</p></td>
+<td style="padding-left:12px;">
+<p style="margin:0;font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:2px;font-family:Arial,sans-serif;">${new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</p>
+</td>
+</tr></table>
+</td></tr>
+<tr><td style="padding:20px 40px;background:#050505;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="border-top:1px solid rgba(255,255,255,0.1);font-size:0;line-height:0;">&nbsp;</td></tr></table>
+</td></tr>` : `<tr><td style="padding:36px 40px 20px;text-align:center;">
+<h1 style="margin:0;font-size:26px;color:#1a1a1a;font-family:Georgia,'Times New Roman',serif;font-weight:bold;line-height:1.3;">${pageTitle}</h1>
+</td></tr>`;
+
+    // Footer with physical address + unsubscribe
+    const footer = `<tr><td style="padding:24px 40px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="border-top:1px solid #e8e8e8;font-size:0;line-height:0;">&nbsp;</td></tr></table>
+</td></tr>
+<tr><td style="padding:12px 40px 32px;text-align:center;">
+<a href="https://www.dreamplaypianos.com" target="_blank" style="text-decoration:none;">
+<img src="/images/DreamPlay%20Logo%20White.png" alt="DreamPlay" style="height:20px;display:inline-block;border:0;opacity:0.4;filter:invert(1);-webkit-filter:invert(1);" />
+</a>
+<p style="font-size:11px;color:#aaa;margin:12px 0 0;font-family:Arial,sans-serif;">DreamPlay Pianos &bull; Victoria, BC, Canada</p>
+<p style="font-size:11px;color:#bbb;margin:6px 0 0;font-family:Arial,sans-serif;">
+<a href="${pageUrl}" style="color:#999;text-decoration:underline;">View on web</a> &nbsp;|&nbsp; <a href="{{unsubscribe_url}}" style="color:#999;text-decoration:underline;">Unsubscribe</a>
+</p>
+</td></tr>`;
 
     return `<!DOCTYPE html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><title>${pageTitle}</title>
+<!--[if mso]><style>table{border-collapse:collapse;}td{font-family:Arial,sans-serif;}</style><![endif]-->
 <style>
-body{margin:0;padding:0;-webkit-text-size-adjust:100%;}
-img{border:0;height:auto;line-height:100%;outline:none;text-decoration:none;max-width:100%;}
-@media only screen and (max-width:640px){.email-container{width:100%!important;}.email-container img{width:100%!important;height:auto!important;}}
+body{margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;}
+img{border:0;height:auto;line-height:100%;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;}
+a{color:#1a1a1a;}
+@media only screen and (max-width:640px){
+.email-container{width:100%!important;}
+.email-container img{width:100%!important;height:auto!important;}
+td[style*="padding:8px 40px"],td[style*="padding:12px 40px"],td[style*="padding:16px 40px"],td[style*="padding:24px 40px"],td[style*="padding:28px 40px"],td[style*="padding:30px 40px"]{padding-left:20px!important;padding-right:20px!important;}
+}
 </style>
 </head>
 <body style="margin:0;padding:0;background:#f4f4f7;font-family:Arial,Helvetica,sans-serif;">
@@ -209,15 +279,9 @@ img{border:0;height:auto;line-height:100%;outline:none;text-decoration:none;max-
 <tr><td align="center" style="padding:20px 0;">
 <table class="email-container" role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;background:#ffffff;">
 ${logoHeader}
-${heroRow}
+${heroSection}
 ${rows}
-<tr><td style="padding:20px 30px;">
-<hr style="border:none;border-top:1px solid #e5e5e5;margin:0;" />
-</td></tr>
-<tr><td style="padding:10px 30px 30px;text-align:center;font-size:11px;color:#aaa;">
-<p style="margin:0;">DreamPlay Pianos &bull; Victoria, BC, Canada</p>
-<p style="margin:5px 0 0;"><a href="{{unsubscribe_url}}" style="color:#aaa;text-decoration:underline;">Unsubscribe</a></p>
-</td></tr>
+${footer}
 </table>
 </td></tr></table></body></html>`;
 }
@@ -339,12 +403,12 @@ function renderBlogBlocks(blocks: ContentBlock[]): string {
                 }
                 if (mediaGroup.length === 1) {
                     const src = getImageSrc(mediaGroup[0]);
-                    const alt = mediaGroup[0].type === "image" ? mediaGroup[0].alt : "Still frame";
+                    const alt = mediaGroup[0].type === "image" ? mediaGroup[0].alt : "DreamPlay";
                     parts.push(`<div class="img-border" style="margin:30px 0;overflow:hidden;"><img src="${src}" alt="${alt}" style="width:100%;height:auto;display:block;" /></div>`);
                 } else {
                     const gridItems = mediaGroup.map(item => {
                         const src = getImageSrc(item);
-                        const alt = item.type === "image" ? item.alt : "Still frame";
+                        const alt = item.type === "image" ? item.alt : "DreamPlay";
                         return `<div class="img-border" style="overflow:hidden;"><img src="${src}" alt="${alt}" style="width:100%;height:auto;display:block;" /></div>`;
                     }).join("\n");
                     parts.push(`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:30px 0;">${gridItems}</div>`);
