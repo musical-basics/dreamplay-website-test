@@ -550,6 +550,7 @@ export default function ContentRemixerPage() {
   const [showDrafts, setShowDrafts] = useState(false);
   const [draftName, setDraftName] = useState("");
   const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [currentDraftId, setCurrentDraftId] = useState<string | null>(null);
   const editIframeRef = useRef<HTMLIFrameElement>(null);
 
   // Load drafts from localStorage on mount
@@ -602,11 +603,27 @@ export default function ContentRemixerPage() {
     showToast("Image swapped! Remember to save your draft.");
   }, [selectedImgId]);
 
-  // Save draft
-  const handleSaveDraft = useCallback(() => {
-    if (!draftName.trim()) return;
+  // Save draft (update existing or create new)
+  const handleSaveDraft = useCallback((forceNew?: boolean) => {
     const html = getCurrentEditedHtml();
     const format = splitView ? splitRight : activeTab;
+
+    // If we have a current draft and not forcing new, update in place
+    if (currentDraftId && !forceNew) {
+      const updated = drafts.map(d => d.id === currentDraftId ? {
+        ...d,
+        html,
+        savedAt: new Date().toISOString(),
+      } : d);
+      setDrafts(updated);
+      saveDrafts(updated);
+      const name = drafts.find(d => d.id === currentDraftId)?.name || "Draft";
+      showToast(`"${name}" saved.`);
+      return;
+    }
+
+    // Create new draft (Save As)
+    if (!draftName.trim()) return;
     const draft: Draft = {
       id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
       name: draftName.trim(),
@@ -619,10 +636,11 @@ export default function ContentRemixerPage() {
     const updated = [...drafts, draft];
     setDrafts(updated);
     saveDrafts(updated);
+    setCurrentDraftId(draft.id);
     setShowSaveDialog(false);
     setDraftName("");
     showToast(`Draft "${draft.name}" saved!`);
-  }, [draftName, drafts, getCurrentEditedHtml, splitView, splitRight, activeTab, selectedPage, blogTheme]);
+  }, [draftName, drafts, currentDraftId, getCurrentEditedHtml, splitView, splitRight, activeTab, selectedPage, blogTheme]);
 
   // Helper: inject edit script into HTML
   const injectEditScript = (html: string): string => {
@@ -639,6 +657,7 @@ export default function ContentRemixerPage() {
   const handleLoadDraft = useCallback((draft: Draft) => {
     // Re-inject edit script since it was stripped when saving
     setEditedHtml(injectEditScript(draft.html));
+    setCurrentDraftId(draft.id);
     setEditMode(true);
     setShowDrafts(false);
     showToast(`Draft "${draft.name}" loaded.`);
@@ -680,6 +699,7 @@ export default function ContentRemixerPage() {
     setEditedHtml(null);
     setShowImagePicker(false);
     setSelectedImgId(null);
+    setCurrentDraftId(null);
   }, []);
 
   const currentPage = PAGES.find((p) => p.id === selectedPage)!;
@@ -1031,11 +1051,27 @@ export default function ContentRemixerPage() {
               </>
             ) : (
               <>
-                <button onClick={() => setShowSaveDialog(true)}
-                  className="flex items-center gap-2 border border-amber-400/30 bg-amber-400/10 px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider text-amber-300 transition-all cursor-pointer hover:bg-amber-400/20"
-                  title="Save current edits as a draft">
-                  <Save className="h-4 w-4" /> Save Draft
-                </button>
+                {currentDraftId ? (
+                  /* Auto-save to current draft */
+                  <>
+                    <button onClick={() => handleSaveDraft()}
+                      className="flex items-center gap-2 border border-amber-400/30 bg-amber-400/10 px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider text-amber-300 transition-all cursor-pointer hover:bg-amber-400/20"
+                      title="Save changes to current draft">
+                      <Save className="h-4 w-4" /> Save
+                    </button>
+                    <button onClick={() => { setDraftName(""); setShowSaveDialog(true); }}
+                      className="flex items-center gap-2 border border-white/10 px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider text-white/50 transition-all cursor-pointer hover:border-white/30 hover:text-white/80"
+                      title="Save as a new draft">
+                      Save As
+                    </button>
+                  </>
+                ) : (
+                  <button onClick={() => setShowSaveDialog(true)}
+                    className="flex items-center gap-2 border border-amber-400/30 bg-amber-400/10 px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider text-amber-300 transition-all cursor-pointer hover:bg-amber-400/20"
+                    title="Save current edits as a new draft">
+                    <Save className="h-4 w-4" /> Save Draft
+                  </button>
+                )}
                 <button onClick={() => {
                   const html = getCurrentEditedHtml();
                   navigator.clipboard.writeText(html).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
@@ -1050,7 +1086,7 @@ export default function ContentRemixerPage() {
                   title="Exit edit mode">
                   <X className="h-4 w-4" /> Exit Edit
                 </button>
-                {editMode && <span className="ml-2 font-sans text-[10px] uppercase tracking-wider text-blue-300 animate-pulse">✏️ Edit Mode Active — click text to edit, click images to swap</span>}
+                {editMode && <span className="ml-2 font-sans text-[10px] uppercase tracking-wider text-blue-300 animate-pulse">✏️ Editing{currentDraftId ? ` "${drafts.find(d => d.id === currentDraftId)?.name}"` : ""} — click text to edit, click images to swap</span>}
               </>
             )}
 
@@ -1066,10 +1102,10 @@ export default function ContentRemixerPage() {
                     placeholder="e.g. Learn Newsletter v2"
                     className="w-full border border-white/10 bg-white/5 px-4 py-3 font-sans text-sm text-white placeholder-white/30 outline-none focus:border-amber-400/50 mb-4"
                     autoFocus
-                    onKeyDown={e => { if (e.key === "Enter") handleSaveDraft(); }}
+                    onKeyDown={e => { if (e.key === "Enter") handleSaveDraft(true); }}
                   />
                   <div className="flex gap-3">
-                    <button onClick={handleSaveDraft} disabled={!draftName.trim()}
+                    <button onClick={() => handleSaveDraft(true)} disabled={!draftName.trim()}
                       className="flex-1 border border-amber-400/30 bg-amber-400/10 px-4 py-2 font-sans text-xs font-medium uppercase tracking-wider text-amber-300 transition-all cursor-pointer hover:bg-amber-400/20 disabled:opacity-30 disabled:cursor-not-allowed">
                       Save
                     </button>
