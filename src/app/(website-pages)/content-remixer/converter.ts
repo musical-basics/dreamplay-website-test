@@ -187,8 +187,13 @@ ${b.author ? `<p style="font-size:12px;color:#888;margin:0;"><strong>${b.author}
         }
     }).join("\n");
 
-    // Logo banner
-    const logoBanner = `<tr><td style="padding:24px 30px 0;text-align:center;background:#050505;">
+    // Logo header with actual logo image (matching emailWrap)
+    const logoHeader = `<tr><td style="padding:30px 20px;text-align:center;background:#050505;">
+<img src="/images/DreamPlay%20Logo%20White.png" alt="DreamPlay" style="height:32px;display:inline-block;" />
+</td></tr>`;
+
+    // Gold text banner below logo
+    const logoBanner = `<tr><td style="padding:16px 30px 0;text-align:center;background:#050505;">
 <p style="margin:0;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:4px;color:#c4a44a;font-family:Arial,sans-serif;">✦ DREAMPLAY PIANOS ✦</p>
 </td></tr>`;
 
@@ -208,6 +213,7 @@ img{border:0;height:auto;line-height:100%;outline:none;text-decoration:none;max-
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f4f4f7;">
 <tr><td align="center" style="padding:20px 0;">
 <table class="email-container" role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;background:#ffffff;">
+${logoHeader}
 ${logoBanner}
 ${heroRow}
 ${rows}
@@ -432,6 +438,9 @@ img{max-width:100%;height:auto;display:block}
 ${css}
 </style>
 </head><body>
+<div style="padding:20px 24px;text-align:center;background:#050505;">
+<img src="/images/DreamPlay%20Logo%20White.png" alt="DreamPlay" style="height:28px;display:inline-block;" />
+</div>
 ${hero}
 <div class="content-wrap">
 <div class="bc" style="padding-top:60px;padding-bottom:80px;">
