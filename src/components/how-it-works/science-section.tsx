@@ -75,36 +75,42 @@ export function ScienceSection() {
             </section>
 
             {/* ─── Hero stats ─── */}
-            <section className="w-full bg-neutral-950 text-white">
+            <section className="w-full bg-[#050505] text-white">
                 <div className="mx-auto max-w-5xl px-6 py-20 md:py-28">
+                    <p className="text-center font-sans text-xs uppercase tracking-[0.3em] text-white/30 mb-12 md:mb-16">
+                        The Evidence
+                    </p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 text-center">
                         {/* Stat 1 */}
-                        <div className="border border-white/15 rounded-lg p-8 md:p-10">
-                            <div className="font-sans text-5xl md:text-6xl font-bold tracking-tight mb-3">
-                                86<span className="text-red-500">%</span>
+                        <div className="border border-white/10 p-10 md:p-12 relative overflow-hidden">
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-px bg-[#c4a44a]" />
+                            <div className="font-serif text-5xl md:text-6xl font-bold tracking-tight mb-4 text-white">
+                                86<span className="text-white/40">%</span>
                             </div>
-                            <p className="font-sans text-sm md:text-base text-white/60 leading-relaxed">
-                                of university piano majors experience <strong className="text-white font-semibold">active pain</strong> while playing
+                            <p className="font-sans text-sm text-white/50 leading-relaxed">
+                                of university piano majors experience <strong className="text-white/80 font-medium">active pain</strong> while playing
                             </p>
                         </div>
 
                         {/* Stat 2 */}
-                        <div className="border border-white/15 rounded-lg p-8 md:p-10">
-                            <div className="font-sans text-5xl md:text-6xl font-bold tracking-tight mb-3">
-                                3<span className="text-red-500">×</span>
+                        <div className="border border-white/10 p-10 md:p-12 relative overflow-hidden">
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-px bg-[#c4a44a]" />
+                            <div className="font-serif text-5xl md:text-6xl font-bold tracking-tight mb-4 text-white">
+                                3<span className="text-white/40">×</span>
                             </div>
-                            <p className="font-sans text-sm md:text-base text-white/60 leading-relaxed">
-                                higher risk of <strong className="text-white font-semibold">tendonitis, focal dystonia</strong> and carpal tunnel syndrome
+                            <p className="font-sans text-sm text-white/50 leading-relaxed">
+                                higher risk of <strong className="text-white/80 font-medium">tendonitis, focal dystonia</strong> and carpal tunnel syndrome
                             </p>
                         </div>
 
                         {/* Stat 3 */}
-                        <div className="border border-white/15 rounded-lg p-8 md:p-10">
-                            <div className="font-sans text-4xl md:text-5xl font-bold tracking-tight text-emerald-400 mb-3">
+                        <div className="border border-white/10 p-10 md:p-12 relative overflow-hidden">
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-px bg-[#c4a44a]" />
+                            <div className="font-serif text-4xl md:text-5xl font-bold tracking-tight text-[#c4a44a] mb-4">
                                 Proven
                             </div>
-                            <p className="font-sans text-sm md:text-base text-white/60 leading-relaxed">
-                                Narrower keyboards show a <strong className="text-white font-semibold">drastic reduction</strong> in muscle fatigue via EMG
+                            <p className="font-sans text-sm text-white/50 leading-relaxed">
+                                Narrower keyboards show a <strong className="text-white/80 font-medium">drastic reduction</strong> in muscle fatigue via EMG
                             </p>
                         </div>
                     </div>
