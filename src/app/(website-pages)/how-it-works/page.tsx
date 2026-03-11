@@ -23,7 +23,7 @@ export default function HowItWorksPage() {
         <div className={`${playfair.variable} ${inter.variable} font-sans antialiased min-h-screen selection:bg-white/20 bg-black`}>
             <SpecialOfferHeader forceOpaque={true} darkMode={true} className="border-b border-white/10 bg-[#050505] backdrop-blur-md" />
 
-            <main className="flex flex-col items-center">
+            <main className="flex flex-col items-center w-full">
                 {/* The Hidden Barrier — full-width animated donut charts */}
                 <HiddenBarrierSection />
 
