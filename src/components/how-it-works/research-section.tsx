@@ -38,17 +38,20 @@ export function ResearchSection() {
                             href: "https://paskpiano.org/performance-quality/",
                             cta: "Learn more",
                         },
-                    ].map((item) => (
-                        <div key={item.title} className="border border-white/10 bg-white/5 p-10 flex flex-col hover:border-white/20 transition-all">
-                            <div className="font-sans text-xl font-bold text-white mb-3">{item.title}</div>
-                            <div className="font-sans text-xs uppercase tracking-[0.3em] text-white/40 mb-4">{item.source}</div>
-                            <div className="font-sans text-sm text-white/60 leading-relaxed mb-8 flex-grow">{item.desc}</div>
-                            <a href={item.href} target="_blank" className="group inline-flex items-center justify-center gap-2 border border-white bg-white px-8 py-4 font-sans text-xs uppercase tracking-widest text-black transition-colors hover:bg-white/90 w-fit">
-                                {item.cta}
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}><path d="M5 12h14" /><path d="M12 5l7 7-7 7" /></svg>
-                            </a>
-                        </div>
-                    ))}
+                    ].map((item, i) => {
+                        const isDark = i % 2 === 0
+                        return (
+                            <div key={item.title} className={`p-10 flex flex-col transition-all ${isDark ? 'border border-white/10 bg-white/5 hover:border-white/20' : 'bg-white hover:bg-neutral-50'}`}>
+                                <div className={`font-sans text-xl font-bold mb-3 ${isDark ? 'text-white' : 'text-neutral-900'}`}>{item.title}</div>
+                                <div className={`font-sans text-xs uppercase tracking-[0.3em] mb-4 ${isDark ? 'text-white/40' : 'text-neutral-400'}`}>{item.source}</div>
+                                <div className={`font-sans text-sm leading-relaxed mb-8 flex-grow ${isDark ? 'text-white/60' : 'text-neutral-600'}`}>{item.desc}</div>
+                                <a href={item.href} target="_blank" className={`group inline-flex items-center justify-center gap-2 border px-8 py-4 font-sans text-xs uppercase tracking-widest transition-colors w-fit ${isDark ? 'border-white bg-white text-black hover:bg-white/90' : 'border-neutral-900 bg-neutral-900 text-white hover:bg-neutral-800'}`}>
+                                    {item.cta}
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}><path d="M5 12h14" /><path d="M12 5l7 7-7 7" /></svg>
+                                </a>
+                            </div>
+                        )
+                    })}
                 </div>
 
                 {/* Academic Recognition */}
