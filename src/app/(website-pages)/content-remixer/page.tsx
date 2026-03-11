@@ -2,12 +2,12 @@
 import React, { useState, useCallback, useRef } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import Footer from "@/components/Footer";
-import { Monitor, Mail, BookOpen, Columns2, ChevronDown, Palette, RefreshCw, Copy, Check, ArrowRightLeft, AlertCircle } from "lucide-react";
-import { scrapePageContent, blocksToNewsletter, blocksToBlog, blocksToGmail } from "./converter";
+import { Monitor, Mail, BookOpen, Columns2, ChevronDown, Palette, RefreshCw, Copy, Check, ArrowRightLeft, AlertCircle, Hash, Instagram, Megaphone } from "lucide-react";
+import { scrapePageContent, blocksToNewsletter, blocksToBlog, blocksToGmail, blocksToRedditAd, blocksToTwitterPost, blocksToIGCarousel, blocksToIGAd } from "./converter";
 import type { ContentBlock } from "./converter";
 
 // ── Types ────────────────────────────────────────────────
-type ViewTab = "website" | "newsletter" | "blog" | "gmail";
+type ViewTab = "website" | "newsletter" | "blog" | "gmail" | "reddit" | "twitter" | "ig-carousel" | "ig-ad";
 type PageId = string;
 type BlogTheme = "minimalist" | "luxury" | "gold-accent";
 
@@ -16,6 +16,10 @@ const TABS: { id: ViewTab; label: string; icon: React.ReactNode }[] = [
   { id: "newsletter", label: "Newsletter", icon: <Mail className="h-4 w-4" /> },
   { id: "blog", label: "Blog", icon: <BookOpen className="h-4 w-4" /> },
   { id: "gmail", label: "Gmail", icon: <Mail className="h-4 w-4" /> },
+  { id: "reddit", label: "Reddit", icon: <Hash className="h-4 w-4" /> },
+  { id: "twitter", label: "X / Twitter", icon: <Hash className="h-4 w-4" /> },
+  { id: "ig-carousel", label: "IG Carousel", icon: <Instagram className="h-4 w-4" /> },
+  { id: "ig-ad", label: "IG Ad", icon: <Megaphone className="h-4 w-4" /> },
 ];
 
 const PAGES: { id: PageId; label: string; path: string }[] = [
@@ -443,6 +447,10 @@ export default function ContentRemixerPage() {
     newsletter: string;
     blog: Record<string, string>;
     gmail: string;
+    reddit: string;
+    twitter: string;
+    igCarousel: string;
+    igAd: string;
     blocks: ContentBlock[];
   }>>({});
   const webIframeRef = useRef<HTMLIFrameElement>(null);
@@ -482,6 +490,10 @@ export default function ContentRemixerPage() {
     if (activeTab === "newsletter") return getNewsletterContent(selectedPage);
     if (activeTab === "blog") return getDynamicBlogContent(selectedPage, blogTheme);
     if (activeTab === "gmail") return getGmailContent(selectedPage);
+    if (activeTab === "reddit") return convertedContent[selectedPage]?.reddit || fallbackHtml("Reddit Ad", selectedPage);
+    if (activeTab === "twitter") return convertedContent[selectedPage]?.twitter || fallbackHtml("X Post", selectedPage);
+    if (activeTab === "ig-carousel") return convertedContent[selectedPage]?.igCarousel || fallbackHtml("IG Carousel", selectedPage);
+    if (activeTab === "ig-ad") return convertedContent[selectedPage]?.igAd || fallbackHtml("IG Ad", selectedPage);
     return "";
   };
 
@@ -532,6 +544,7 @@ export default function ContentRemixerPage() {
       }
 
       const title = currentPage.label;
+      const pageUrl = "https://www.dreamplaypianos.com" + currentPage.path;
       const newsletter = blocksToNewsletter(blocks, title);
       const gmail = blocksToGmail(blocks, title);
       const blog: Record<string, string> = {
@@ -539,10 +552,14 @@ export default function ContentRemixerPage() {
         luxury: blocksToBlog(blocks, title, "luxury"),
         "gold-accent": blocksToBlog(blocks, title, "gold-accent"),
       };
+      const reddit = blocksToRedditAd(blocks, title, pageUrl);
+      const twitter = blocksToTwitterPost(blocks, title);
+      const igCarousel = blocksToIGCarousel(blocks, title);
+      const igAd = blocksToIGAd(blocks, title, pageUrl);
 
       setConvertedContent((prev) => ({
         ...prev,
-        [selectedPage]: { newsletter, blog, gmail, blocks },
+        [selectedPage]: { newsletter, blog, gmail, reddit, twitter, igCarousel, igAd, blocks },
       }));
 
       showToast(`Converted! ${blocks.length} content blocks extracted from ${currentPage.label}.`);
@@ -706,15 +723,19 @@ export default function ContentRemixerPage() {
                 {activeTab === "newsletter" && <Mail className="h-4 w-4 text-cyan-400/60" />}
                 {activeTab === "blog" && <BookOpen className="h-4 w-4 text-purple-400/60" />}
                 {activeTab === "gmail" && <Mail className="h-4 w-4 text-orange-400/60" />}
+                {activeTab === "reddit" && <Hash className="h-4 w-4 text-orange-500/60" />}
+                {activeTab === "twitter" && <Hash className="h-4 w-4 text-blue-400/60" />}
+                {activeTab === "ig-carousel" && <Instagram className="h-4 w-4 text-pink-400/60" />}
+                {activeTab === "ig-ad" && <Megaphone className="h-4 w-4 text-pink-400/60" />}
                 <span className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
-                  {activeTab === "website" ? `Website — ${currentPage.path} ` : activeTab === "newsletter" ? "Newsletter — Email-safe HTML" : activeTab === "gmail" ? "Gmail — Table-layout HTML" : `Blog — ${blogTheme} `}
+                  {activeTab === "website" ? `Website — ${currentPage.path}` : activeTab === "newsletter" ? "Newsletter — Email-safe HTML" : activeTab === "gmail" ? "Gmail — Table-layout HTML" : activeTab === "reddit" ? "Reddit — Promoted Post" : activeTab === "twitter" ? "X — Tweet + Thread" : activeTab === "ig-carousel" ? "Instagram — Carousel Post" : activeTab === "ig-ad" ? "Instagram — Sponsored Ad" : `Blog — ${blogTheme}`}
                 </span>
               </div>
               <div className={`overflow - hidden border border - white / 10 shadow - 2xl ${activeTab === "website" ? "bg-white" : "bg-[#f4f4f7]"} `}>
                 {activeTab === "website" ? (
                   <iframe ref={webIframeRef} key={`web-${refreshKey}`} src={currentPage.path} className="h-[900px] w-full" title="Website" />
                 ) : (
-                  <iframe key={`single - ${refreshKey} `} srcDoc={singleContent} className="h-[900px] w-full" title={activeTab} sandbox="allow-same-origin allow-popups" />
+                  <iframe key={`single-${refreshKey}`} srcDoc={singleContent} className="h-[900px] w-full" title={activeTab} sandbox="allow-same-origin allow-popups allow-scripts" />
                 )}
               </div>
             </div>
@@ -729,22 +750,38 @@ export default function ContentRemixerPage() {
           )}
 
           {/* Legend */}
-          <div className="mt-12 grid gap-6 md:grid-cols-4">
-            <div className="border border-white/10 bg-white/[0.02] p-6">
-              <div className="mb-3 flex items-center gap-2"><Monitor className="h-4 w-4 text-white/40" /><span className="font-sans text-xs font-bold uppercase tracking-wider text-white">Website</span></div>
-              <p className="font-sans text-xs leading-relaxed text-white/40">Full interactive landing page with scroll animations, videos, and responsive layout.</p>
+          <div className="mt-12 grid gap-4 grid-cols-2 md:grid-cols-4">
+            <div className="border border-white/10 bg-white/[0.02] p-5">
+              <div className="mb-2 flex items-center gap-2"><Monitor className="h-3.5 w-3.5 text-white/40" /><span className="font-sans text-[10px] font-bold uppercase tracking-wider text-white">Website</span></div>
+              <p className="font-sans text-[10px] leading-relaxed text-white/40">Full interactive page with videos and animations.</p>
             </div>
-            <div className="border border-cyan-500/20 bg-cyan-500/[0.03] p-6">
-              <div className="mb-3 flex items-center gap-2"><Mail className="h-4 w-4 text-cyan-400" /><span className="font-sans text-xs font-bold uppercase tracking-wider text-cyan-300">Newsletter</span></div>
-              <p className="font-sans text-xs leading-relaxed text-white/40">Email-safe HTML: 600px, inline styles, video stills at 540px, social icons, mustache variables.</p>
+            <div className="border border-cyan-500/20 bg-cyan-500/[0.03] p-5">
+              <div className="mb-2 flex items-center gap-2"><Mail className="h-3.5 w-3.5 text-cyan-400" /><span className="font-sans text-[10px] font-bold uppercase tracking-wider text-cyan-300">Newsletter</span></div>
+              <p className="font-sans text-[10px] leading-relaxed text-white/40">600px email HTML with inline styles.</p>
             </div>
-            <div className="border border-purple-500/20 bg-purple-500/[0.03] p-6">
-              <div className="mb-3 flex items-center gap-2"><BookOpen className="h-4 w-4 text-purple-400" /><span className="font-sans text-xs font-bold uppercase tracking-wider text-purple-300">Blog</span></div>
-              <p className="font-sans text-xs leading-relaxed text-white/40">Cormorant Garamond headings, 800px max-width, 3 themes: Minimalist (light), Luxury (dark), Gold Accent.</p>
+            <div className="border border-purple-500/20 bg-purple-500/[0.03] p-5">
+              <div className="mb-2 flex items-center gap-2"><BookOpen className="h-3.5 w-3.5 text-purple-400" /><span className="font-sans text-[10px] font-bold uppercase tracking-wider text-purple-300">Blog</span></div>
+              <p className="font-sans text-[10px] leading-relaxed text-white/40">3 themes: Minimalist, Luxury, Gold Accent.</p>
             </div>
-            <div className="border border-orange-500/20 bg-orange-500/[0.03] p-6">
-              <div className="mb-3 flex items-center gap-2"><Mail className="h-4 w-4 text-orange-400" /><span className="font-sans text-xs font-bold uppercase tracking-wider text-orange-300">Gmail</span></div>
-              <p className="font-sans text-xs leading-relaxed text-white/40">Table-based layout, pure inline styles, no CSS classes, Gmail-safe fonts. 580px max-width.</p>
+            <div className="border border-orange-500/20 bg-orange-500/[0.03] p-5">
+              <div className="mb-2 flex items-center gap-2"><Mail className="h-3.5 w-3.5 text-orange-400" /><span className="font-sans text-[10px] font-bold uppercase tracking-wider text-orange-300">Gmail</span></div>
+              <p className="font-sans text-[10px] leading-relaxed text-white/40">Table-layout, pure inline styles, 580px.</p>
+            </div>
+            <div className="border border-orange-600/20 bg-orange-600/[0.03] p-5">
+              <div className="mb-2 flex items-center gap-2"><Hash className="h-3.5 w-3.5 text-orange-500" /><span className="font-sans text-[10px] font-bold uppercase tracking-wider text-orange-400">Reddit</span></div>
+              <p className="font-sans text-[10px] leading-relaxed text-white/40">Promoted post with headline, thumbnail, CTA.</p>
+            </div>
+            <div className="border border-blue-500/20 bg-blue-500/[0.03] p-5">
+              <div className="mb-2 flex items-center gap-2"><Hash className="h-3.5 w-3.5 text-blue-400" /><span className="font-sans text-[10px] font-bold uppercase tracking-wider text-blue-300">X / Twitter</span></div>
+              <p className="font-sans text-[10px] leading-relaxed text-white/40">280-char tweet + thread with character counter.</p>
+            </div>
+            <div className="border border-pink-500/20 bg-pink-500/[0.03] p-5">
+              <div className="mb-2 flex items-center gap-2"><Instagram className="h-3.5 w-3.5 text-pink-400" /><span className="font-sans text-[10px] font-bold uppercase tracking-wider text-pink-300">IG Carousel</span></div>
+              <p className="font-sans text-[10px] leading-relaxed text-white/40">5-7 slide storytelling arc with navigation.</p>
+            </div>
+            <div className="border border-pink-500/20 bg-pink-500/[0.03] p-5">
+              <div className="mb-2 flex items-center gap-2"><Megaphone className="h-3.5 w-3.5 text-pink-400" /><span className="font-sans text-[10px] font-bold uppercase tracking-wider text-pink-300">IG Ad</span></div>
+              <p className="font-sans text-[10px] leading-relaxed text-white/40">Scroll-stopping hero + CTA + performance targets.</p>
             </div>
           </div>
         </div>
