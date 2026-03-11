@@ -3,6 +3,7 @@ export type ContentBlock =
     | { type: "heading"; level: 1 | 2 | 3; text: string }
     | { type: "text"; html: string }
     | { type: "image"; src: string; alt: string }
+    | { type: "video"; src: string; poster?: string }
     | { type: "cta"; text: string; href: string }
     | { type: "quote"; text: string; author?: string; role?: string }
     | { type: "divider" }
@@ -61,15 +62,20 @@ export function scrapePageContent(doc: Document): ContentBlock[] {
 
         // Extract videos (use poster or first source)
         section.querySelectorAll("video").forEach((el) => {
-            const poster = el.getAttribute("poster");
+            const poster = el.getAttribute("poster") || "";
             const src = el.getAttribute("src") || el.querySelector("source")?.getAttribute("src") || "";
+            if (!src && !poster) return;
+            const key = "vid:" + (src || poster);
+            if (seen.has(key)) return;
+            seen.add(key);
+            // Add as video block with actual video src
+            if (src) {
+                blocks.push({ type: "video", src, poster: poster || undefined });
+            }
+            // Also add poster as image if available
             if (poster && !seen.has("img:" + poster)) {
                 seen.add("img:" + poster);
                 blocks.push({ type: "image", src: poster, alt: "Video still" });
-            } else if (src && !seen.has("vid:" + src)) {
-                seen.add("vid:" + src);
-                // Note: videos become image placeholders in email/blog
-                blocks.push({ type: "image", src: src.replace(/\.mp4|\.webm/i, ".jpg"), alt: "Video content" });
             }
         });
 
@@ -196,36 +202,102 @@ const blogThemeCSSMap: Record<BlogTheme, string> = {
 export function blocksToBlog(blocks: ContentBlock[], pageTitle: string, theme: BlogTheme): string {
     const css = blogThemeCSSMap[theme];
 
-    const content = blocks.map((b) => {
+    // Group consecutive images into grids
+    const contentParts: string[] = [];
+    let i = 0;
+    while (i < blocks.length) {
+        const b = blocks[i];
         switch (b.type) {
             case "heading":
-                return b.level === 1
+                contentParts.push(b.level === 1
                     ? `<h1 style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:600;line-height:1.2;margin:40px 0 20px;">${b.text}</h1>`
-                    : `<h2 style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;margin:40px 0 16px;">${b.text}</h2>`;
+                    : `<h2 style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;margin:40px 0 16px;">${b.text}</h2>`);
+                i++;
+                break;
             case "text":
-                return `<p style="font-family:'Inter',sans-serif;font-size:16px;line-height:1.8;margin:0 0 16px;">${b.html}</p>`;
-            case "image":
-                return `<div style="margin:30px 0;overflow:hidden;border-radius:2px;"><img src="${b.src}" alt="${b.alt}" style="width:100%;height:auto;display:block;" /></div>`;
+                contentParts.push(`<p style="font-family:'Inter',sans-serif;font-size:16px;line-height:1.8;margin:0 0 16px;">${b.html}</p>`);
+                i++;
+                break;
+            case "image": {
+                // Collect consecutive images for grid layout
+                const imageGroup: typeof blocks = [];
+                while (i < blocks.length && (blocks[i].type === "image" || blocks[i].type === "video")) {
+                    imageGroup.push(blocks[i]);
+                    i++;
+                }
+                if (imageGroup.length === 1) {
+                    const img = imageGroup[0];
+                    if (img.type === "image") {
+                        contentParts.push(`<div style="margin:30px 0;overflow:hidden;border-radius:2px;"><img src="${img.src}" alt="${img.alt}" style="width:100%;height:auto;display:block;" /></div>`);
+                    } else if (img.type === "video") {
+                        contentParts.push(`<div style="margin:30px 0;overflow:hidden;border-radius:2px;"><video src="${img.src}" ${img.poster ? `poster="${img.poster}"` : ""} controls playsinline muted style="width:100%;height:auto;display:block;border-radius:2px;"></video></div>`);
+                    }
+                } else {
+                    // 2-col grid for multiple images/videos
+                    const gridItems = imageGroup.map(item => {
+                        if (item.type === "video") {
+                            return `<div style="overflow:hidden;border-radius:2px;"><video src="${item.src}" ${(item as { poster?: string }).poster ? `poster="${(item as { poster?: string }).poster}"` : ""} controls playsinline muted style="width:100%;height:auto;display:block;"></video></div>`;
+                        }
+                        const img = item as { type: "image"; src: string; alt: string };
+                        return `<div style="overflow:hidden;border-radius:2px;"><img src="${img.src}" alt="${img.alt}" style="width:100%;height:auto;display:block;" /></div>`;
+                    }).join("\n");
+                    contentParts.push(`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:30px 0;">${gridItems}</div>`);
+                }
+                break;
+            }
+            case "video": {
+                // Collect consecutive videos/images for grid
+                const mediaGroup: typeof blocks = [];
+                while (i < blocks.length && (blocks[i].type === "video" || blocks[i].type === "image")) {
+                    mediaGroup.push(blocks[i]);
+                    i++;
+                }
+                if (mediaGroup.length === 1) {
+                    const vid = mediaGroup[0] as { type: "video"; src: string; poster?: string };
+                    contentParts.push(`<div style="margin:30px 0;overflow:hidden;border-radius:2px;"><video src="${vid.src}" ${vid.poster ? `poster="${vid.poster}"` : ""} controls playsinline muted style="width:100%;height:auto;display:block;"></video></div>`);
+                } else {
+                    const gridItems = mediaGroup.map(item => {
+                        if (item.type === "video") {
+                            return `<div style="overflow:hidden;border-radius:2px;"><video src="${item.src}" ${(item as { poster?: string }).poster ? `poster="${(item as { poster?: string }).poster}"` : ""} controls playsinline muted style="width:100%;height:auto;display:block;"></video></div>`;
+                        }
+                        const img = item as { type: "image"; src: string; alt: string };
+                        return `<div style="overflow:hidden;border-radius:2px;"><img src="${img.src}" alt="${img.alt}" style="width:100%;height:auto;display:block;" /></div>`;
+                    }).join("\n");
+                    contentParts.push(`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:30px 0;">${gridItems}</div>`);
+                }
+                break;
+            }
             case "cta":
-                return `<div style="text-align:center;padding:30px 0;">
+                contentParts.push(`<div style="text-align:center;padding:30px 0;">
 <a href="${b.href}" style="display:inline-block;padding:14px 40px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3px;text-decoration:none;border:1px solid currentColor;">${b.text} &rarr;</a>
-</div>`;
+</div>`);
+                i++;
+                break;
             case "quote":
-                return `<blockquote>
-<p style="font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.5;font-style:italic;margin:0 0 10px;">"${b.text}"</p>
+                contentParts.push(`<blockquote>
+<p style="font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.5;font-style:italic;margin:0 0 10px;">${b.text}</p>
 ${b.author ? `<p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin:0;">${b.author}${b.role ? `<br/><span style="font-weight:400;opacity:0.6;">${b.role}</span>` : ""}</p>` : ""}
-</blockquote>`;
+</blockquote>`);
+                i++;
+                break;
             case "divider":
-                return `<hr style="border:none;border-top:1px solid;opacity:0.1;margin:40px 0;" />`;
+                contentParts.push(`<hr style="border:none;border-top:1px solid;opacity:0.1;margin:40px 0;" />`);
+                i++;
+                break;
             case "stat":
-                return `<div style="text-align:center;padding:20px 0;">
+                contentParts.push(`<div style="text-align:center;padding:20px 0;">
 <p style="font-size:48px;font-weight:700;margin:0;font-family:'Cormorant Garamond',serif;">${b.value}</p>
 <p style="font-size:11px;text-transform:uppercase;letter-spacing:3px;opacity:0.5;margin:8px 0 0;">${b.label}</p>
-</div>`;
+</div>`);
+                i++;
+                break;
             default:
-                return "";
+                i++;
+                break;
         }
-    }).join("\n");
+    }
+
+    const content = contentParts.join("\n");
 
     return `<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
