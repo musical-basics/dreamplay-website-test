@@ -1091,15 +1091,27 @@ export default function ContentRemixerPage() {
           )}
 
           {editMode && editedHtml ? (
-            /* Edit Mode View */
-            <div className="mx-auto max-w-4xl">
-              <div className="mb-3 flex items-center gap-2">
-                <Pencil className="h-4 w-4 text-blue-400/60" />
-                <span className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">Edit Mode</span>
-                <span className="ml-auto font-sans text-[10px] text-white/20">Click text to edit · Click images to swap</span>
+            /* Edit Mode View — split: website left, editable right */
+            <div className="grid gap-6 lg:grid-cols-2">
+              <div>
+                <div className="mb-3 flex items-center gap-2">
+                  <Monitor className="h-4 w-4 text-white/40" />
+                  <span className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">Website</span>
+                  <span className="ml-auto font-sans text-[10px] text-white/20">{currentPage.path}</span>
+                </div>
+                <div className="overflow-hidden border border-white/10 bg-white shadow-2xl">
+                  <iframe ref={splitWebIframeRef} key={`web-edit-${refreshKey}`} src={currentPage.path} className="h-[800px] w-full" title="Website" />
+                </div>
               </div>
-              <div className="overflow-hidden border-2 border-blue-400/30 bg-[#121212] shadow-2xl shadow-blue-500/10">
-                <iframe ref={editIframeRef} key={`edit-${refreshKey}`} srcDoc={editedHtml} className="h-[900px] w-full" title="Edit Mode" sandbox="allow-same-origin allow-popups allow-scripts" />
+              <div>
+                <div className="mb-3 flex items-center gap-2">
+                  <Pencil className="h-4 w-4 text-blue-400/60" />
+                  <span className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">Edit Mode</span>
+                  <span className="ml-auto font-sans text-[10px] text-white/20">Click text to edit · Click images to swap</span>
+                </div>
+                <div className="overflow-hidden border-2 border-blue-400/30 bg-[#121212] shadow-2xl shadow-blue-500/10">
+                  <iframe ref={editIframeRef} key={`edit-${refreshKey}`} srcDoc={editedHtml} className="h-[800px] w-full" title="Edit Mode" sandbox="allow-same-origin allow-popups allow-scripts" />
+                </div>
               </div>
             </div>
           ) : splitView ? (
