@@ -614,9 +614,21 @@ export default function ContentRemixerPage() {
     showToast(`Draft "${draft.name}" saved!`);
   }, [draftName, drafts, getCurrentEditedHtml, splitView, splitRight, activeTab, selectedPage, blogTheme]);
 
+  // Helper: inject edit script into HTML
+  const injectEditScript = (html: string): string => {
+    // Try case-insensitive </body> replacement first, fall back to appending
+    const bodyMatch = html.match(/<\/body>/i);
+    if (bodyMatch) {
+      return html.replace(bodyMatch[0], EDIT_SCRIPT + bodyMatch[0]);
+    }
+    // No </body> found — append at end
+    return html + EDIT_SCRIPT;
+  };
+
   // Load draft
   const handleLoadDraft = useCallback((draft: Draft) => {
-    setEditedHtml(draft.html);
+    // Re-inject edit script since it was stripped when saving
+    setEditedHtml(injectEditScript(draft.html));
     setEditMode(true);
     setShowDrafts(false);
     showToast(`Draft "${draft.name}" loaded.`);
@@ -646,8 +658,8 @@ export default function ContentRemixerPage() {
       showToast("Convert the page first, then enter Edit Mode.");
       return;
     }
-    // Inject edit script before </body>
-    const injected = html.replace("</body>", EDIT_SCRIPT + "</body>");
+    // Inject edit script
+    const injected = injectEditScript(html);
     setEditedHtml(injected);
     setEditMode(true);
   }, [splitView, splitRight, activeTab, selectedPage, blogTheme, convertedContent]);
