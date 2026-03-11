@@ -2,8 +2,8 @@
 import React, { useState, useCallback, useRef } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import Footer from "@/components/Footer";
-import { Monitor, Mail, BookOpen, ChevronDown, Palette, RefreshCw, Copy, Check, ArrowRightLeft, AlertCircle, Hash, Instagram, Megaphone } from "lucide-react";
-import { scrapePageContent, blocksToNewsletter, blocksToBlog, blocksToGmail, blocksToRedditAd, blocksToTwitterPost, blocksToIGCarousel, blocksToIGAd } from "./converter";
+import { Monitor, Mail, BookOpen, ChevronDown, Palette, RefreshCw, Copy, Check, ArrowRightLeft, AlertCircle, Hash, Instagram, Megaphone, Download, Clipboard } from "lucide-react";
+import { scrapePageContent, blocksToNewsletter, blocksToBlog, blocksToGmail, blocksToRedditAd, blocksToTwitterPost, blocksToIGCarousel, blocksToIGAd, getRedditCaption, getTwitterCaption, getIGCarouselCaption, getIGAdCaption, getAllMediaUrls } from "./converter";
 import type { ContentBlock } from "./converter";
 
 // ── Types ────────────────────────────────────────────────
@@ -440,6 +440,7 @@ export default function ContentRemixerPage() {
   const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [copied, setCopied] = useState(false);
+  const [captionCopied, setCaptionCopied] = useState(false);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [converting, setConverting] = useState(false);
   const [convertedContent, setConvertedContent] = useState<Record<string, {
@@ -519,6 +520,71 @@ export default function ContentRemixerPage() {
     setToastMsg(msg);
     setTimeout(() => setToastMsg(null), 3000);
   };
+
+  // Social media: copy plain-text caption to clipboard
+  const isSocialTab = (tab: ViewTab) => ["reddit", "twitter", "ig-carousel", "ig-ad"].includes(tab);
+
+  const handleCopyCaption = useCallback(() => {
+    const pageData = convertedContent[selectedPage];
+    if (!pageData?.blocks) {
+      showToast("Convert the page first to generate captions.");
+      return;
+    }
+    const blocks = pageData.blocks;
+    const title = currentPage.label;
+    const pageUrl = "https://www.dreamplaypianos.com" + currentPage.path;
+    const tab = splitView ? splitRight : activeTab;
+
+    let caption = "";
+    if (tab === "reddit") caption = getRedditCaption(blocks, title, pageUrl);
+    else if (tab === "twitter") caption = getTwitterCaption(blocks, title);
+    else if (tab === "ig-carousel") caption = getIGCarouselCaption(blocks, title);
+    else if (tab === "ig-ad") caption = getIGAdCaption(blocks, title, pageUrl);
+
+    if (!caption) return;
+    navigator.clipboard.writeText(caption).then(() => {
+      setCaptionCopied(true);
+      showToast("Caption copied! Paste on your device.");
+      setTimeout(() => setCaptionCopied(false), 2000);
+    });
+  }, [convertedContent, selectedPage, currentPage, splitView, splitRight, activeTab]);
+
+  const handleDownloadAssets = useCallback(() => {
+    const pageData = convertedContent[selectedPage];
+    if (!pageData?.blocks) {
+      showToast("Convert the page first to extract assets.");
+      return;
+    }
+    const { images, videos } = getAllMediaUrls(pageData.blocks);
+    if (images.length === 0 && videos.length === 0) {
+      showToast("No media assets found on this page.");
+      return;
+    }
+
+    // Download each image via anchor click
+    let count = 0;
+    images.forEach((src, i) => {
+      const a = document.createElement("a");
+      a.href = src;
+      a.download = `dreamplay-asset-${i + 1}.jpg`;
+      a.target = "_blank";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      count++;
+    });
+    videos.forEach((src, i) => {
+      const a = document.createElement("a");
+      a.href = src;
+      a.download = `dreamplay-video-${i + 1}.mp4`;
+      a.target = "_blank";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      count++;
+    });
+    showToast(`Downloading ${count} asset(s)...`);
+  }, [convertedContent, selectedPage]);
 
   // Convert: scrape iframe DOM and build all formats
   const handleConvert = useCallback((targetTab?: ViewTab) => {
@@ -735,6 +801,23 @@ export default function ContentRemixerPage() {
                 <div className="overflow-hidden border border-white/10 bg-[#121212] shadow-2xl">
                   <iframe key={`right-${splitRight}-${refreshKey}`} srcDoc={rightContent} className="h-[800px] w-full" title={splitRight} sandbox="allow-same-origin allow-popups allow-scripts" />
                 </div>
+                {/* Action bar for social media tabs */}
+                {isSocialTab(splitRight) && (
+                  <div className="mt-3 flex items-center gap-2">
+                    <button onClick={handleCopyCaption}
+                      className={`flex items-center gap-2 border px-4 py-2 font-sans text-xs font-medium uppercase tracking-wider transition-all cursor-pointer ${captionCopied ? "border-green-400 bg-green-400/10 text-green-300" : "border-amber-400/30 bg-amber-400/5 text-amber-300 hover:bg-amber-400/10 hover:border-amber-400/50"}`}>
+                      {captionCopied ? <Check className="h-4 w-4" /> : <Clipboard className="h-4 w-4" />}
+                      {captionCopied ? "Copied!" : "Copy Caption"}
+                    </button>
+                    <button onClick={handleDownloadAssets}
+                      className="flex items-center gap-2 border border-cyan-400/30 bg-cyan-400/5 px-4 py-2 font-sans text-xs font-medium uppercase tracking-wider text-cyan-300 transition-all cursor-pointer hover:bg-cyan-400/10 hover:border-cyan-400/50">
+                      <Download className="h-4 w-4" /> Download Assets
+                    </button>
+                    <span className="ml-auto font-sans text-[10px] text-white/20">
+                      {convertedContent[selectedPage]?.blocks ? `${getAllMediaUrls(convertedContent[selectedPage].blocks).images.length} images, ${getAllMediaUrls(convertedContent[selectedPage].blocks).videos.length} videos` : "Convert first"}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           ) : (

@@ -878,3 +878,115 @@ function adJump(i){document.querySelector('#ad-creative img[data-idx="'+adIdx+'"
 </body></html>`;
 }
 
+// ── Caption Extraction (plain text for copy/paste) ────────
+export function getRedditCaption(blocks: ContentBlock[], pageTitle: string, pageUrl: string): string {
+    const headline = truncate(getFirstHeading(blocks), 300);
+    const texts = getTexts(blocks);
+    const description = truncate(texts[0] || pageTitle, 200);
+    const cta = getFirstCta(blocks);
+
+    return `${headline || pageTitle}
+
+${description}
+
+${texts.slice(1, 3).map(t => truncate(t, 150)).join("\n\n")}
+
+🔗 ${pageUrl}
+${cta.text ? `👉 ${cta.text}: ${cta.href}` : ""}
+
+#DreamPlayPianos #Piano #MusicEducation`.trim();
+}
+
+export function getTwitterCaption(blocks: ContentBlock[], pageTitle: string): string {
+    const headings = getHeadings(blocks);
+    const texts = getTexts(blocks);
+    const quotes = getQuotes(blocks);
+    const cta = getFirstCta(blocks);
+
+    const hook = headings[0] || pageTitle;
+    const body = texts[0] ? truncate(texts[0], 120) : "";
+    const hashtags = "#DreamPlayPianos #Piano #MusicEducation";
+    const mainTweet = truncate(`${hook}\n\n${body}\n\n${cta.href}\n\n${hashtags}`, 280);
+
+    const threads: string[] = [mainTweet];
+
+    // Thread replies
+    for (let i = 1; i < Math.min(headings.length, 5); i++) {
+        const threadText = texts[i] ? truncate(texts[i], 200) : "";
+        threads.push(truncate(`${headings[i]}\n\n${threadText}`, 280));
+    }
+
+    if (quotes.length > 0) {
+        threads.push(truncate(`💬 "${quotes[0].text}"\n— ${quotes[0].author || ""}`, 280));
+    }
+
+    if (cta.text) {
+        threads.push(truncate(`👉 ${cta.text}\n${cta.href}\n\n${hashtags}`, 280));
+    }
+
+    return threads.join("\n\n---\n\n");
+}
+
+export function getIGCarouselCaption(blocks: ContentBlock[], pageTitle: string): string {
+    const headings = getHeadings(blocks);
+    const texts = getTexts(blocks);
+    const quotes = getQuotes(blocks);
+    const cta = getFirstCta(blocks);
+
+    const hook = headings[0] || pageTitle;
+    const body = texts.slice(0, 2).map(t => truncate(t, 100)).join("\n\n");
+    const socialProof = quotes[0] ? `\n\n💬 "${truncate(quotes[0].text, 80)}" — ${quotes[0].author || ""}` : "";
+
+    return `${hook}
+
+${body}${socialProof}
+
+${cta.text ? `👉 ${cta.text}` : ""}
+🔗 Link in bio
+
+#piano #dreamplay #musictech #learnpiano #pianopractice #musiceducation`.trim();
+}
+
+export function getIGAdCaption(blocks: ContentBlock[], pageTitle: string, pageUrl: string): string {
+    const headline = getFirstHeading(blocks);
+    const texts = getTexts(blocks);
+    const quotes = getQuotes(blocks);
+    const cta = getFirstCta(blocks);
+
+    const adHook = truncate(headline, 60);
+    const adBody = texts.slice(0, 2).map(t => truncate(t, 100)).join("\n\n");
+    const socialProof = quotes[0] ? `\n\n"${truncate(quotes[0].text, 80)}" — ${quotes[0].author || ""}` : "";
+
+    return `${adHook}
+
+${adBody}${socialProof}
+
+👇 ${cta.text || "Learn More"}
+🔗 ${pageUrl || cta.href}
+
+#piano #dreamplay #musictech #learnpiano`.trim();
+}
+
+// ── Media URL Extraction (for download) ──────────────────
+export function getAllMediaUrls(blocks: ContentBlock[]): { images: string[]; videos: string[] } {
+    const images: string[] = [];
+    const videos: string[] = [];
+    const seen = new Set<string>();
+
+    for (const b of blocks) {
+        if (b.type === "image" && b.src && !seen.has(b.src)) {
+            seen.add(b.src);
+            images.push(b.src);
+        }
+        if (b.type === "video" && b.src && !seen.has(b.src)) {
+            seen.add(b.src);
+            videos.push(b.src);
+            if (b.poster && !seen.has(b.poster)) {
+                seen.add(b.poster);
+                images.push(b.poster);
+            }
+        }
+    }
+
+    return { images, videos };
+}
