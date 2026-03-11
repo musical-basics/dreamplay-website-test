@@ -586,7 +586,17 @@ export default function ContentRemixerPage() {
   // Handle image swap from picker
   const handleSwapImage = useCallback((newSrc: string) => {
     if (selectedImgId === null) return;
-    editIframeRef.current?.contentWindow?.postMessage({ type: "SWAP_IMAGE", imgId: selectedImgId, newSrc }, "*");
+    const iframe = editIframeRef.current;
+    // Direct DOM manipulation (more reliable than postMessage)
+    if (iframe?.contentDocument) {
+      const imgs = iframe.contentDocument.querySelectorAll('img');
+      if (imgs[selectedImgId]) {
+        imgs[selectedImgId].src = newSrc;
+        imgs[selectedImgId].setAttribute('data-swapped', 'true');
+      }
+    }
+    // Also try postMessage as fallback
+    iframe?.contentWindow?.postMessage({ type: "SWAP_IMAGE", imgId: selectedImgId, newSrc }, "*");
     setShowImagePicker(false);
     setSelectedImgId(null);
     showToast("Image swapped! Remember to save your draft.");
