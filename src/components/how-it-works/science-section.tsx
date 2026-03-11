@@ -120,12 +120,12 @@ export function ScienceSection() {
             </section>
 
             {/* ─── Sources (minimal) ─── */}
-            <section className="w-full bg-neutral-50">
+            <section className="w-full bg-white">
                 <div className="mx-auto max-w-4xl px-6 py-10 md:py-14">
-                    <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-300 mb-4">Peer-reviewed sources</p>
+                    <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-4">Peer-reviewed sources</p>
                     <div className="space-y-1">
-                        <p className="font-sans text-xs text-neutral-400">Yoshimura et al. (2006) · Sakai (2008) · Wristen (2000)</p>
-                        <p className="font-sans text-[11px] text-neutral-300 italic">Medical Problems of Performing Artists</p>
+                        <p className="font-sans text-xs text-neutral-600">Yoshimura et al. (2006) · Sakai (2008) · Wristen (2000)</p>
+                        <p className="font-sans text-[11px] text-neutral-400 italic">Medical Problems of Performing Artists</p>
                     </div>
                 </div>
             </section>

@@ -36,7 +36,7 @@ export default function TestimonialsSection() {
     const story = stories[currentSlide];
 
     return (
-        <section className="bg-neutral-100 text-black py-12 md:py-24 px-4 md:px-6">
+        <section className="bg-white text-black py-12 md:py-24 px-4 md:px-6">
             <div className="max-w-3xl mx-auto w-full">
                 <div className="text-center mb-8 md:mb-12">
                     <span className="font-sans text-xs uppercase tracking-[0.3em] text-neutral-400 mb-3 block">Why We&apos;re Doing This</span>
