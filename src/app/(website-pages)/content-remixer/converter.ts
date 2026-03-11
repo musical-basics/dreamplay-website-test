@@ -226,90 +226,157 @@ ${rows}
 type BlogTheme = "minimalist" | "luxury" | "gold-accent";
 
 const blogThemeCSSMap: Record<BlogTheme, string> = {
-    minimalist: `body{background:#fafafa;color:#1a1a1a;}h1,h2{color:#1a1a1a;}p{color:#333;}blockquote{border-left:3px solid #e5e5e5;background:#f5f5f5;padding:20px 24px;margin:20px 0;}`,
-    luxury: `body{background:#050505;color:rgba(255,255,255,0.85);}h1,h2{color:#fff;}p{color:rgba(255,255,255,0.7);}blockquote{border-left:3px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.03);padding:20px 24px;margin:20px 0;color:rgba(255,255,255,0.6);}a{color:#fff;}`,
-    "gold-accent": `body{background:#0a0a0a;color:rgba(255,255,255,0.85);}h1,h2{color:#c9a85c;}p{color:rgba(255,255,255,0.7);}blockquote{border-left:3px solid rgba(201,168,92,0.4);background:rgba(201,168,92,0.05);padding:20px 24px;margin:20px 0;color:rgba(255,255,255,0.6);}a{color:#c9a85c;}`,
+    minimalist: `
+        body { background: #fafafa; color: #1a1a1a; }
+        .hero-bg { background: #111; }
+        .hero-overlay { background: linear-gradient(to bottom, rgba(17,17,17,0.4), rgba(17,17,17,0.85)); }
+        h1, h2 { color: #1a1a1a; }
+        .bc { background: transparent; }
+        .content-wrap { background: #fff; }
+        .quote-card { border: 1px solid #e5e5e5; background: #fafafa; }
+        .quote-text { color: #333; }
+        .quote-author { color: #1a1a1a; }
+        .quote-role { color: #888; }
+        .body-text { color: #444; }
+        .accent-border { border-color: #1a1a1a; }
+        .hero-badge { background: #1a1a1a; color: #fff; }
+        .hero-cat { color: rgba(255,255,255,0.6); }
+        .hero-meta { color: rgba(255,255,255,0.4); }
+        .hero-title { color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero-excerpt { color: rgba(255,255,255,0.7); }
+        .hero-author-name { color: #fff; }
+        .hero-author-date { color: rgba(255,255,255,0.4); }
+        .hero-author-box { border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff; }
+        .hero-author-divider { border-color: rgba(255,255,255,0.1); }
+        .cta-btn { background: #1a1a1a; color: #fff; }
+        .caption { color: #999; }
+        .img-border { border: 1px solid #eee; }
+    `,
+    luxury: `
+        body { background: #050505; color: #fafafa; }
+        .hero-bg { background: #050505; }
+        .hero-overlay { background: linear-gradient(to bottom, rgba(5,5,5,0.5), rgba(5,5,5,0.9)); }
+        h1, h2 { color: #fafafa; }
+        .bc { background: transparent; }
+        .quote-card { border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); }
+        .quote-text { color: rgba(255,255,255,0.9); }
+        .quote-author { color: #fff; }
+        .quote-role { color: rgba(255,255,255,0.4); }
+        .body-text { color: rgba(255,255,255,0.7); }
+        .content-wrap { background: transparent; }
+        .accent-border { border-color: rgba(255,255,255,0.15); }
+        .hero-badge { background: #fff; color: #000; }
+        .hero-cat { color: rgba(255,255,255,0.5); }
+        .hero-meta { color: rgba(255,255,255,0.35); }
+        .hero-title { color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .hero-excerpt { color: rgba(255,255,255,0.65); }
+        .hero-author-name { color: #fff; }
+        .hero-author-date { color: rgba(255,255,255,0.35); }
+        .hero-author-box { border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff; }
+        .hero-author-divider { border-color: rgba(255,255,255,0.1); }
+        .cta-btn { background: #fff; color: #000; }
+        .caption { color: rgba(255,255,255,0.4); }
+        .img-border { border: 1px solid rgba(255,255,255,0.1); }
+    `,
+    "gold-accent": `
+        body { background: #0a0a08; color: #fafafa; }
+        .hero-bg { background: #0a0a08; }
+        .hero-overlay { background: linear-gradient(to bottom, rgba(10,10,8,0.5), rgba(10,10,8,0.92)); }
+        h1, h2 { color: #f5e6c8; }
+        .bc { background: transparent; }
+        .quote-card { border: 1px solid rgba(201,168,92,0.3); background: rgba(201,168,92,0.05); }
+        .quote-text { color: rgba(255,255,255,0.9); }
+        .quote-author { color: #c9a85c; }
+        .quote-role { color: rgba(255,255,255,0.4); }
+        .body-text { color: rgba(255,255,255,0.7); }
+        .content-wrap { background: transparent; }
+        .accent-border { border-color: rgba(201,168,92,0.4); }
+        .hero-badge { background: #c9a85c; color: #0a0a08; }
+        .hero-cat { color: rgba(201,168,92,0.7); }
+        .hero-meta { color: rgba(255,255,255,0.35); }
+        .hero-title { color: #f5e6c8; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .hero-excerpt { color: rgba(255,255,255,0.65); }
+        .hero-author-name { color: #c9a85c; }
+        .hero-author-date { color: rgba(255,255,255,0.35); }
+        .hero-author-box { border: 1px solid rgba(201,168,92,0.3); background: rgba(201,168,92,0.08); color: #c9a85c; }
+        .hero-author-divider { border-color: rgba(201,168,92,0.2); }
+        .cta-btn { background: #c9a85c; color: #0a0a08; }
+        .caption { color: rgba(255,255,255,0.4); }
+        .img-border { border: 1px solid rgba(201,168,92,0.2); }
+    `,
 };
+
+// Helper: get image src from block (videos use poster)
+function getImageSrc(b: ContentBlock): string {
+    if (b.type === "image") return b.src;
+    if (b.type === "video") return b.poster || b.src;
+    return "";
+}
 
 export function blocksToBlog(blocks: ContentBlock[], pageTitle: string, theme: BlogTheme): string {
     const css = blogThemeCSSMap[theme];
 
-    // Group consecutive images into grids
+    // Extract hero image and first text for excerpt
+    let heroSrc = "";
+    let excerpt = "";
+    const headings = getHeadings(blocks);
+    const texts = getTexts(blocks);
+
+    for (const b of blocks) {
+        const src = getImageSrc(b);
+        if (src) { heroSrc = src; break; }
+    }
+    excerpt = texts[0] ? truncate(texts[0], 160) : "";
+
+    // Build content body
     const contentParts: string[] = [];
     let i = 0;
     while (i < blocks.length) {
         const b = blocks[i];
         switch (b.type) {
             case "heading":
-                contentParts.push(b.level === 1
-                    ? `<h1 style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;line-height:1.2;margin:40px 0 20px;">${b.text}</h1>`
-                    : `<h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin:30px 0 12px;">${b.text}</h2>`);
+                contentParts.push(`<h2 class="sf" style="font-size:${b.level === 1 ? '32px' : '24px'};font-weight:600;margin-bottom:20px;">${b.text}</h2>`);
                 i++;
                 break;
             case "text":
-                contentParts.push(`<p style="font-family:'Inter',sans-serif;font-size:16px;line-height:1.8;margin:0 0 16px;">${b.html}</p>`);
+                contentParts.push(`<p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:20px;">${b.html}</p>`);
                 i++;
                 break;
-            case "image": {
-                // Collect consecutive images for grid layout
-                const imageGroup: typeof blocks = [];
-                while (i < blocks.length && (blocks[i].type === "image" || blocks[i].type === "video")) {
-                    imageGroup.push(blocks[i]);
-                    i++;
-                }
-                if (imageGroup.length === 1) {
-                    const img = imageGroup[0];
-                    if (img.type === "image") {
-                        contentParts.push(`<div style="margin:30px 0;overflow:hidden;border-radius:2px;"><img src="${img.src}" alt="${img.alt}" style="width:100%;height:auto;display:block;" /></div>`);
-                    } else if (img.type === "video") {
-                        contentParts.push(`<div style="margin:30px 0;overflow:hidden;border-radius:2px;"><video src="${img.src}" ${img.poster ? `poster="${img.poster}"` : ""} controls playsinline muted style="width:100%;height:auto;display:block;border-radius:2px;"></video></div>`);
-                    }
-                } else {
-                    // 2-col grid for multiple images/videos
-                    const gridItems = imageGroup.map(item => {
-                        if (item.type === "video") {
-                            return `<div style="overflow:hidden;border-radius:2px;"><video src="${item.src}" ${(item as { poster?: string }).poster ? `poster="${(item as { poster?: string }).poster}"` : ""} controls playsinline muted style="width:100%;height:auto;display:block;"></video></div>`;
-                        }
-                        const img = item as { type: "image"; src: string; alt: string };
-                        return `<div style="overflow:hidden;border-radius:2px;"><img src="${img.src}" alt="${img.alt}" style="width:100%;height:auto;display:block;" /></div>`;
-                    }).join("\n");
-                    contentParts.push(`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:30px 0;">${gridItems}</div>`);
-                }
-                break;
-            }
+            case "image":
             case "video": {
-                // Collect consecutive videos/images for grid
-                const mediaGroup: typeof blocks = [];
-                while (i < blocks.length && (blocks[i].type === "video" || blocks[i].type === "image")) {
+                // Collect consecutive media for grid
+                const mediaGroup: ContentBlock[] = [];
+                while (i < blocks.length && (blocks[i].type === "image" || blocks[i].type === "video")) {
                     mediaGroup.push(blocks[i]);
                     i++;
                 }
                 if (mediaGroup.length === 1) {
-                    const vid = mediaGroup[0] as { type: "video"; src: string; poster?: string };
-                    contentParts.push(`<div style="margin:30px 0;overflow:hidden;border-radius:2px;"><video src="${vid.src}" ${vid.poster ? `poster="${vid.poster}"` : ""} controls playsinline muted style="width:100%;height:auto;display:block;"></video></div>`);
+                    const src = getImageSrc(mediaGroup[0]);
+                    const alt = mediaGroup[0].type === "image" ? mediaGroup[0].alt : "Still frame";
+                    contentParts.push(`<div class="img-border" style="margin:30px 0;overflow:hidden;"><img src="${src}" alt="${alt}" style="width:100%;height:auto;display:block;" /></div>`);
                 } else {
+                    // 2-col grid
                     const gridItems = mediaGroup.map(item => {
-                        if (item.type === "video") {
-                            return `<div style="overflow:hidden;border-radius:2px;"><video src="${item.src}" ${(item as { poster?: string }).poster ? `poster="${(item as { poster?: string }).poster}"` : ""} controls playsinline muted style="width:100%;height:auto;display:block;"></video></div>`;
-                        }
-                        const img = item as { type: "image"; src: string; alt: string };
-                        return `<div style="overflow:hidden;border-radius:2px;"><img src="${img.src}" alt="${img.alt}" style="width:100%;height:auto;display:block;" /></div>`;
+                        const src = getImageSrc(item);
+                        const alt = item.type === "image" ? item.alt : "Still frame";
+                        return `<div class="img-border" style="overflow:hidden;"><img src="${src}" alt="${alt}" style="width:100%;height:auto;display:block;" /></div>`;
                     }).join("\n");
                     contentParts.push(`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:30px 0;">${gridItems}</div>`);
                 }
                 break;
             }
             case "cta":
-                contentParts.push(`<div style="text-align:center;padding:30px 0;">
-<a href="${b.href}" style="display:inline-block;padding:14px 40px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3px;text-decoration:none;border:1px solid currentColor;">${b.text} &rarr;</a>
+                contentParts.push(`<div style="text-align:center;padding:40px 0;">
+<a href="${b.href}" class="cta-btn" style="display:inline-block;padding:14px 40px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3px;text-decoration:none;">${b.text} &rarr;</a>
 </div>`);
                 i++;
                 break;
             case "quote":
-                contentParts.push(`<blockquote>
-<p style="font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.5;font-style:italic;margin:0 0 10px;">${b.text}</p>
-${b.author ? `<p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin:0;">${b.author}${b.role ? `<br/><span style="font-weight:400;opacity:0.6;">${b.role}</span>` : ""}</p>` : ""}
-</blockquote>`);
+                contentParts.push(`<div class="quote-card" style="padding:30px;margin:30px 0;">
+<div class="sf quote-text" style="font-size:22px;line-height:1.5;font-style:italic;margin-bottom:12px;">"${b.text}"</div>
+${b.author ? `<span class="quote-author" style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;">${b.author}</span>` : ""}
+${b.role ? `<div class="quote-role" style="font-size:11px;margin-top:4px;">${b.role}</div>` : ""}
+</div>`);
                 i++;
                 break;
             case "divider":
@@ -318,8 +385,8 @@ ${b.author ? `<p style="font-size:12px;font-weight:700;text-transform:uppercase;
                 break;
             case "stat":
                 contentParts.push(`<div style="text-align:center;padding:20px 0;">
-<p style="font-size:48px;font-weight:700;margin:0;font-family:'Cormorant Garamond',serif;">${b.value}</p>
-<p style="font-size:11px;text-transform:uppercase;letter-spacing:3px;opacity:0.5;margin:8px 0 0;">${b.label}</p>
+<p class="sf" style="font-size:48px;font-weight:700;margin:0;">${b.value}</p>
+<p class="caption" style="font-size:11px;text-transform:uppercase;letter-spacing:3px;margin:8px 0 0;">${b.label}</p>
 </div>`);
                 i++;
                 break;
@@ -329,51 +396,47 @@ ${b.author ? `<p style="font-size:12px;font-weight:700;text-transform:uppercase;
         }
     }
 
-    // Extract hero image: first image or first video poster
-    let blogHeroSrc = "";
-    for (const b of blocks) {
-        if (b.type === "image" && b.src) { blogHeroSrc = b.src; break; }
-        if (b.type === "video") { blogHeroSrc = b.poster || b.src; break; }
-    }
-
     const content = contentParts.join("\n");
+    const today = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
-    // Blog hero section
-    const blogHero = blogHeroSrc ? `
-<div style="position:relative;width:100%;max-height:400px;overflow:hidden;margin-bottom:40px;">
-<img src="${blogHeroSrc}" alt="" style="width:100%;height:auto;display:block;filter:brightness(0.7);" />
-<div style="position:absolute;bottom:0;left:0;right:0;padding:30px 40px;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);">
-<p style="margin:0 0 8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:4px;color:#c4a44a;font-family:'Inter',sans-serif;">✦ DREAMPLAY PIANOS</p>
-<h1 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:#fff;line-height:1.2;">${pageTitle}</h1>
+    // Hero section (matching blogWrap pattern)
+    const hero = heroSrc ? `<div style="position:relative;min-height:450px;overflow:hidden;" class="hero-bg">
+<img src="${heroSrc}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.35;"/>
+<div style="position:absolute;inset:0;" class="hero-overlay"></div>
+<div class="bc" style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;min-height:450px;padding-bottom:60px;">
+<div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:24px;">
+<span class="hero-badge" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:3px;padding:4px 12px;">Featured</span>
+<span class="hero-meta" style="font-size:10px;text-transform:uppercase;letter-spacing:3px;">${Math.ceil(blocks.length / 4)} min read</span>
 </div>
-</div>` : `
-<div style="padding:40px 0 20px;text-align:center;">
+<h1 class="sf hero-title" style="font-size:48px;line-height:1.15;font-weight:600;margin-bottom:20px;">${pageTitle}</h1>
+<p class="hero-excerpt" style="font-size:15px;line-height:1.7;max-width:600px;">${excerpt}</p>
+<div style="display:flex;align-items:center;gap:16px;margin-top:30px;padding-top:24px;" class="hero-author-divider">
+<div class="hero-author-box sf" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:14px;">DP</div>
+<div><span class="hero-author-name" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;">DreamPlay Editorial</span><div class="hero-author-date" style="font-size:10px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;">${today}</div></div>
+</div>
+</div></div>` : `<div style="padding:60px 0 20px;text-align:center;">
 <p style="margin:0 0 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:4px;color:#c4a44a;font-family:'Inter',sans-serif;">✦ DREAMPLAY PIANOS</p>
+<h1 class="sf" style="font-size:48px;font-weight:600;margin-bottom:16px;">${pageTitle}</h1>
 </div>`;
-
-    // Theme-aware article background
-    const articleBg = theme === "minimalist" ? "#ffffff" : theme === "luxury" ? "#050505" : "#0a0a0a";
-    const outerBg = theme === "minimalist" ? "#f4f4f7" : "#000000";
 
     return `<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>${pageTitle}</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-img{border:0;height:auto;line-height:100%;outline:none;text-decoration:none;max-width:100%;}
-@media only screen and (max-width:640px){.blog-container{width:100%!important;padding:0 16px!important;}.blog-container img{width:100%!important;height:auto!important;}}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;transition:all .3s}
+.bc{max-width:800px;margin:0 auto;padding:0 24px}
+.sf{font-family:'Cormorant Garamond',Georgia,serif}
+img{max-width:100%;height:auto;display:block}
 ${css}
 </style>
-</head>
-<body style="background:${outerBg};">
-<div style="max-width:800px;margin:0 auto;padding:20px 0;">
-<article class="blog-container" style="max-width:800px;margin:0 auto;background-color:${articleBg};">
-${blogHero}
-<div style="padding:40px;">
+</head><body>
+${hero}
+<div class="content-wrap">
+<div class="bc" style="padding-top:60px;padding-bottom:80px;">
 ${content}
 </div>
-</article>
 </div>
 </body></html>`;
 }
