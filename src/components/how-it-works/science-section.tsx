@@ -80,23 +80,25 @@ export function ScienceSection() {
                     <p className="text-center font-sans text-xs uppercase tracking-[0.3em] text-white/30 mb-12 md:mb-16">
                         The Evidence
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 text-center">
-                        {/* Stat 1 */}
-                        <div className="border border-white/10 p-10 md:p-12 relative overflow-hidden">
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-px bg-[#c4a44a]" />
-                            <div className="font-serif text-5xl md:text-6xl font-bold tracking-tight mb-4 text-white">
-                                86<span className="text-white/40">%</span>
+                    {/* Featured stat — full width */}
+                    <div className="border border-white/10 bg-white/[0.02] p-10 md:p-14 relative overflow-hidden mb-5 md:mb-6">
+                        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-[#c4a44a] via-[#c4a44a]/40 to-transparent" />
+                        <div className="md:flex md:items-center md:justify-between md:gap-12">
+                            <div className="font-serif text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-white leading-none mb-4 md:mb-0">
+                                86<span className="text-white/20">%</span>
                             </div>
-                            <p className="font-sans text-sm text-white/50 leading-relaxed">
+                            <p className="font-sans text-base md:text-lg text-white/50 leading-relaxed md:max-w-md md:text-right">
                                 of university piano majors experience <strong className="text-white/80 font-medium">active pain</strong> while playing
                             </p>
                         </div>
+                    </div>
 
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
                         {/* Stat 2 */}
-                        <div className="border border-white/10 p-10 md:p-12 relative overflow-hidden">
+                        <div className="border border-white/10 p-10 md:p-12 relative overflow-hidden text-center">
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-px bg-[#c4a44a]" />
                             <div className="font-serif text-5xl md:text-6xl font-bold tracking-tight mb-4 text-white">
-                                3<span className="text-white/40">×</span>
+                                3<span className="text-white/30">×</span>
                             </div>
                             <p className="font-sans text-sm text-white/50 leading-relaxed">
                                 higher risk of <strong className="text-white/80 font-medium">tendonitis, focal dystonia</strong> and carpal tunnel syndrome
@@ -104,8 +106,8 @@ export function ScienceSection() {
                         </div>
 
                         {/* Stat 3 */}
-                        <div className="border border-white/10 p-10 md:p-12 relative overflow-hidden">
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-px bg-[#c4a44a]" />
+                        <div className="border border-white/[0.06] bg-[#c4a44a]/[0.04] p-10 md:p-12 relative overflow-hidden text-center">
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-px bg-[#c4a44a]/60" />
                             <div className="font-serif text-4xl md:text-5xl font-bold tracking-tight text-[#c4a44a] mb-4">
                                 Proven
                             </div>
