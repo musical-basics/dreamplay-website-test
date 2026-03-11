@@ -33,14 +33,14 @@ export default function HowItWorksPage() {
                 {/* Testimonials — integrated with biomechanics section */}
                 <TestimonialsSection />
 
+                {/* Published Research — right after testimonials */}
+                <ResearchSection />
+
                 {/* A Keyboard That Fits You + size cards */}
                 <HowItWorksHero />
 
                 {/* Hand Span Calculator */}
                 <CalculatorSection />
-
-                {/* Published Research */}
-                <ResearchSection />
 
                 {/* CTA */}
                 <CtaSection />
