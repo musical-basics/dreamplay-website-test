@@ -522,18 +522,13 @@ export default function ContentRemixerPage() {
   };
 
   // Convert: scrape iframe DOM and build all formats
-  const handleConvert = useCallback(() => {
-    const iframe = splitView ? splitWebIframeRef.current : webIframeRef.current;
-    if (!iframe) {
-      // Try the other ref
-      const altIframe = splitView ? webIframeRef.current : splitWebIframeRef.current;
-      if (!altIframe) {
-        showToast("No website iframe found. Switch to a view that shows the website first.");
-        return;
-      }
+  const handleConvert = useCallback((targetTab?: ViewTab) => {
+    // Try all iframe refs
+    const activeIframe = webIframeRef.current || splitWebIframeRef.current;
+    if (!activeIframe) {
+      showToast("Website not loaded yet. Please wait for the page to load, then try again.");
+      return;
     }
-    const activeIframe = (splitView ? splitWebIframeRef.current : webIframeRef.current) || splitWebIframeRef.current || webIframeRef.current;
-    if (!activeIframe) return;
 
     try {
       const doc = activeIframe.contentDocument;
@@ -573,8 +568,10 @@ export default function ContentRemixerPage() {
       showToast(`Converted! ${blocks.length} content blocks extracted from ${currentPage.label}.`);
       setConverting(false);
 
-      // Auto-switch to newsletter view if on website tab
-      if (activeTab === "website" && !splitView) {
+      // Switch to target tab if provided
+      if (targetTab) {
+        setActiveTab(targetTab);
+      } else if (activeTab === "website" && !splitView) {
         setActiveTab("newsletter");
       }
     } catch (e) {
@@ -582,6 +579,43 @@ export default function ContentRemixerPage() {
       setConverting(false);
     }
   }, [selectedPage, currentPage, splitView, activeTab, blogTheme]);
+
+  // Auto-convert when clicking a non-website tab
+  const handleTabClick = useCallback((tabId: ViewTab) => {
+    setPageDropdownOpen(false);
+    setThemeDropdownOpen(false);
+
+    if (tabId === "website") {
+      setActiveTab("website");
+      setSplitView(false);
+      return;
+    }
+
+    // If we already have converted content, just switch
+    if (convertedContent[selectedPage]) {
+      setActiveTab(tabId);
+      setSplitView(false);
+      return;
+    }
+
+    // Auto-convert then switch
+    setSplitView(false);
+    handleConvert(tabId);
+  }, [selectedPage, convertedContent, handleConvert]);
+
+  // Auto-convert when clicking a split view button
+  const handleSplitClick = useCallback((rightTab: ViewTab) => {
+    setPageDropdownOpen(false);
+    setThemeDropdownOpen(false);
+    setSplitView(true);
+    setSplitRight(rightTab);
+
+    // Auto-convert if no content yet
+    if (!convertedContent[selectedPage] && rightTab !== "website") {
+      // Small delay to let split view mount the iframe
+      setTimeout(() => handleConvert(), 500);
+    }
+  }, [selectedPage, convertedContent, handleConvert]);
 
   return (
     <div>
@@ -624,8 +658,8 @@ export default function ContentRemixerPage() {
 
             {/* View tabs */}
             {TABS.map((tab) => (
-              <button key={tab.id} onClick={() => { setActiveTab(tab.id); setSplitView(false); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
-                className={`flex items - center gap - 2 border px - 4 py - 2 font - sans text - xs font - medium uppercase tracking - wider transition - all cursor - pointer ${!splitView && activeTab === tab.id ? "border-white bg-white text-black" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"} `}>
+              <button key={tab.id} onClick={() => handleTabClick(tab.id)}
+                className={`flex items-center gap-2 border px-4 py-2 font-sans text-xs font-medium uppercase tracking-wider transition-all cursor-pointer ${!splitView && activeTab === tab.id ? "border-white bg-white text-black" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
                 {tab.icon} {tab.label}
               </button>
             ))}
@@ -633,27 +667,27 @@ export default function ContentRemixerPage() {
             <div className="mx-1 h-6 w-px bg-white/10" />
 
             {/* Split views */}
-            <button onClick={() => { setSplitView(true); setSplitRight("newsletter"); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
+            <button onClick={() => handleSplitClick("newsletter")}
               className={`flex items-center gap-2 border px-3 py-2 font-sans text-[10px] font-medium uppercase tracking-wider transition-all cursor-pointer ${splitView && splitRight === "newsletter" ? "border-cyan-400 bg-cyan-400/10 text-cyan-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
               <Columns2 className="h-3.5 w-3.5" /> Web ↔ News
             </button>
-            <button onClick={() => { setSplitView(true); setSplitRight("blog"); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
+            <button onClick={() => handleSplitClick("blog")}
               className={`flex items-center gap-2 border px-3 py-2 font-sans text-[10px] font-medium uppercase tracking-wider transition-all cursor-pointer ${splitView && splitRight === "blog" ? "border-purple-400 bg-purple-400/10 text-purple-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
               <Columns2 className="h-3.5 w-3.5" /> Web ↔ Blog
             </button>
-            <button onClick={() => { setSplitView(true); setSplitRight("reddit"); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
+            <button onClick={() => handleSplitClick("reddit")}
               className={`flex items-center gap-2 border px-3 py-2 font-sans text-[10px] font-medium uppercase tracking-wider transition-all cursor-pointer ${splitView && splitRight === "reddit" ? "border-orange-400 bg-orange-400/10 text-orange-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
               <Columns2 className="h-3.5 w-3.5" /> Web ↔ Reddit
             </button>
-            <button onClick={() => { setSplitView(true); setSplitRight("twitter"); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
+            <button onClick={() => handleSplitClick("twitter")}
               className={`flex items-center gap-2 border px-3 py-2 font-sans text-[10px] font-medium uppercase tracking-wider transition-all cursor-pointer ${splitView && splitRight === "twitter" ? "border-blue-400 bg-blue-400/10 text-blue-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
               <Columns2 className="h-3.5 w-3.5" /> Web ↔ X
             </button>
-            <button onClick={() => { setSplitView(true); setSplitRight("ig-carousel"); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
+            <button onClick={() => handleSplitClick("ig-carousel")}
               className={`flex items-center gap-2 border px-3 py-2 font-sans text-[10px] font-medium uppercase tracking-wider transition-all cursor-pointer ${splitView && splitRight === "ig-carousel" ? "border-pink-400 bg-pink-400/10 text-pink-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
               <Columns2 className="h-3.5 w-3.5" /> Web ↔ IG
             </button>
-            <button onClick={() => { setSplitView(true); setSplitRight("ig-ad"); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
+            <button onClick={() => handleSplitClick("ig-ad")}
               className={`flex items-center gap-2 border px-3 py-2 font-sans text-[10px] font-medium uppercase tracking-wider transition-all cursor-pointer ${splitView && splitRight === "ig-ad" ? "border-pink-400 bg-pink-400/10 text-pink-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
               <Columns2 className="h-3.5 w-3.5" /> Web ↔ Ad
             </button>
