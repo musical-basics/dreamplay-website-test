@@ -315,55 +315,23 @@ function getImageSrc(b: ContentBlock): string {
 
 export type BlogLength = "short" | "full";
 
-export function blocksToBlog(blocks: ContentBlock[], pageTitle: string, theme: BlogTheme, length: BlogLength = "full"): string {
-    const css = blogThemeCSSMap[theme];
-
-    // For short mode, limit to ~6 blocks (3 min read): grab first heading, first 2 texts, first image, first quote, first CTA
-    let filteredBlocks = blocks;
-    if (length === "short") {
-        const short: ContentBlock[] = [];
-        let headingCount = 0, textCount = 0, imageCount = 0, quoteCount = 0, ctaCount = 0;
-        for (const b of blocks) {
-            if (b.type === "heading" && headingCount < 2) { short.push(b); headingCount++; }
-            else if (b.type === "text" && textCount < 3) { short.push(b); textCount++; }
-            else if ((b.type === "image" || b.type === "video") && imageCount < 2) { short.push(b); imageCount++; }
-            else if (b.type === "quote" && quoteCount < 1) { short.push(b); quoteCount++; }
-            else if (b.type === "cta" && ctaCount < 1) { short.push(b); ctaCount++; }
-            else if (b.type === "divider" && short.length > 0 && short.length < 6) { short.push(b); }
-        }
-        filteredBlocks = short;
-    }
-
-    const readTime = length === "short" ? "3 min read" : `${Math.max(6, Math.ceil(blocks.length / 3))} min read`;
-
-    // Extract hero image and first text for excerpt
-    let heroSrc = "";
-    let excerpt = "";
-    const texts = getTexts(blocks);
-
-    for (const b of blocks) {
-        const src = getImageSrc(b);
-        if (src) { heroSrc = src; break; }
-    }
-    excerpt = texts[0] ? truncate(texts[0], 160) : "";
-
-    // Build content body
-    const contentParts: string[] = [];
+// Helper: render blocks to HTML strings
+function renderBlogBlocks(blocks: ContentBlock[]): string {
+    const parts: string[] = [];
     let i = 0;
-    while (i < filteredBlocks.length) {
-        const b = filteredBlocks[i];
+    while (i < blocks.length) {
+        const b = blocks[i];
         switch (b.type) {
             case "heading":
-                contentParts.push(`<h2 class="sf" style="font-size:${b.level === 1 ? '32px' : '24px'};font-weight:600;margin-bottom:20px;">${b.text}</h2>`);
+                parts.push(`<h2 class="sf" style="font-size:${b.level === 1 ? '32px' : '24px'};font-weight:600;margin-bottom:20px;">${b.text}</h2>`);
                 i++;
                 break;
             case "text":
-                contentParts.push(`<p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:20px;">${b.html}</p>`);
+                parts.push(`<p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:20px;">${b.html}</p>`);
                 i++;
                 break;
             case "image":
             case "video": {
-                // Collect consecutive media for grid
                 const mediaGroup: ContentBlock[] = [];
                 while (i < blocks.length && (blocks[i].type === "image" || blocks[i].type === "video")) {
                     mediaGroup.push(blocks[i]);
@@ -372,26 +340,25 @@ export function blocksToBlog(blocks: ContentBlock[], pageTitle: string, theme: B
                 if (mediaGroup.length === 1) {
                     const src = getImageSrc(mediaGroup[0]);
                     const alt = mediaGroup[0].type === "image" ? mediaGroup[0].alt : "Still frame";
-                    contentParts.push(`<div class="img-border" style="margin:30px 0;overflow:hidden;"><img src="${src}" alt="${alt}" style="width:100%;height:auto;display:block;" /></div>`);
+                    parts.push(`<div class="img-border" style="margin:30px 0;overflow:hidden;"><img src="${src}" alt="${alt}" style="width:100%;height:auto;display:block;" /></div>`);
                 } else {
-                    // 2-col grid
                     const gridItems = mediaGroup.map(item => {
                         const src = getImageSrc(item);
                         const alt = item.type === "image" ? item.alt : "Still frame";
                         return `<div class="img-border" style="overflow:hidden;"><img src="${src}" alt="${alt}" style="width:100%;height:auto;display:block;" /></div>`;
                     }).join("\n");
-                    contentParts.push(`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:30px 0;">${gridItems}</div>`);
+                    parts.push(`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:30px 0;">${gridItems}</div>`);
                 }
                 break;
             }
             case "cta":
-                contentParts.push(`<div style="text-align:center;padding:40px 0;">
+                parts.push(`<div style="text-align:center;padding:40px 0;">
 <a href="${b.href}" class="cta-btn" style="display:inline-block;padding:14px 40px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3px;text-decoration:none;">${b.text} &rarr;</a>
 </div>`);
                 i++;
                 break;
             case "quote":
-                contentParts.push(`<div class="quote-card" style="padding:30px;margin:30px 0;">
+                parts.push(`<div class="quote-card" style="padding:30px;margin:30px 0;">
 <div class="sf quote-text" style="font-size:22px;line-height:1.5;font-style:italic;margin-bottom:12px;">"${b.text}"</div>
 ${b.author ? `<span class="quote-author" style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;">${b.author}</span>` : ""}
 ${b.role ? `<div class="quote-role" style="font-size:11px;margin-top:4px;">${b.role}</div>` : ""}
@@ -399,11 +366,11 @@ ${b.role ? `<div class="quote-role" style="font-size:11px;margin-top:4px;">${b.r
                 i++;
                 break;
             case "divider":
-                contentParts.push(`<hr style="border:none;border-top:1px solid;opacity:0.1;margin:40px 0;" />`);
+                parts.push(`<hr style="border:none;border-top:1px solid;opacity:0.1;margin:40px 0;" />`);
                 i++;
                 break;
             case "stat":
-                contentParts.push(`<div style="text-align:center;padding:20px 0;">
+                parts.push(`<div style="text-align:center;padding:20px 0;">
 <p class="sf" style="font-size:48px;font-weight:700;margin:0;">${b.value}</p>
 <p class="caption" style="font-size:11px;text-transform:uppercase;letter-spacing:3px;margin:8px 0 0;">${b.label}</p>
 </div>`);
@@ -414,18 +381,52 @@ ${b.role ? `<div class="quote-role" style="font-size:11px;margin-top:4px;">${b.r
                 break;
         }
     }
+    return parts.join("\n");
+}
 
-    const content = contentParts.join("\n");
+// Build short blocks from full blocks
+function getShortBlocks(blocks: ContentBlock[]): ContentBlock[] {
+    const short: ContentBlock[] = [];
+    let headingCount = 0, textCount = 0, imageCount = 0, quoteCount = 0, ctaCount = 0;
+    for (const b of blocks) {
+        if (b.type === "heading" && headingCount < 2) { short.push(b); headingCount++; }
+        else if (b.type === "text" && textCount < 3) { short.push(b); textCount++; }
+        else if ((b.type === "image" || b.type === "video") && imageCount < 2) { short.push(b); imageCount++; }
+        else if (b.type === "quote" && quoteCount < 1) { short.push(b); quoteCount++; }
+        else if (b.type === "cta" && ctaCount < 1) { short.push(b); ctaCount++; }
+        else if (b.type === "divider" && short.length > 0 && short.length < 6) { short.push(b); }
+    }
+    return short;
+}
+
+export function blocksToBlog(blocks: ContentBlock[], pageTitle: string, theme: BlogTheme): string {
+    const css = blogThemeCSSMap[theme];
+
+    // Build both content versions
+    const fullContent = renderBlogBlocks(blocks);
+    const shortBlocks = getShortBlocks(blocks);
+    const shortContent = renderBlogBlocks(shortBlocks);
+
+    const fullReadTime = `${Math.max(6, Math.ceil(blocks.length / 3))} min read`;
+
+    // Extract hero image and excerpt
+    let heroSrc = "";
+    const texts = getTexts(blocks);
+    for (const b of blocks) {
+        const src = getImageSrc(b);
+        if (src) { heroSrc = src; break; }
+    }
+    const excerpt = texts[0] ? truncate(texts[0], 160) : "";
     const today = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
-    // Hero section (matching blogWrap pattern)
+    // Hero section
     const hero = heroSrc ? `<div style="position:relative;min-height:450px;overflow:hidden;" class="hero-bg">
 <img src="${heroSrc}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.35;"/>
 <div style="position:absolute;inset:0;" class="hero-overlay"></div>
 <div class="bc" style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;min-height:450px;padding-bottom:60px;">
 <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:24px;">
 <span class="hero-badge" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:3px;padding:4px 12px;">Featured</span>
-<span class="hero-meta" style="font-size:10px;text-transform:uppercase;letter-spacing:3px;">${readTime}</span>
+<span class="hero-meta" id="read-time" style="font-size:10px;text-transform:uppercase;letter-spacing:3px;">3 min read</span>
 </div>
 <h1 class="sf hero-title" style="font-size:48px;line-height:1.15;font-weight:600;margin-bottom:20px;">${pageTitle}</h1>
 <p class="hero-excerpt" style="font-size:15px;line-height:1.7;max-width:600px;">${excerpt}</p>
@@ -448,6 +449,11 @@ body{font-family:'Inter',sans-serif;transition:all .3s}
 .bc{max-width:800px;margin:0 auto;padding:0 24px}
 .sf{font-family:'Cormorant Garamond',Georgia,serif}
 img{max-width:100%;height:auto;display:block}
+.length-toggle{display:flex;justify-content:center;gap:0;margin:0 auto;border-radius:0;overflow:hidden;border:1px solid rgba(255,255,255,0.15);}
+.length-btn{padding:10px 24px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:3px;cursor:pointer;border:none;transition:all 0.2s;font-family:'Inter',sans-serif;}
+.length-btn.active{opacity:1;}
+.length-btn:not(.active){opacity:0.4;}
+.length-btn:hover:not(.active){opacity:0.6;}
 ${css}
 </style>
 </head><body>
@@ -456,10 +462,27 @@ ${css}
 </div>
 ${hero}
 <div class="content-wrap">
-<div class="bc" style="padding-top:60px;padding-bottom:80px;">
-${content}
+<div class="bc" style="padding-top:40px;padding-bottom:80px;">
+<div style="text-align:center;margin-bottom:40px;">
+<div class="length-toggle" style="display:inline-flex;">
+<button class="length-btn active" id="btn-short" onclick="setLength('short')">3 min read</button>
+<button class="length-btn" id="btn-full" onclick="setLength('full')">Full article</button>
 </div>
 </div>
+<div id="content-short">${shortContent}</div>
+<div id="content-full" style="display:none;">${fullContent}</div>
+</div>
+</div>
+<script>
+function setLength(mode) {
+  document.getElementById('content-short').style.display = mode === 'short' ? 'block' : 'none';
+  document.getElementById('content-full').style.display = mode === 'full' ? 'block' : 'none';
+  document.getElementById('btn-short').className = 'length-btn' + (mode === 'short' ? ' active' : '');
+  document.getElementById('btn-full').className = 'length-btn' + (mode === 'full' ? ' active' : '');
+  var rt = document.getElementById('read-time');
+  if (rt) rt.textContent = mode === 'short' ? '3 min read' : '${fullReadTime}';
+}
+</script>
 </body></html>`;
 }
 

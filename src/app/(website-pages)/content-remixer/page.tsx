@@ -4,7 +4,7 @@ import { SpecialOfferHeader } from "@/components/special-offer/header";
 import Footer from "@/components/Footer";
 import { Monitor, Mail, BookOpen, ChevronDown, Palette, RefreshCw, Copy, Check, ArrowRightLeft, AlertCircle, Hash, Instagram, Megaphone, Download, Clipboard } from "lucide-react";
 import { scrapePageContent, blocksToNewsletter, blocksToBlog, blocksToGmail, blocksToRedditAd, blocksToTwitterPost, blocksToIGCarousel, blocksToIGAd, getRedditCaption, getTwitterCaption, getIGCarouselCaption, getIGAdCaption, getAllMediaUrls } from "./converter";
-import type { ContentBlock, BlogLength } from "./converter";
+import type { ContentBlock } from "./converter";
 
 // ── Types ────────────────────────────────────────────────
 type ViewTab = "website" | "newsletter" | "blog" | "gmail" | "reddit" | "twitter" | "ig-carousel" | "ig-ad";
@@ -440,7 +440,6 @@ export default function ContentRemixerPage() {
   const [splitRight, setSplitRight] = useState<ViewTab>("newsletter");
   const [pageDropdownOpen, setPageDropdownOpen] = useState(false);
   const [blogTheme, setBlogTheme] = useState<BlogTheme>("luxury");
-  const [blogLength, setBlogLength] = useState<BlogLength>("full");
   const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [copied, setCopied] = useState(false);
@@ -481,10 +480,9 @@ export default function ContentRemixerPage() {
 
   // Blog content: converted → hardcoded → fallback
   const getDynamicBlogContent = useCallback((pageId: string, theme: BlogTheme): string => {
-    const key = blogLength === "short" ? `${theme}-short` : theme;
-    if (convertedContent[pageId]?.blog?.[key]) return convertedContent[pageId].blog[key];
+    if (convertedContent[pageId]?.blog?.[theme]) return convertedContent[pageId].blog[theme];
     return getBlogContent(pageId, theme);
-  }, [convertedContent, blogLength]);
+  }, [convertedContent]);
 
   // Decide what right-side content to show (for split view)
   const getRightContent = (): string => {
@@ -621,12 +619,9 @@ export default function ContentRemixerPage() {
       const newsletter = blocksToNewsletter(blocks, title);
       const gmail = blocksToGmail(blocks, title);
       const blog: Record<string, string> = {
-        minimalist: blocksToBlog(blocks, title, "minimalist", "full"),
-        luxury: blocksToBlog(blocks, title, "luxury", "full"),
-        "gold-accent": blocksToBlog(blocks, title, "gold-accent", "full"),
-        "minimalist-short": blocksToBlog(blocks, title, "minimalist", "short"),
-        "luxury-short": blocksToBlog(blocks, title, "luxury", "short"),
-        "gold-accent-short": blocksToBlog(blocks, title, "gold-accent", "short"),
+        minimalist: blocksToBlog(blocks, title, "minimalist"),
+        luxury: blocksToBlog(blocks, title, "luxury"),
+        "gold-accent": blocksToBlog(blocks, title, "gold-accent"),
       };
       const reddit = blocksToRedditAd(blocks, title, pageUrl);
       const twitter = blocksToTwitterPost(blocks, title);
@@ -727,17 +722,6 @@ export default function ContentRemixerPage() {
             {(activeTab === "blog" || (splitView && splitRight === "blog")) && (
               <>
                 <div className="mx-1 h-6 w-px bg-white/10" />
-                {/* Blog length toggle */}
-                <div className="flex border border-white/10 overflow-hidden">
-                  <button onClick={() => setBlogLength("short")}
-                    className={`px-3 py-2 font-sans text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${blogLength === "short" ? "bg-cyan-400/15 text-cyan-300 border-r border-cyan-400/30" : "text-white/40 hover:text-white/60 border-r border-white/10"}`}>
-                    3 min
-                  </button>
-                  <button onClick={() => setBlogLength("full")}
-                    className={`px-3 py-2 font-sans text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer ${blogLength === "full" ? "bg-cyan-400/15 text-cyan-300" : "text-white/40 hover:text-white/60"}`}>
-                    Full
-                  </button>
-                </div>
                 {/* Blog theme dropdown */}
                 <div className="relative">
                   <button onClick={() => { setThemeDropdownOpen(!themeDropdownOpen); setPageDropdownOpen(false); }}
