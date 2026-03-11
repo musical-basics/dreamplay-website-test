@@ -644,7 +644,7 @@ export default function ContentRemixerPage() {
             {/* View tabs */}
             {TABS.map((tab) => (
               <button key={tab.id} onClick={() => handleTabClick(tab.id)}
-                className={`flex items-center gap-2 border px-4 py-2 font-sans text-xs font-medium uppercase tracking-wider transition-all cursor-pointer ${(tab.id === "website" ? !splitView && activeTab === "website" : splitView && splitRight === tab.id) ? "border-white bg-white text-black" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
+                className={`${tab.id === "website" ? "md:hidden " : ""}flex items-center gap-2 border px-4 py-2 font-sans text-xs font-medium uppercase tracking-wider transition-all cursor-pointer ${(tab.id === "website" ? !splitView && activeTab === "website" : splitView && splitRight === tab.id) ? "border-white bg-white text-black" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
                 {tab.icon} {tab.label}
               </button>
             ))}
