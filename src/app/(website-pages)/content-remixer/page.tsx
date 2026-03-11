@@ -7,7 +7,7 @@ import { scrapePageContent, blocksToNewsletter, blocksToBlog, blocksToGmail, blo
 import type { ContentBlock } from "./converter";
 
 // ── Types ────────────────────────────────────────────────
-type ViewTab = "website" | "newsletter" | "blog" | "gmail" | "reddit" | "twitter" | "ig-carousel" | "ig-ad";
+type ViewTab = "website" | "newsletter" | "blog" | "gmail" | "reddit" | "twitter" | "ig-posts" | "ig-ad";
 type PageId = string;
 type BlogTheme = "minimalist" | "luxury" | "gold-accent";
 
@@ -17,7 +17,7 @@ const TABS: { id: ViewTab; label: string; icon: React.ReactNode }[] = [
   { id: "blog", label: "Blog", icon: <BookOpen className="h-4 w-4" /> },
   { id: "reddit", label: "Reddit", icon: <Hash className="h-4 w-4" /> },
   { id: "twitter", label: "X / Twitter", icon: <Hash className="h-4 w-4" /> },
-  { id: "ig-carousel", label: "IG Carousel", icon: <Instagram className="h-4 w-4" /> },
+  { id: "ig-posts", label: "IG Posts", icon: <Instagram className="h-4 w-4" /> },
   { id: "ig-ad", label: "IG Ad", icon: <Megaphone className="h-4 w-4" /> },
 ];
 
@@ -491,7 +491,7 @@ export default function ContentRemixerPage() {
     if (splitRight === "gmail") return getGmailContent(selectedPage);
     if (splitRight === "reddit") return convertedContent[selectedPage]?.reddit || fallbackHtml("Reddit Ad", selectedPage);
     if (splitRight === "twitter") return convertedContent[selectedPage]?.twitter || fallbackHtml("X Post", selectedPage);
-    if (splitRight === "ig-carousel") return convertedContent[selectedPage]?.igCarousel || fallbackHtml("IG Carousel", selectedPage);
+    if (splitRight === "ig-posts") return convertedContent[selectedPage]?.igCarousel || fallbackHtml("IG Posts", selectedPage);
     if (splitRight === "ig-ad") return convertedContent[selectedPage]?.igAd || fallbackHtml("IG Ad", selectedPage);
     return "";
   };
@@ -503,7 +503,7 @@ export default function ContentRemixerPage() {
     if (activeTab === "gmail") return getGmailContent(selectedPage);
     if (activeTab === "reddit") return convertedContent[selectedPage]?.reddit || fallbackHtml("Reddit Ad", selectedPage);
     if (activeTab === "twitter") return convertedContent[selectedPage]?.twitter || fallbackHtml("X Post", selectedPage);
-    if (activeTab === "ig-carousel") return convertedContent[selectedPage]?.igCarousel || fallbackHtml("IG Carousel", selectedPage);
+    if (activeTab === "ig-posts") return convertedContent[selectedPage]?.igCarousel || fallbackHtml("IG Posts", selectedPage);
     if (activeTab === "ig-ad") return convertedContent[selectedPage]?.igAd || fallbackHtml("IG Ad", selectedPage);
     return "";
   };
@@ -525,7 +525,7 @@ export default function ContentRemixerPage() {
   };
 
   // Social media: copy plain-text caption to clipboard
-  const isSocialTab = (tab: ViewTab) => ["reddit", "twitter", "ig-carousel", "ig-ad"].includes(tab);
+  const isSocialTab = (tab: ViewTab) => ["reddit", "twitter", "ig-posts", "ig-ad"].includes(tab);
 
   const handleCopyCaption = useCallback(() => {
     const pageData = convertedContent[selectedPage];
@@ -541,7 +541,7 @@ export default function ContentRemixerPage() {
     let caption = "";
     if (tab === "reddit") caption = getRedditCaption(blocks, title, pageUrl);
     else if (tab === "twitter") caption = getTwitterCaption(blocks, title);
-    else if (tab === "ig-carousel") caption = getIGCarouselCaption(blocks, title);
+    else if (tab === "ig-posts") caption = getIGCarouselCaption(blocks, title);
     else if (tab === "ig-ad") caption = getIGAdCaption(blocks, title, pageUrl);
 
     if (!caption) return;
@@ -793,13 +793,13 @@ export default function ContentRemixerPage() {
                   {splitRight === "gmail" && <Mail className="h-4 w-4 text-orange-400/60" />}
                   {splitRight === "reddit" && <Hash className="h-4 w-4 text-orange-500/60" />}
                   {splitRight === "twitter" && <Hash className="h-4 w-4 text-blue-400/60" />}
-                  {splitRight === "ig-carousel" && <Instagram className="h-4 w-4 text-pink-400/60" />}
+                  {splitRight === "ig-posts" && <Instagram className="h-4 w-4 text-pink-400/60" />}
                   {splitRight === "ig-ad" && <Megaphone className="h-4 w-4 text-pink-400/60" />}
                   <span className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
-                    {splitRight === "newsletter" ? "Newsletter" : splitRight === "blog" ? "Blog" : splitRight === "gmail" ? "Gmail" : splitRight === "reddit" ? "Reddit Ad" : splitRight === "twitter" ? "X Post" : splitRight === "ig-carousel" ? "IG Carousel" : "IG Ad"}
+                    {splitRight === "newsletter" ? "Newsletter" : splitRight === "blog" ? "Blog" : splitRight === "gmail" ? "Gmail" : splitRight === "reddit" ? "Reddit Ad" : splitRight === "twitter" ? "X Post" : splitRight === "ig-posts" ? "IG Posts" : "IG Ad"}
                   </span>
                   <span className="ml-auto font-sans text-[10px] text-white/20">
-                    {splitRight === "newsletter" ? "email-safe HTML" : splitRight === "blog" ? `blog / ${blogTheme}` : splitRight === "gmail" ? "table-layout" : splitRight === "reddit" ? "promoted post" : splitRight === "twitter" ? "tweet + thread" : splitRight === "ig-carousel" ? "carousel post" : "sponsored ad"}
+                    {splitRight === "newsletter" ? "email-safe HTML" : splitRight === "blog" ? `blog / ${blogTheme}` : splitRight === "gmail" ? "table-layout" : splitRight === "reddit" ? "promoted post" : splitRight === "twitter" ? "tweet + thread" : splitRight === "ig-posts" ? "swipe post" : "sponsored ad"}
                   </span>
                 </div>
                 <div className="overflow-hidden border border-white/10 bg-[#121212] shadow-2xl">
@@ -816,7 +816,7 @@ export default function ContentRemixerPage() {
                   if (blocks) {
                     if (tab === "reddit") caption = getRedditCaption(blocks, title, pageUrl);
                     else if (tab === "twitter") caption = getTwitterCaption(blocks, title);
-                    else if (tab === "ig-carousel") caption = getIGCarouselCaption(blocks, title);
+                    else if (tab === "ig-posts") caption = getIGCarouselCaption(blocks, title);
                     else if (tab === "ig-ad") caption = getIGAdCaption(blocks, title, pageUrl);
                   }
                   return (
@@ -861,10 +861,10 @@ export default function ContentRemixerPage() {
                 {activeTab === "gmail" && <Mail className="h-4 w-4 text-orange-400/60" />}
                 {activeTab === "reddit" && <Hash className="h-4 w-4 text-orange-500/60" />}
                 {activeTab === "twitter" && <Hash className="h-4 w-4 text-blue-400/60" />}
-                {activeTab === "ig-carousel" && <Instagram className="h-4 w-4 text-pink-400/60" />}
+                {activeTab === "ig-posts" && <Instagram className="h-4 w-4 text-pink-400/60" />}
                 {activeTab === "ig-ad" && <Megaphone className="h-4 w-4 text-pink-400/60" />}
                 <span className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
-                  {activeTab === "website" ? `Website — ${currentPage.path}` : activeTab === "newsletter" ? "Newsletter — Email-safe HTML" : activeTab === "gmail" ? "Gmail — Table-layout HTML" : activeTab === "reddit" ? "Reddit — Promoted Post" : activeTab === "twitter" ? "X — Tweet + Thread" : activeTab === "ig-carousel" ? "Instagram — Carousel Post" : activeTab === "ig-ad" ? "Instagram — Sponsored Ad" : `Blog — ${blogTheme}`}
+                  {activeTab === "website" ? `Website — ${currentPage.path}` : activeTab === "newsletter" ? "Newsletter — Email-safe HTML" : activeTab === "gmail" ? "Gmail — Table-layout HTML" : activeTab === "reddit" ? "Reddit — Promoted Post" : activeTab === "twitter" ? "X — Tweet + Thread" : activeTab === "ig-posts" ? "Instagram — Posts" : activeTab === "ig-ad" ? "Instagram — Sponsored Ad" : `Blog — ${blogTheme}`}
                 </span>
               </div>
               <div className={`overflow - hidden border border - white / 10 shadow - 2xl ${activeTab === "website" ? "bg-white" : "bg-[#f4f4f7]"} `}>
@@ -912,7 +912,7 @@ export default function ContentRemixerPage() {
               <p className="font-sans text-[10px] leading-relaxed text-white/40">280-char tweet + thread with character counter.</p>
             </div>
             <div className="border border-pink-500/20 bg-pink-500/[0.03] p-5">
-              <div className="mb-2 flex items-center gap-2"><Instagram className="h-3.5 w-3.5 text-pink-400" /><span className="font-sans text-[10px] font-bold uppercase tracking-wider text-pink-300">IG Carousel</span></div>
+              <div className="mb-2 flex items-center gap-2"><Instagram className="h-3.5 w-3.5 text-pink-400" /><span className="font-sans text-[10px] font-bold uppercase tracking-wider text-pink-300">IG Posts</span></div>
               <p className="font-sans text-[10px] leading-relaxed text-white/40">5-7 slide storytelling arc with navigation.</p>
             </div>
             <div className="border border-pink-500/20 bg-pink-500/[0.03] p-5">
