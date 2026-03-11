@@ -197,15 +197,24 @@ ${b.author ? `<p style="font-size:12px;color:#888;margin:0;"><strong>${b.author}
 <img src="${heroSrc}" alt="" width="600" style="display:block;width:100%;max-width:600px;height:auto;border:0;" />
 </td></tr>` : "";
 
-    return `<!DOCTYPE html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><title>${pageTitle}</title></head>
+    return `<!DOCTYPE html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><title>${pageTitle}</title>
+<style>
+body{margin:0;padding:0;-webkit-text-size-adjust:100%;}
+img{border:0;height:auto;line-height:100%;outline:none;text-decoration:none;max-width:100%;}
+@media only screen and (max-width:640px){.email-container{width:100%!important;}.email-container img{width:100%!important;height:auto!important;}}
+</style>
+</head>
 <body style="margin:0;padding:0;background:#f4f4f7;font-family:Arial,Helvetica,sans-serif;">
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f4f4f7;">
 <tr><td align="center" style="padding:20px 0;">
-<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;background:#ffffff;">
+<table class="email-container" role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;background:#ffffff;">
 ${logoBanner}
 ${heroRow}
 ${rows}
-<tr><td style="padding:20px 30px 30px;text-align:center;font-size:11px;color:#aaa;">
+<tr><td style="padding:20px 30px;">
+<hr style="border:none;border-top:1px solid #e5e5e5;margin:0;" />
+</td></tr>
+<tr><td style="padding:10px 30px 30px;text-align:center;font-size:11px;color:#aaa;">
 <p style="margin:0;">DreamPlay Pianos &bull; Victoria, BC, Canada</p>
 <p style="margin:5px 0 0;"><a href="{{unsubscribe_url}}" style="color:#aaa;text-decoration:underline;">Unsubscribe</a></p>
 </td></tr>
@@ -348,13 +357,20 @@ ${b.author ? `<p style="font-size:12px;font-weight:700;text-transform:uppercase;
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
+body{margin:0;padding:0;background-color:#f4f4f7;font-family:Arial,Helvetica,sans-serif;}
+img{border:0;height:auto;line-height:100%;outline:none;text-decoration:none;max-width:100%;}
+@media only screen and (max-width:640px){.blog-container{width:100%!important;padding:0 16px!important;}.blog-container img{width:100%!important;height:auto!important;}}
 ${css}
 </style>
 </head>
 <body>
-<div style="max-width:800px;margin:0 auto;padding:60px 40px;">
+<div style="max-width:800px;margin:0 auto;padding:20px 0;">
+<article class="blog-container" style="max-width:800px;margin:0 auto;background-color:#ffffff;">
 ${blogHero}
+<div style="padding:40px;">
 ${content}
+</div>
+</article>
 </div>
 </body></html>`;
 }
