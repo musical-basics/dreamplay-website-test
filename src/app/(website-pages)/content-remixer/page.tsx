@@ -1,10 +1,92 @@
 "use client";
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { SpecialOfferHeader } from "@/components/special-offer/header";
 import Footer from "@/components/Footer";
-import { Monitor, Mail, BookOpen, ChevronDown, Palette, RefreshCw, Copy, Check, ArrowRightLeft, AlertCircle, Hash, Instagram, Megaphone, Download, Clipboard } from "lucide-react";
+import { Monitor, Mail, BookOpen, ChevronDown, Palette, RefreshCw, Copy, Check, ArrowRightLeft, AlertCircle, Hash, Instagram, Megaphone, Download, Clipboard, Pencil, Save, Trash2, FolderOpen, X, ImageIcon } from "lucide-react";
 import { scrapePageContent, blocksToNewsletter, blocksToBlog, blocksToGmail, blocksToRedditAd, blocksToTwitterPost, blocksToIGCarousel, blocksToIGAd, getRedditCaption, getTwitterCaption, getIGCarouselCaption, getIGAdCaption, getAllMediaUrls } from "./converter";
 import type { ContentBlock } from "./converter";
+
+// ── Image Gallery for Picker ────────────────────────────────
+const IMAGE_GALLERY = [
+  { src: "/images/stills/hero-video-1-still.jpg", label: "Hero 1 — Top" },
+  { src: "/images/stills/hero-video-2-still.jpg", label: "Hero 2 — Child+Mom" },
+  { src: "/images/stills/hero-video-3-still.jpg", label: "Hero 3 — Hand Sizes" },
+  { src: "/images/stills/hero-video-4-still.jpg", label: "Hero 4 — Specs" },
+  { src: "/images/stills/hero-grid-still.jpg", label: "Grid Hero" },
+  { src: "/images/learn/pianist-led-keys.jpg", label: "LED Keys" },
+  { src: "/images/learn/sheet-music-mode-real.jpg", label: "Sheet Music Mode" },
+  { src: "/images/learn/falling-notes-still.jpg", label: "Falling Notes" },
+  { src: "/images/learn/ui-playthrough-still.jpg", label: "UI Playthrough" },
+  { src: "/images/learn/control-buttons.jpg", label: "Control Buttons" },
+  { src: "/images/learn/keyboard-led-lights.jpg", label: "Keyboard LEDs" },
+  { src: "/images/learn/keyboard-back-ports.jpg", label: "Back Ports" },
+  { src: "/images/Hero-Image-Final-Version.jpg", label: "Hero Final" },
+  { src: "/images/DreamPlay Piano Hands.jpg", label: "Piano Hands" },
+  { src: "/images/BW Piano (1).jpg", label: "BW Piano" },
+  { src: "/images/DS5.5-White-p-800.png", label: "DS5.5 White" },
+  { src: "/images/DS6.0-Black-1-p-800.png", label: "DS6.0 Black" },
+  { src: "/images/DS6.5-Black-p-800.png", label: "DS6.5 Black" },
+  { src: "/images/piano-bench-bundle.png", label: "Piano + Bench" },
+  { src: "/images/David-Linda.jpg", label: "David & Linda" },
+  { src: "/images/LionelYuPlayingPiano.jpg", label: "Lionel Playing" },
+  { src: "/images/DreamPlay Logo White.png", label: "Logo White" },
+];
+
+// ── Draft Types ────────────────────────────────────────────
+interface Draft {
+  id: string;
+  name: string;
+  page: string;
+  format: string;
+  theme?: string;
+  html: string;
+  savedAt: string;
+}
+const DRAFTS_KEY = "dp-remixer-drafts";
+function loadDrafts(): Draft[] {
+  try { return JSON.parse(localStorage.getItem(DRAFTS_KEY) || "[]"); } catch { return []; }
+}
+function saveDrafts(drafts: Draft[]) {
+  localStorage.setItem(DRAFTS_KEY, JSON.stringify(drafts));
+}
+
+// ── Edit Mode Injection Script ────────────────────────────
+const EDIT_SCRIPT = `<script>
+(function(){
+  // Make all text elements editable
+  document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,span,a,li,td,th,div,strong,em,b,i,label').forEach(function(el){
+    if(el.children.length===0 || el.textContent.trim().length > 0){
+      el.contentEditable='true';
+      el.style.outline='none';
+      el.addEventListener('focus',function(){el.style.outline='2px solid rgba(59,130,246,0.5)';el.style.outlineOffset='2px';});
+      el.addEventListener('blur',function(){el.style.outline='none';});
+    }
+  });
+  // Make images clickable for swapping
+  document.querySelectorAll('img').forEach(function(img){
+    img.style.cursor='pointer';
+    img.addEventListener('mouseenter',function(){img.style.outline='3px solid rgba(234,179,8,0.6)';img.style.outlineOffset='2px';});
+    img.addEventListener('mouseleave',function(){img.style.outline='none';});
+    img.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      window.parent.postMessage({type:'IMAGE_CLICK',src:img.src,imgId:Array.from(document.querySelectorAll('img')).indexOf(img)},'*');
+    });
+  });
+  // Listen for image swap messages from parent
+  window.addEventListener('message',function(e){
+    if(e.data && e.data.type==='SWAP_IMAGE'){
+      var imgs=document.querySelectorAll('img');
+      if(imgs[e.data.imgId]){
+        imgs[e.data.imgId].src=e.data.newSrc;
+      }
+    }
+  });
+  // Notify parent that edit mode is ready
+  window.parent.postMessage({type:'EDIT_READY'},'*');
+})()
+</script>`;
+
 
 // ── Types ────────────────────────────────────────────────
 type ViewTab = "website" | "newsletter" | "blog" | "gmail" | "reddit" | "twitter" | "ig-posts" | "ig-ad";
@@ -459,6 +541,125 @@ export default function ContentRemixerPage() {
   const webIframeRef = useRef<HTMLIFrameElement>(null);
   const splitWebIframeRef = useRef<HTMLIFrameElement>(null);
 
+  // ── Edit Mode State ──────────────────────────────────────
+  const [editMode, setEditMode] = useState(false);
+  const [editedHtml, setEditedHtml] = useState<string | null>(null);
+  const [showImagePicker, setShowImagePicker] = useState(false);
+  const [selectedImgId, setSelectedImgId] = useState<number | null>(null);
+  const [drafts, setDrafts] = useState<Draft[]>([]);
+  const [showDrafts, setShowDrafts] = useState(false);
+  const [draftName, setDraftName] = useState("");
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const editIframeRef = useRef<HTMLIFrameElement>(null);
+
+  // Load drafts from localStorage on mount
+  useEffect(() => { setDrafts(loadDrafts()); }, []);
+
+  // Listen for postMessage from edit iframe
+  useEffect(() => {
+    if (!editMode) return;
+    const handler = (e: MessageEvent) => {
+      if (e.data?.type === "IMAGE_CLICK") {
+        setSelectedImgId(e.data.imgId);
+        setShowImagePicker(true);
+      }
+    };
+    window.addEventListener("message", handler);
+    return () => window.removeEventListener("message", handler);
+  }, [editMode]);
+
+  // Get current iframe HTML for saving
+  const getCurrentEditedHtml = useCallback((): string => {
+    const iframe = editIframeRef.current;
+    if (iframe?.contentDocument) {
+      // Clone doc, remove edit script, return HTML
+      const doc = iframe.contentDocument;
+      const clone = doc.documentElement.cloneNode(true) as HTMLElement;
+      clone.querySelectorAll("script").forEach(s => s.remove());
+      // Remove contentEditable attrs
+      clone.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
+      return "<!DOCTYPE html><html>" + clone.innerHTML + "</html>";
+    }
+    return editedHtml || "";
+  }, [editedHtml]);
+
+  // Handle image swap from picker
+  const handleSwapImage = useCallback((newSrc: string) => {
+    if (selectedImgId === null) return;
+    editIframeRef.current?.contentWindow?.postMessage({ type: "SWAP_IMAGE", imgId: selectedImgId, newSrc }, "*");
+    setShowImagePicker(false);
+    setSelectedImgId(null);
+    showToast("Image swapped! Remember to save your draft.");
+  }, [selectedImgId]);
+
+  // Save draft
+  const handleSaveDraft = useCallback(() => {
+    if (!draftName.trim()) return;
+    const html = getCurrentEditedHtml();
+    const format = splitView ? splitRight : activeTab;
+    const draft: Draft = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      name: draftName.trim(),
+      page: selectedPage,
+      format,
+      theme: format === "blog" ? blogTheme : undefined,
+      html,
+      savedAt: new Date().toISOString(),
+    };
+    const updated = [...drafts, draft];
+    setDrafts(updated);
+    saveDrafts(updated);
+    setShowSaveDialog(false);
+    setDraftName("");
+    showToast(`Draft "${draft.name}" saved!`);
+  }, [draftName, drafts, getCurrentEditedHtml, splitView, splitRight, activeTab, selectedPage, blogTheme]);
+
+  // Load draft
+  const handleLoadDraft = useCallback((draft: Draft) => {
+    setEditedHtml(draft.html);
+    setEditMode(true);
+    setShowDrafts(false);
+    showToast(`Draft "${draft.name}" loaded.`);
+  }, []);
+
+  // Delete draft
+  const handleDeleteDraft = useCallback((id: string) => {
+    const updated = drafts.filter(d => d.id !== id);
+    setDrafts(updated);
+    saveDrafts(updated);
+    showToast("Draft deleted.");
+  }, [drafts]);
+
+  // Enter edit mode
+  const handleEnterEdit = useCallback(() => {
+    // Get current content HTML and inject edit script
+    const format = splitView ? splitRight : activeTab;
+    let html = "";
+    if (format === "newsletter") html = getNewsletterContent(selectedPage);
+    else if (format === "blog") html = getDynamicBlogContent(selectedPage, blogTheme);
+    else if (format === "gmail") html = getGmailContent(selectedPage);
+    else if (format === "reddit") html = convertedContent[selectedPage]?.reddit || "";
+    else if (format === "twitter") html = convertedContent[selectedPage]?.twitter || "";
+    else if (format === "ig-posts") html = convertedContent[selectedPage]?.igCarousel || "";
+    else if (format === "ig-ad") html = convertedContent[selectedPage]?.igAd || "";
+    if (!html) {
+      showToast("Convert the page first, then enter Edit Mode.");
+      return;
+    }
+    // Inject edit script before </body>
+    const injected = html.replace("</body>", EDIT_SCRIPT + "</body>");
+    setEditedHtml(injected);
+    setEditMode(true);
+  }, [splitView, splitRight, activeTab, selectedPage, blogTheme, convertedContent]);
+
+  // Exit edit mode
+  const handleExitEdit = useCallback(() => {
+    setEditMode(false);
+    setEditedHtml(null);
+    setShowImagePicker(false);
+    setSelectedImgId(null);
+  }, []);
+
   const currentPage = PAGES.find((p) => p.id === selectedPage)!;
 
   const fallbackHtml = (format: string, pageId: string) =>
@@ -769,12 +970,139 @@ export default function ContentRemixerPage() {
               title="Convert website content to newsletter, blog, and gmail formats">
               <ArrowRightLeft className="h-4 w-4" /> {converting ? "Converting..." : (convertedContent[selectedPage] ? "Re-convert" : "Convert")}
             </button>
+
+            <div className="mx-1 h-6 w-px bg-white/10" />
+
+            {/* Edit Mode Controls */}
+            {!editMode ? (
+              <>
+                <button onClick={handleEnterEdit}
+                  className="flex items-center gap-2 border border-blue-400/30 bg-blue-400/5 px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider text-blue-300 transition-all cursor-pointer hover:bg-blue-400/10 hover:border-blue-400/50"
+                  title="Edit text and swap images">
+                  <Pencil className="h-4 w-4" /> Edit
+                </button>
+                <div className="relative">
+                  <button onClick={() => { setShowDrafts(!showDrafts); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
+                    className="flex items-center gap-2 border border-white/10 px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider text-white/50 transition-all cursor-pointer hover:border-white/30 hover:text-white/80"
+                    title="Load a saved draft">
+                    <FolderOpen className="h-4 w-4" /> Drafts{drafts.length > 0 && <span className="ml-1 text-amber-300">({drafts.length})</span>}
+                  </button>
+                  {showDrafts && (
+                    <div className="absolute right-0 top-full mt-1 z-50 border border-white/10 bg-[#0a0a0f] shadow-2xl min-w-[280px] max-h-[400px] overflow-y-auto">
+                      {drafts.length === 0 ? (
+                        <div className="px-5 py-4 text-center font-sans text-xs text-white/30">No saved drafts yet</div>
+                      ) : drafts.map(d => (
+                        <div key={d.id} className="flex items-center gap-2 px-4 py-3 border-b border-white/5 hover:bg-white/5 transition-all">
+                          <button onClick={() => handleLoadDraft(d)} className="flex-1 text-left cursor-pointer">
+                            <div className="font-sans text-xs font-medium text-white/80">{d.name}</div>
+                            <div className="font-sans text-[10px] text-white/30 mt-0.5">{d.page} · {d.format}{d.theme ? ` · ${d.theme}` : ""} · {new Date(d.savedAt).toLocaleDateString()}</div>
+                          </button>
+                          <button onClick={(e) => { e.stopPropagation(); handleDeleteDraft(d.id); }}
+                            className="p-1.5 text-white/20 hover:text-red-400 transition-colors cursor-pointer" title="Delete draft">
+                            <Trash2 className="h-3 w-3" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </>
+            ) : (
+              <>
+                <button onClick={() => setShowSaveDialog(true)}
+                  className="flex items-center gap-2 border border-amber-400/30 bg-amber-400/10 px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider text-amber-300 transition-all cursor-pointer hover:bg-amber-400/20"
+                  title="Save current edits as a draft">
+                  <Save className="h-4 w-4" /> Save Draft
+                </button>
+                <button onClick={() => {
+                  const html = getCurrentEditedHtml();
+                  navigator.clipboard.writeText(html).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
+                }}
+                  className={`flex items-center gap-2 border px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider transition-all cursor-pointer ${copied ? "border-green-400 bg-green-400/10 text-green-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}
+                  title="Copy edited HTML">
+                  {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                  {copied ? "Copied!" : "Copy HTML"}
+                </button>
+                <button onClick={handleExitEdit}
+                  className="flex items-center gap-2 border border-red-400/30 bg-red-400/5 px-3 py-2 font-sans text-xs font-medium uppercase tracking-wider text-red-300 transition-all cursor-pointer hover:bg-red-400/10 hover:border-red-400/50"
+                  title="Exit edit mode">
+                  <X className="h-4 w-4" /> Exit Edit
+                </button>
+                {editMode && <span className="ml-2 font-sans text-[10px] uppercase tracking-wider text-blue-300 animate-pulse">✏️ Edit Mode Active — click text to edit, click images to swap</span>}
+              </>
+            )}
+
+            {/* Save Draft Dialog */}
+            {showSaveDialog && (
+              <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setShowSaveDialog(false)}>
+                <div className="border border-white/10 bg-[#0a0a0f] p-8 shadow-2xl max-w-sm w-full" onClick={e => e.stopPropagation()}>
+                  <h3 className="font-sans text-sm font-bold uppercase tracking-wider text-white mb-4">Save Draft</h3>
+                  <input
+                    type="text"
+                    value={draftName}
+                    onChange={e => setDraftName(e.target.value)}
+                    placeholder="e.g. Learn Newsletter v2"
+                    className="w-full border border-white/10 bg-white/5 px-4 py-3 font-sans text-sm text-white placeholder-white/30 outline-none focus:border-amber-400/50 mb-4"
+                    autoFocus
+                    onKeyDown={e => { if (e.key === "Enter") handleSaveDraft(); }}
+                  />
+                  <div className="flex gap-3">
+                    <button onClick={handleSaveDraft} disabled={!draftName.trim()}
+                      className="flex-1 border border-amber-400/30 bg-amber-400/10 px-4 py-2 font-sans text-xs font-medium uppercase tracking-wider text-amber-300 transition-all cursor-pointer hover:bg-amber-400/20 disabled:opacity-30 disabled:cursor-not-allowed">
+                      Save
+                    </button>
+                    <button onClick={() => setShowSaveDialog(false)}
+                      className="border border-white/10 px-4 py-2 font-sans text-xs font-medium uppercase tracking-wider text-white/50 transition-all cursor-pointer hover:text-white/80">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Content */}
-        <div className="container mx-auto max-w-7xl px-6 py-10">
-          {splitView ? (
+        <div className="container mx-auto max-w-7xl px-6 py-10 relative">
+          {/* Image Picker Panel */}
+          {showImagePicker && editMode && (
+            <div className="fixed right-0 top-[200px] z-[150] w-80 border-l border-white/10 bg-[#0a0a0f]/95 backdrop-blur-md shadow-2xl h-[calc(100vh-200px)] overflow-y-auto">
+              <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/10 bg-[#0a0a0f] px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <ImageIcon className="h-4 w-4 text-amber-400" />
+                  <span className="font-sans text-xs font-bold uppercase tracking-wider text-white">Swap Image</span>
+                </div>
+                <button onClick={() => { setShowImagePicker(false); setSelectedImgId(null); }} className="p-1 text-white/40 hover:text-white cursor-pointer">
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+              <div className="grid grid-cols-2 gap-2 p-3">
+                {IMAGE_GALLERY.map((img) => (
+                  <button key={img.src} onClick={() => handleSwapImage(img.src)}
+                    className="group relative overflow-hidden border border-white/10 bg-white/5 transition-all hover:border-amber-400/50 hover:bg-white/10 cursor-pointer">
+                    <img src={img.src} alt={img.label} className="h-20 w-full object-cover" />
+                    <div className="px-2 py-1.5">
+                      <span className="font-sans text-[9px] uppercase tracking-wider text-white/50 group-hover:text-amber-300">{img.label}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {editMode && editedHtml ? (
+            /* Edit Mode View */
+            <div className="mx-auto max-w-4xl">
+              <div className="mb-3 flex items-center gap-2">
+                <Pencil className="h-4 w-4 text-blue-400/60" />
+                <span className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">Edit Mode</span>
+                <span className="ml-auto font-sans text-[10px] text-white/20">Click text to edit · Click images to swap</span>
+              </div>
+              <div className="overflow-hidden border-2 border-blue-400/30 bg-[#121212] shadow-2xl shadow-blue-500/10">
+                <iframe ref={editIframeRef} key={`edit-${refreshKey}`} srcDoc={editedHtml} className="h-[900px] w-full" title="Edit Mode" sandbox="allow-same-origin allow-popups allow-scripts" />
+              </div>
+            </div>
+          ) : splitView ? (
             <div className="grid gap-6 lg:grid-cols-2">
               <div>
                 <div className="mb-3 flex items-center gap-2">
