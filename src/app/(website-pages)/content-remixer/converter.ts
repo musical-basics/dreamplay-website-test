@@ -351,21 +351,24 @@ ${b.author ? `<p style="font-size:12px;font-weight:700;text-transform:uppercase;
 <p style="margin:0 0 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:4px;color:#c4a44a;font-family:'Inter',sans-serif;">✦ DREAMPLAY PIANOS</p>
 </div>`;
 
+    // Theme-aware article background
+    const articleBg = theme === "minimalist" ? "#ffffff" : theme === "luxury" ? "#050505" : "#0a0a0a";
+    const outerBg = theme === "minimalist" ? "#f4f4f7" : "#000000";
+
     return `<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>${pageTitle}</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{margin:0;padding:0;background-color:#f4f4f7;font-family:Arial,Helvetica,sans-serif;}
 img{border:0;height:auto;line-height:100%;outline:none;text-decoration:none;max-width:100%;}
 @media only screen and (max-width:640px){.blog-container{width:100%!important;padding:0 16px!important;}.blog-container img{width:100%!important;height:auto!important;}}
 ${css}
 </style>
 </head>
-<body>
+<body style="background:${outerBg};">
 <div style="max-width:800px;margin:0 auto;padding:20px 0;">
-<article class="blog-container" style="max-width:800px;margin:0 auto;background-color:#ffffff;">
+<article class="blog-container" style="max-width:800px;margin:0 auto;background-color:${articleBg};">
 ${blogHero}
 <div style="padding:40px;">
 ${content}
