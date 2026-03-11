@@ -435,7 +435,7 @@ export default function ContentRemixerPage() {
   const [selectedPage, setSelectedPage] = useState<PageId>("learn");
   const [activeTab, setActiveTab] = useState<ViewTab>("website");
   const [splitView, setSplitView] = useState(false);
-  const [splitRight, setSplitRight] = useState<"newsletter" | "blog">("newsletter");
+  const [splitRight, setSplitRight] = useState<ViewTab>("newsletter");
   const [pageDropdownOpen, setPageDropdownOpen] = useState(false);
   const [blogTheme, setBlogTheme] = useState<BlogTheme>("luxury");
   const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
@@ -481,10 +481,18 @@ export default function ContentRemixerPage() {
     return getBlogContent(pageId, theme);
   }, [convertedContent]);
 
-  // Decide what right-side content to show
-  const rightContent = splitRight === "newsletter"
-    ? getNewsletterContent(selectedPage)
-    : getDynamicBlogContent(selectedPage, blogTheme);
+  // Decide what right-side content to show (for split view)
+  const getRightContent = (): string => {
+    if (splitRight === "newsletter") return getNewsletterContent(selectedPage);
+    if (splitRight === "blog") return getDynamicBlogContent(selectedPage, blogTheme);
+    if (splitRight === "gmail") return getGmailContent(selectedPage);
+    if (splitRight === "reddit") return convertedContent[selectedPage]?.reddit || fallbackHtml("Reddit Ad", selectedPage);
+    if (splitRight === "twitter") return convertedContent[selectedPage]?.twitter || fallbackHtml("X Post", selectedPage);
+    if (splitRight === "ig-carousel") return convertedContent[selectedPage]?.igCarousel || fallbackHtml("IG Carousel", selectedPage);
+    if (splitRight === "ig-ad") return convertedContent[selectedPage]?.igAd || fallbackHtml("IG Ad", selectedPage);
+    return "";
+  };
+  const rightContent = getRightContent();
 
   const getActiveContent = (): string => {
     if (activeTab === "newsletter") return getNewsletterContent(selectedPage);
@@ -626,12 +634,28 @@ export default function ContentRemixerPage() {
 
             {/* Split views */}
             <button onClick={() => { setSplitView(true); setSplitRight("newsletter"); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
-              className={`flex items - center gap - 2 border px - 4 py - 2 font - sans text - xs font - medium uppercase tracking - wider transition - all cursor - pointer ${splitView && splitRight === "newsletter" ? "border-cyan-400 bg-cyan-400/10 text-cyan-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"} `}>
-              <Columns2 className="h-4 w-4" /> Web ↔ Newsletter
+              className={`flex items-center gap-2 border px-3 py-2 font-sans text-[10px] font-medium uppercase tracking-wider transition-all cursor-pointer ${splitView && splitRight === "newsletter" ? "border-cyan-400 bg-cyan-400/10 text-cyan-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
+              <Columns2 className="h-3.5 w-3.5" /> Web ↔ News
             </button>
             <button onClick={() => { setSplitView(true); setSplitRight("blog"); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
-              className={`flex items - center gap - 2 border px - 4 py - 2 font - sans text - xs font - medium uppercase tracking - wider transition - all cursor - pointer ${splitView && splitRight === "blog" ? "border-purple-400 bg-purple-400/10 text-purple-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"} `}>
-              <Columns2 className="h-4 w-4" /> Web ↔ Blog
+              className={`flex items-center gap-2 border px-3 py-2 font-sans text-[10px] font-medium uppercase tracking-wider transition-all cursor-pointer ${splitView && splitRight === "blog" ? "border-purple-400 bg-purple-400/10 text-purple-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
+              <Columns2 className="h-3.5 w-3.5" /> Web ↔ Blog
+            </button>
+            <button onClick={() => { setSplitView(true); setSplitRight("reddit"); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
+              className={`flex items-center gap-2 border px-3 py-2 font-sans text-[10px] font-medium uppercase tracking-wider transition-all cursor-pointer ${splitView && splitRight === "reddit" ? "border-orange-400 bg-orange-400/10 text-orange-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
+              <Columns2 className="h-3.5 w-3.5" /> Web ↔ Reddit
+            </button>
+            <button onClick={() => { setSplitView(true); setSplitRight("twitter"); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
+              className={`flex items-center gap-2 border px-3 py-2 font-sans text-[10px] font-medium uppercase tracking-wider transition-all cursor-pointer ${splitView && splitRight === "twitter" ? "border-blue-400 bg-blue-400/10 text-blue-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
+              <Columns2 className="h-3.5 w-3.5" /> Web ↔ X
+            </button>
+            <button onClick={() => { setSplitView(true); setSplitRight("ig-carousel"); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
+              className={`flex items-center gap-2 border px-3 py-2 font-sans text-[10px] font-medium uppercase tracking-wider transition-all cursor-pointer ${splitView && splitRight === "ig-carousel" ? "border-pink-400 bg-pink-400/10 text-pink-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
+              <Columns2 className="h-3.5 w-3.5" /> Web ↔ IG
+            </button>
+            <button onClick={() => { setSplitView(true); setSplitRight("ig-ad"); setPageDropdownOpen(false); setThemeDropdownOpen(false); }}
+              className={`flex items-center gap-2 border px-3 py-2 font-sans text-[10px] font-medium uppercase tracking-wider transition-all cursor-pointer ${splitView && splitRight === "ig-ad" ? "border-pink-400 bg-pink-400/10 text-pink-300" : "border-white/10 text-white/50 hover:border-white/30 hover:text-white/80"}`}>
+              <Columns2 className="h-3.5 w-3.5" /> Web ↔ Ad
             </button>
 
             {/* Blog theme selector — visible when blog is showing */}
@@ -703,16 +727,22 @@ export default function ContentRemixerPage() {
               </div>
               <div>
                 <div className="mb-3 flex items-center gap-2">
-                  {splitRight === "newsletter" ? <Mail className="h-4 w-4 text-cyan-400/60" /> : <BookOpen className="h-4 w-4 text-purple-400/60" />}
-                  <span className={`font - sans text - [10px] font - bold uppercase tracking - [0.2em] ${splitRight === "newsletter" ? "text-cyan-400/60" : "text-purple-400/60"} `}>
-                    {splitRight === "newsletter" ? "Newsletter" : "Blog"}
+                  {splitRight === "newsletter" && <Mail className="h-4 w-4 text-cyan-400/60" />}
+                  {splitRight === "blog" && <BookOpen className="h-4 w-4 text-purple-400/60" />}
+                  {splitRight === "gmail" && <Mail className="h-4 w-4 text-orange-400/60" />}
+                  {splitRight === "reddit" && <Hash className="h-4 w-4 text-orange-500/60" />}
+                  {splitRight === "twitter" && <Hash className="h-4 w-4 text-blue-400/60" />}
+                  {splitRight === "ig-carousel" && <Instagram className="h-4 w-4 text-pink-400/60" />}
+                  {splitRight === "ig-ad" && <Megaphone className="h-4 w-4 text-pink-400/60" />}
+                  <span className="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
+                    {splitRight === "newsletter" ? "Newsletter" : splitRight === "blog" ? "Blog" : splitRight === "gmail" ? "Gmail" : splitRight === "reddit" ? "Reddit Ad" : splitRight === "twitter" ? "X Post" : splitRight === "ig-carousel" ? "IG Carousel" : "IG Ad"}
                   </span>
                   <span className="ml-auto font-sans text-[10px] text-white/20">
-                    {splitRight === "newsletter" ? "email-safe HTML" : `blog / ${blogTheme} `}
+                    {splitRight === "newsletter" ? "email-safe HTML" : splitRight === "blog" ? `blog / ${blogTheme}` : splitRight === "gmail" ? "table-layout" : splitRight === "reddit" ? "promoted post" : splitRight === "twitter" ? "tweet + thread" : splitRight === "ig-carousel" ? "carousel post" : "sponsored ad"}
                   </span>
                 </div>
-                <div className="overflow-hidden border border-white/10 bg-[#f4f4f7] shadow-2xl">
-                  <iframe key={`right - ${refreshKey} `} srcDoc={rightContent} className="h-[800px] w-full" title={splitRight} sandbox="allow-same-origin allow-popups" />
+                <div className="overflow-hidden border border-white/10 bg-[#121212] shadow-2xl">
+                  <iframe key={`right-${splitRight}-${refreshKey}`} srcDoc={rightContent} className="h-[800px] w-full" title={splitRight} sandbox="allow-same-origin allow-popups allow-scripts" />
                 </div>
               </div>
             </div>
