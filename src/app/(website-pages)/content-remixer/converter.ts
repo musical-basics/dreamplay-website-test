@@ -242,8 +242,8 @@ export function blocksToBlog(blocks: ContentBlock[], pageTitle: string, theme: B
         switch (b.type) {
             case "heading":
                 contentParts.push(b.level === 1
-                    ? `<h1 style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:600;line-height:1.2;margin:40px 0 20px;">${b.text}</h1>`
-                    : `<h2 style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;margin:40px 0 16px;">${b.text}</h2>`);
+                    ? `<h1 style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;line-height:1.2;margin:40px 0 20px;">${b.text}</h1>`
+                    : `<h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin:30px 0 12px;">${b.text}</h2>`);
                 i++;
                 break;
             case "text":
