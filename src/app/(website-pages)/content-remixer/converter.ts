@@ -110,6 +110,40 @@ export function scrapePageContent(doc: Document): ContentBlock[] {
             const role = el.querySelector("[class*='role'], [class*='title']")?.textContent?.trim();
             blocks.push({ type: "quote", text, author, role });
         });
+
+        // Extract stats from SVG-rendered charts and large-number elements
+        // Detect numbers in SVG overlays (donut chart centers like 87%, 24%)
+        section.querySelectorAll("svg").forEach((svg) => {
+            const parent = svg.parentElement;
+            if (!parent) return;
+            const overlay = parent.querySelector("[class*='absolute'] span, [class*='absolute'] div");
+            if (!overlay) return;
+            const value = overlay.textContent?.trim() || "";
+            if (!value || value.length > 10 || !/\d/.test(value) || seen.has("stat:" + value)) return;
+            seen.add("stat:" + value);
+            // Look for a label near the SVG (sibling <p>)
+            const container = parent.parentElement;
+            const labelEl = container?.querySelector("p");
+            const label = labelEl?.textContent?.trim() || "";
+            blocks.push({ type: "stat", value, label });
+        });
+
+        // Detect standalone large-number elements (like 8.5", 25-30%)
+        section.querySelectorAll("div").forEach((el) => {
+            const text = el.textContent?.trim() || "";
+            if (!text || text.length > 12) return;
+            const style = getComputedStyle(el);
+            const fontSize = parseFloat(style.fontSize);
+            if (fontSize < 30) return; // only large text
+            if (!/\d/.test(text) || seen.has("stat:" + text)) return;
+            seen.add("stat:" + text);
+            // Look for a label sibling
+            const next = el.nextElementSibling;
+            const label = next?.textContent?.trim() || "";
+            if (label.length < 50) {
+                blocks.push({ type: "stat", value: text, label });
+            }
+        });
     });
 
     // Add a divider between groups of content

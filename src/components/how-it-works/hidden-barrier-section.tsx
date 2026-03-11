@@ -32,7 +32,7 @@ export function HiddenBarrierSection() {
                     {/* Female stat */}
                     <div className="flex flex-col items-center text-center relative">
                         <div className="relative w-[180px] h-[180px] md:w-[220px] md:h-[220px] mb-4 md:mb-6">
-                            <svg width="220" height="220" viewBox="0 0 220 220" className="transform -rotate-90">
+                            <svg viewBox="0 0 220 220" className="w-full h-full transform -rotate-90">
                                 <defs>
                                     <filter id="glow-red" x="-50%" y="-50%" width="200%" height="200%">
                                         <feGaussianBlur stdDeviation="4" result="blur" />
@@ -78,7 +78,7 @@ export function HiddenBarrierSection() {
                     {/* Male stat */}
                     <div className="flex flex-col items-center text-center">
                         <div className="relative w-[180px] h-[180px] md:w-[220px] md:h-[220px] mb-4 md:mb-6">
-                            <svg width="220" height="220" viewBox="0 0 220 220" className="transform -rotate-90">
+                            <svg viewBox="0 0 220 220" className="w-full h-full transform -rotate-90">
                                 {/* Track */}
                                 <circle cx="110" cy="110" r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="18" />
                                 {/* Green (comfortable) arc */}
