@@ -139,8 +139,13 @@ export function blocksToNewsletter(blocks: ContentBlock[], pageTitle: string, pa
     const texts = getTexts(blocks);
     const excerpt = texts[0] ? truncate(texts[0], 140) : "";
 
-    // Build content rows with editorial polish
+    // Build content rows with editorial polish (limit: 2 videos, 4 images max)
+    let videoCount = 0;
+    let imageCount = 0;
     const rows = blocks.map((b) => {
+        // Enforce media limits
+        if (b.type === "video") { if (videoCount >= 2) return ""; videoCount++; }
+        if (b.type === "image") { if (imageCount >= 4) return ""; imageCount++; }
         switch (b.type) {
             case "heading":
                 if (b.level === 1) return ""; // h1 is in hero
@@ -159,7 +164,8 @@ export function blocksToNewsletter(blocks: ContentBlock[], pageTitle: string, pa
 </td></tr>`;
             case "video": {
                 // Poster image with play button overlay — links to website page
-                const poster = b.poster || b.src;
+                const poster = b.poster || "";
+                if (!poster) return ""; // skip videos without posters
                 return `<tr><td style="padding:12px 40px;">
 <a href="${pageUrl}" target="_blank" style="display:block;text-decoration:none;position:relative;">
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="520" style="max-width:100%;margin:0 auto;">
@@ -370,10 +376,10 @@ const blogThemeCSSMap: Record<BlogTheme, string> = {
     `,
 };
 
-// Helper: get image src from block (videos use poster)
+// Helper: get image src from block (videos use poster only — never .mp4)
 function getImageSrc(b: ContentBlock): string {
     if (b.type === "image") return b.src;
-    if (b.type === "video") return b.poster || b.src;
+    if (b.type === "video") return b.poster || ""; // skip if no poster
     return "";
 }
 
@@ -401,12 +407,15 @@ function renderBlogBlocks(blocks: ContentBlock[]): string {
                     mediaGroup.push(blocks[i]);
                     i++;
                 }
-                if (mediaGroup.length === 1) {
-                    const src = getImageSrc(mediaGroup[0]);
-                    const alt = mediaGroup[0].type === "image" ? mediaGroup[0].alt : "DreamPlay";
+                // Filter out items with no valid image src (e.g. poster-less videos)
+                const validMedia = mediaGroup.filter(item => getImageSrc(item));
+                if (validMedia.length === 0) break;
+                if (validMedia.length === 1) {
+                    const src = getImageSrc(validMedia[0]);
+                    const alt = validMedia[0].type === "image" ? validMedia[0].alt : "DreamPlay";
                     parts.push(`<div class="img-border" style="margin:30px 0;overflow:hidden;"><img src="${src}" alt="${alt}" style="width:100%;height:auto;display:block;" /></div>`);
                 } else {
-                    const gridItems = mediaGroup.map(item => {
+                    const gridItems = validMedia.map(item => {
                         const src = getImageSrc(item);
                         const alt = item.type === "image" ? item.alt : "DreamPlay";
                         return `<div class="img-border" style="overflow:hidden;"><img src="${src}" alt="${alt}" style="width:100%;height:auto;display:block;" /></div>`;
