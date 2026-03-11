@@ -192,11 +192,6 @@ ${b.author ? `<p style="font-size:12px;color:#888;margin:0;"><strong>${b.author}
 <img src="/images/DreamPlay%20Logo%20White.png" alt="DreamPlay" style="height:32px;display:inline-block;" />
 </td></tr>`;
 
-    // Gold text banner below logo
-    const logoBanner = `<tr><td style="padding:16px 30px 0;text-align:center;background:#050505;">
-<p style="margin:0;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:4px;color:#c4a44a;font-family:Arial,sans-serif;">✦ DREAMPLAY PIANOS ✦</p>
-</td></tr>`;
-
     // Hero image row (full-width, no padding)
     const heroRow = heroSrc ? `<tr><td style="padding:0;">
 <img src="${heroSrc}" alt="" width="600" style="display:block;width:100%;max-width:600px;height:auto;border:0;" />
@@ -214,7 +209,6 @@ img{border:0;height:auto;line-height:100%;outline:none;text-decoration:none;max-
 <tr><td align="center" style="padding:20px 0;">
 <table class="email-container" role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;background:#ffffff;">
 ${logoHeader}
-${logoBanner}
 ${heroRow}
 ${rows}
 <tr><td style="padding:20px 30px;">
@@ -319,13 +313,32 @@ function getImageSrc(b: ContentBlock): string {
     return "";
 }
 
-export function blocksToBlog(blocks: ContentBlock[], pageTitle: string, theme: BlogTheme): string {
+export type BlogLength = "short" | "full";
+
+export function blocksToBlog(blocks: ContentBlock[], pageTitle: string, theme: BlogTheme, length: BlogLength = "full"): string {
     const css = blogThemeCSSMap[theme];
+
+    // For short mode, limit to ~6 blocks (3 min read): grab first heading, first 2 texts, first image, first quote, first CTA
+    let filteredBlocks = blocks;
+    if (length === "short") {
+        const short: ContentBlock[] = [];
+        let headingCount = 0, textCount = 0, imageCount = 0, quoteCount = 0, ctaCount = 0;
+        for (const b of blocks) {
+            if (b.type === "heading" && headingCount < 2) { short.push(b); headingCount++; }
+            else if (b.type === "text" && textCount < 3) { short.push(b); textCount++; }
+            else if ((b.type === "image" || b.type === "video") && imageCount < 2) { short.push(b); imageCount++; }
+            else if (b.type === "quote" && quoteCount < 1) { short.push(b); quoteCount++; }
+            else if (b.type === "cta" && ctaCount < 1) { short.push(b); ctaCount++; }
+            else if (b.type === "divider" && short.length > 0 && short.length < 6) { short.push(b); }
+        }
+        filteredBlocks = short;
+    }
+
+    const readTime = length === "short" ? "3 min read" : `${Math.max(6, Math.ceil(blocks.length / 3))} min read`;
 
     // Extract hero image and first text for excerpt
     let heroSrc = "";
     let excerpt = "";
-    const headings = getHeadings(blocks);
     const texts = getTexts(blocks);
 
     for (const b of blocks) {
@@ -337,8 +350,8 @@ export function blocksToBlog(blocks: ContentBlock[], pageTitle: string, theme: B
     // Build content body
     const contentParts: string[] = [];
     let i = 0;
-    while (i < blocks.length) {
-        const b = blocks[i];
+    while (i < filteredBlocks.length) {
+        const b = filteredBlocks[i];
         switch (b.type) {
             case "heading":
                 contentParts.push(`<h2 class="sf" style="font-size:${b.level === 1 ? '32px' : '24px'};font-weight:600;margin-bottom:20px;">${b.text}</h2>`);
@@ -412,7 +425,7 @@ ${b.role ? `<div class="quote-role" style="font-size:11px;margin-top:4px;">${b.r
 <div class="bc" style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;min-height:450px;padding-bottom:60px;">
 <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:24px;">
 <span class="hero-badge" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:3px;padding:4px 12px;">Featured</span>
-<span class="hero-meta" style="font-size:10px;text-transform:uppercase;letter-spacing:3px;">${Math.ceil(blocks.length / 4)} min read</span>
+<span class="hero-meta" style="font-size:10px;text-transform:uppercase;letter-spacing:3px;">${readTime}</span>
 </div>
 <h1 class="sf hero-title" style="font-size:48px;line-height:1.15;font-weight:600;margin-bottom:20px;">${pageTitle}</h1>
 <p class="hero-excerpt" style="font-size:15px;line-height:1.7;max-width:600px;">${excerpt}</p>
