@@ -36,11 +36,11 @@ export default function HowItWorksPage() {
                 {/* Published Research — right after testimonials */}
                 <ResearchSection />
 
-                {/* A Keyboard That Fits You + size cards */}
-                <HowItWorksHero />
-
                 {/* Hand Span Calculator */}
                 <CalculatorSection />
+
+                {/* A Keyboard That Fits You + size cards */}
+                <HowItWorksHero />
 
                 {/* CTA */}
                 <CtaSection />
