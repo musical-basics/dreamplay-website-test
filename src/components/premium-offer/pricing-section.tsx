@@ -71,7 +71,7 @@ const allTiers = [
 export function PricingSection({ hiddenProducts = [] }: { hiddenProducts?: string[] }) {
   const tiers = allTiers.filter(t => !hiddenProducts.includes(t.id))
   return (
-    <section id="pricing" className="relative bg-foreground">
+    <section id="pricing" className="relative bg-foreground w-full">
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28 lg:py-32">
         <div className="mb-16 max-w-2xl">
           <p className="font-sans text-xs uppercase tracking-[0.3em] text-background/50">
