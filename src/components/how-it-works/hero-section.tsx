@@ -24,7 +24,7 @@ const keyboards = {
 
 export function HowItWorksHero() {
     return (
-        <section className="relative flex min-h-screen flex-col justify-center bg-[#0a0a0f] py-24 text-white w-full">
+        <section className="relative flex flex-col justify-center bg-[#0a0a0f] py-16 md:py-24 text-white w-full">
             <div className="mx-auto w-full max-w-6xl px-6">
                 <div className="mb-16 text-center">
                     <p className="mb-4 font-sans text-[10px] uppercase tracking-[0.3em] text-white/50">The Solution</p>
