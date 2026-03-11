@@ -134,6 +134,13 @@ export function scrapePageContent(doc: Document): ContentBlock[] {
 
 // ── Newsletter Builder (600px, inline styles) ────────────
 export function blocksToNewsletter(blocks: ContentBlock[], pageTitle: string): string {
+    // Extract hero image: first image or first video poster
+    let heroSrc = "";
+    for (const b of blocks) {
+        if (b.type === "image" && b.src) { heroSrc = b.src; break; }
+        if (b.type === "video") { heroSrc = b.poster || b.src; break; }
+    }
+
     const rows = blocks.map((b) => {
         switch (b.type) {
             case "heading":
@@ -153,6 +160,10 @@ export function blocksToNewsletter(blocks: ContentBlock[], pageTitle: string): s
                 return `<tr><td style="padding:10px 30px;text-align:center;">
 <img src="${b.src}" alt="${b.alt}" width="540" style="display:block;max-width:100%;width:540px;height:auto;margin:0 auto;border:0;" />
 </td></tr>`;
+            case "video":
+                return `<tr><td style="padding:10px 30px;text-align:center;">
+<img src="${b.poster || b.src}" alt="Video" width="540" style="display:block;max-width:100%;width:540px;height:auto;margin:0 auto;border:0;" />
+</td></tr>`;
             case "cta":
                 return `<tr><td style="padding:15px 30px;text-align:center;">
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;"><tr><td style="background:#000000;padding:14px 40px;">
@@ -161,7 +172,7 @@ export function blocksToNewsletter(blocks: ContentBlock[], pageTitle: string): s
 </td></tr>`;
             case "quote":
                 return `<tr><td style="padding:15px 30px;background:#f8f8f8;border-left:3px solid #e5e5e5;">
-<p style="font-size:15px;line-height:1.6;color:#555;font-style:italic;margin:0 0 5px;">"${b.text}"</p>
+<p style="font-size:15px;line-height:1.6;color:#555;font-style:italic;margin:0 0 5px;">${b.text}</p>
 ${b.author ? `<p style="font-size:12px;color:#888;margin:0;"><strong>${b.author}</strong>${b.role ? ` — ${b.role}` : ""}</p>` : ""}
 </td></tr>`;
             case "divider":
@@ -176,11 +187,23 @@ ${b.author ? `<p style="font-size:12px;color:#888;margin:0;"><strong>${b.author}
         }
     }).join("\n");
 
+    // Logo banner
+    const logoBanner = `<tr><td style="padding:24px 30px 0;text-align:center;background:#050505;">
+<p style="margin:0;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:4px;color:#c4a44a;font-family:Arial,sans-serif;">✦ DREAMPLAY PIANOS ✦</p>
+</td></tr>`;
+
+    // Hero image row (full-width, no padding)
+    const heroRow = heroSrc ? `<tr><td style="padding:0;">
+<img src="${heroSrc}" alt="" width="600" style="display:block;width:100%;max-width:600px;height:auto;border:0;" />
+</td></tr>` : "";
+
     return `<!DOCTYPE html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><title>${pageTitle}</title></head>
 <body style="margin:0;padding:0;background:#f4f4f7;font-family:Arial,Helvetica,sans-serif;">
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f4f4f7;">
 <tr><td align="center" style="padding:20px 0;">
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;background:#ffffff;">
+${logoBanner}
+${heroRow}
 ${rows}
 <tr><td style="padding:20px 30px 30px;text-align:center;font-size:11px;color:#aaa;">
 <p style="margin:0;">DreamPlay Pianos &bull; Victoria, BC, Canada</p>
@@ -297,7 +320,27 @@ ${b.author ? `<p style="font-size:12px;font-weight:700;text-transform:uppercase;
         }
     }
 
+    // Extract hero image: first image or first video poster
+    let blogHeroSrc = "";
+    for (const b of blocks) {
+        if (b.type === "image" && b.src) { blogHeroSrc = b.src; break; }
+        if (b.type === "video") { blogHeroSrc = b.poster || b.src; break; }
+    }
+
     const content = contentParts.join("\n");
+
+    // Blog hero section
+    const blogHero = blogHeroSrc ? `
+<div style="position:relative;width:100%;max-height:400px;overflow:hidden;margin-bottom:40px;">
+<img src="${blogHeroSrc}" alt="" style="width:100%;height:auto;display:block;filter:brightness(0.7);" />
+<div style="position:absolute;bottom:0;left:0;right:0;padding:30px 40px;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);">
+<p style="margin:0 0 8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:4px;color:#c4a44a;font-family:'Inter',sans-serif;">✦ DREAMPLAY PIANOS</p>
+<h1 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:#fff;line-height:1.2;">${pageTitle}</h1>
+</div>
+</div>` : `
+<div style="padding:40px 0 20px;text-align:center;">
+<p style="margin:0 0 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:4px;color:#c4a44a;font-family:'Inter',sans-serif;">✦ DREAMPLAY PIANOS</p>
+</div>`;
 
     return `<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -310,6 +353,7 @@ ${css}
 </head>
 <body>
 <div style="max-width:800px;margin:0 auto;padding:60px 40px;">
+${blogHero}
 ${content}
 </div>
 </body></html>`;
