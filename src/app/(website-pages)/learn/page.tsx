@@ -350,9 +350,9 @@ export default function LearnPage() {
                                     <img
                                         src="/images/learn/pianist-led-keys.jpg"
                                         alt="Pianist playing DreamPlay One with LED-lit keys and Learn app on tablet"
-                                        className="h-full w-full object-cover"
+                                        className="h-full w-full object-cover brightness-[1.2]"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/50 to-transparent" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/20 to-transparent" />
                                 </div>
                             </AnimatedSection>
                         </div>
