@@ -805,23 +805,51 @@ export default function ContentRemixerPage() {
                 <div className="overflow-hidden border border-white/10 bg-[#121212] shadow-2xl">
                   <iframe key={`right-${splitRight}-${refreshKey}`} srcDoc={rightContent} className="h-[800px] w-full" title={splitRight} sandbox="allow-same-origin allow-popups allow-scripts" />
                 </div>
-                {/* Action bar for social media tabs */}
-                {isSocialTab(splitRight) && (
-                  <div className="mt-3 flex items-center gap-2">
-                    <button onClick={handleCopyCaption}
-                      className={`flex items-center gap-2 border px-4 py-2 font-sans text-xs font-medium uppercase tracking-wider transition-all cursor-pointer ${captionCopied ? "border-green-400 bg-green-400/10 text-green-300" : "border-amber-400/30 bg-amber-400/5 text-amber-300 hover:bg-amber-400/10 hover:border-amber-400/50"}`}>
-                      {captionCopied ? <Check className="h-4 w-4" /> : <Clipboard className="h-4 w-4" />}
-                      {captionCopied ? "Copied!" : "Copy Caption"}
-                    </button>
-                    <button onClick={handleDownloadAssets}
-                      className="flex items-center gap-2 border border-cyan-400/30 bg-cyan-400/5 px-4 py-2 font-sans text-xs font-medium uppercase tracking-wider text-cyan-300 transition-all cursor-pointer hover:bg-cyan-400/10 hover:border-cyan-400/50">
-                      <Download className="h-4 w-4" /> Download Assets
-                    </button>
-                    <span className="ml-auto font-sans text-[10px] text-white/20">
-                      {convertedContent[selectedPage]?.blocks ? `${getAllMediaUrls(convertedContent[selectedPage].blocks).images.length} images, ${getAllMediaUrls(convertedContent[selectedPage].blocks).videos.length} videos` : "Convert first"}
-                    </span>
-                  </div>
-                )}
+                {/* Caption preview + actions for social media tabs */}
+                {isSocialTab(splitRight) && (() => {
+                  const pageData = convertedContent[selectedPage];
+                  const blocks = pageData?.blocks;
+                  const title = currentPage.label;
+                  const pageUrl = "https://www.dreamplaypianos.com" + currentPage.path;
+                  const tab = splitView ? splitRight : activeTab;
+                  let caption = "";
+                  if (blocks) {
+                    if (tab === "reddit") caption = getRedditCaption(blocks, title, pageUrl);
+                    else if (tab === "twitter") caption = getTwitterCaption(blocks, title);
+                    else if (tab === "ig-carousel") caption = getIGCarouselCaption(blocks, title);
+                    else if (tab === "ig-ad") caption = getIGAdCaption(blocks, title, pageUrl);
+                  }
+                  return (
+                    <div className="mt-3 space-y-2">
+                      {caption ? (
+                        <div
+                          onClick={handleCopyCaption}
+                          className="group relative cursor-pointer border border-white/10 bg-[#0a0a0f] p-4 transition-all hover:border-amber-400/30"
+                          title="Click to copy caption"
+                        >
+                          <pre className="whitespace-pre-wrap font-sans text-[13px] leading-relaxed text-white/70">{caption}</pre>
+                          <div className={`absolute top-2 right-2 flex items-center gap-1.5 rounded px-2 py-1 text-[10px] font-bold uppercase tracking-wider transition-all ${captionCopied ? "bg-green-400/15 text-green-300" : "bg-white/5 text-white/30 group-hover:bg-amber-400/10 group-hover:text-amber-300"}`}>
+                            {captionCopied ? <Check className="h-3 w-3" /> : <Clipboard className="h-3 w-3" />}
+                            {captionCopied ? "Copied!" : "Tap to copy"}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="border border-white/5 bg-[#0a0a0f] p-4 text-center font-sans text-xs text-white/20">
+                          Convert the page to generate caption text
+                        </div>
+                      )}
+                      <div className="flex items-center gap-2">
+                        <button onClick={handleDownloadAssets}
+                          className="flex items-center gap-2 border border-cyan-400/30 bg-cyan-400/5 px-4 py-2 font-sans text-xs font-medium uppercase tracking-wider text-cyan-300 transition-all cursor-pointer hover:bg-cyan-400/10 hover:border-cyan-400/50">
+                          <Download className="h-4 w-4" /> Download Assets
+                        </button>
+                        <span className="ml-auto font-sans text-[10px] text-white/20">
+                          {convertedContent[selectedPage]?.blocks ? `${getAllMediaUrls(convertedContent[selectedPage].blocks).images.length} images, ${getAllMediaUrls(convertedContent[selectedPage].blocks).videos.length} videos` : "Convert first"}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })()}
               </div>
             </div>
           ) : (
