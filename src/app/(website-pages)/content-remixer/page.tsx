@@ -167,6 +167,9 @@ img{max-width:100%;height:auto;display:block}
 ${blogThemeCSS[theme]}
 </style>
 </head><body>
+<div style="padding:20px 24px;text-align:center;background:#050505;">
+<img src="/images/DreamPlay%20Logo%20White.png" alt="DreamPlay" style="height:28px;display:inline-block;" />
+</div>
 ${hero}
 <div class="content-wrap">
 <div class="bc" style="padding-top:60px;padding-bottom:80px;">
@@ -320,7 +323,7 @@ const GMAIL_CONTENT: Record<string, string> = {
 function getBlogContent(page: PageId, theme: BlogTheme): string {
   if (page === "learn") {
     return blogWrap(
-      `< div style = "position:relative;min-height:450px;overflow:hidden;" class="hero-bg" >
+      `<div style="position:relative;min-height:450px;overflow:hidden;" class="hero-bg">
 <img src="/images/learn/grid-hero-still.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.35;"/>
 <div style="position:absolute;inset:0;" class="hero-overlay"></div>
 <div class="bc" style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;min-height:450px;padding-bottom:60px;">
@@ -331,13 +334,13 @@ function getBlogContent(page: PageId, theme: BlogTheme): string {
 </div>
 <h1 class="sf hero-title" style="font-size:48px;line-height:1.15;font-weight:600;margin-bottom:20px;">Learn Piano. The Smart Way.</h1>
 <p class="hero-excerpt" style="font-size:15px;line-height:1.7;max-width:600px;">How DreamPlay Learn combines on-screen guidance with LED-lit keys to create the most intuitive piano learning experience.</p>
-<div style="display:flex;align-items:center;gap:16px;margin-top:30px;padding-top:24px;" class="hero-author-divider" >
+<div style="display:flex;align-items:center;gap:16px;margin-top:30px;padding-top:24px;" class="hero-author-divider">
 <div class="hero-author-box sf" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:14px;">DP</div>
 <div><span class="hero-author-name" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;">DreamPlay Editorial</span><div class="hero-author-date" style="font-size:10px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;">March 9, 2026</div></div>
 </div>
-</div></div > `,
+</div></div>`,
       `
-  < h2 class="sf" style = "font-size:32px;font-weight:600;margin-bottom:24px;" > Two Modes.One App.</h2 >
+<h2 class="sf" style="font-size:32px;font-weight:600;margin-bottom:24px;">Two Modes. One App.</h2>
 <p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:20px;">DreamPlay Learn offers two complementary practice modes: <strong>Sheet Music Mode</strong> for traditional notation reading, and <strong>Falling Notes Mode</strong> for an intuitive, visual approach.</p>
 <div class="img-border" style="margin:30px 0;overflow:hidden;"><img src="/images/learn/sheet-music-mode-real.jpg" alt="Sheet Music Mode" style="width:100%;height:auto;"/></div>
 <p class="caption" style="font-size:13px;margin-bottom:20px;text-align:center;">Sheet Music Mode  -  real-time notation tracking</p>
@@ -374,7 +377,7 @@ function getBlogContent(page: PageId, theme: BlogTheme): string {
 
   if (page === "better-practice") {
     return blogWrap(
-      `< div style = "position:relative;min-height:450px;overflow:hidden;" class="hero-bg" >
+      `<div style="position:relative;min-height:450px;overflow:hidden;" class="hero-bg">
 <img src="/images/BW%20Piano%20(1).jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.4;"/>
 <div style="position:absolute;inset:0;" class="hero-overlay"></div>
 <div class="bc" style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;min-height:450px;padding-bottom:60px;">
@@ -389,9 +392,9 @@ function getBlogContent(page: PageId, theme: BlogTheme): string {
 <div class="hero-author-box sf" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:14px;">DP</div>
 <div><span class="hero-author-name" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;">DreamPlay Editorial</span><div class="hero-author-date" style="font-size:10px;text-transform:uppercase;letter-spacing:2px;margin-top:4px;">March 9, 2026</div></div>
 </div>
-</div></div > `,
+</div></div>`,
       `
-  < h2 class="sf" style = "font-size:32px;font-weight:600;margin-bottom:24px;" > The Cognitive Load of Small Hands</h2 >
+<h2 class="sf" style="font-size:32px;font-weight:600;margin-bottom:24px;">The Cognitive Load of Small Hands</h2>
 <p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:20px;">The greater the degree of technical difficulty, <strong>the greater the practice required</strong>. Less time and mental capacity for musical expression.</p>
 <p class="body-text" style="font-size:16px;line-height:1.8;margin-bottom:40px;">When small-handed pianists switch to a smaller keyboard, <strong>it is often a revelation</strong>.</p>
 
