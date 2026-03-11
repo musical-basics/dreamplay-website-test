@@ -32,7 +32,7 @@ export function ResearchSection() {
                             desc: "Shorter reaches and reduced wrist travel on compatible keyboards are linked to better control and lower risk of overuse injuries.",
                             href: "https://paskpiano.org/performance-quality/",
                             cta: "Learn more",
-                            dark: true,
+                            dark: false,
                         },
                         {
                             title: "Benefits of ergonomically scaled keyboards",
@@ -40,7 +40,7 @@ export function ResearchSection() {
                             desc: "Players report relief from pain, faster technical progress, and greater comfort when they move to keyboards that match their hand span.",
                             href: "https://www.researchgate.net/publication/264457999",
                             cta: "Read full study",
-                            dark: false,
+                            dark: true,
                         },
                     ].map((item) => (
                         <div key={item.title} className={`p-10 flex flex-col transition-all ${item.dark ? 'border border-white/10 bg-white/5 hover:border-white/20' : 'bg-white hover:bg-neutral-50'}`}>
