@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
 
 export default function HomePage() {
-    redirect("/premium-offer")
+    redirect("/dreamplay-journey")
 }

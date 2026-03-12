@@ -108,7 +108,7 @@ const PAGES: { id: PageId; label: string; path: string }[] = [
   { id: "better-practice", label: "The Benefits", path: "/better-practice" },
   { id: "how-it-works", label: "How It Works", path: "/how-it-works" },
   { id: "customize", label: "Customize", path: "/customize" },
-  { id: "premium-offer", label: "Premium Offer", path: "/premium-offer" },
+  { id: "dreamplay-journey", label: "DreamPlay Journey", path: "/dreamplay-journey" },
   { id: "our-story", label: "Our Story", path: "/our-story" },
   { id: "why-narrow", label: "Why Narrow Keys", path: "/why-narrow" },
   { id: "buyers-guide", label: "Buyer's Guide", path: "/buyers-guide" },
